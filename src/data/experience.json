@@ -1,0 +1,98 @@
+{
+  "experiencia": [
+    {
+      "id": 1,
+      "company": "EDUCA EDTECH Group",
+      "role": {
+        "es": "Programador Full Stack",
+        "en": "Full Stack Developer"
+      },
+      "period": {
+        "es": "oct. 2023 – jun. 2024",
+        "en": "Oct. 2023 – Jun. 2024"
+      },
+      "duration": {
+        "es": "9 meses",
+        "en": "9 months"
+      },
+      "modality": {
+        "es": "Híbrido",
+        "en": "Hybrid"
+      },
+      "location": "Granada, España",
+      "description": {
+        "es": "Desarrollo y mantenimiento de plataformas educativas en producción, trabajando de principio a fin en proyectos reales del sector edtech: diseño de bases de datos, integración de APIs REST, mejora de rendimiento front-end y despliegues en Google Cloud.",
+        "en": "Development and maintenance of educational platforms in production, working end-to-end on real edtech projects: database design, REST API integration, front-end performance optimization, and deployments on Google Cloud."
+      },
+      "bullets": {
+        "es": [
+          "Integración y mantenimiento de APIs REST con Laravel y PHP",
+          "Diseño y optimización de bases de datos SQL",
+          "Despliegues y gestión de infraestructura en Google Cloud Platform",
+          "Integración de ElasticSearch para funcionalidades de búsqueda avanzada",
+          "Mejoras de rendimiento y experiencia de usuario con JavaScript"
+        ],
+        "en": [
+          "REST API integration and maintenance with Laravel and PHP",
+          "Database design and SQL query optimization",
+          "Deployments and infrastructure management on Google Cloud Platform",
+          "ElasticSearch integration for advanced search features",
+          "Performance and user experience improvements with JavaScript"
+        ]
+      },
+      "skills": [
+        { "name": "Laravel", "level": "high" },
+        { "name": "PHP", "level": "high" },
+        { "name": "MySQL", "level": "high" },
+        { "name": "JavaScript", "level": "mid" },
+        { "name": "Google Cloud", "level": "mid" },
+        { "name": "ElasticSearch", "level": "low" }
+      ]
+    },
+    {
+      "id": 2,
+      "company": "Euroinnova",
+      "role": {
+        "es": "Junior Software Developer",
+        "en": "Junior Software Developer"
+      },
+      "period": {
+        "es": "abr. 2023 – oct. 2023",
+        "en": "Apr. 2023 – Oct. 2023"
+      },
+      "duration": {
+        "es": "7 meses",
+        "en": "7 months"
+      },
+      "modality": {
+        "es": "Híbrido",
+        "en": "Hybrid"
+      },
+      "location": "Granada, España",
+      "description": {
+        "es": "Desarrollo de aplicaciones web en el sector de la formación online. Participé en la creación y mantenimiento de módulos con Laravel y PHP, gestión de bases de datos MySQL e integración de funcionalidades front-end.",
+        "en": "Web application development in the online education sector. Participated in building and maintaining modules with Laravel and PHP, MySQL database management, and front-end feature integration."
+      },
+      "bullets": {
+        "es": [
+          "Desarrollo de nuevas funcionalidades con Laravel y PHP",
+          "Gestión y optimización de bases de datos MySQL",
+          "Integración de módulos JavaScript en el front-end",
+          "Colaboración en proyectos de plataformas de formación online"
+        ],
+        "en": [
+          "New feature development with Laravel and PHP",
+          "MySQL database management and optimization",
+          "JavaScript module integration on the front-end",
+          "Collaboration on online education platform projects"
+        ]
+      },
+      "skills": [
+        { "name": "Laravel", "level": "high" },
+        { "name": "PHP", "level": "high" },
+        { "name": "MySQL", "level": "high" },
+        { "name": "JavaScript", "level": "mid" }
+      ]
+    }
+  ]
+}

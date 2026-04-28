@@ -687,6 +687,223 @@ footer {
   margin-bottom: 24px;
 }
 
+/* ── Página Experiencia ── */
+
+.exp-stats {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 48px;
+}
+
+.exp-stat {
+  background: #fff;
+  border: 2px solid #e8edf7;
+  border-radius: 16px;
+  padding: 24px 36px;
+  text-align: center;
+  min-width: 140px;
+  box-shadow: 0 4px 16px rgba(30,60,114,0.07);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.exp-stat:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(30,60,114,0.13);
+}
+
+.exp-stat-num {
+  display: block;
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: #1e3c72;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.exp-stat-label {
+  font-size: 0.88rem;
+  color: #6b7280;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Timeline */
+.exp-timeline {
+  position: relative;
+  padding-left: 32px;
+}
+
+.exp-timeline::before {
+  content: '';
+  position: absolute;
+  left: 10px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: linear-gradient(to bottom, #1e3c72, #2a5298, #e8edf7);
+  border-radius: 2px;
+}
+
+.exp-item {
+  position: relative;
+  margin-bottom: 32px;
+}
+
+.exp-item:last-child {
+  margin-bottom: 0;
+}
+
+.exp-dot {
+  position: absolute;
+  left: -28px;
+  top: 24px;
+  width: 16px;
+  height: 16px;
+  background: #ffce00;
+  border: 3px solid #1e3c72;
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px rgba(30,60,114,0.12);
+}
+
+.exp-card {
+  background: #fff;
+  border: 1.5px solid #e8edf7;
+  border-radius: 16px;
+  padding: 24px 28px;
+  box-shadow: 0 4px 18px rgba(30,60,114,0.07);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.exp-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(30,60,114,0.12);
+}
+
+.exp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+
+.exp-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.exp-role {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1e3c72;
+}
+
+.exp-company {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2a5298;
+  margin: 0;
+}
+
+.exp-badges {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.exp-badge {
+  display: inline-block;
+  padding: 4px 14px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.exp-duration {
+  background: #1e3c72;
+  color: #fff;
+}
+
+.exp-badge--mode {
+  background: #e8f0fe;
+  color: #2a5298;
+}
+
+.exp-period {
+  font-size: 0.88rem;
+  color: #888;
+  margin: 4px 0 14px;
+}
+
+.exp-desc {
+  font-size: 0.96rem;
+  color: #444;
+  line-height: 1.65;
+  margin-bottom: 14px;
+}
+
+.exp-bullets {
+  padding-left: 18px;
+  margin-bottom: 16px;
+}
+
+.exp-bullets li {
+  font-size: 0.93rem;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 5px;
+  position: relative;
+}
+
+.exp-bullets li::marker {
+  color: #2a5298;
+}
+
+.exp-item:target .exp-card {
+  border-color: #1e3c72;
+  animation: exp-focus 2s ease-out forwards;
+}
+
+@keyframes exp-focus {
+  0%   { background: rgba(30, 60, 114, 0.08); box-shadow: 0 0 0 4px rgba(30,60,114,0.18), 0 8px 28px rgba(30,60,114,0.12); }
+  100% { background: #fff; box-shadow: 0 4px 18px rgba(30,60,114,0.07); }
+}
+
+@media (max-width: 600px) {
+  .exp-stats {
+    gap: 12px;
+  }
+  .exp-stat {
+    padding: 18px 24px;
+    min-width: 110px;
+  }
+  .exp-stat-num {
+    font-size: 1.9rem;
+  }
+  .exp-timeline {
+    padding-left: 24px;
+  }
+  .exp-dot {
+    left: -20px;
+    width: 12px;
+    height: 12px;
+    top: 26px;
+  }
+  .exp-card {
+    padding: 18px 16px;
+  }
+  .exp-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
 /* ── Tarjeta completa (página proyectos) ── */
 .project-card--full .project-desc--large {
   color: #555;

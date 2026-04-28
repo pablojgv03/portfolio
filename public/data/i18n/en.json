@@ -34,6 +34,13 @@
   },
   "section-experiencia": {
     "title": "💼 Experience",
+    "page-title": "💼 Experience",
+    "subtitle": "My professional journey as a developer",
+    "stats": {
+      "years": "year of experience",
+      "companies": "companies",
+      "projects": "production projects"
+    },
     "first-job": {
         "title": "Full Stack Developer — EDUCA EDTECH Group",
         "period": "Oct. 2023 – Jun. 2024 · 9 months · Hybrid"
@@ -50,11 +57,6 @@
   "rights": "© 2026 Pablo Gómez Villén || Full Stack Developer",
   
   "blog": {
-      "experiencia-fullstack": {
-        "title": "Full Stack Experience",
-        "date": "2024",
-        "content": "<p>During my <strong>full stack developer</strong> experience I worked with Laravel, PHP, and SQL databases.<br>Optimized performance and security, and deployed projects on Google Cloud.</p>"
-      },
       "dam": {
         "title": "Multiplatform App Development",
         "date": "2022",

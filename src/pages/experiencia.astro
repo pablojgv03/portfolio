@@ -1,0 +1,116 @@
+---
+import Layout from '../layouts/Layout.astro';
+import expData from '../data/experience.json';
+
+const defaultLang = 'es';
+---
+
+<Layout title="Experiencia — Pablo Gómez" showHero={false}>
+
+  <!-- Banner -->
+  <div class="page-banner">
+    <h1 data-i18n="section-experiencia.page-title">💼 Experiencia</h1>
+    <p data-i18n="section-experiencia.subtitle">Mi trayectoria profesional como desarrollador</p>
+  </div>
+
+  <section class="section">
+
+    <!-- Stats rápidas -->
+    <div class="exp-stats">
+      <div class="exp-stat">
+        <span class="exp-stat-num">1+</span>
+        <span class="exp-stat-label" data-i18n="section-experiencia.stats.years">año de experiencia</span>
+      </div>
+      <div class="exp-stat">
+        <span class="exp-stat-num">2</span>
+        <span class="exp-stat-label" data-i18n="section-experiencia.stats.companies">empresas</span>
+      </div>
+      <div class="exp-stat">
+        <span class="exp-stat-num">2</span>
+        <span class="exp-stat-label" data-i18n="section-experiencia.stats.projects">proyectos en producción</span>
+      </div>
+    </div>
+
+    <!-- Timeline -->
+    <div class="exp-timeline">
+      {expData.experiencia.map((job) => (
+        <div class="exp-item" id={`exp-${job.id}`} data-exp-id={String(job.id)}>
+          <div class="exp-dot"></div>
+          <div class="exp-card">
+            <div class="exp-header">
+              <div class="exp-header-left">
+                <h3 class="exp-role">{job.role[defaultLang as 'es' | 'en']}</h3>
+                <p class="exp-company">{job.company}</p>
+              </div>
+              <div class="exp-badges">
+                <span class="exp-badge exp-duration">{job.duration[defaultLang as 'es' | 'en']}</span>
+                <span class="exp-badge exp-badge--mode exp-modality">{job.modality[defaultLang as 'es' | 'en']}</span>
+              </div>
+            </div>
+
+            <p class="exp-period">
+              <span class="exp-period-text">{job.period[defaultLang as 'es' | 'en']}</span>
+              {' · '}{job.location}
+            </p>
+
+            <p class="exp-desc">{job.description[defaultLang as 'es' | 'en']}</p>
+
+            <ul class="exp-bullets">
+              {job.bullets[defaultLang as 'es' | 'en'].map((b) => (
+                <li>{b}</li>
+              ))}
+            </ul>
+
+            <div class="skills">
+              {job.skills.map(skill => (
+                <span class={`skill ${skill.level}`}>{skill.name}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </section>
+
+  <script type="module">
+    import { loadLanguage, getLanguage } from '/scripts/i18n.js';
+
+    window.addEventListener('DOMContentLoaded', async () => {
+      const lang = getLanguage();
+      await loadLanguage(lang);
+      const idiomaActual = window.lang || lang;
+
+      if (idiomaActual === 'es') return;
+
+      const data = await fetch('/data/experience.json').then(r => r.json());
+
+      data.experiencia.forEach(job => {
+        const card = document.querySelector(`[data-exp-id="${job.id}"]`);
+        if (!card) return;
+
+        const get = sel => card.querySelector(sel);
+
+        const roleEl = get('.exp-role');
+        if (roleEl && job.role[idiomaActual]) roleEl.textContent = job.role[idiomaActual];
+
+        const periodEl = get('.exp-period-text');
+        if (periodEl && job.period[idiomaActual]) periodEl.textContent = job.period[idiomaActual];
+
+        const durationEl = get('.exp-duration');
+        if (durationEl && job.duration[idiomaActual]) durationEl.textContent = job.duration[idiomaActual];
+
+        const modalityEl = get('.exp-modality');
+        if (modalityEl && job.modality[idiomaActual]) modalityEl.textContent = job.modality[idiomaActual];
+
+        const descEl = get('.exp-desc');
+        if (descEl && job.description[idiomaActual]) descEl.textContent = job.description[idiomaActual];
+
+        const bulletsEl = get('.exp-bullets');
+        if (bulletsEl && job.bullets[idiomaActual]) {
+          bulletsEl.innerHTML = job.bullets[idiomaActual].map(b => `<li>${b}</li>`).join('');
+        }
+      });
+    });
+  </script>
+</Layout>

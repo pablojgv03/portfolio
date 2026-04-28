@@ -34,6 +34,13 @@
   },
   "section-experiencia": {
     "title": "💼 Experiencia",
+    "page-title": "💼 Experiencia",
+    "subtitle": "Mi trayectoria profesional como desarrollador",
+    "stats": {
+      "years": "año de experiencia",
+      "companies": "empresas",
+      "projects": "proyectos en producción"
+    },
     "first-job": {
       "title": "Programador Full Stack — EDUCA EDTECH Group",
       "period": "oct. 2023 – jun. 2024 · 9 meses · Híbrido"
@@ -50,11 +57,6 @@
   "rights": "© 2026 Pablo Gómez Villén || Programador Full Stack",
 
   "blog": {
-    "experiencia-fullstack": {
-      "title": "Experiencia Full Stack",
-      "date": "2024",
-      "content": "<p>Durante mi etapa como <strong>desarrollador full stack</strong> trabajé con Laravel, PHP y bases de datos SQL.<br>Optimicé rendimiento, seguridad y participé en despliegues en Google Cloud.</p>"
-    },
     "dam": {
       "title": "Desarrollo de Aplicaciones Multiplataforma",
       "date": "2022",

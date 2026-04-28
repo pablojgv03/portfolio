@@ -1,0 +1,32 @@
+---
+import Layout from '../layouts/Layout.astro';
+import es from '../data/i18n/es.json';
+import en from '../data/i18n/en.json';
+
+const allPosts = { es: es.blog, en: en.blog };
+---
+
+<Layout title="Blog" lang="es">
+  <section class="section" id="blog-content">
+    <p id="blog-loading">Cargando...</p>
+  </section>
+</Layout>
+
+<script define:vars={{ allPosts }}>
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get('slug');
+  const lang = localStorage.getItem('lang') || 'es';
+  const posts = allPosts[lang] || allPosts['es'];
+  const post = slug && posts && posts[slug] ? posts[slug] : null;
+
+  const container = document.getElementById('blog-content');
+  if (post) {
+    container.innerHTML = `
+      <h1>${post.title}</h1>
+      <p class="date">${post.date}</p>
+      <div>${post.content}</div>
+    `;
+  } else {
+    container.innerHTML = '<p>Entrada no encontrada.</p>';
+  }
+</script>

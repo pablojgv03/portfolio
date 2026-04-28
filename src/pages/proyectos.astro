@@ -1,0 +1,49 @@
+---
+import Layout from '../layouts/Layout.astro';
+import projects from '../data/projects.json';
+---
+
+<Layout title="Mis proyectos">
+  <section class="proyectos">
+    <h1 class="text-3xl font-bold mb-6 text-center">Mis proyectos</h1>
+
+    <!-- Filtros -->
+    <div class="filtros flex justify-center gap-4 mb-6">
+      <button class="filtro" data-filtro="todos">Todos</button>
+      <button class="filtro" data-filtro="web">Web</button>
+      <button class="filtro" data-filtro="python">Python</button>
+      <button class="filtro" data-filtro="otros">Otros</button>
+    </div>
+
+    <!-- Contenedor de proyectos -->
+    <div id="lista-proyectos" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {projects.proyectos.map((p) => (
+        <article class="proyecto border rounded-xl p-4 shadow hover:shadow-lg transition" data-tipo={p.tipo}>
+          <h2 class="text-xl font-semibold mb-2">{p.nombre}</h2>
+          <p class="text-gray-600 mb-3">{p.descripcion}</p>
+          <a href={p.url} target="_blank" class="text-blue-600 hover:underline">Ver proyecto</a>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const botones = document.querySelectorAll('.filtro');
+      const proyectos = document.querySelectorAll('.proyecto');
+
+      botones.forEach(boton => {
+        boton.addEventListener('click', () => {
+          const tipo = boton.dataset.filtro;
+          proyectos.forEach(proyecto => {
+            if (tipo === 'todos' || proyecto.dataset.tipo === tipo) {
+              proyecto.style.display = 'block';
+            } else {
+              proyecto.style.display = 'none';
+            }
+          });
+        });
+      });
+    });
+  </script>
+</Layout>

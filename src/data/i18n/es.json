@@ -1,0 +1,61 @@
+{
+  "idioma": "es",
+  "hero": {
+    "greeting": "👋 Hola, soy <span>Pablo Gómez</span>",
+    "role": "Desarrollador Full Stack | PHP · Laravel · JavaScript · MySQL",
+    "btnProjects": "🚀 Ver proyectos",
+    "btnCV": "📄 Descargar CV"
+  },
+  "nav": {
+    "projects": "Proyectos",
+    "experience": "Experiencia",
+    "about": "Sobre mí"
+  },
+  "section-sobre-mi": {
+    "title": "🙋 Sobre mí",
+    "content": "Desarrollador Full Stack con más de un año de experiencia en producción, especializado en PHP (Laravel), JavaScript y MySQL. He trabajado en dos proyectos reales de principio a fin en empresas del sector edtech, desde el diseño de bases de datos hasta la integración de APIs REST y la mejora de rendimiento front-end. Formación complementaria en Especialización en IA y Big Data, y actualmente cursando DAW (jun. 2026). Busco incorporarme a un equipo donde seguir creciendo como desarrollador Full Stack."
+  },
+  "section-proyectos": {
+    "title": "🚀 Proyectos"
+  },
+  "section-estudios": {
+    "title": "🎓 Estudios",
+    "daw": "Desarrollo de Aplicaciones Web",
+    "ia-bd": "Especialización en IA y Big Data",
+    "dam": "Desarrollo de Aplicaciones Multiplataforma"
+  },
+  "section-experiencia": {
+    "title": "💼 Experiencia",
+    "first-job": {
+      "title": "Programador Full Stack — EDUCA EDTECH Group",
+      "period": "oct. 2023 – jun. 2024 · 9 meses · Híbrido"
+    },
+    "second-job": {
+      "title": "Junior Software Developer — Euroinnova",
+      "period": "abr. 2023 – oct. 2023 · 7 meses · Híbrido"
+    }
+  },
+  "contact": {
+    "title": "📩 Contacto",
+    "content": "¿Interesado en colaborar o simplemente quieres saludar? ¡No dudes en contactarme! Estoy siempre abierto a nuevas oportunidades y conexiones. También puedes conocer más sobre mi trabajo aquí:"
+  },
+  "rights": "© 2026 Pablo Gómez Villén || Programador Full Stack",
+
+  "blog": {
+    "experiencia-fullstack": {
+      "title": "Experiencia Full Stack",
+      "date": "2024",
+      "content": "<p>Durante mi etapa como <strong>desarrollador full stack</strong> trabajé con Laravel, PHP y bases de datos SQL.<br>Optimicé rendimiento, seguridad y participé en despliegues en Google Cloud.</p>"
+    },
+    "dam": {
+      "title": "Desarrollo de Aplicaciones Multiplataforma",
+      "date": "2022",
+      "content": "<p>Aprendí a crear aplicaciones nativas para Android y escritorio usando Java y XML.</p><p>Profundicé en POO, estructuras de datos y bases de datos relacionales.</p>"
+    },
+    "ia-bigdata": {
+      "title": "Especialización en IA y Big Data",
+      "date": "2025",
+      "content": "<p>Estudié Python, Machine Learning y análisis de datos masivos.</p><p>Proyecto destacado: <em>detección temprana de problemas de salud mental mediante redes sociales</em>.</p>"
+    }
+  }
+}

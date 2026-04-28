@@ -1,22 +1,141 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
-</html>
+---
+export const prerender = false;
+const { title, lang } = Astro.props;
+import ContactScript from '../components/ContactScript.astro';
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+---
+
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{title}</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <meta name="theme-color" content="#1e3c72">
+  </head>
+  <body class="contact-open">
+    <!-- Header -->
+    <header class="navbar">
+      <div class="navbar-container">
+        <!-- Logo -->
+        <a href="/" class="logo" aria-label="Ir al inicio">
+          <img src="/favicon.ico" alt="Logo" />
+        </a>
+
+        <!-- Menú de escritorio -->
+        <nav class="nav-links desktop">
+          <a href="/proyectos" data-i18n="nav.projects"></a>
+          <a href="/experiencia" data-i18n="nav.experience"></a>
+          <a href="/sobre-mi" data-i18n="nav.about"></a>
+        </nav>
+
+        <!-- Toggle idioma (solo escritorio) -->
+        <div class="lang-toggle desktop-only" aria-label="Cambiar idioma">
+          <input type="checkbox" id="lang-switch" />
+          <label for="lang-switch" class="lang-label">
+            <span class="flag flag-es " onclick="setLanguage('es')"><img src="/img/flags/es.svg" alt="Español"></span>
+            <span class="flag flag-en" onclick="setLanguage('en')"><img src="/img/flags/gb.svg" alt="English"></span>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <!-- Botón menú móvil -->
+        <button class="nav-toggle" aria-label="Abrir menú">☰</button>
+      </div>
+
+      <!-- Menú móvil -->
+      <nav class="nav-links mobile" id="mobileMenu">
+        <div class="menu-header">
+          <a href="/" class="logo" aria-label="Ir al inicio">
+            <img src="/favicon.ico" alt="Logo" />
+          </a>
+          <button class="close-menu" aria-label="Cerrar menú">✕</button>
+        </div>
+        <a href="/proyectos" data-i18n="nav.projects"></a>
+        <a href="/experiencia" data-i18n="nav.experience"></a>
+        <a href="/sobre-mi" data-i18n="nav.about"></a>
+
+        <!-- Toggle idioma (solo móvil) -->
+        <div class="lang-toggle mobile-only" aria-label="Cambiar idioma">
+          <input type="checkbox" id="lang-switch-mobile" />
+          <label for="lang-switch-mobile" class="lang-label">
+            <span class="flag flag-es"><img src="/img/flags/es.svg" alt="Español"></span>
+            <span class="flag flag-en"><img src="/img/flags/gb.svg" alt="English"></span>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Hero -->
+    <header class="hero">
+      <div class="hero-content">
+        <h1 data-i18n="hero.greeting"><span>Pablo Gómez</span></h1>
+        <p data-i18n="hero.role"></p>
+        <div class="hero-buttons">
+          <a href="#proyectos" class="btn" data-i18n="hero.btnProjects"></a>
+          <a href="CV_·_Pablo_Gomez_Software-Developer.pdf" target="_blank" class="btn secondary" data-i18n="hero.btnCV"></a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Slot -->
+  <slot lang={lang} />
+
+    <!-- Footer -->
+    <footer>
+      <p data-i18n="rights"></p>
+    </footer>
+
+    <!-- Contact Script -->
+    <ContactScript />
+
+    <!-- Scripts -->
+    <script type="module">
+      import { loadLanguage, getLanguage, setLanguage } from '/src/scripts/i18n.js';
+
+      window.addEventListener('DOMContentLoaded', () => {
+        const toggle = document.querySelector('.nav-toggle');
+        const menu = document.getElementById('mobileMenu');
+        const closeBtn = document.querySelector('.close-menu');
+        const langSwitches = document.querySelectorAll('#lang-switch, #lang-switch-mobile');
+
+        // --- Menú móvil ---
+        toggle.addEventListener('click', (e) => {
+          e.stopPropagation();
+          menu.classList.toggle('show');
+          document.body.style.overflow = menu.classList.contains('show') ? 'hidden' : '';
+        });
+
+        closeBtn.addEventListener('click', () => {
+          menu.classList.remove('show');
+          document.body.style.overflow = '';
+        });
+
+        document.addEventListener('click', (e) => {
+          if (menu.classList.contains('show') && !menu.contains(e.target) && !toggle.contains(e.target)) {
+            menu.classList.remove('show');
+            document.body.style.overflow = '';
+          }
+        });
+
+        // --- Idioma ---
+        const cookieLang = getLanguage();
+        langSwitches.forEach(sw => sw.checked = cookieLang === 'en');
+
+        loadLanguage(cookieLang);
+
+        langSwitches.forEach(sw => {
+          sw.addEventListener('change', (e) => {
+            const checked = e.target.checked;
+            langSwitches.forEach(other => other.checked = checked);
+            const idioma = checked ? 'en' : 'es';
+            setLanguage(idioma);
+            loadLanguage(idioma); // Traducir inmediatamente sin recargar
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

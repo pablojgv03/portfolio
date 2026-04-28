@@ -1,0 +1,624 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+}
+
+/* Hero */
+.hero {
+  background: linear-gradient(to right, #1e3c72, #2a5298);
+  color: white;
+  text-align: center;
+  padding: 35px 15px;
+  margin-top: -20px;
+  box-shadow: 0 20px 30px rgba(0,0,0,0.3);
+  border-bottom-left-radius: 110px 40px;
+  border-bottom-right-radius: 110px 40px;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+}
+
+.hero h1 span {
+  color: #ffce00;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin: 15px 0;
+}
+
+.hero-buttons {
+  margin-top: 20px;
+}
+
+.btn {
+  display: inline-block;
+  background: #ffce00;
+  color: #222;
+  padding: 10px 20px;
+  margin: 5px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: #ffd633;
+}
+
+.btn.secondary {
+  background: #fff;
+  color: #222;
+}
+
+/* --- Navbar general --- */
+.navbar {
+  background: linear-gradient(90deg, #1e3c72, #2a5298);
+  color: white;
+  padding: 0.8rem 1.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  border-bottom-left-radius: 55px 20px;
+  border-bottom-right-radius: 55px 20px;
+}
+
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+}
+
+/* Logo */
+.logo img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  transition: transform 0.2s;
+}
+
+.logo img:hover {
+  transform: scale(1.05);
+}
+
+/* Menú escritorio */
+.nav-links.desktop {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.nav-links.desktop a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.2s;
+}
+
+.nav-links.desktop a:hover {
+  opacity: 0.8;
+}
+
+/* Toggle idioma */
+.lang-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 70px;
+  height: 32px;
+}
+
+.lang-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.lang-label {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  background: #ddd;
+  border-radius: 25px;
+  padding: 0 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.lang-label .flag img{
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+
+.toggle-slider {
+  position: absolute;
+  top: 2px;
+  left: 3px;
+  width: 28px;
+  height: 28px;
+  background-color: #fff;
+  border-radius: 50%;
+  opacity: 0.7;
+  transition: transform 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.lang-toggle input:checked + .lang-label .toggle-slider {
+  transform: translateX(36px);
+}
+
+.lang-toggle input:not(:checked) + .lang-label {
+  background: linear-gradient(90deg, #2980b9, #2ecc71); 
+}
+.lang-toggle input:checked + .lang-label {
+  background: linear-gradient(90deg, #f4d03f, #f39c12);
+}
+
+/* Botón hamburguesa */
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+/* Menú móvil */
+.nav-links.mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .nav-links.desktop,
+  .desktop-only {
+    display: none;
+  }
+
+  .nav-toggle {
+    display: block;
+  }
+
+  .nav-links.mobile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 75%;
+    max-width: 300px;
+    height: 100%;
+    background: linear-gradient(180deg, #1e3c72, #2a5298);
+    gap: 1.5rem;
+    transition: left 0.3s ease;
+    z-index: 9999;
+  }
+
+  .nav-links.mobile.show {
+    left: 0;
+  }
+
+  .menu-header {
+    display: flex;
+    justify-content: space-between; /* separa logo y botón */
+    align-items: center; /* centra verticalmente */
+    width: 100%; /* ocupa todo el ancho del nav */
+    padding: 0.5rem 1rem; /* añade un poco de espacio interno */
+  }
+
+
+  .close-menu {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.8rem;
+    cursor: pointer;
+  }
+
+  .nav-links.mobile a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+  }
+
+  .mobile-only {
+    display: flex;
+    margin-top: 1.5rem;
+  }
+}
+
+/* Hover */
+.hero .btn {
+  transition: filter 0.18s ease, transform 0.18s ease;
+}
+.hero .btn:hover {
+  filter: brightness(0.85);
+  transform: translateY(-3px);
+}
+.hero .btn.secondary:hover {
+  filter: brightness(0.9);
+}
+
+/* Secciones */
+.section {
+  padding: 60px 20px;
+  max-width: 900px;
+  margin: auto;
+}
+
+.next-section {
+  padding-top: 2.5rem;
+}
+
+.section h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2rem;
+  color: #1e3c72;
+}
+
+.bg-light-rounded {
+  background: #f7f7f7;
+  border-radius: 12px;
+}
+
+.bg-dark {
+  background: #1e3c72;
+  color: white;
+}
+
+.bg-dark h2 {
+  color: white;
+}
+
+.bg-dark p {
+  text-align: center;
+}
+
+.bg-dark a {
+  color: #ffce00;
+}
+
+/* Contacto con fusion al footer */
+#contacto {
+  width: 100%;
+  max-width: none;
+  margin-top: 40px; 
+  padding: 20px; 
+  box-sizing: border-box;
+  border-top-left-radius: 55px 20px;
+  border-top-right-radius: 55px 20px;
+     background: linear-gradient(
+    to bottom, 
+    #1e3c72 0%,       
+    #1e3c72 97%,      
+    #222 100%         
+  );
+}
+
+/* Keep inner content readable by constraining text and centering it */
+#contacto p,
+#contacto .contact {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Proyectos */
+.projects {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.project-card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Enlace invisible pero clicable en toda la tarjeta */
+.project-card .full-link {
+  position: absolute;
+  inset: 0; /* ocupa todo el contenedor */
+  z-index: 10;
+  text-indent: -9999px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+/* Disable hover elevation for study cards so they don't look interactive */
+#estudios .project-card:hover {
+  transform: none;
+}
+
+.project-card h3 {
+  margin-bottom: 10px;
+  color: #2a5298;
+}
+
+.project-card .tech {
+  display: block;
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.project-card .links a {
+  margin-right: 10px;
+  text-decoration: none;
+  color: #2a5298;
+  font-weight: bold;
+}
+
+/* Ensure links stay at the bottom of a card */
+.project-card .links {
+  margin-top: auto;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Estilo base común a todos los badges */
+.project-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  font-size: 18px;
+  padding: 0;
+  border-radius: 8px;
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Badge móvil */
+.badge-mobile {
+  background-image: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%); /* rosa-rojo */
+}
+
+/* Badge web */
+.badge-web {
+  background-image: linear-gradient(135deg, #8eb8e6 0%, #2a5298 100%); /* azul */
+}
+
+/* Badge escritorio */
+.badge-desktop {
+  background-image: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); /* verde */
+}
+
+/* Metadatos: centro y periodo (fechas) en tarjetas de estudios */
+.project-card .meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 6px;
+  gap: 10px;
+}
+.project-card .meta .center {
+  font-weight: 600;
+  color: #444;
+}
+.project-card .meta .period {
+  color: #666;
+  font-weight: 700;
+  display: inline-flex;
+  gap: 6px; /* pequeño espacio entre start, guion y end */
+  align-items: center;
+  white-space: nowrap;
+}
+.project-card .meta .period .start,
+.project-card .meta .period .end {
+  display: inline-block;
+  min-width: 0;
+  text-align: left;
+}
+
+/* Skills list inside study cards */
+.skills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+.skill {
+  padding: 6px 8px;
+  border-radius: 999px;
+  background: #f2f4f8;
+  color: #22303e;
+  font-weight: 600;
+}
+.skill.high { font-size: 1.05rem; background: #e8f5ea; color: #14532d; }
+.skill.mid  { font-size: 0.98rem; background: #fff7e6; color: #92400e; }
+.skill.low  { font-size: 0.86rem; background: #f8f9fb; color: #6b7280; }
+
+/* A little spacing for the tech label under skills */
+.project-card .tech { display: block; margin-top: 8px; }
+
+@media (max-width: 520px) {
+  .project-card .meta { flex-direction: column; align-items: center; }
+  .project-card .meta .period .start,
+  .project-card .meta .period .end { text-align: center; }
+}
+
+/* Timeline */
+.timeline {
+  list-style: none;
+  padding-left: 0;
+}
+
+.timeline li {
+  margin: 15px 0;
+  padding-left: 15px;
+  border-left: 3px solid #2a5298;
+}
+
+/* Contacto */
+.contact {
+  list-style: none;
+  text-align: center;
+}
+
+.contact li {
+  margin: 10px 0;
+}
+
+.contact a {
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.contact-fixed {
+  position: fixed;
+  right: 24px;
+  bottom: 2%;
+  background: rgba(30,60,114,0.86);
+  color: white;
+  padding: 12px 14px;
+  border-radius: 10px;
+  box-shadow: 0 12px 36px rgba(0,0,0,0.18);
+  z-index: 60;
+  /* start off-canvas (to the right) and invisible; transitions will animate it in */
+  transform: translateX(110%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 320ms cubic-bezier(.2,.9,.2,1), opacity 220ms ease;
+}
+.contact-fixed .contact { text-align: left; }
+.contact-fixed .contact li { margin: 8px 0; }
+.contact-fixed .contact a { color: #ffce00; font-weight: 600; }
+.contact-fixed-title { margin: 0 0 8px 0; font-size: 0.95rem; font-weight: 700; color: #fff; }
+
+.contact-fixed-header { display: flex; align-items: center; justify-content: space-between; }
+.contact-close {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+/* Mini button visible on smaller screens */
+.contact-mini {
+  display: block;
+  position: fixed;
+  right: 18px;
+  bottom: 15%;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  /* ligeramente translúcido */
+  background: rgba(30,60,114,0.86);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  border: none;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+  z-index: 70;
+  cursor: pointer;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+body.contact-open .contact-mini { display: none; }
+.contact-mini:active { transform: scale(0.96); }
+.contact-mini:focus { outline: 2px solid rgba(255,206,0,0.9); outline-offset: 2px; }
+
+/* When body has .contact-open show the panel (used by script) */
+body.contact-open .contact-fixed {
+  transform: translateX(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* When user reaches the Experiencia section, pause the floating contact so it no longer follows */
+body.contact-paused .contact-fixed {
+  transform: translateX(110%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Also hide/disable the mini button when the contact is paused (e.g., user reached #contacto) */
+body.contact-paused .contact-mini {
+  transform: translateY(18px) scale(0.92);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Always show the mini toggle button; the panel visibility is controlled by the
+   'contact-open' class on the body. Removed breakpoint-based auto-show/ hide to
+   keep behavior consistent across screen sizes. */
+.contact-mini { display: block; }
+
+/* About  */
+.about-text p {
+  color: #444; 
+  font-weight: 500; 
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 1.25rem;
+  align-items: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.avatar {
+  width: 140px;
+  height: 140px;
+  border-radius: 12px;
+  object-fit: cover;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+
+@media (max-width: 720px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .avatar { margin: 0 auto; }
+}
+
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 20px;
+  background: #222;
+  color: white;
+}

@@ -1,0 +1,43 @@
+<div client:load>
+  <script>
+    (() => {
+      const mini = document.querySelector('.contact-mini');
+      const closeBtn = document.querySelector('.contact-close');
+      const panel = document.querySelector('.contact-fixed');
+      if (!mini || !panel) return;
+
+      const openPanel = () => {
+        document.body.classList.add('contact-open');
+        mini.setAttribute('aria-expanded', 'true');
+        closeBtn?.focus();
+      };
+
+      const closePanel = () => {
+        document.body.classList.remove('contact-open');
+        mini.setAttribute('aria-expanded', 'false');
+        mini?.focus();
+      };
+
+      mini.addEventListener('click', () => {
+        if (!document.body.classList.contains('contact-open')) openPanel();
+      });
+
+      closeBtn?.addEventListener('click', closePanel);
+
+      mini.setAttribute('aria-controls', 'contacto');
+      const isOpen = document.body.classList.contains('contact-open');
+      mini.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+
+      const contactoSection = document.getElementById('contacto');
+      if (contactoSection && 'IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) document.body.classList.add('contact-paused');
+            else document.body.classList.remove('contact-paused');
+          });
+        }, { root: null, threshold: 0.2 });
+        io.observe(contactoSection);
+      }
+    })();
+  </script>
+</div>

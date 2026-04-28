@@ -1,0 +1,72 @@
+{
+  "proyectos":[
+    {
+        "id": 1,
+        "slug": "etl-ecommerce",
+        "icon": "img",
+        "badge": "desktop",
+        "title": "ETL Ecommerce",
+        "large-description": {
+            "es": "Descripción larga en español",
+            "en": "Large description in English"
+        },
+        "description": {
+            "es": "Descripción breve en español",
+            "en": "Brief description in English"
+        },
+        "skills": [
+            { "name": "Python", "level": "high" },
+            { "name": "Pandas", "level": "mid" },
+            { "name": "Modelado ML", "level": "mid" }
+        ],
+        "link": "#",
+        "link-text":"#"
+    },
+    {
+        "id": 2,
+        "slug": "start-brawling",
+        "icon": "img",
+        "badge": "mobile",
+        "title": "Start Brawling",
+        "large-description": {
+            "es": "Descripción larga en español",
+            "en": "Large description in English"
+        },
+        "description": {
+            "es": "Descripción breve en español",
+            "en": "Brief description in English"
+        },
+        "skills": [
+            { "name": "Java", "level": "high" },
+            { "name": "Android SDK", "level": "high" },
+            { "name": "AsyncTask", "level": "mid" },
+            { "name": "RecyclerView", "level": "low" },
+            { "name": "Glide", "level": "low" }
+        ],
+        "link": "http://localhost:4321/Start_Brawling", 
+        "link-text": "https://github.com/pablojgv03/Start_Brawling.git"
+    },
+    {
+        "id": 3,
+        "slug": "ml-abandono-escolar",
+        "icon": "img",
+        "badge": "web",
+        "title": "Ml Abandono Escolar",
+        "large-description": {
+            "es": "Descripción larga en español",
+            "en": "Large description in English"
+        },
+        "description": {
+            "es": 	"Descripción breve en español",
+            "en": 	"Brief description in English"
+        },
+        "skills": [
+            { "name": "Scikit-learn", "level": "high" },
+            { "name": "Pandas", "level": "mid" }
+            
+        ],
+        "link": "#",
+        "link-text":"#"
+      }
+  ]
+}

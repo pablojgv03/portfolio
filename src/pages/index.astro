@@ -169,15 +169,15 @@ const lang = 'es';
 
   <!-- Carga i18n para todo el slot -->
   <script type="module">
-    import { loadLanguage, getLanguage } from '/src/scripts/i18n.js';
-    import projectsData from '/src/data/projects.json';
+    import { loadLanguage, getLanguage } from '/scripts/i18n.js';
 
     window.addEventListener('DOMContentLoaded', async () => {
       const lang = getLanguage();
-      await loadLanguage(lang); // Espera a que cargue el idioma
+      await loadLanguage(lang);
       const idiomaActual = window.lang || lang;
 
-      // Actualizar todas las descripciones de proyectos
+      const projectsData = await fetch('/data/projects.json').then(r => r.json());
+
       document.querySelectorAll('.project-card').forEach((card, i) => {
         const descEl = card.querySelector('.project-desc');
         if (!descEl) return;

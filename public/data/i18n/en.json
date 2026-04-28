@@ -1,0 +1,62 @@
+{
+  "idioma": "en",
+  "hero": {
+    "greeting": "👋 Hi, I'm <span>Pablo Gómez</span>",
+    "role": "Full Stack Developer | PHP · Laravel · JavaScript · MySQL",
+    "btnProjects": "🚀 View Projects",
+    "btnCV": "📄 Download CV"
+  },
+  "nav": {
+    "projects": "Projects",
+    "experience": "Experience",
+    "about": "About Me"
+  },
+  "section-sobre-mi": {
+    "title": "🙋 About Me",
+    "content": "Full Stack Developer with over a year of hands-on production experience, specializing in PHP (Laravel), JavaScript, and MySQL. I have worked on two real-world projects from scratch in the edtech sector, covering everything from database design to REST API integration and front-end performance optimization. Additional training in AI and Big Data, and currently studying Web Application Development (DAW, graduating Jun. 2026). Looking to join a team where I can keep growing as a Full Stack Developer."
+  },
+  "section-proyectos": {
+    "title": "🚀 Projects"
+  },
+  "section-estudios": {
+    "title": "🎓 Education",
+    "daw": "Web Application Development",
+    "ia-bd": "Specialization in AI and Big Data",
+    "dam": "Multiplatform Application Development"
+  },
+  "section-experiencia": {
+    "title": "💼 Experience",
+    "first-job": {
+        "title": "Full Stack Developer — EDUCA EDTECH Group",
+        "period": "Oct. 2023 – Jun. 2024 · 9 months · Hybrid"
+    },
+    "second-job": {
+        "title": "Junior Software Developer — Euroinnova",
+        "period": "Apr. 2023 – Oct. 2023 · 7 months · Hybrid"
+    }
+  },
+  "contact": {
+    "title": "📩 Contact",
+    "content": "Interested in collaborating or just want to say hi? Feel free to reach out! I'm always open to new opportunities and connections. You can also learn more about my work here:"
+  },
+  "rights": "© 2026 Pablo Gómez Villén || Full Stack Developer",
+  
+  "blog": {
+      "experiencia-fullstack": {
+        "title": "Full Stack Experience",
+        "date": "2024",
+        "content": "<p>During my <strong>full stack developer</strong> experience I worked with Laravel, PHP, and SQL databases.<br>Optimized performance and security, and deployed projects on Google Cloud.</p>"
+      },
+      "dam": {
+        "title": "Multiplatform App Development",
+        "date": "2022",
+        "content": "<p>I learned to build native Android and desktop apps using Java and XML.</p><p>Deepened in OOP, data structures, and relational databases.</p>"
+      },
+      "ia-bigdata": {
+        "title": "AI and Big Data Specialization",
+        "date": "2025",
+        "content": "<p>Studied Python, Machine Learning, and Big Data analysis.</p><p>Highlight project: <em>early detection of mental health issues using social networks</em>.</p>"
+      }
+  }
+
+}

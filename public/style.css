@@ -622,3 +622,76 @@ footer {
   background: #222;
   color: white;
 }
+
+/* ── Page banner (subpáginas sin hero) ── */
+.page-banner {
+  background: linear-gradient(to right, #1e3c72, #2a5298);
+  color: white;
+  text-align: center;
+  padding: 50px 20px 45px;
+  margin-top: -20px;
+  box-shadow: 0 20px 30px rgba(0,0,0,0.25);
+  border-bottom-left-radius: 110px 40px;
+  border-bottom-right-radius: 110px 40px;
+}
+
+.page-banner h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+}
+
+.page-banner p {
+  margin-top: 10px;
+  font-size: 1.1rem;
+  opacity: 0.85;
+}
+
+/* ── Filtros ── */
+.filtros {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.filtro {
+  padding: 8px 22px;
+  border: 2px solid #2a5298;
+  border-radius: 999px;
+  background: transparent;
+  color: #2a5298;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.15s;
+}
+
+.filtro:hover {
+  background: #2a5298;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.filtro.active {
+  background: #1e3c72;
+  border-color: #1e3c72;
+  color: white;
+}
+
+/* ── Contador de proyectos ── */
+.project-count {
+  text-align: center;
+  color: #888;
+  font-size: 0.88rem;
+  margin-bottom: 24px;
+}
+
+/* ── Tarjeta completa (página proyectos) ── */
+.project-card--full .project-desc--large {
+  color: #555;
+  font-size: 0.97rem;
+  line-height: 1.65;
+  margin: 10px 0 14px;
+  flex: 1;
+}

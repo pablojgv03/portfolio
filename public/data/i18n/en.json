@@ -16,7 +16,15 @@
     "content": "Full Stack Developer with over a year of hands-on production experience, specializing in PHP (Laravel), JavaScript, and MySQL. I have worked on two real-world projects from scratch in the edtech sector, covering everything from database design to REST API integration and front-end performance optimization. Additional training in AI and Big Data, and currently studying Web Application Development (DAW, graduating Jun. 2026). Looking to join a team where I can keep growing as a Full Stack Developer."
   },
   "section-proyectos": {
-    "title": "🚀 Projects"
+    "title": "🚀 Projects",
+    "page-title": "🚀 Projects",
+    "subtitle": "A selection of my personal and professional projects"
+  },
+  "filtros": {
+    "todos": "All",
+    "desktop": "🖥️ Desktop",
+    "mobile": "📱 Mobile",
+    "web": "🌐 Web"
   },
   "section-estudios": {
     "title": "🎓 Education",

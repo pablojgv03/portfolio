@@ -1,49 +1,113 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import projects from '../data/projects.json';
+import projectsData from '../data/projects.json';
+
+const defaultLang = 'es';
+const badgeEmojis: Record<string, string> = {
+  desktop: '🖥️',
+  mobile: '📱',
+  web: '🌐',
+};
 ---
 
-<Layout title="Mis proyectos">
-  <section class="proyectos">
-    <h1 class="text-3xl font-bold mb-6 text-center">Mis proyectos</h1>
+<Layout title="Proyectos — Pablo Gómez" showHero={false}>
+
+  <!-- Banner de página -->
+  <div class="page-banner">
+    <h1 data-i18n="section-proyectos.page-title">🚀 Proyectos</h1>
+    <p data-i18n="section-proyectos.subtitle">Una selección de mis proyectos personales y profesionales</p>
+  </div>
+
+  <section class="section proyectos-page">
 
     <!-- Filtros -->
-    <div class="filtros flex justify-center gap-4 mb-6">
-      <button class="filtro" data-filtro="todos">Todos</button>
-      <button class="filtro" data-filtro="web">Web</button>
-      <button class="filtro" data-filtro="python">Python</button>
-      <button class="filtro" data-filtro="otros">Otros</button>
+    <div class="filtros" role="group" aria-label="Filtrar proyectos">
+      <button class="filtro active" data-filtro="todos" data-i18n="filtros.todos">Todos</button>
+      <button class="filtro" data-filtro="desktop" data-i18n="filtros.desktop">🖥️ Escritorio</button>
+      <button class="filtro" data-filtro="mobile" data-i18n="filtros.mobile">📱 Móvil</button>
+      <button class="filtro" data-filtro="web" data-i18n="filtros.web">🌐 Web</button>
     </div>
 
-    <!-- Contenedor de proyectos -->
-    <div id="lista-proyectos" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {projects.proyectos.map((p) => (
-        <article class="proyecto border rounded-xl p-4 shadow hover:shadow-lg transition" data-tipo={p.tipo}>
-          <h2 class="text-xl font-semibold mb-2">{p.nombre}</h2>
-          <p class="text-gray-600 mb-3">{p.descripcion}</p>
-          <a href={p.url} target="_blank" class="text-blue-600 hover:underline">Ver proyecto</a>
+    <p class="project-count" id="project-count"></p>
+
+    <!-- Grid de proyectos -->
+    <div id="lista-proyectos" class="projects">
+      {projectsData.proyectos.map((p) => (
+        <article class="project-card project-card--full" data-badge={p.badge}>
+          <div class={`project-badge badge-${p.badge}`} title={p.badge}>
+            {badgeEmojis[p.badge] ?? '❓'}
+          </div>
+          <h3>{p.title}</h3>
+          <p
+            class="project-desc project-desc--large"
+            data-project-id={String(p.id)}
+          >
+            {p['large-description'][defaultLang as 'es' | 'en']}
+          </p>
+          {p.skills && p.skills.length > 0 && (
+            <div class="skills" aria-label={`Aptitudes de ${p.title}`}>
+              {p.skills.map(skill => (
+                <span class={`skill ${skill.level ?? ''}`} title={skill.level ?? ''}>{skill.name}</span>
+              ))}
+            </div>
+          )}
+          <div class="links">
+            {p['link-text'] && p['link-text'] !== '#' && (
+              <a href={p['link-text']} target="_blank" rel="noopener noreferrer">🔗 GitHub</a>
+            )}
+            {p.link && p.link !== '#' && !p.link.includes('localhost') && p.link !== p['link-text'] && (
+              <a href={p.link} target="_blank" rel="noopener noreferrer">🚀 Demo</a>
+            )}
+          </div>
         </article>
       ))}
     </div>
   </section>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const botones = document.querySelectorAll('.filtro');
-      const proyectos = document.querySelectorAll('.proyecto');
+  <script type="module">
+    import { loadLanguage, getLanguage } from '/scripts/i18n.js';
 
-      botones.forEach(boton => {
-        boton.addEventListener('click', () => {
-          const tipo = boton.dataset.filtro;
-          proyectos.forEach(proyecto => {
-            if (tipo === 'todos' || proyecto.dataset.tipo === tipo) {
-              proyecto.style.display = 'block';
-            } else {
-              proyecto.style.display = 'none';
-            }
+    window.addEventListener('DOMContentLoaded', async () => {
+      const lang = getLanguage();
+      await loadLanguage(lang);
+      const idiomaActual = window.lang || lang;
+
+      const data = await fetch('/data/projects.json').then(r => r.json());
+
+      // Actualizar descripciones largas al idioma actual
+      document.querySelectorAll('[data-project-id]').forEach(el => {
+        const id = parseInt(el.dataset.projectId);
+        const p = data.proyectos.find(proj => proj.id === id);
+        const desc = p?.['large-description']?.[idiomaActual];
+        if (desc) el.textContent = desc;
+      });
+
+      // Mostrar contador inicial
+      updateCount(data.proyectos.length, data.proyectos.length);
+
+      // Filtros
+      const botones = document.querySelectorAll('.filtro');
+      const cards = document.querySelectorAll('#lista-proyectos .project-card');
+
+      botones.forEach(btn => {
+        btn.addEventListener('click', () => {
+          botones.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const tipo = btn.dataset.filtro;
+          let visible = 0;
+          cards.forEach(card => {
+            const show = tipo === 'todos' || card.dataset.badge === tipo;
+            card.style.display = show ? '' : 'none';
+            if (show) visible++;
           });
+          updateCount(visible, cards.length);
         });
       });
+
+      function updateCount(visible, total) {
+        const el = document.getElementById('project-count');
+        if (el) el.textContent = `${visible} de ${total} proyectos`;
+      }
     });
   </script>
 </Layout>

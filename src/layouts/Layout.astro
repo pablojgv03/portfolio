@@ -1,6 +1,6 @@
 ---
 export const prerender = false;
-const { title, lang } = Astro.props;
+const { title, lang, showHero = true } = Astro.props;
 import ContactScript from '../components/ContactScript.astro';
 
 ---
@@ -69,16 +69,18 @@ import ContactScript from '../components/ContactScript.astro';
     </header>
 
     <!-- Hero -->
-    <header class="hero">
-      <div class="hero-content">
-        <h1 data-i18n="hero.greeting"><span>Pablo Gómez</span></h1>
-        <p data-i18n="hero.role"></p>
-        <div class="hero-buttons">
-          <a href="#proyectos" class="btn" data-i18n="hero.btnProjects"></a>
-          <a href="CV_·_Pablo_Gomez_Software-Developer.pdf" target="_blank" class="btn secondary" data-i18n="hero.btnCV"></a>
+    {showHero && (
+      <header class="hero">
+        <div class="hero-content">
+          <h1 data-i18n="hero.greeting"><span>Pablo Gómez</span></h1>
+          <p data-i18n="hero.role"></p>
+          <div class="hero-buttons">
+            <a href="#proyectos" class="btn" data-i18n="hero.btnProjects"></a>
+            <a href="CV_·_Pablo_Gomez_Software-Developer.pdf" target="_blank" class="btn secondary" data-i18n="hero.btnCV"></a>
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
+    )}
 
     <!-- Slot -->
   <slot lang={lang} />

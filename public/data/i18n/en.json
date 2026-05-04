@@ -56,6 +56,63 @@
   },
   "rights": "© 2026 Pablo Gómez Villén || Full Stack Developer",
   
+  "sobre-mi": {
+    "chip": "👨‍💻 About Me",
+    "role": "Full Stack Developer · AI & Big Data",
+    "intro": "23-year-old developer passionate about building digital solutions that make a difference. Over a year of real-world production experience, always learning and looking for the next challenge.",
+    "scroll-cta": "Learn more",
+    "stats": {
+      "years": "years experience",
+      "companies": "companies",
+      "formations": "degrees",
+      "techs": "technologies"
+    },
+    "timeline": {
+      "title": "My <span>Journey</span>",
+      "dam": {
+        "badge": "📚 Education · 2021 – 2023",
+        "title": "Multiplatform Application Development",
+        "org": "IES Francisco Ayala · Granada",
+        "desc": "Solid foundation in object-oriented programming, SQL databases and Android mobile development."
+      },
+      "euroinnova": {
+        "badge": "💼 Experience · Apr. – Oct. 2023",
+        "title": "Junior Software Developer",
+        "org": "Euroinnova · Granada · Hybrid",
+        "desc": "Development of online education platforms. First real production experience with Laravel and PHP."
+      },
+      "educa": {
+        "badge": "💼 Experience · Oct. 2023 – Jun. 2024",
+        "title": "Full Stack Developer",
+        "org": "EDUCA EDTECH Group · Granada · Hybrid",
+        "desc": "Development and maintenance of educational platforms in production: REST APIs, Google Cloud and ElasticSearch."
+      },
+      "ia": {
+        "badge": "📚 Education · 2025",
+        "title": "AI and Big Data Specialization",
+        "org": "Campus Net Manyanet Les Corts · Barcelona",
+        "desc": "Python, Machine Learning and Big Data analysis. Project: early detection of mental health issues on social networks."
+      },
+      "daw": {
+        "badge": "✨ Ongoing · 2025 – 2026",
+        "title": "Web Application Development",
+        "org": "iLERNA · Online",
+        "desc": "Deepening fullstack web development: PHP, JavaScript, MySQL and modern web design."
+      }
+    },
+    "stack": { "title": "Tech <span>Stack</span>" },
+    "hobbies": {
+      "title": "Beyond the <span>Code</span>",
+      "subtitle": "Because there's life beyond the keyboard...",
+      "padel":  { "title": "Padel",           "desc": "The court is where I think best. It brings me competitiveness, strategy and the perfect mental reset after a day at the computer." },
+      "gym":    { "title": "Gym",             "desc": "The same consistency I apply to training, I apply to code. Daily discipline to grow physically and mentally." },
+      "routes": { "title": "Hiking & Nature", "desc": "Disconnecting from screens to reconnect with the environment. My best ideas come while walking in the mountains." },
+      "bonsai": { "title": "Bonsais",         "desc": "Caring for a bonsai teaches you that the best results require time and patience. Just like good software." },
+      "photo":  { "title": "Photography",     "desc": "Phone or drone, I capture unique perspectives. The compositional eye also feeds interface design." },
+      "travel": { "title": "Traveling",       "desc": "Every destination broadens your worldview. New cultures, ideas and ways of doing things." }
+    }
+  },
+
   "blog": {
       "dam": {
         "title": "Multiplatform App Development",

@@ -41,6 +41,65 @@
   },
   "rights": "© 2026 Pablo Gómez Villén || Programador Full Stack",
 
+  "sobre-mi": {
+    "chip": "👨‍💻 Sobre mí",
+    "role": "Full Stack Developer · IA & Big Data",
+    "intro": "Programador de 23 años apasionado por construir soluciones digitales que marquen la diferencia. Más de un año de experiencia real en producción, siempre aprendiendo y buscando el siguiente reto.",
+    "scroll-cta": "Conóceme",
+    "stats": {
+      "years": "años experiencia",
+      "companies": "empresas",
+      "formations": "formaciones",
+      "techs": "tecnologías"
+    },
+    "timeline": {
+      "title": "Mi <span>Trayectoria</span>",
+      "dam": {
+        "badge": "📚 Formación · 2021 – 2023",
+        "title": "Desarrollo de Aplicaciones Multiplataforma",
+        "org": "IES Francisco Ayala · Granada",
+        "desc": "Base sólida en programación orientada a objetos, bases de datos SQL y desarrollo móvil Android."
+      },
+      "euroinnova": {
+        "badge": "💼 Experiencia · abr. – oct. 2023",
+        "title": "Junior Software Developer",
+        "org": "Euroinnova · Granada · Híbrido",
+        "desc": "Desarrollo de plataformas de formación online. Primera experiencia real en producción con Laravel y PHP."
+      },
+      "educa": {
+        "badge": "💼 Experiencia · oct. 2023 – jun. 2024",
+        "title": "Programador Full Stack",
+        "org": "EDUCA EDTECH Group · Granada · Híbrido",
+        "desc": "Desarrollo y mantenimiento de plataformas educativas en producción: APIs REST, Google Cloud y ElasticSearch."
+      },
+      "ia": {
+        "badge": "📚 Formación · 2025",
+        "title": "Especialización IA y Big Data",
+        "org": "Campus Net Manyanet Les Corts · Barcelona",
+        "desc": "Python, Machine Learning y análisis de datos masivos. Proyecto: detección temprana de salud mental en RRSS."
+      },
+      "daw": {
+        "badge": "✨ En curso · 2025 – 2026",
+        "title": "Desarrollo de Aplicaciones Web",
+        "org": "iLERNA · Online",
+        "desc": "Profundizando en desarrollo web fullstack: PHP, JavaScript, MySQL y diseño web moderno."
+      }
+    },
+    "stack": {
+      "title": "Stack <span>Tecnológico</span>"
+    },
+    "hobbies": {
+      "title": "Fuera del <span>Código</span>",
+      "subtitle": "Porque hay vida más allá del teclado...",
+      "padel":  { "title": "Pádel",             "desc": "En la pista es donde mejor pienso. Me aporta competitividad, estrategia y la descarga perfecta después de un día frente al ordenador." },
+      "gym":    { "title": "Gimnasio",           "desc": "La misma constancia que aplico al entrenamiento la aplico al código. Disciplina diaria para crecer física y mentalmente." },
+      "routes": { "title": "Rutas & Naturaleza", "desc": "Desconectar de las pantallas para reconectar con el entorno. Las mejores ideas me llegan caminando por la montaña." },
+      "bonsai": { "title": "Bonsáis",            "desc": "Cuidar un bonsái enseña que los mejores resultados requieren tiempo y paciencia. Igual que el buen software." },
+      "photo":  { "title": "Fotografía",         "desc": "Móvil o drone, capturo perspectivas únicas. El ojo compositivo también alimenta el diseño de interfaces." },
+      "travel": { "title": "Viajar",             "desc": "Cada destino amplía la visión del mundo. Nuevas culturas, ideas y formas de hacer las cosas." }
+    }
+  },
+
   "blog": {
     "experiencia-fullstack": {
       "title": "Experiencia Full Stack",

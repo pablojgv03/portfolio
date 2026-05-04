@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import projects from '../data/projects.json';
+// PROYECTOS OCULTO temporalmente (en construcción)
+// import projects from '../data/projects.json';
 
 const lang = 'es';
 
@@ -18,45 +19,14 @@ const lang = 'es';
     </div>
   </section>
 
-  <!-- Proyectos -->
+  <!-- PROYECTOS OCULTO temporalmente (en construcción)
   <section id="proyectos" class="section bg-light-rounded">
     <h2 data-i18n="section-proyectos.title"></h2>
     <div class="projects">
-      {projects.proyectos.map((p) => {
-        const badgeEmojis = {
-          desktop: '🖥️',
-          mobile: '📱',
-          web: '🌐'
-        };
-
-        return (
-          <div class="project-card">
-            {/* Contenedor clicable (solo contenido principal) */}
-            <a href={p.link} target="_blank" class="project-card-link" style="text-decoration:none; color:inherit; display:block;">
-              <div class={`project-badge badge-${p.badge}`} title={p.badge}>
-              {badgeEmojis[p.badge as 'desktop' | 'mobile' | 'web'] || '❓'}
-              </div>
-              <h3>{p.title}</h3>
-              <p class="project-desc">{p.description[lang as 'es' | 'en']}</p>
-            </a>
-
-            {/* Skills y link GitHub independientes */}
-            <div class="links">
-              {p.skills && p.skills.length > 0 && (
-                <div class="skills" aria-label={`Aptitudes obtenidas en ${p.title}`}>
-                  {p.skills.map(skill => {
-                    const levelClass = skill.level ? `skill ${skill.level}` : 'skill';
-                    return <span class={levelClass} title={skill.level ?? ''}>{skill.name}</span>;
-                  })}
-                </div>
-              )}
-              {p['link-text'] ? <a href={p['link-text']} target="_blank">🔗 GitHub</a> : <a href="#">🔗 GitHub</a>}
-            </div>
-          </div>
-        );
-      })}
+      (contenido de proyectos - ver src/pages/proyectos.astro)
     </div>
   </section>
+  -->
 
   <!-- Estudios -->
   <section id="estudios" class="section">

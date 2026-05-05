@@ -5,13 +5,51 @@ import Layout from '../layouts/Layout.astro';
 
 const lang = 'es';
 
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Pablo Gómez",
+  "jobTitle": "Full Stack Developer",
+  "url": "https://pablogomez.vercel.app",
+  "email": "paraelpc03@gmail.com",
+  "telephone": "+34622400727",
+  "image": "https://pablogomez.vercel.app/img/foto-empresa.jpg",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Granada",
+    "addressCountry": "ES"
+  },
+  "sameAs": ["https://www.linkedin.com/in/pablo-gomez-villen"]
+};
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Pablo Gómez - Portfolio",
+  "url": "https://pablogomez.vercel.app",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://pablogomez.vercel.app/blog?slug={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  }
+};
 ---
 
-<Layout title="Pablo Gómez - Portfolio" lang={lang}>
+<Layout
+  title="Pablo Gómez — Full Stack Developer Laravel & PHP | Portfolio"
+  lang={lang}
+  description="Portfolio de Pablo Gómez, Full Stack Developer especializado en Laravel, PHP, JavaScript y MySQL. Más de 1 año de experiencia en producción en Granada, España."
+  canonical="https://pablogomez.vercel.app/"
+  keywords="Full Stack Developer, Laravel, PHP, JavaScript, MySQL, Google Cloud, ElasticSearch, desarrollador web, Granada, España"
+  jsonLd={[personSchema, websiteSchema]}
+>
   <!-- Sobre mí -->
   <section id="sobre-mi" class="section">
     <div class="about-grid">
-      <img src="img/foto-empresa.jpg" alt="Pablo Gómez - foto de busto empresa" class="avatar" loading="lazy" />
+      <img src="img/foto-empresa.jpg" alt="Pablo Gómez, Full Stack Developer en Granada" class="avatar" loading="lazy" />
       <div class="about-text">
         <h2 data-i18n="section-sobre-mi.title"></h2>
         <p data-i18n="section-sobre-mi.content"></p>
@@ -34,6 +72,7 @@ const lang = 'es';
     <div class="projects">
 
       <div class="project-card">
+        <a href="/blog?slug=daw" class="full-link" aria-label="Ver estudios DAW"></a>
         <h3 data-i18n="section-estudios.daw"></h3>
         <div class="meta">
           <span class="center">iLERNA</span>

@@ -1,8 +1,20 @@
 ---
 export const prerender = false;
-const { title, lang, showHero = true } = Astro.props;
+const {
+  title,
+  lang = 'es',
+  showHero = true,
+  description,
+  canonical,
+  keywords,
+  ogImage = '/img/foto-empresa.jpg',
+  jsonLd,
+} = Astro.props;
 import ContactScript from '../components/ContactScript.astro';
 
+const ogImageAbsolute = `https://pablogomez.vercel.app${ogImage}`;
+const ogLocale = lang === 'en' ? 'en_US' : 'es_ES';
+const jsonLdList = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 ---
 
 <html lang={lang}>
@@ -10,6 +22,32 @@ import ContactScript from '../components/ContactScript.astro';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{title}</title>
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Pablo Gómez">
+    {description && <meta name="description" content={description}>}
+    {keywords && <meta name="keywords" content={keywords}>}
+    {canonical && <link rel="canonical" href={canonical}>}
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content={ogLocale}>
+    <meta property="og:site_name" content="Pablo Gómez - Portfolio">
+    <meta property="og:title" content={title}>
+    {description && <meta property="og:description" content={description}>}
+    {canonical && <meta property="og:url" content={canonical}>}
+    <meta property="og:image" content={ogImageAbsolute}>
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content={title}>
+    {description && <meta name="twitter:description" content={description}>}
+    <meta name="twitter:image" content={ogImageAbsolute}>
+
+    <!-- JSON-LD -->
+    {jsonLdList.map(schema => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
+
     <link rel="stylesheet" href="/style.css">
     <link rel="icon" type="image/png" href="/favicon.png">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
@@ -21,7 +59,7 @@ import ContactScript from '../components/ContactScript.astro';
       <div class="navbar-container">
         <!-- Logo -->
         <a href="/" class="logo" aria-label="Ir al inicio">
-          <img src="/favicon.ico" alt="Logo" />
+          <img src="/favicon.ico" alt="Pablo Gómez - Portfolio" />
         </a>
 
         <!-- Menú de escritorio -->
@@ -31,14 +69,15 @@ import ContactScript from '../components/ContactScript.astro';
           -->
           <a href="/experiencia" data-i18n="nav.experience">Experiencia</a>
           <a href="/sobre-mi" data-i18n="nav.about">Sobre mí</a>
+          <a href="/blog?slug=ia-bigdata" data-i18n="nav.blog">Blog</a>
         </nav>
 
         <!-- Toggle idioma (solo escritorio) -->
         <div class="lang-toggle desktop-only" aria-label="Cambiar idioma">
           <input type="checkbox" id="lang-switch" />
           <label for="lang-switch" class="lang-label">
-            <span class="flag flag-es " onclick="setLanguage('es')"><img src="/img/flags/es.svg" alt="Español"></span>
-            <span class="flag flag-en" onclick="setLanguage('en')"><img src="/img/flags/gb.svg" alt="English"></span>
+            <span class="flag flag-es " onclick="setLanguage('es')"><img src="/img/flags/es.svg" alt="Cambiar idioma a Español"></span>
+            <span class="flag flag-en" onclick="setLanguage('en')"><img src="/img/flags/gb.svg" alt="Switch language to English"></span>
             <span class="toggle-slider"></span>
           </label>
         </div>
@@ -51,7 +90,7 @@ import ContactScript from '../components/ContactScript.astro';
       <nav class="nav-links mobile" id="mobileMenu">
         <div class="menu-header">
           <a href="/" class="logo" aria-label="Ir al inicio">
-            <img src="/favicon.ico" alt="Logo" />
+            <img src="/favicon.ico" alt="Pablo Gómez - Portfolio" />
           </a>
           <button class="close-menu" aria-label="Cerrar menú">✕</button>
         </div>
@@ -60,13 +99,14 @@ import ContactScript from '../components/ContactScript.astro';
         -->
         <a href="/experiencia" data-i18n="nav.experience">Experiencia</a>
         <a href="/sobre-mi" data-i18n="nav.about">Sobre mí</a>
+        <a href="/blog?slug=ia-bigdata" data-i18n="nav.blog">Blog</a>
 
         <!-- Toggle idioma (solo móvil) -->
         <div class="lang-toggle mobile-only" aria-label="Cambiar idioma">
           <input type="checkbox" id="lang-switch-mobile" />
           <label for="lang-switch-mobile" class="lang-label">
-            <span class="flag flag-es"><img src="/img/flags/es.svg" alt="Español"></span>
-            <span class="flag flag-en"><img src="/img/flags/gb.svg" alt="English"></span>
+            <span class="flag flag-es"><img src="/img/flags/es.svg" alt="Cambiar idioma a Español"></span>
+            <span class="flag flag-en"><img src="/img/flags/gb.svg" alt="Switch language to English"></span>
             <span class="toggle-slider"></span>
           </label>
         </div>
@@ -77,7 +117,7 @@ import ContactScript from '../components/ContactScript.astro';
     {showHero && (
       <header class="hero">
         <div class="hero-content">
-          <h1 data-i18n="hero.greeting"><span>Pablo Gómez</span></h1>
+          <h1 data-i18n="hero.greeting"><span>Pablo Gómez</span> — Full Stack Developer Laravel &amp; PHP</h1>
           <p data-i18n="hero.role"></p>
           <div class="hero-buttons">
             <!-- PROYECTOS OCULTO temporalmente (en construcción)

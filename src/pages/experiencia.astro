@@ -3,9 +3,36 @@ import Layout from '../layouts/Layout.astro';
 import expData from '../data/experience.json';
 
 const defaultLang = 'es';
+
+const expSchema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Experiencia Laboral — Pablo Gómez",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Programador Full Stack — EDUCA EDTECH Group",
+      "description": "Desarrollo y mantenimiento de plataformas educativas en producción. Oct. 2023 – Jun. 2024"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Junior Software Developer — Euroinnova",
+      "description": "Desarrollo de aplicaciones web en el sector de la formación online. Abr. 2023 – Oct. 2023"
+    }
+  ]
+};
 ---
 
-<Layout title="Experiencia — Pablo Gómez" showHero={false}>
+<Layout
+  title="Experiencia — Pablo Gómez | Full Stack Developer"
+  showHero={false}
+  description="Trayectoria profesional de Pablo Gómez: más de 1 año de experiencia como Full Stack Developer en EDUCA EDTECH Group y Euroinnova. Laravel, PHP, MySQL, Google Cloud."
+  canonical="https://pablogomez.vercel.app/experiencia"
+  keywords="experiencia laboral, Full Stack Developer, Laravel, PHP, EDUCA EDTECH, Euroinnova, Granada, desarrollador backend"
+  jsonLd={expSchema}
+>
 
   <!-- Banner -->
   <div class="page-banner">

@@ -1,7 +1,7 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import es from '../data/i18n/es.json';
-import en from '../data/i18n/en.json';
+import Layout from '../../layouts/Layout.astro';
+import es from '../../data/i18n/es.json';
+import en from '../../data/i18n/en.json';
 
 const allPosts = { es: es.blog, en: en.blog };
 ---
@@ -11,11 +11,10 @@ const allPosts = { es: es.blog, en: en.blog };
   lang="es"
   showHero={false}
   description="Blog de Pablo Gómez sobre desarrollo web, IA y Big Data. Artículos sobre Laravel, PHP, formación DAM, especialización en Inteligencia Artificial y más."
-  canonical="https://pablogomez.vercel.app/blog"
+  canonical="https://pablogomezvillen.com/blog"
   keywords="blog, desarrollo web, Laravel, PHP, IA, Big Data, DAM, programación, tecnología"
 >
 
-  <!-- ── VISTA ÍNDICE ── -->
   <div id="view-index">
 
     <div class="blog-index-banner">
@@ -42,40 +41,15 @@ const allPosts = { es: es.blog, en: en.blog };
     </div>
   </div>
 
-  <!-- ── VISTA ARTÍCULO ── -->
-  <div id="view-post" style="display:none">
-
-    <div class="blog-post-banner">
-      <div class="blog-post-banner-inner">
-        <div class="blog-post-header-meta">
-          <span class="blog-category-badge" id="blog-category"></span>
-          <span class="blog-read-time" id="blog-read-time"></span>
-        </div>
-        <h1 class="blog-post-title" id="blog-post-title">Cargando...</h1>
-        <p class="blog-post-subtitle" id="blog-post-subtitle"></p>
-        <div class="blog-post-tags" id="blog-post-tags"></div>
-      </div>
-    </div>
-
-    <article class="blog-article">
-      <div class="blog-article-meta">
-        <a href="/blog" class="blog-back-link" id="blog-back-link">← Blog</a>
-        <time class="blog-date" id="blog-date"></time>
-      </div>
-      <div class="blog-article-body" id="blog-content">
-        <p class="blog-loading">Cargando...</p>
-      </div>
-      <div class="blog-article-footer">
-        <a href="/blog" class="btn secondary" id="blog-back-btn">← Volver al blog</a>
-      </div>
-    </article>
-
-  </div>
-
 </Layout>
 
 <script define:vars={{ allPosts }}>
-  /* ── helpers ── */
+  /* ── redirect old ?slug= URLs ── */
+  const oldSlug = new URLSearchParams(window.location.search).get('slug');
+  if (oldSlug) {
+    window.location.replace(`/blog/${oldSlug}`);
+  }
+
   function getLang() {
     const c = document.cookie.split('; ').find(r => r.startsWith('lang='));
     return c ? c.split('=')[1] : (localStorage.getItem('lang') || 'es');
@@ -94,41 +68,22 @@ const allPosts = { es: es.blog, en: en.blog };
     informative:   isEN ? 'Informative' : 'Informativo',
     readMore:      isEN ? 'Read more'   : 'Leer más',
     noResults:     isEN ? 'No articles match your filters.' : 'No hay artículos con esos filtros.',
-    backBlog:      isEN ? '← Blog'          : '← Blog',
-    backBlogBtn:   isEN ? '← Back to blog'  : '← Volver al blog',
-    notFound:      isEN ? 'Post not found'  : 'Entrada no encontrada',
-    notFoundMsg:   isEN ? 'This post does not exist.' : 'Esta entrada no existe.',
     searchPH:      isEN ? 'Search articles…' : 'Buscar artículos…',
   };
 
-  const CAT_FORMATION  = isEN ? 'Education'   : 'Formación';
+  const CAT_FORMATION   = isEN ? 'Education'   : 'Formación';
   const CAT_INFORMATIVE = isEN ? 'Informative' : 'Informativo';
 
-  /* ── routing ── */
-  const slug = new URLSearchParams(window.location.search).get('slug');
+  document.getElementById('idx-title').textContent    = T.indexTitle;
+  document.getElementById('idx-subtitle').textContent = T.indexSubtitle;
+  document.getElementById('blog-search').placeholder  = T.searchPH;
 
-  if (slug) {
-    showPost(slug);
-  } else {
-    showIndex();
-  }
+  const allList = Object.entries(posts || {})
+    .filter(([, p]) => !p.hidden)
+    .map(([s, p]) => ({ slug: s, ...p }));
 
-  /* ─────────────── INDEX ─────────────── */
-  function showIndex() {
-    document.getElementById('view-index').style.display = 'block';
-    document.getElementById('view-post').style.display  = 'none';
-
-    document.getElementById('idx-title').textContent    = T.indexTitle;
-    document.getElementById('idx-subtitle').textContent = T.indexSubtitle;
-    document.getElementById('blog-search').placeholder  = T.searchPH;
-
-    const allList = Object.entries(posts || {})
-      .filter(([, p]) => !p.hidden)
-      .map(([s, p]) => ({ slug: s, ...p }));
-
-    buildFilters(allList);
-    renderCards(allList);
-  }
+  buildFilters(allList);
+  renderCards(allList);
 
   function buildFilters(allList) {
     const wrap = document.getElementById('blog-cat-filters');
@@ -163,7 +118,7 @@ const allPosts = { es: es.blog, en: en.blog };
 
     function filter() {
       let list = allList;
-      if (curCat)        list = list.filter(p => p.category === curCat);
+      if (curCat)           list = list.filter(p => p.category === curCat);
       if (curSearch.trim()) {
         const q = curSearch.toLowerCase();
         list = list.filter(p =>
@@ -182,7 +137,7 @@ const allPosts = { es: es.blog, en: en.blog };
     if (!grid) return;
 
     if (!list.length) {
-      noResult.textContent  = T.noResults;
+      noResult.textContent   = T.noResults;
       noResult.style.display = 'block';
       grid.innerHTML = '';
       return;
@@ -195,8 +150,8 @@ const allPosts = { es: es.blog, en: en.blog };
       const tags        = (p.tags || []).slice(0, 3).map(t => `<span>${t}</span>`).join('');
       return `
         <article class="blog-card" role="link" tabindex="0"
-          onclick="location.href='/blog?slug=${p.slug}'"
-          onkeydown="if(event.key==='Enter')location.href='/blog?slug=${p.slug}'">
+          onclick="location.href='/blog/${p.slug}'"
+          onkeydown="if(event.key==='Enter')location.href='/blog/${p.slug}'">
           <div class="blog-card-top">
             <span class="blog-card-category ${catClass}">${p.category || ''}</span>
             <span class="blog-card-date">${p.date || ''}</span>
@@ -210,38 +165,5 @@ const allPosts = { es: es.blog, en: en.blog };
           </div>
         </article>`;
     }).join('');
-  }
-
-  /* ─────────────── POST ─────────────── */
-  function showPost(slug) {
-    document.getElementById('view-index').style.display = 'none';
-    document.getElementById('view-post').style.display  = 'block';
-
-    const backLink = document.getElementById('blog-back-link');
-    const backBtn  = document.getElementById('blog-back-btn');
-    if (backLink) backLink.textContent = T.backBlog;
-    if (backBtn)  backBtn.textContent  = T.backBlogBtn;
-
-    const post = posts?.[slug] || null;
-
-    if (!post) {
-      document.getElementById('blog-post-title').textContent = T.notFound;
-      document.getElementById('blog-content').innerHTML      = `<p>${T.notFoundMsg}</p>`;
-      return;
-    }
-
-    document.getElementById('blog-post-title').textContent   = post.title;
-    document.getElementById('blog-post-subtitle').textContent = post.subtitle || '';
-    document.getElementById('blog-date').textContent          = post.date || '';
-    document.getElementById('blog-read-time').textContent     = post.readTime ? `⏱ ${post.readTime}` : '';
-    document.getElementById('blog-content').innerHTML         = post.content;
-
-    const catEl = document.getElementById('blog-category');
-    catEl.textContent = post.category || '';
-    catEl.classList.remove('cat-formation', 'cat-info');
-    catEl.classList.add(post.category === CAT_FORMATION ? 'cat-formation' : 'cat-info');
-
-    const tagsEl = document.getElementById('blog-post-tags');
-    if (post.tags) tagsEl.innerHTML = post.tags.map(t => `<span>${t}</span>`).join('');
   }
 </script>

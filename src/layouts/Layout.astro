@@ -7,12 +7,12 @@ const {
   description,
   canonical,
   keywords,
-  ogImage = '/img/foto-empresa.jpg',
+  ogImage = '/img/opengraph.png',
   jsonLd,
 } = Astro.props;
 import ContactScript from '../components/ContactScript.astro';
 
-const ogImageAbsolute = `https://pablogomez.vercel.app${ogImage}`;
+const ogImageAbsolute = `https://pablogomezvillen.com${ogImage}`;
 const ogLocale = lang === 'en' ? 'en_US' : 'es_ES';
 const jsonLdList = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 ---

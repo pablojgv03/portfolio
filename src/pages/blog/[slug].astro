@@ -1,0 +1,84 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import esData from '../../data/i18n/es.json';
+import enData from '../../data/i18n/en.json';
+
+export function getStaticPaths() {
+  return Object.entries(esData.blog)
+    .filter(([, post]) => !post.hidden)
+    .map(([slug]) => ({ params: { slug } }));
+}
+
+const { slug } = Astro.params;
+const postEs = esData.blog[slug];
+const postEn = enData.blog?.[slug];
+
+const catClass  = postEs.category === 'Formación' ? 'cat-formation' : 'cat-info';
+const tagsHtml  = (postEs.tags || []).map(t => `<span>${t}</span>`).join('');
+---
+
+<Layout
+  title={`${postEs.title} — Pablo Gómez`}
+  lang="es"
+  showHero={false}
+  description={postEs.subtitle || ''}
+  canonical={`https://pablogomezvillen.com/blog/${slug}`}
+  keywords={(postEs.tags || []).join(', ')}
+>
+
+  <div id="view-post">
+
+    <div class="blog-post-banner">
+      <div class="blog-post-banner-inner">
+        <div class="blog-post-header-meta">
+          <span class={`blog-category-badge ${catClass}`} id="blog-category">{postEs.category}</span>
+          <span class="blog-read-time" id="blog-read-time">{postEs.readTime ? `⏱ ${postEs.readTime}` : ''}</span>
+        </div>
+        <h1 class="blog-post-title" id="blog-post-title">{postEs.title}</h1>
+        <p class="blog-post-subtitle" id="blog-post-subtitle">{postEs.subtitle}</p>
+        <div class="blog-post-tags" id="blog-post-tags" set:html={tagsHtml}></div>
+      </div>
+    </div>
+
+    <article class="blog-article">
+      <div class="blog-article-meta">
+        <a href="/blog" class="blog-back-link" id="blog-back-link">← Blog</a>
+        <time class="blog-date" id="blog-date">{postEs.date}</time>
+      </div>
+      <div class="blog-article-body" id="blog-content" set:html={postEs.content}></div>
+      <div class="blog-article-footer">
+        <a href="/blog" class="btn secondary" id="blog-back-btn">← Volver al blog</a>
+      </div>
+    </article>
+
+  </div>
+
+</Layout>
+
+<script define:vars={{ postEn }}>
+  function getLang() {
+    const c = document.cookie.split('; ').find(r => r.startsWith('lang='));
+    return c ? c.split('=')[1] : (localStorage.getItem('lang') || 'es');
+  }
+
+  if (getLang() === 'en' && postEn) {
+    const isFormationEn = postEn.category === 'Education';
+
+    const catEl = document.getElementById('blog-category');
+    catEl.textContent = postEn.category || '';
+    catEl.className   = `blog-category-badge ${isFormationEn ? 'cat-formation' : 'cat-info'}`;
+
+    document.getElementById('blog-post-title').textContent    = postEn.title;
+    document.getElementById('blog-post-subtitle').textContent = postEn.subtitle || '';
+    document.getElementById('blog-read-time').textContent     = postEn.readTime ? `⏱ ${postEn.readTime}` : '';
+    document.getElementById('blog-date').textContent          = postEn.date || '';
+    document.getElementById('blog-content').innerHTML         = postEn.content;
+    document.getElementById('blog-back-btn').textContent      = '← Back to blog';
+
+    if (postEn.tags) {
+      document.getElementById('blog-post-tags').innerHTML = postEn.tags.map(t => `<span>${t}</span>`).join('');
+    }
+
+    document.title = `${postEn.title} — Pablo Gómez`;
+  }
+</script>

@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /api/
 
-Sitemap: https://pablogomez.vercel.app/sitemap.xml
+Sitemap: https://pablogomezvillen.com/sitemap.xml

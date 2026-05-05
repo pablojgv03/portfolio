@@ -45,14 +45,15 @@ const websiteSchema = {
   canonical="https://pablogomezvillen.com/"
   keywords="Full Stack Developer, Laravel, PHP, JavaScript, MySQL, Google Cloud, ElasticSearch, desarrollador web, Granada, España"
   jsonLd={[personSchema, websiteSchema]}
+  lcp="/img/foto-empresa.jpg"
 >
   <!-- Sobre mí -->
   <section id="sobre-mi" class="section">
     <div class="about-grid">
-      <img src="img/foto-empresa.jpg" alt="Pablo Gómez, Full Stack Developer en Granada" class="avatar" loading="lazy" />
+      <img src="/img/foto-empresa.jpg" alt="Pablo Gómez, Full Stack Developer en Granada" class="avatar" width="140" height="140" fetchpriority="high" />
       <div class="about-text">
-        <h2 data-i18n="section-sobre-mi.title"></h2>
-        <p data-i18n="section-sobre-mi.content"></p>
+        <h2 data-i18n="section-sobre-mi.title">🙋 Sobre mí</h2>
+        <p data-i18n="section-sobre-mi.content">Desarrollador Full Stack con más de un año de experiencia en producción, especializado en PHP (Laravel), JavaScript y MySQL. He trabajado en dos proyectos reales de principio a fin en empresas del sector edtech, desde el diseño de bases de datos hasta la integración de APIs REST y la mejora de rendimiento front-end. Formación complementaria en Especialización en IA y Big Data, y actualmente cursando DAW (jun. 2026). Busco incorporarme a un equipo donde seguir creciendo como desarrollador Full Stack.</p>
       </div>
     </div>
   </section>
@@ -68,12 +69,12 @@ const websiteSchema = {
 
   <!-- Estudios -->
   <section id="estudios" class="section">
-    <h2 data-i18n="section-estudios.title"></h2>
+    <h2 data-i18n="section-estudios.title">🎓 Estudios</h2>
     <div class="projects">
 
       <div class="project-card">
         <a href="/blog?slug=daw" class="full-link" aria-label="Ver estudios DAW"></a>
-        <h3 data-i18n="section-estudios.daw"></h3>
+        <h3 data-i18n="section-estudios.daw">Desarrollo de Aplicaciones Web</h3>
         <div class="meta">
           <span class="center">iLERNA</span>
           <span class="period"><span class="start">2025</span>–<span class="end">2026</span></span>
@@ -90,7 +91,7 @@ const websiteSchema = {
 
       <div class="project-card">
         <a href="/blog?slug=ia-bigdata" class="full-link" aria-label="Ver especialización en IA y Big Data"></a>
-        <h3 data-i18n="section-estudios.ia-bd"></h3>
+        <h3 data-i18n="section-estudios.ia-bd">Especialización en IA y Big Data</h3>
         <div class="meta">
           <span class="center">Campus Net Manyanet Les Corts</span>
           <span class="period"><span class="start">2025</span>–<span class="end">2025</span></span>
@@ -105,7 +106,7 @@ const websiteSchema = {
 
       <div class="project-card">
         <a href="/blog?slug=dam" class="full-link" aria-label="Ver estudios DAM"></a>
-        <h3 data-i18n="section-estudios.dam"></h3>
+        <h3 data-i18n="section-estudios.dam">Desarrollo de Aplicaciones Multiplataforma</h3>
         <div class="meta">
           <span class="center">IES Francisco Ayala</span>
           <span class="period"><span class="start">2021</span>–<span class="end">2023</span></span>
@@ -123,12 +124,12 @@ const websiteSchema = {
 
   <!-- Experiencia -->
   <section id="experiencia" class="section bg-light-rounded">
-    <h2 data-i18n="section-experiencia.title"></h2>
+    <h2 data-i18n="section-experiencia.title">💼 Experiencia</h2>
     <div class="projects">
       <div class="project-card">
         <a href="/experiencia#exp-1" class="full-link" aria-label="Ver experiencia en EDUCA EDTECH Group"></a>
-        <h3 data-i18n="section-experiencia.first-job.title"></h3>
-        <p data-i18n="section-experiencia.first-job.period"></p>
+        <h3 data-i18n="section-experiencia.first-job.title">Programador Full Stack — EDUCA EDTECH Group</h3>
+        <p data-i18n="section-experiencia.first-job.period">oct. 2023 – jun. 2024 · 9 meses · Híbrido</p>
         <div class="skills">
           <span class="skill high">Laravel</span>
           <span class="skill high">PHP</span>
@@ -140,8 +141,8 @@ const websiteSchema = {
 
       <div class="project-card">
         <a href="/experiencia#exp-2" class="full-link" aria-label="Ver experiencia en Euroinnova"></a>
-        <h3 data-i18n="section-experiencia.second-job.title"></h3>
-        <p data-i18n="section-experiencia.second-job.period"></p>
+        <h3 data-i18n="section-experiencia.second-job.title">Junior Software Developer — Euroinnova</h3>
+        <p data-i18n="section-experiencia.second-job.period">abr. 2023 – oct. 2023 · 7 meses · Híbrido</p>
         <div class="skills">
           <span class="skill high">Laravel</span>
           <span class="skill high">PHP</span>
@@ -155,8 +156,8 @@ const websiteSchema = {
 
   <!-- Contacto -->
   <section id="contacto" class="section bg-dark">
-    <h2 data-i18n="contact.title"></h2>
-    <p data-i18n="contact.content"></p>
+    <h2 data-i18n="contact.title">📩 Contacto</h2>
+    <p data-i18n="contact.content">¿Interesado en colaborar o simplemente quieres saludar? ¡No dudes en contactarme! Estoy siempre abierto a nuevas oportunidades y conexiones. También puedes conocer más sobre mi trabajo aquí:</p>
     <ul class="contact">
       <li>💼 <a href="https://www.linkedin.com/in/pablo-gomez-villen" target="_blank">LinkedIn</a></li>
       <li>📞 <a href="tel:+34622400727">+34 622 400 727</a></li>
@@ -164,9 +165,9 @@ const websiteSchema = {
     </ul>
   </section>
 
-  <div class="contact-fixed" aria-hidden="true">
+  <div class="contact-fixed">
     <div class="contact-fixed-header">
-      <h3 class="contact-fixed-title" data-i18n="contact.title"></h3>
+      <h3 class="contact-fixed-title" data-i18n="contact.title">📩 Contacto</h3>
       <button class="contact-close" aria-label="Cerrar contacto">✕</button>
     </div>
     <ul class="contact">
@@ -177,26 +178,4 @@ const websiteSchema = {
   </div>
   <button class="contact-mini" aria-label="Abrir contacto">📩</button>
 
-  <!-- Carga i18n para todo el slot -->
-  <script type="module">
-    import { loadLanguage, getLanguage } from '/scripts/i18n.js';
-
-    window.addEventListener('DOMContentLoaded', async () => {
-      const lang = getLanguage();
-      await loadLanguage(lang);
-      const idiomaActual = window.lang || lang;
-
-      const projectsData = await fetch('/data/projects.json').then(r => r.json());
-
-      document.querySelectorAll('.project-card').forEach((card, i) => {
-        const descEl = card.querySelector('.project-desc');
-        if (!descEl) return;
-
-        const p = projectsData.proyectos[i];
-        if (p?.description?.[idiomaActual]) {
-          descEl.textContent = p.description[idiomaActual];
-        }
-      });
-    });
-  </script>
 </Layout>

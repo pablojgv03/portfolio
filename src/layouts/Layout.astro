@@ -1,4 +1,7 @@
 ---
+import '../styles/global.css';
+import ContactScript from '../components/ContactScript.astro';
+
 export const prerender = false;
 const {
   title,
@@ -9,8 +12,8 @@ const {
   keywords,
   ogImage = '/img/opengraph.png',
   jsonLd,
+  lcp,
 } = Astro.props;
-import ContactScript from '../components/ContactScript.astro';
 
 const ogImageAbsolute = `https://pablogomezvillen.com${ogImage}`;
 const ogLocale = lang === 'en' ? 'en_US' : 'es_ES';
@@ -48,10 +51,11 @@ const jsonLdList = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
       <script type="application/ld+json" set:html={JSON.stringify(schema)} />
     ))}
 
-    <link rel="stylesheet" href="/style.css">
     <link rel="icon" type="image/png" href="/favicon.png">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <meta name="theme-color" content="#1e3c72">
+    <link rel="modulepreload" href="/scripts/i18n.js">
+    {lcp && <link rel="preload" href={lcp} as="image" fetchpriority="high">}
   </head>
   <body class="contact-open">
     <!-- Header -->
@@ -68,7 +72,7 @@ const jsonLdList = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
           <a href="/proyectos" data-i18n="nav.projects">Proyectos</a>
           -->
           <a href="/experiencia" data-i18n="nav.experience">Experiencia</a>
-          <a href="/sobre-mi" data-i18n="nav.about">Sobre mí</a>
+          <a href="/pablo-gomez-villen" data-i18n="nav.about">Sobre mí</a>
           <a href="/blog" data-i18n="nav.blog">Blog</a>
         </nav>
 
@@ -98,7 +102,7 @@ const jsonLdList = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
         <a href="/proyectos" data-i18n="nav.projects">Proyectos</a>
         -->
         <a href="/experiencia" data-i18n="nav.experience">Experiencia</a>
-        <a href="/sobre-mi" data-i18n="nav.about">Sobre mí</a>
+        <a href="/pablo-gomez-villen" data-i18n="nav.about">Sobre mí</a>
         <a href="/blog" data-i18n="nav.blog">Blog</a>
 
         <!-- Toggle idioma (solo móvil) -->
@@ -117,24 +121,26 @@ const jsonLdList = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
     {showHero && (
       <header class="hero">
         <div class="hero-content">
-          <h1 data-i18n="hero.greeting"><span>Pablo Gómez</span> — Full Stack Developer Laravel &amp; PHP</h1>
-          <p data-i18n="hero.role"></p>
+          <h1 data-i18n="hero.greeting">👋 Hola, soy <span>Pablo Gómez</span></h1>
+          <p data-i18n="hero.role">Desarrollador Full Stack | PHP · Laravel · JavaScript · MySQL</p>
           <div class="hero-buttons">
             <!-- PROYECTOS OCULTO temporalmente (en construcción)
             <a href="#proyectos" class="btn" data-i18n="hero.btnProjects"></a>
             -->
-            <a href="CV_·_Pablo_Gomez_Software-Developer.pdf" target="_blank" class="btn secondary" data-i18n="hero.btnCV"></a>
+            <a href="CV_·_Pablo_Gomez_Software-Developer.pdf" target="_blank" class="btn secondary" data-i18n="hero.btnCV">📄 Descargar CV</a>
           </div>
         </div>
       </header>
     )}
 
     <!-- Slot -->
-  <slot lang={lang} />
+  <main id="main-content">
+    <slot lang={lang} />
+  </main>
 
     <!-- Footer -->
     <footer>
-      <p data-i18n="rights"></p>
+      <p data-i18n="rights">© 2026 Pablo Gómez Villén || Programador Full Stack</p>
     </footer>
 
     <!-- Contact Script -->
@@ -173,7 +179,10 @@ const jsonLdList = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
         const cookieLang = getLanguage();
         langSwitches.forEach(sw => sw.checked = cookieLang === 'en');
 
-        loadLanguage(cookieLang);
+        // El español está pre-renderizado en el HTML, solo cargar para otros idiomas
+        if (cookieLang !== 'es') {
+          loadLanguage(cookieLang);
+        }
 
         langSwitches.forEach(sw => {
           sw.addEventListener('change', (e) => {

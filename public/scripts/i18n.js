@@ -1,9 +1,6 @@
 export function getLanguage() {
-  // Buscar primero en cookie
   const cookieLang = document.cookie.split('; ').find(r => r.startsWith('lang='));
   if (cookieLang) return cookieLang.split('=')[1];
-
-  // Si no hay cookie, comprobar localStorage
   return localStorage.getItem('lang') || 'es';
 }
 
@@ -12,25 +9,29 @@ export async function loadLanguage(lang) {
     const res = await fetch(`/data/i18n/${lang}.json`);
     const data = await res.json();
 
-    // Guardar idioma actual globalmente
     window.lang = data.idioma;
 
-    // Reemplazar textos
+    // Leer todos los atributos primero, luego escribir en el DOM de una vez
+    const updates = [];
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
       const keys = key.split('.');
       let value = data;
-      keys.forEach(k => { if (value) value = value[k]; });
-      if (typeof value === 'string') el.innerHTML = value;
+      for (const k of keys) {
+        if (value == null) break;
+        value = value[k];
+      }
+      if (typeof value === 'string') updates.push([el, value]);
     });
+    for (const [el, value] of updates) {
+      el.innerHTML = value;
+    }
   } catch (err) {
     console.error('Error cargando idioma:', err);
   }
 }
 
 export function setLanguage(lang) {
-  // Guardar cookie 1 año
   document.cookie = `lang=${lang}; path=/; max-age=31536000`;
-  // Recargar para renderizar con el idioma correcto
   location.reload();
 }

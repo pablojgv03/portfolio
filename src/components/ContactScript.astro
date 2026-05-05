@@ -6,17 +6,32 @@
       const panel = document.querySelector('.contact-fixed');
       if (!mini || !panel) return;
 
+      const focusableInPanel = () =>
+        panel.querySelectorAll('button, a[href]');
+
       const openPanel = () => {
         document.body.classList.add('contact-open');
+        panel.removeAttribute('aria-hidden');
+        focusableInPanel().forEach(el => el.removeAttribute('tabindex'));
         mini.setAttribute('aria-expanded', 'true');
         closeBtn?.focus();
       };
 
       const closePanel = () => {
         document.body.classList.remove('contact-open');
+        panel.setAttribute('aria-hidden', 'true');
+        focusableInPanel().forEach(el => el.setAttribute('tabindex', '-1'));
         mini.setAttribute('aria-expanded', 'false');
         mini?.focus();
       };
+
+      // Inicializar estado según clase del body
+      const isOpen = document.body.classList.contains('contact-open');
+      panel.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+      if (!isOpen) {
+        focusableInPanel().forEach(el => el.setAttribute('tabindex', '-1'));
+      }
+      mini.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
 
       mini.addEventListener('click', () => {
         if (!document.body.classList.contains('contact-open')) openPanel();
@@ -25,8 +40,6 @@
       closeBtn?.addEventListener('click', closePanel);
 
       mini.setAttribute('aria-controls', 'contacto');
-      const isOpen = document.body.classList.contains('contact-open');
-      mini.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
 
       const contactoSection = document.getElementById('contacto');
       if (contactoSection && 'IntersectionObserver' in window) {

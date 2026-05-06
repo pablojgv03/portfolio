@@ -58,8 +58,8 @@
 
   "sobre-mi": {
     "chip": "👨‍💻 Sobre mí",
-    "role": "Full Stack Developer · IA & Big Data",
-    "intro": "Programador de 23 años apasionado por construir soluciones digitales que marquen la diferencia. Más de un año de experiencia real en producción, siempre aprendiendo y buscando el siguiente reto.",
+    "role": "Desarrollador Full Stack · Soluciones Informáticas · IA & Big Data",
+    "intro": "Pablo Gómez Villén, apasionado por construir soluciones digitales que marquen la diferencia. Más de un año de experiencia real en producción, siempre aprendiendo y buscando el siguiente reto.",
     "scroll-cta": "Conóceme",
     "stats": {
       "years": "años experiencia",
@@ -98,6 +98,13 @@
         "title": "Desarrollo de Aplicaciones Web",
         "org": "iLERNA · Online",
         "desc": "Profundizando en desarrollo web fullstack: PHP, JavaScript, MySQL y diseño web moderno."
+      },
+      "own": {
+        "badge": "🚀 Marca Personal · Freelance · Remoto",
+        "title": "Pablo Gómez Villén — Desarrollador Full Stack & Soluciones Digitales",
+        "where": "2025 – presente",
+        "desc1": "Creación de soluciones informáticas a medida para negocios y particulares: desarrollo web, aplicaciones, automatización y herramientas digitales orientadas a resolver necesidades reales.",
+        "desc2": "Además del desarrollo técnico, trabajo en la construcción de una marca personal enfocada en visibilidad online, SEO y creación de productos digitales con impacto práctico."
       }
     },
     "stack": { "title": "Stack <span>Tecnológico</span>" },

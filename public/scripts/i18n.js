@@ -6,7 +6,7 @@ export function getLanguage() {
 
 export async function loadLanguage(lang) {
   try {
-    const res = await fetch(`/data/i18n/${lang}.json`);
+    const res = await fetch(`/data/i18n/${lang}.json`, { cache: 'no-cache' });
     const data = await res.json();
 
     window.lang = data.idioma;

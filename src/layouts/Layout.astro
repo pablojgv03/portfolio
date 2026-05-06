@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import ContactScript from '../components/ContactScript.astro';
+import ExitIntentPopup from '../components/ExitIntentPopup.astro';
 
 export const prerender = false;
 const {
@@ -145,6 +146,9 @@ const jsonLdList = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 
     <!-- Contact Script -->
     <ContactScript />
+
+    <!-- Exit Intent Popup -->
+    <ExitIntentPopup />
 
     <!-- Scripts -->
     <script type="module">

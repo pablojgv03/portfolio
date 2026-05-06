@@ -1133,6 +1133,17 @@ body:has(.sm-page) footer p {
 
 .sm-tl-dot.edu  { border-color: #2a5298; box-shadow: 0 0 10px rgba(42,82,152,.5); }
 .sm-tl-dot.work { border-color: #ffce00; box-shadow: 0 0 10px rgba(255,206,0,.4); }
+.sm-tl-dot.own  {
+  border-color: #10b981;
+  box-shadow: 0 0 14px rgba(16,185,129,.6);
+  animation: sm-pulse-own 2s ease-in-out infinite;
+}
+
+@keyframes sm-pulse-own {
+  0%, 100% { box-shadow: 0 0 8px  rgba(16,185,129,.4); }
+  50%       { box-shadow: 0 0 22px rgba(16,185,129,.9); }
+}
+
 .sm-tl-dot.now  {
   border-color: #00d4ff;
   box-shadow: 0 0 14px rgba(0,212,255,.6);
@@ -1160,6 +1171,11 @@ body:has(.sm-page) footer p {
   box-shadow: 0 0 30px rgba(0,212,255,.05);
 }
 
+.sm-tl-card.own {
+  border-color: rgba(16,185,129,.2);
+  box-shadow: 0 0 30px rgba(16,185,129,.06);
+}
+
 .sm-badge {
   display: inline-block;
   padding: .22rem .7rem;
@@ -1171,6 +1187,7 @@ body:has(.sm-page) footer p {
 .sm-badge.edu  { background: rgba(42,82,152,.2);  color: #93c5fd; border: 1px solid rgba(42,82,152,.3);  }
 .sm-badge.work { background: rgba(255,206,0,.1);   color: #fbbf24; border: 1px solid rgba(255,206,0,.25); }
 .sm-badge.now  { background: rgba(0,212,255,.1);   color: #00d4ff; border: 1px solid rgba(0,212,255,.3);  }
+.sm-badge.own  { background: rgba(16,185,129,.1);  color: #34d399; border: 1px solid rgba(16,185,129,.3); }
 
 .sm-tl-card h3 {
   font-size: 1.1rem;

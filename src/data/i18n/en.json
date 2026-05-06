@@ -84,6 +84,13 @@
         "title": "Web Application Development",
         "org": "iLERNA · Online",
         "desc": "Deepening fullstack web development: PHP, JavaScript, MySQL and modern web design."
+      },
+      "own": {
+        "badge": "🚀 Personal Brand · Freelance · Remote",
+        "title": "Pablo Gómez Villén — Full Stack Developer & Digital Solutions",
+        "where": "2025 – present",
+        "desc1": "Building custom IT solutions for businesses and individuals: web development, applications, automation, and digital tools aimed at solving real-world needs.",
+        "desc2": "Beyond technical development, I work on building a personal brand focused on online visibility, SEO, and creating digital products with real-world impact."
       }
     },
     "stack": {

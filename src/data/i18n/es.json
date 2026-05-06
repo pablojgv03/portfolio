@@ -84,6 +84,13 @@
         "title": "Desarrollo de Aplicaciones Web",
         "org": "iLERNA · Online",
         "desc": "Profundizando en desarrollo web fullstack: PHP, JavaScript, MySQL y diseño web moderno."
+      },
+      "own": {
+        "badge": "🚀 Marca Personal · Freelance · Remoto",
+        "title": "Pablo Gómez Villén — Desarrollador Full Stack & Soluciones Digitales",
+        "where": "2025 – presente",
+        "desc1": "Creación de soluciones informáticas a medida para negocios y particulares: desarrollo web, aplicaciones, automatización y herramientas digitales orientadas a resolver necesidades reales.",
+        "desc2": "Además del desarrollo técnico, trabajo en la construcción de una marca personal enfocada en visibilidad online, SEO y creación de productos digitales con impacto práctico."
       }
     },
     "stack": {

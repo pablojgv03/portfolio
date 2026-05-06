@@ -24,6 +24,9 @@ pnpm-debug.log*
 .idea/
 .vercel
 
+# i18n runtime files — auto-generados desde src/data/i18n/ en prebuild
+public/data/i18n/
+
 # playwright
 .playwright-mcp/
 *.png

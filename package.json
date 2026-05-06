@@ -3,7 +3,9 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
+    "predev": "cp src/data/i18n/en.json public/data/i18n/en.json && cp src/data/i18n/es.json public/data/i18n/es.json",
     "dev": "astro dev",
+    "prebuild": "cp src/data/i18n/en.json public/data/i18n/en.json && cp src/data/i18n/es.json public/data/i18n/es.json",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"

@@ -128,7 +128,7 @@ const jsonLdList = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
             <!-- PROYECTOS OCULTO temporalmente (en construcción)
             <a href="#proyectos" class="btn" data-i18n="hero.btnProjects"></a>
             -->
-            <a href="CV_·_Pablo_Gomez_Software-Developer.pdf" target="_blank" class="btn secondary" data-i18n="hero.btnCV">📄 Descargar CV</a>
+            <a id="cv-link" href="CV_Full-stack_Pablo_Gomez_Villen_Desarrollador.pdf" class="btn secondary" data-i18n="hero.btnCV">📄 Descargar CV</a>
           </div>
         </div>
       </header>
@@ -183,7 +183,33 @@ const jsonLdList = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
         const cookieLang = getLanguage();
         langSwitches.forEach(sw => sw.checked = cookieLang === 'en');
 
+        const CV_LINKS = {
+          es: 'CV_Full-stack_Pablo_Gomez_Villen_Desarrollador.pdf',
+          en: 'CV_Pablo_Gomez_Villen_Software-Developer.pdf',
+        };
+
+        function updateCvLink(lang) {
+          const cvLink = document.getElementById('cv-link');
+          if (cvLink) cvLink.href = CV_LINKS[lang] || CV_LINKS.es;
+        }
+
+        const cvLink = document.getElementById('cv-link');
+        if (cvLink) {
+          cvLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            const href = cvLink.href;
+            window.open(href, '_blank');
+            const a = document.createElement('a');
+            a.href = href;
+            a.download = href.split('/').pop();
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+          });
+        }
+
         // El español está pre-renderizado en el HTML, solo cargar para otros idiomas
+        updateCvLink(cookieLang);
         if (cookieLang !== 'es') {
           loadLanguage(cookieLang);
         }
@@ -194,6 +220,7 @@ const jsonLdList = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
             langSwitches.forEach(other => other.checked = checked);
             const idioma = checked ? 'en' : 'es';
             setLanguage(idioma);
+            updateCvLink(idioma);
             loadLanguage(idioma); // Traducir inmediatamente sin recargar
           });
         });

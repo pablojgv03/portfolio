@@ -113,6 +113,14 @@ body {
   opacity: 0.8;
 }
 
+.nav-links a.nav-current {
+  pointer-events: none;
+  cursor: default;
+  font-weight: 700;
+  border-bottom: 2px solid rgba(255,255,255,0.75);
+  padding-bottom: 2px;
+}
+
 /* Toggle idioma */
 .lang-toggle {
   display: flex;
@@ -239,6 +247,13 @@ body {
     color: white;
     text-decoration: none;
     font-size: 1.2rem;
+  }
+
+  .nav-links.mobile a.nav-current {
+    font-weight: 700;
+    opacity: 0.55;
+    pointer-events: none;
+    cursor: default;
   }
 
   .mobile-only {
@@ -1435,10 +1450,50 @@ body:has(.sm-page) footer p {
   box-shadow: 0 0 0 3px rgba(42,82,152,.1);
 }
 
+.blog-filters-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
 .blog-cat-filters {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
+}
+
+.blog-sort-wrap {
+  display: flex;
+  gap: 6px;
+  margin-left: auto;
+}
+
+.blog-sort-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 14px;
+  border: 1.5px solid #d0d8ee;
+  border-radius: 20px;
+  background: #fff;
+  color: #777;
+  font-size: .82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .2s;
+  white-space: nowrap;
+}
+
+.blog-sort-btn:hover {
+  border-color: #2a5298;
+  color: #2a5298;
+}
+
+.blog-sort-btn.active {
+  background: #e8eef8;
+  border-color: #2a5298;
+  color: #2a5298;
 }
 
 .blog-cat-btn {
@@ -1605,7 +1660,9 @@ body:has(.sm-page) footer p {
   .blog-index-title    { font-size: 1.8rem; }
   .blog-index-content  { padding: 0 14px; }
   .blog-filters-bar    { flex-direction: column; align-items: stretch; }
+  .blog-filters-row    { flex-direction: column; align-items: stretch; }
   .blog-cat-filters    { justify-content: center; }
+  .blog-sort-wrap      { justify-content: center; margin-left: 0; }
   .blog-grid           { grid-template-columns: 1fr; }
 }
 
@@ -1864,4 +1921,37 @@ body:has(.sm-page) footer p {
 
 @media (max-width: 420px) {
   .tech-grid { grid-template-columns: 1fr; }
+}
+
+/* ── Scroll-to-top button ── */
+#scroll-top-btn {
+  display: none;
+  position: fixed;
+  bottom: 24px;
+  right: 18px;
+  z-index: 999;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.18);
+  background: rgba(30, 60, 114, 0.82);
+  color: #fff;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.22);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  padding: 0;
+}
+
+#scroll-top-btn.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  #scroll-top-btn { display: flex; }
 }

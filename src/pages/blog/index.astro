@@ -32,7 +32,10 @@ const allPosts = { es: es.blog, en: en.blog };
           <svg class="blog-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
           <input type="search" id="blog-search" class="blog-search-input" placeholder="Buscar artículos...">
         </div>
-        <div class="blog-cat-filters" id="blog-cat-filters"></div>
+        <div class="blog-filters-row">
+          <div class="blog-cat-filters" id="blog-cat-filters"></div>
+          <div class="blog-sort-wrap" id="blog-sort-wrap"></div>
+        </div>
       </div>
 
       <div class="blog-grid" id="blog-grid"></div>
@@ -69,6 +72,8 @@ const allPosts = { es: es.blog, en: en.blog };
     readMore:      isEN ? 'Read more'   : 'Leer más',
     noResults:     isEN ? 'No articles match your filters.' : 'No hay artículos con esos filtros.',
     searchPH:      isEN ? 'Search articles…' : 'Buscar artículos…',
+    newest:        isEN ? 'Newest'  : 'Más reciente',
+    oldest:        isEN ? 'Oldest'  : 'Más antiguo',
   };
 
   const CAT_FORMATION   = isEN ? 'Education'   : 'Formación';
@@ -80,13 +85,14 @@ const allPosts = { es: es.blog, en: en.blog };
 
   const allList = Object.entries(posts || {})
     .filter(([, p]) => !p.hidden)
-    .map(([s, p]) => ({ slug: s, ...p }));
+    .map(([s, p], i) => ({ slug: s, _idx: i, ...p }));
 
   buildFilters(allList);
   renderCards(allList);
 
   function buildFilters(allList) {
-    const wrap = document.getElementById('blog-cat-filters');
+    const wrap     = document.getElementById('blog-cat-filters');
+    const sortWrap = document.getElementById('blog-sort-wrap');
     if (!wrap) return;
 
     const cats = [
@@ -99,8 +105,21 @@ const allPosts = { es: es.blog, en: en.blog };
       `<button class="blog-cat-btn${i === 0 ? ' active' : ''}" data-cat="${c.value}">${c.label}</button>`
     ).join('');
 
+    if (sortWrap) {
+      sortWrap.innerHTML = `
+        <button class="blog-sort-btn active" data-sort="newest">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+          ${T.newest}
+        </button>
+        <button class="blog-sort-btn" data-sort="oldest">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          ${T.oldest}
+        </button>`;
+    }
+
     let curCat    = '';
     let curSearch = '';
+    let curSort   = 'newest';
 
     wrap.querySelectorAll('.blog-cat-btn').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -111,13 +130,29 @@ const allPosts = { es: es.blog, en: en.blog };
       });
     });
 
+    if (sortWrap) {
+      sortWrap.querySelectorAll('.blog-sort-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          sortWrap.querySelectorAll('.blog-sort-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          curSort = btn.dataset.sort;
+          filter();
+        });
+      });
+    }
+
     document.getElementById('blog-search').addEventListener('input', e => {
       curSearch = e.target.value;
       filter();
     });
 
+    function extractYear(dateStr) {
+      const m = (dateStr || '').match(/\d{4}/);
+      return m ? parseInt(m[0], 10) : 0;
+    }
+
     function filter() {
-      let list = allList;
+      let list = allList.slice();
       if (curCat)           list = list.filter(p => p.category === curCat);
       if (curSearch.trim()) {
         const q = curSearch.toLowerCase();
@@ -126,6 +161,11 @@ const allPosts = { es: es.blog, en: en.blog };
           (p.subtitle || '').toLowerCase().includes(q) ||
           (p.tags || []).some(t => t.toLowerCase().includes(q))
         );
+      }
+      if (curSort === 'newest') {
+        list.sort((a, b) => (extractYear(b.date) - extractYear(a.date)) || (a._idx - b._idx));
+      } else {
+        list.sort((a, b) => (extractYear(a.date) - extractYear(b.date)) || (a._idx - b._idx));
       }
       renderCards(list);
     }

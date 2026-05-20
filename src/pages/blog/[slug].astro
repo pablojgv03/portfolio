@@ -29,12 +29,30 @@ function truncate(str, max = 55) {
   return str.length > max ? str.slice(0, max - 1) + '…' : str;
 }
 
-// Related posts: same category first, then fill from others, max 3
+// Related posts: tag-based scoring (substring match, case-insensitive)
 const allSlugs = Object.keys(esData.blog).filter(s => s !== slug && !esData.blog[s].hidden);
-const sameCat  = allSlugs.filter(s => esData.blog[s].category === postEs.category);
-const otherCat = allSlugs.filter(s => esData.blog[s].category !== postEs.category);
+const myTags   = (postEs.tags || []).map(t => t.toLowerCase());
+
+function tagScore(s) {
+  if (!myTags.length) return 0;
+  const theirTags = (esData.blog[s].tags || []).map(t => t.toLowerCase());
+  let score = 0;
+  for (const mt of myTags) {
+    if (theirTags.some(tt => mt === tt || mt.includes(tt) || tt.includes(mt))) score++;
+  }
+  return score;
+}
+
 const sortDesc = (a, b) => (esData.blog[b].date || '').localeCompare(esData.blog[a].date || '');
-const relatedSlugs = [...sameCat.sort(sortDesc), ...otherCat.sort(sortDesc)].slice(0, 3);
+const scored   = allSlugs.map(s => ({ s, score: tagScore(s) }))
+  .sort((a, b) => b.score - a.score || sortDesc(a.s, b.s));
+
+const withTags = scored.filter(x => x.score > 0).slice(0, 3).map(x => x.s);
+// Fill to 3 using same-category if not enough tag matches
+const byCat = allSlugs
+  .filter(s => !withTags.includes(s) && esData.blog[s].category === postEs.category)
+  .sort(sortDesc);
+const relatedSlugs = [...withTags, ...byCat].slice(0, 3);
 const relatedEs = relatedSlugs.map(s => ({ slug: s, ...esData.blog[s] }));
 const relatedEn = relatedSlugs.map(s => ({ slug: s, ...(enData.blog?.[s] || {}) }));
 
@@ -95,17 +113,18 @@ const breadcrumbSchema = {
 
   <div id="view-post">
 
-    <!-- Breadcrumb visual -->
-    <nav class="blog-breadcrumb" aria-label="Breadcrumb">
-      <ol>
-        <li><a href="/" id="bc-home">Inicio</a></li>
-        <li><a href="/blog" id="bc-blog">Blog</a></li>
-        <li aria-current="page" id="bc-current">{truncate(postEs.title)}</li>
-      </ol>
-    </nav>
-
     <div class="blog-post-banner">
       <div class="blog-post-banner-inner">
+
+        <!-- Breadcrumb dentro del banner (visible sobre fondo oscuro) -->
+        <nav class="blog-breadcrumb" aria-label="Breadcrumb">
+          <ol>
+            <li><a href="/" id="bc-home">Inicio</a></li>
+            <li><a href="/blog" id="bc-blog">Blog</a></li>
+            <li aria-current="page" id="bc-current">{truncate(postEs.title)}</li>
+          </ol>
+        </nav>
+
         <div class="blog-post-header-meta">
           <span class={`blog-category-badge ${catClass}`} id="blog-category">{postEs.category}</span>
           <span class="blog-read-time" id="blog-read-time">{postEs.readTime ? `⏱ ${postEs.readTime}` : ''}</span>

@@ -8,8 +8,6 @@ export default defineConfig({
   integrations: [sitemap()],
   redirects: {
     '/sobre-mi': '/pablo-gomez-villen',
-    '/en/experiencia': '/experiencia',
-    '/en/pablo-gomez-villen': '/pablo-gomez-villen',
-    '/en/sobre-mi': '/pablo-gomez-villen',
+    '/en/sobre-mi': '/en/pablo-gomez-villen',
   },
 });

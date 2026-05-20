@@ -1,0 +1,103 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import expData from '../../data/experience.json';
+
+const lang = 'en';
+
+const expSchema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Work Experience — Pablo Gómez",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Full Stack Developer — EDUCA EDTECH Group",
+      "description": "Development and maintenance of educational platforms in production. Oct. 2023 – Jun. 2024"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Junior Software Developer — Euroinnova",
+      "description": "Web application development in the online education sector. Apr. 2023 – Oct. 2023"
+    }
+  ]
+};
+---
+
+<Layout
+  title="Experience — Pablo Gómez | Full Stack Developer"
+  lang="en"
+  showHero={false}
+  description="Pablo Gómez's professional background: over 1 year of experience as a Full Stack Developer at EDUCA EDTECH Group and Euroinnova. Laravel, PHP, MySQL, Google Cloud."
+  canonical="https://pablogomezvillen.com/en/experiencia"
+  alternateEs="https://pablogomezvillen.com/experiencia"
+  alternateEn="https://pablogomezvillen.com/en/experiencia"
+  keywords="work experience, Full Stack Developer, Laravel, PHP, EDUCA EDTECH, Euroinnova, Granada, backend developer"
+  jsonLd={expSchema}
+>
+
+  <div class="page-banner">
+    <h1>💼 Experience</h1>
+    <p>My professional journey as a developer</p>
+  </div>
+
+  <section class="section">
+
+    <div class="exp-stats">
+      <div class="exp-stat">
+        <span class="exp-stat-num">1+</span>
+        <span class="exp-stat-label">year of experience</span>
+      </div>
+      <div class="exp-stat">
+        <span class="exp-stat-num">2</span>
+        <span class="exp-stat-label">companies</span>
+      </div>
+      <div class="exp-stat">
+        <span class="exp-stat-num">2</span>
+        <span class="exp-stat-label">production projects</span>
+      </div>
+    </div>
+
+    <div class="exp-timeline">
+      {expData.experiencia.map((job) => (
+        <div class="exp-item" id={`exp-${job.id}`}>
+          <div class="exp-dot"></div>
+          <div class="exp-card">
+            <div class="exp-header">
+              <div class="exp-header-left">
+                <h3 class="exp-role">{job.role[lang]}</h3>
+                <p class="exp-company">{job.company}</p>
+              </div>
+              <div class="exp-badges">
+                <span class="exp-badge exp-duration">{job.duration[lang]}</span>
+                <span class="exp-badge exp-badge--mode exp-modality">{job.modality[lang]}</span>
+              </div>
+            </div>
+
+            <p class="exp-period">
+              <span class="exp-period-text">{job.period[lang]}</span>
+              {' · '}{job.location}
+            </p>
+
+            <p class="exp-desc">{job.description[lang]}</p>
+
+            <ul class="exp-bullets">
+              {job.bullets[lang].map((b) => (
+                <li>{b}</li>
+              ))}
+            </ul>
+
+            <div class="skills">
+              {job.skills.map(skill => (
+                <span class={`skill ${skill.level}`}>{skill.name}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </section>
+
+</Layout>

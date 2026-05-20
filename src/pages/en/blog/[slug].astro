@@ -1,0 +1,155 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import esData from '../../../data/i18n/es.json';
+import enData from '../../../data/i18n/en.json';
+
+export function getStaticPaths() {
+  return Object.entries(esData.blog)
+    .filter(([slug, post]) => !post.hidden && enData.blog?.[slug]?.content)
+    .map(([slug]) => ({ params: { slug } }));
+}
+
+const { slug } = Astro.params;
+const postEn = enData.blog[slug];
+const postEs = esData.blog[slug];
+
+const catClass = postEn.category === 'Education' ? 'cat-formation' : 'cat-info';
+const tagsHtml = (postEn.tags || []).map(t => `<span>${t}</span>`).join('');
+
+function formatDate(dateStr) {
+  if (!dateStr || !/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr || '';
+  const [y, m] = dateStr.split('-');
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return `${months[parseInt(m, 10) - 1]} ${y}`;
+}
+
+function truncate(str, max = 55) {
+  return str.length > max ? str.slice(0, max - 1) + '…' : str;
+}
+
+// Related posts (tag-based, using ES data for scoring then EN for display)
+const allSlugs = Object.keys(esData.blog).filter(s => s !== slug && !esData.blog[s].hidden && enData.blog?.[s]?.content);
+const myTags = (postEn.tags || []).map(t => t.toLowerCase());
+
+function tagScore(s) {
+  if (!myTags.length) return 0;
+  const theirTags = (enData.blog[s]?.tags || []).map(t => t.toLowerCase());
+  let score = 0;
+  for (const mt of myTags) {
+    if (theirTags.some(tt => mt === tt || mt.includes(tt) || tt.includes(mt))) score++;
+  }
+  return score;
+}
+
+const sortDesc = (a, b) => (esData.blog[b].date || '').localeCompare(esData.blog[a].date || '');
+const scored = allSlugs.map(s => ({ s, score: tagScore(s) }))
+  .sort((a, b) => b.score - a.score || sortDesc(a.s, b.s));
+
+const withTags = scored.filter(x => x.score > 0).slice(0, 3).map(x => x.s);
+const byCat = allSlugs
+  .filter(s => !withTags.includes(s) && enData.blog?.[s]?.category === postEn.category)
+  .sort(sortDesc);
+const relatedSlugs = [...withTags, ...byCat].slice(0, 3);
+const relatedPosts = relatedSlugs.map(s => ({ slug: s, ...enData.blog[s] }));
+
+const blogPosting = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": postEn.title,
+  "description": postEn.subtitle || '',
+  "datePublished": postEs.date,
+  "dateModified": postEs.date,
+  "author": {
+    "@type": "Person",
+    "name": "Pablo Gómez Villén",
+    "url": "https://pablogomezvillen.com",
+    "sameAs": ["https://www.linkedin.com/in/pablo-gomez-villen"]
+  },
+  "publisher": { "@type": "Person", "name": "Pablo Gómez Villén", "url": "https://pablogomezvillen.com" },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": `https://pablogomezvillen.com/en/blog/${slug}` },
+  "url": `https://pablogomezvillen.com/en/blog/${slug}`,
+  "image": "https://pablogomezvillen.com/img/opengraph.png",
+  "keywords": (postEn.tags || []).join(', '),
+  "inLanguage": "en-US",
+  "isPartOf": {
+    "@type": "Blog",
+    "@id": "https://pablogomezvillen.com/en/blog",
+    "name": "Blog — Pablo Gómez"
+  }
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home",  "item": "https://pablogomezvillen.com/en/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog",  "item": "https://pablogomezvillen.com/en/blog" },
+    { "@type": "ListItem", "position": 3, "name": postEn.title, "item": `https://pablogomezvillen.com/en/blog/${slug}` }
+  ]
+};
+---
+
+<Layout
+  title={`${postEn.title} — Pablo Gómez`}
+  lang="en"
+  showHero={false}
+  description={postEn.subtitle || ''}
+  canonical={`https://pablogomezvillen.com/en/blog/${slug}`}
+  alternateEs={`https://pablogomezvillen.com/blog/${slug}`}
+  alternateEn={`https://pablogomezvillen.com/en/blog/${slug}`}
+  keywords={(postEn.tags || []).join(', ')}
+  jsonLd={[blogPosting, breadcrumbSchema]}
+>
+
+  <div id="view-post">
+
+    <div class="blog-post-banner">
+      <div class="blog-post-banner-inner">
+
+        <nav class="blog-breadcrumb" aria-label="Breadcrumb">
+          <ol>
+            <li><a href="/en/">Home</a></li>
+            <li><a href="/en/blog">Blog</a></li>
+            <li aria-current="page">{truncate(postEn.title)}</li>
+          </ol>
+        </nav>
+
+        <div class="blog-post-header-meta">
+          <span class={`blog-category-badge ${catClass}`}>{postEn.category}</span>
+          <span class="blog-read-time">{postEn.readTime ? `⏱ ${postEn.readTime}` : ''}</span>
+        </div>
+        <h1 class="blog-post-title">{postEn.title}</h1>
+        <p class="blog-post-subtitle">{postEn.subtitle}</p>
+        <div class="blog-post-tags" set:html={tagsHtml}></div>
+      </div>
+    </div>
+
+    <article class="blog-article">
+      <div class="blog-article-meta">
+        <a href="/en/blog" class="blog-back-link">← Blog</a>
+        <time class="blog-date" datetime={postEs.date}>{formatDate(postEs.date)}</time>
+      </div>
+      <div class="blog-article-body" set:html={postEn.content}></div>
+      <div class="blog-article-footer">
+        <a href="/en/blog" class="btn secondary">← Back to blog</a>
+      </div>
+    </article>
+
+    {relatedPosts.length > 0 && (
+      <aside class="blog-related">
+        <h2 class="blog-related-title">Related articles</h2>
+        <div class="blog-related-grid">
+          {relatedPosts.map((p) => (
+            <a href={`/en/blog/${p.slug}`} class="blog-related-card">
+              <span class={`blog-related-cat ${p.category === 'Education' ? 'cat-formation' : 'cat-info'}`}>{p.category}</span>
+              <h3 class="blog-related-card-title">{p.title}</h3>
+              <span class="blog-related-date">{formatDate(esData.blog[p.slug]?.date)}</span>
+            </a>
+          ))}
+        </div>
+      </aside>
+    )}
+
+  </div>
+
+</Layout>

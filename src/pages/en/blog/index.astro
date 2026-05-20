@@ -1,20 +1,21 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import es from '../../data/i18n/es.json';
-import en from '../../data/i18n/en.json';
+import Layout from '../../../layouts/Layout.astro';
+import en from '../../../data/i18n/en.json';
+import es from '../../../data/i18n/es.json';
 
-const allPosts = { es: es.blog, en: en.blog };
+// Pass both datasets to the client script
+const allPosts = { en: en.blog, es: es.blog };
 ---
 
 <Layout
-  title="Blog — Pablo Gómez | Tecnología y Desarrollo"
-  lang="es"
+  title="Blog — Pablo Gómez | Technology and Development"
+  lang="en"
   showHero={false}
-  description="Blog de Pablo Gómez sobre desarrollo web, IA y Big Data. Artículos sobre Laravel, PHP, formación DAM, especialización en Inteligencia Artificial y más."
-  canonical="https://pablogomezvillen.com/blog"
-  alternateEn="https://pablogomezvillen.com/en/blog"
+  description="Pablo Gómez's blog on web development, AI and Big Data. Articles about Laravel, PHP, education, AI specialization and more."
+  canonical="https://pablogomezvillen.com/en/blog"
   alternateEs="https://pablogomezvillen.com/blog"
-  keywords="blog, desarrollo web, Laravel, PHP, IA, Big Data, DAM, programación, tecnología"
+  alternateEn="https://pablogomezvillen.com/en/blog"
+  keywords="blog, web development, Laravel, PHP, AI, Big Data, programming, technology"
 >
 
   <div id="view-index">
@@ -22,8 +23,8 @@ const allPosts = { es: es.blog, en: en.blog };
     <div class="blog-index-banner">
       <div class="blog-index-banner-inner">
         <span class="blog-index-eyebrow">Blog</span>
-        <h1 class="blog-index-title" id="idx-title">Artículos</h1>
-        <p class="blog-index-subtitle" id="idx-subtitle"></p>
+        <h1 class="blog-index-title">Articles</h1>
+        <p class="blog-index-subtitle">Development, technology and education — thoughts from the trenches.</p>
       </div>
     </div>
 
@@ -32,7 +33,7 @@ const allPosts = { es: es.blog, en: en.blog };
       <div class="blog-filters-bar">
         <div class="blog-search-wrap">
           <svg class="blog-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-          <input type="search" id="blog-search" class="blog-search-input" placeholder="Buscar artículos...">
+          <input type="search" id="blog-search" class="blog-search-input" placeholder="Search articles…">
         </div>
         <div class="blog-filters-row">
           <div class="blog-cat-filters" id="blog-cat-filters"></div>
@@ -49,41 +50,17 @@ const allPosts = { es: es.blog, en: en.blog };
 </Layout>
 
 <script define:vars={{ allPosts }}>
-  /* ── redirect old ?slug= URLs ── */
+  /* redirect old ?slug= URLs */
   const oldSlug = new URLSearchParams(window.location.search).get('slug');
-  if (oldSlug) {
-    window.location.replace(`/blog/${oldSlug}`);
-  }
+  if (oldSlug) window.location.replace(`/en/blog/${oldSlug}`);
 
-  function getLang() {
-    const c = document.cookie.split('; ').find(r => r.startsWith('lang='));
-    return c ? c.split('=')[1] : (localStorage.getItem('lang') || 'es');
-  }
-
-  const lang  = getLang();
-  const isEN  = lang === 'en';
-  const posts = allPosts[lang] || allPosts['es'];
+  const posts = allPosts['en'] || allPosts['es'];
 
   const T = {
-    indexTitle:    isEN ? 'Articles'                        : 'Artículos',
-    indexSubtitle: isEN ? 'Development, technology and education — thoughts from the trenches.'
-                        : 'Desarrollo, tecnología y formación — reflexiones desde la práctica.',
-    all:           isEN ? 'All'          : 'Todos',
-    formation:     isEN ? 'Education'   : 'Formación',
-    informative:   isEN ? 'Informative' : 'Informativo',
-    readMore:      isEN ? 'Read more'   : 'Leer más',
-    noResults:     isEN ? 'No articles match your filters.' : 'No hay artículos con esos filtros.',
-    searchPH:      isEN ? 'Search articles…' : 'Buscar artículos…',
-    newest:        isEN ? 'Newest'  : 'Más reciente',
-    oldest:        isEN ? 'Oldest'  : 'Más antiguo',
+    all: 'All', formation: 'Education', informative: 'Informative',
+    readMore: 'Read more', noResults: 'No articles match your filters.',
+    newest: 'Newest', oldest: 'Oldest',
   };
-
-  const CAT_FORMATION   = isEN ? 'Education'   : 'Formación';
-  const CAT_INFORMATIVE = isEN ? 'Informative' : 'Informativo';
-
-  document.getElementById('idx-title').textContent    = T.indexTitle;
-  document.getElementById('idx-subtitle').textContent = T.indexSubtitle;
-  document.getElementById('blog-search').placeholder  = T.searchPH;
 
   const allList = Object.entries(posts || {})
     .filter(([, p]) => !p.hidden)
@@ -98,9 +75,9 @@ const allPosts = { es: es.blog, en: en.blog };
     if (!wrap) return;
 
     const cats = [
-      { label: T.all,         value: '' },
-      { label: T.formation,   value: CAT_FORMATION },
-      { label: T.informative, value: CAT_INFORMATIVE },
+      { label: T.all, value: '' },
+      { label: T.formation, value: 'Education' },
+      { label: T.informative, value: 'Informative' },
     ];
 
     wrap.innerHTML = cats.map((c, i) =>
@@ -119,9 +96,7 @@ const allPosts = { es: es.blog, en: en.blog };
         </button>`;
     }
 
-    let curCat    = '';
-    let curSearch = '';
-    let curSort   = 'newest';
+    let curCat = '', curSearch = '', curSort = 'newest';
 
     wrap.querySelectorAll('.blog-cat-btn').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -150,7 +125,6 @@ const allPosts = { es: es.blog, en: en.blog };
 
     function toSortKey(dateStr) {
       if (!dateStr) return '0000-00-00';
-      // ISO date YYYY-MM-DD sorts lexicographically; fallback extracts first year
       if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr;
       const m = dateStr.match(/\d{4}/);
       return m ? `${m[0]}-00-00` : '0000-00-00';
@@ -158,7 +132,7 @@ const allPosts = { es: es.blog, en: en.blog };
 
     function filter() {
       let list = allList.slice();
-      if (curCat)           list = list.filter(p => p.category === curCat);
+      if (curCat) list = list.filter(p => p.category === curCat);
       if (curSearch.trim()) {
         const q = curSearch.toLowerCase();
         list = list.filter(p =>
@@ -176,22 +150,20 @@ const allPosts = { es: es.blog, en: en.blog };
     }
   }
 
-  function formatDisplayDate(dateStr, lang) {
+  function formatDisplayDate(dateStr) {
     if (!dateStr || !/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr || '';
     const [year, month] = dateStr.split('-');
-    const monthsES = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
-    const monthsEN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    const months   = lang === 'en' ? monthsEN : monthsES;
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     return `${months[parseInt(month, 10) - 1]} ${year}`;
   }
 
   function renderCards(list) {
-    const grid     = document.getElementById('blog-grid');
+    const grid = document.getElementById('blog-grid');
     const noResult = document.getElementById('blog-no-results');
     if (!grid) return;
 
     if (!list.length) {
-      noResult.textContent   = T.noResults;
+      noResult.textContent = T.noResults;
       noResult.style.display = 'block';
       grid.innerHTML = '';
       return;
@@ -199,14 +171,14 @@ const allPosts = { es: es.blog, en: en.blog };
     noResult.style.display = 'none';
 
     grid.innerHTML = list.map(p => {
-      const isFormation = p.category === CAT_FORMATION;
-      const catClass    = isFormation ? 'cat-formation' : 'cat-info';
-      const tags        = (p.tags || []).slice(0, 3).map(t => `<span>${t}</span>`).join('');
-      const dateDisplay = formatDisplayDate(p.date, lang);
+      const isFormation = p.category === 'Education';
+      const catClass = isFormation ? 'cat-formation' : 'cat-info';
+      const tags = (p.tags || []).slice(0, 3).map(t => `<span>${t}</span>`).join('');
+      const dateDisplay = formatDisplayDate(p.date);
       return `
         <article class="blog-card" role="link" tabindex="0"
-          onclick="location.href='/blog/${p.slug}'"
-          onkeydown="if(event.key==='Enter')location.href='/blog/${p.slug}'">
+          onclick="location.href='/en/blog/${p.slug}'"
+          onkeydown="if(event.key==='Enter')location.href='/en/blog/${p.slug}'">
           <div class="blog-card-top">
             <span class="blog-card-category ${catClass}">${p.category || ''}</span>
             <span class="blog-card-date">${dateDisplay}</span>

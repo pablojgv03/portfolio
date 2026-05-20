@@ -107,6 +107,8 @@ const breadcrumbSchema = {
   showHero={false}
   description={postEs.subtitle || ''}
   canonical={`https://pablogomezvillen.com/blog/${slug}`}
+  alternateEn={`https://pablogomezvillen.com/en/blog/${slug}`}
+  alternateEs={`https://pablogomezvillen.com/blog/${slug}`}
   keywords={(postEs.tags || []).join(', ')}
   jsonLd={[blogPosting, breadcrumbSchema]}
 >

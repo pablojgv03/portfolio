@@ -1,0 +1,194 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import esData from '../../data/i18n/es.json';
+import enData from '../../data/i18n/en.json';
+
+function fmtDate(d) {
+  if (!d || !/^\d{4}-\d{2}-\d{2}$/.test(d)) return d || '';
+  const [y, m] = d.split('-');
+  return `${ ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][parseInt(m,10)-1] }. ${y}`;
+}
+
+// Featured articles: use es.json for featured/date, en.json for content
+const featuredPosts = Object.entries(esData.blog)
+  .filter(([, p]) => p.featured && !p.hidden)
+  .sort(([, a], [, b]) => (b.date || '').localeCompare(a.date || ''))
+  .slice(0, 3)
+  .map(([slug, p]) => ({ slug, ...p, ...(enData.blog?.[slug] || {}) }));
+
+const en = enData;
+
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Pablo Gómez",
+  "jobTitle": "Full Stack Developer",
+  "url": "https://pablogomezvillen.com",
+  "email": "pablogomezvillen@gmail.com",
+  "telephone": "+34622400727",
+  "image": "https://pablogomezvillen.com/img/foto-empresa.jpg",
+  "address": { "@type": "PostalAddress", "addressLocality": "Granada", "addressCountry": "ES" },
+  "sameAs": ["https://www.linkedin.com/in/pablo-gomez-villen"]
+};
+---
+
+<Layout
+  title="Pablo Gómez — Full Stack Developer Laravel & PHP | Portfolio"
+  lang="en"
+  description="Portfolio of Pablo Gómez, Full Stack Developer specializing in Laravel, PHP, JavaScript and MySQL. Over 1 year of production experience in Granada, Spain."
+  canonical="https://pablogomezvillen.com/en/"
+  alternateEs="https://pablogomezvillen.com/"
+  alternateEn="https://pablogomezvillen.com/en/"
+  keywords="Full Stack Developer, Laravel, PHP, JavaScript, MySQL, Google Cloud, ElasticSearch, web developer, Granada, Spain"
+  jsonLd={[personSchema]}
+  lcp="/img/foto-empresa.webp"
+>
+  <!-- About -->
+  <section id="sobre-mi" class="section">
+    <h2>{en['section-sobre-mi'].title}</h2>
+    <div class="about-grid">
+      <picture>
+        <source type="image/webp" srcset="/img/foto-empresa.webp">
+        <img src="/img/foto-empresa.jpg" alt="Pablo Gómez, Full Stack Developer in Granada" class="avatar" width="140" height="140" fetchpriority="high">
+      </picture>
+      <div class="about-text">
+        <p>{en['section-sobre-mi'].content}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Education -->
+  <section id="estudios" class="section">
+    <h2>{en['section-estudios'].title}</h2>
+    <div class="projects">
+
+      <div class="project-card">
+        <a href="/en/blog/daw" class="full-link" aria-label="Read about DAW studies"></a>
+        <h3>{en['section-estudios'].daw}</h3>
+        <div class="meta">
+          <span class="center">iLERNA</span>
+          <span class="period"><span class="start">2025</span>–<span class="end">2026</span></span>
+        </div>
+        <div class="skills" aria-label="Skills from iLERNA">
+          <span class="skill high">PHP</span>
+          <span class="skill high">JavaScript</span>
+          <span class="skill mid">MySQL</span>
+          <span class="skill mid">HTML</span>
+          <span class="skill mid">CSS</span>
+        </div>
+        <span class="tech">DAW | In progress</span>
+      </div>
+
+      <div class="project-card">
+        <a href="/en/blog/ia-bigdata" class="full-link" aria-label="Read about AI and Big Data specialization"></a>
+        <h3>{en['section-estudios']['ia-bd']}</h3>
+        <div class="meta">
+          <span class="center">Campus Net Manyanet Les Corts</span>
+          <span class="period"><span class="start">2025</span>–<span class="end">2025</span></span>
+        </div>
+        <div class="skills" aria-label="Skills from Campus Net Manyanet">
+          <span class="skill high">Python</span>
+          <span class="skill mid">Pandas</span>
+          <span class="skill mid">ML Modeling</span>
+        </div>
+        <span class="tech">AI | Big Data</span>
+      </div>
+
+      <div class="project-card">
+        <a href="/en/blog/dam" class="full-link" aria-label="Read about DAM studies"></a>
+        <h3>{en['section-estudios'].dam}</h3>
+        <div class="meta">
+          <span class="center">IES Francisco Ayala</span>
+          <span class="period"><span class="start">2021</span>–<span class="end">2023</span></span>
+        </div>
+        <div class="skills">
+          <span class="skill low">Odoo</span>
+          <span class="skill high">SQL</span>
+          <span class="skill mid">Hibernate</span>
+        </div>
+        <span class="tech">Mobile Dev | JavaScript</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section id="experiencia" class="section bg-light-rounded">
+    <h2>{en['section-experiencia'].title}</h2>
+    <div class="projects">
+      <div class="project-card">
+        <a href="/experiencia#exp-1" class="full-link" aria-label="View experience at EDUCA EDTECH Group"></a>
+        <h3>{en['section-experiencia']['first-job'].title}</h3>
+        <p>{en['section-experiencia']['first-job'].period}</p>
+        <div class="skills">
+          <span class="skill high">Laravel</span>
+          <span class="skill high">PHP</span>
+          <span class="skill mid">Google Cloud</span>
+          <span class="skill low">ElasticSearch</span>
+        </div>
+        <span class="tech">Laravel | JavaScript | SQL</span>
+      </div>
+
+      <div class="project-card">
+        <a href="/experiencia#exp-2" class="full-link" aria-label="View experience at Euroinnova"></a>
+        <h3>{en['section-experiencia']['second-job'].title}</h3>
+        <p>{en['section-experiencia']['second-job'].period}</p>
+        <div class="skills">
+          <span class="skill high">Laravel</span>
+          <span class="skill high">PHP</span>
+          <span class="skill high">MySQL</span>
+          <span class="skill mid">JavaScript</span>
+        </div>
+        <span class="tech">PHP | Laravel | MySQL</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured articles -->
+  {featuredPosts.length > 0 && (
+    <section id="articulos-destacados" class="section">
+      <div class="featured-header">
+        <h2>{en.featured.title}</h2>
+        <a href="/en/blog" class="featured-see-all">{en.featured['see-all']}</a>
+      </div>
+      <div class="featured-grid">
+        {featuredPosts.map((p) => (
+          <a href={`/en/blog/${p.slug}`} class="featured-card">
+            <div class="featured-card-top">
+              <span class={`blog-card-category ${p.category === 'Education' ? 'cat-formation' : 'cat-info'}`}>{p.category}</span>
+              <span class="featured-card-date">{fmtDate(p.date)}</span>
+            </div>
+            <h3 class="featured-card-title">{p.title}</h3>
+            <p class="featured-card-sub">{(p.subtitle||'').slice(0,95)}{(p.subtitle||'').length>95?'…':''}</p>
+            <span class="featured-card-cta">{en.featured.read}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- Contact -->
+  <section id="contacto" class="section bg-dark">
+    <h2>{en.contact.title}</h2>
+    <p>{en.contact.content}</p>
+    <ul class="contact">
+      <li>💼 <a href="https://www.linkedin.com/in/pablo-gomez-villen" target="_blank">LinkedIn</a></li>
+      <li>📞 <a href="tel:+34622400727">+34 622 400 727</a></li>
+      <li>📧 <a href="mailto:pablogomezvillen@gmail.com">pablogomezvillen@gmail.com</a></li>
+    </ul>
+  </section>
+
+  <div class="contact-fixed">
+    <div class="contact-fixed-header">
+      <h3 class="contact-fixed-title">{en.contact.title}</h3>
+      <button class="contact-close" aria-label="Close contact">✕</button>
+    </div>
+    <ul class="contact">
+      <li>📞 <a href="tel:+34622400727">+34 622 400 727</a></li>
+      <li>📧 <a href="mailto:pablogomezvillen@gmail.com">pablogomezvillen@gmail.com</a></li>
+      <li>💼 <a href="https://www.linkedin.com/in/pablo-gomez-villen" target="_blank">LinkedIn</a></li>
+    </ul>
+  </div>
+  <button class="contact-mini" aria-label="Open contact">📩</button>
+
+</Layout>

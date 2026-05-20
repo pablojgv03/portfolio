@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import ContactScript from '../components/ContactScript.astro';
 import ExitIntentPopup from '../components/ExitIntentPopup.astro';
+import enData from '../data/i18n/en.json';
 
 export const prerender = false;
 const {
@@ -14,18 +15,33 @@ const {
   ogImage = '/img/opengraph.png',
   jsonLd,
   lcp,
+  alternateEn,
+  alternateEs,
 } = Astro.props;
 
+const isEN = lang === 'en';
+const basePath = isEN ? '/en' : '';
+
 const ogImageAbsolute = `https://pablogomezvillen.com${ogImage}`;
-const ogLocale = lang === 'en' ? 'en_US' : 'es_ES';
+const ogLocale = isEN ? 'en_US' : 'es_ES';
 
 const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+const normalizedPath = currentPath.replace(/^\/en/, '') || '/';
 const navClass = (href: string) => {
-  const match = href === '/' ? currentPath === '/' : currentPath.startsWith(href);
+  const match = href === '/' ? normalizedPath === '/' : normalizedPath.startsWith(href);
   return match ? 'nav-current' : undefined;
 };
 const navCurrent = (href: string) => navClass(href) ? 'page' : undefined;
 const jsonLdList = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+
+const navHome       = isEN ? enData.nav.home       : 'Inicio';
+const navExperience = isEN ? enData.nav.experience  : 'Experiencia';
+const navAbout      = isEN ? enData.nav.about       : 'Sobre mí';
+const heroGreeting  = isEN ? enData.hero.greeting   : '👋 Hola, soy <span>Pablo Gómez</span>';
+const heroRole      = isEN ? enData.hero.role       : 'Desarrollador Full Stack | PHP · Laravel · JavaScript · MySQL';
+const heroBtnCV     = isEN ? enData.hero.btnCV      : '📄 Descargar CV';
+const cvFile        = isEN ? 'CV_Pablo_Gomez_Villen_Software-Developer.pdf' : 'CV_Full-stack_Pablo_Gomez_Villen_Desarrollador.pdf';
+const rightsText    = isEN ? enData.rights          : '© 2026 Pablo Gómez Villén || Programador Full Stack';
 ---
 
 <html lang={lang}>
@@ -38,6 +54,9 @@ const jsonLdList = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
     {description && <meta name="description" content={description}>}
     {keywords && <meta name="keywords" content={keywords}>}
     {canonical && <link rel="canonical" href={canonical}>}
+    {alternateEs && <link rel="alternate" hreflang="es" href={alternateEs}>}
+    {alternateEn && <link rel="alternate" hreflang="en" href={alternateEn}>}
+    {(alternateEs || alternateEn) && <link rel="alternate" hreflang="x-default" href={alternateEs ?? canonical}>}
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
@@ -62,7 +81,6 @@ const jsonLdList = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
     <link rel="icon" type="image/png" href="/favicon.png">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <meta name="theme-color" content="#1e3c72">
-    <link rel="modulepreload" href="/scripts/i18n.js">
     {lcp && <link rel="preload" href={lcp} as="image" fetchpriority="high">}
   </head>
   <body class="contact-open">
@@ -76,13 +94,10 @@ const jsonLdList = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 
         <!-- Menú de escritorio -->
         <nav class="nav-links desktop">
-          <a href="/" class={navClass('/')} aria-current={navCurrent('/')} data-i18n="nav.home">Inicio</a>
-          <!-- PROYECTOS OCULTO temporalmente (en construcción)
-          <a href="/proyectos" data-i18n="nav.projects">Proyectos</a>
-          -->
-          <a href="/experiencia" class={navClass('/experiencia')} aria-current={navCurrent('/experiencia')} data-i18n="nav.experience">Experiencia</a>
-          <a href="/pablo-gomez-villen" class={navClass('/pablo-gomez-villen')} aria-current={navCurrent('/pablo-gomez-villen')} data-i18n="nav.about">Sobre mí</a>
-          <a href="/blog" class={navClass('/blog')} aria-current={navCurrent('/blog')} data-i18n="nav.blog">Blog</a>
+          <a href={`${basePath}/`} class={navClass('/')} aria-current={navCurrent('/')}>{navHome}</a>
+          <a href={`${basePath}/experiencia`} class={navClass('/experiencia')} aria-current={navCurrent('/experiencia')}>{navExperience}</a>
+          <a href={`${basePath}/pablo-gomez-villen`} class={navClass('/pablo-gomez-villen')} aria-current={navCurrent('/pablo-gomez-villen')}>{navAbout}</a>
+          <a href={`${basePath}/blog`} class={navClass('/blog')} aria-current={navCurrent('/blog')}>Blog</a>
         </nav>
 
         <!-- Toggle idioma (solo escritorio) -->
@@ -102,18 +117,15 @@ const jsonLdList = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
       <!-- Menú móvil -->
       <nav class="nav-links mobile" id="mobileMenu">
         <div class="menu-header">
-          <a href="/" class="logo" aria-label="Ir al inicio">
+          <a href={`${basePath}/`} class="logo" aria-label="Go to homepage">
             <img src="/favicon.ico" alt="Pablo Gómez - Portfolio" />
           </a>
           <button class="close-menu" aria-label="Cerrar menú">✕</button>
         </div>
-        <a href="/" class={navClass('/')} aria-current={navCurrent('/')} data-i18n="nav.home">Inicio</a>
-        <!-- PROYECTOS OCULTO temporalmente (en construcción)
-        <a href="/proyectos" data-i18n="nav.projects">Proyectos</a>
-        -->
-        <a href="/experiencia" class={navClass('/experiencia')} aria-current={navCurrent('/experiencia')} data-i18n="nav.experience">Experiencia</a>
-        <a href="/pablo-gomez-villen" class={navClass('/pablo-gomez-villen')} aria-current={navCurrent('/pablo-gomez-villen')} data-i18n="nav.about">Sobre mí</a>
-        <a href="/blog" class={navClass('/blog')} aria-current={navCurrent('/blog')} data-i18n="nav.blog">Blog</a>
+        <a href={`${basePath}/`} class={navClass('/')} aria-current={navCurrent('/')}>{navHome}</a>
+        <a href={`${basePath}/experiencia`} class={navClass('/experiencia')} aria-current={navCurrent('/experiencia')}>{navExperience}</a>
+        <a href={`${basePath}/pablo-gomez-villen`} class={navClass('/pablo-gomez-villen')} aria-current={navCurrent('/pablo-gomez-villen')}>{navAbout}</a>
+        <a href={`${basePath}/blog`} class={navClass('/blog')} aria-current={navCurrent('/blog')}>Blog</a>
 
         <!-- Toggle idioma (solo móvil) -->
         <div class="lang-toggle mobile-only" aria-label="Cambiar idioma">
@@ -131,13 +143,10 @@ const jsonLdList = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
     {showHero && (
       <header class="hero">
         <div class="hero-content">
-          <h1 data-i18n="hero.greeting">👋 Hola, soy <span>Pablo Gómez</span></h1>
-          <p data-i18n="hero.role">Desarrollador Full Stack | PHP · Laravel · JavaScript · MySQL</p>
+          <h1 set:html={heroGreeting}></h1>
+          <p>{heroRole}</p>
           <div class="hero-buttons">
-            <!-- PROYECTOS OCULTO temporalmente (en construcción)
-            <a href="#proyectos" class="btn" data-i18n="hero.btnProjects"></a>
-            -->
-            <a id="cv-link" href="CV_Full-stack_Pablo_Gomez_Villen_Desarrollador.pdf" class="btn secondary" data-i18n="hero.btnCV">📄 Descargar CV</a>
+            <a id="cv-link" href={cvFile} class="btn secondary">{heroBtnCV}</a>
           </div>
         </div>
       </header>
@@ -150,7 +159,7 @@ const jsonLdList = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 
     <!-- Footer -->
     <footer>
-      <p data-i18n="rights">© 2026 Pablo Gómez Villén || Programador Full Stack</p>
+      <p>{rightsText}</p>
     </footer>
 
     <!-- Scroll to top -->
@@ -168,8 +177,6 @@ const jsonLdList = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 
     <!-- Scripts -->
     <script type="module">
-      import { loadLanguage, getLanguage, setLanguage } from '/scripts/i18n.js';
-
       window.addEventListener('DOMContentLoaded', () => {
         const toggle = document.querySelector('.nav-toggle');
         const menu = document.getElementById('mobileMenu');
@@ -195,20 +202,13 @@ const jsonLdList = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
           }
         });
 
-        // --- Idioma ---
-        const cookieLang = getLanguage();
-        langSwitches.forEach(sw => sw.checked = cookieLang === 'en');
+        // --- Idioma (URL-based) ---
+        const isEnPage = window.location.pathname.startsWith('/en');
+        langSwitches.forEach(sw => sw.checked = isEnPage);
+        // Sincronizar cookie con la URL actual
+        document.cookie = `lang=${isEnPage ? 'en' : 'es'}; path=/; max-age=31536000`;
 
-        const CV_LINKS = {
-          es: 'CV_Full-stack_Pablo_Gomez_Villen_Desarrollador.pdf',
-          en: 'CV_Pablo_Gomez_Villen_Software-Developer.pdf',
-        };
-
-        function updateCvLink(lang) {
-          const cvLink = document.getElementById('cv-link');
-          if (cvLink) cvLink.href = CV_LINKS[lang] || CV_LINKS.es;
-        }
-
+        // CV: click abre en nueva pestaña y descarga
         const cvLink = document.getElementById('cv-link');
         if (cvLink) {
           cvLink.addEventListener('click', (e) => {
@@ -224,20 +224,22 @@ const jsonLdList = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
           });
         }
 
-        // El español está pre-renderizado en el HTML, solo cargar para otros idiomas
-        updateCvLink(cookieLang);
-        if (cookieLang !== 'es') {
-          loadLanguage(cookieLang);
-        }
-
+        // Toggle: navegar a la URL del idioma alternativo
         langSwitches.forEach(sw => {
           sw.addEventListener('change', (e) => {
-            const checked = e.target.checked;
-            langSwitches.forEach(other => other.checked = checked);
-            const idioma = checked ? 'en' : 'es';
-            setLanguage(idioma);
-            updateCvLink(idioma);
-            loadLanguage(idioma); // Traducir inmediatamente sin recargar
+            const toEN = e.target.checked;
+            langSwitches.forEach(other => other.checked = toEN);
+            document.cookie = `lang=${toEN ? 'en' : 'es'}; path=/; max-age=31536000`;
+            const path = window.location.pathname;
+            if (toEN) {
+              // ES → EN: añadir prefijo /en
+              const enPath = '/en' + (path === '/' ? '' : path);
+              window.location.href = enPath;
+            } else {
+              // EN → ES: quitar prefijo /en
+              const esPath = path.replace(/^\/en/, '') || '/';
+              window.location.href = esPath;
+            }
           });
         });
 

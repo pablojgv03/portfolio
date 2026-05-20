@@ -13,8 +13,74 @@ const { slug } = Astro.params;
 const postEs = esData.blog[slug];
 const postEn = enData.blog?.[slug];
 
-const catClass  = postEs.category === 'Formación' ? 'cat-formation' : 'cat-info';
-const tagsHtml  = (postEs.tags || []).map(t => `<span>${t}</span>`).join('');
+const catClass = postEs.category === 'Formación' ? 'cat-formation' : 'cat-info';
+const tagsHtml = (postEs.tags || []).map(t => `<span>${t}</span>`).join('');
+
+function formatDate(dateStr, lang = 'es') {
+  if (!dateStr || !/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr || '';
+  const [y, m] = dateStr.split('-');
+  const months = lang === 'en'
+    ? ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+    : ['ene.','feb.','mar.','abr.','may.','jun.','jul.','ago.','sep.','oct.','nov.','dic.'];
+  return `${months[parseInt(m, 10) - 1]} ${y}`;
+}
+
+function truncate(str, max = 55) {
+  return str.length > max ? str.slice(0, max - 1) + '…' : str;
+}
+
+// Related posts: same category first, then fill from others, max 3
+const allSlugs = Object.keys(esData.blog).filter(s => s !== slug && !esData.blog[s].hidden);
+const sameCat  = allSlugs.filter(s => esData.blog[s].category === postEs.category);
+const otherCat = allSlugs.filter(s => esData.blog[s].category !== postEs.category);
+const sortDesc = (a, b) => (esData.blog[b].date || '').localeCompare(esData.blog[a].date || '');
+const relatedSlugs = [...sameCat.sort(sortDesc), ...otherCat.sort(sortDesc)].slice(0, 3);
+const relatedEs = relatedSlugs.map(s => ({ slug: s, ...esData.blog[s] }));
+const relatedEn = relatedSlugs.map(s => ({ slug: s, ...(enData.blog?.[s] || {}) }));
+
+// JSON-LD: BlogPosting + BreadcrumbList
+const blogPosting = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": postEs.title,
+  "description": postEs.subtitle || '',
+  "datePublished": postEs.date,
+  "dateModified": postEs.date,
+  "author": {
+    "@type": "Person",
+    "name": "Pablo Gómez Villén",
+    "url": "https://pablogomezvillen.com",
+    "sameAs": ["https://www.linkedin.com/in/pablo-gomez-villen"]
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "Pablo Gómez Villén",
+    "url": "https://pablogomezvillen.com"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": `https://pablogomezvillen.com/blog/${slug}`
+  },
+  "url": `https://pablogomezvillen.com/blog/${slug}`,
+  "image": "https://pablogomezvillen.com/img/opengraph.png",
+  "keywords": (postEs.tags || []).join(', '),
+  "inLanguage": "es-ES",
+  "isPartOf": {
+    "@type": "Blog",
+    "@id": "https://pablogomezvillen.com/blog",
+    "name": "Blog — Pablo Gómez"
+  }
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://pablogomezvillen.com" },
+    { "@type": "ListItem", "position": 2, "name": "Blog",   "item": "https://pablogomezvillen.com/blog" },
+    { "@type": "ListItem", "position": 3, "name": postEs.title, "item": `https://pablogomezvillen.com/blog/${slug}` }
+  ]
+};
 ---
 
 <Layout
@@ -24,9 +90,19 @@ const tagsHtml  = (postEs.tags || []).map(t => `<span>${t}</span>`).join('');
   description={postEs.subtitle || ''}
   canonical={`https://pablogomezvillen.com/blog/${slug}`}
   keywords={(postEs.tags || []).join(', ')}
+  jsonLd={[blogPosting, breadcrumbSchema]}
 >
 
   <div id="view-post">
+
+    <!-- Breadcrumb visual -->
+    <nav class="blog-breadcrumb" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="/" id="bc-home">Inicio</a></li>
+        <li><a href="/blog" id="bc-blog">Blog</a></li>
+        <li aria-current="page" id="bc-current">{truncate(postEs.title)}</li>
+      </ol>
+    </nav>
 
     <div class="blog-post-banner">
       <div class="blog-post-banner-inner">
@@ -43,15 +119,7 @@ const tagsHtml  = (postEs.tags || []).map(t => `<span>${t}</span>`).join('');
     <article class="blog-article">
       <div class="blog-article-meta">
         <a href="/blog" class="blog-back-link" id="blog-back-link">← Blog</a>
-        <time class="blog-date" id="blog-date">{
-          (() => {
-            const d = postEs.date || '';
-            if (!/^\d{4}-\d{2}-\d{2}$/.test(d)) return d;
-            const [y, m] = d.split('-');
-            const months = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
-            return `${months[parseInt(m,10)-1]}. ${y}`;
-          })()
-        }</time>
+        <time class="blog-date" id="blog-date" datetime={postEs.date}>{formatDate(postEs.date)}</time>
       </div>
       <div class="blog-article-body" id="blog-content" set:html={postEs.content}></div>
       <div class="blog-article-footer">
@@ -59,14 +127,39 @@ const tagsHtml  = (postEs.tags || []).map(t => `<span>${t}</span>`).join('');
       </div>
     </article>
 
+    <!-- Artículos relacionados (server-rendered — Google lo rastrea) -->
+    {relatedEs.length > 0 && (
+      <aside class="blog-related">
+        <h2 class="blog-related-title" id="related-title">Artículos relacionados</h2>
+        <div class="blog-related-grid">
+          {relatedEs.map((p, i) => (
+            <a href={`/blog/${p.slug}`} class="blog-related-card" data-ri={i}>
+              <span class={`blog-related-cat ${p.category === 'Formación' ? 'cat-formation' : 'cat-info'}`} data-rc={i}>{p.category}</span>
+              <h3 class="blog-related-card-title" data-rt={i}>{p.title}</h3>
+              <span class="blog-related-date" data-rd={i}>{formatDate(p.date)}</span>
+            </a>
+          ))}
+        </div>
+      </aside>
+    )}
+
   </div>
 
 </Layout>
 
-<script define:vars={{ postEn }}>
+<script define:vars={{ postEn, relatedEn }}>
   function getLang() {
     const c = document.cookie.split('; ').find(r => r.startsWith('lang='));
     return c ? c.split('=')[1] : (localStorage.getItem('lang') || 'es');
+  }
+
+  function fmtDate(dateStr, lang) {
+    if (!dateStr || !/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr || '';
+    const [y, m] = dateStr.split('-');
+    const months = lang === 'en'
+      ? ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+      : ['ene.','feb.','mar.','abr.','may.','jun.','jul.','ago.','sep.','oct.','nov.','dic.'];
+    return `${months[parseInt(m, 10) - 1]} ${y}`;
   }
 
   if (getLang() === 'en' && postEn) {
@@ -79,21 +172,38 @@ const tagsHtml  = (postEs.tags || []).map(t => `<span>${t}</span>`).join('');
     document.getElementById('blog-post-title').textContent    = postEn.title;
     document.getElementById('blog-post-subtitle').textContent = postEn.subtitle || '';
     document.getElementById('blog-read-time').textContent     = postEn.readTime ? `⏱ ${postEn.readTime}` : '';
-    const rawDate = postEn.date || '';
-    const fmtDate = (() => {
-      if (!/^\d{4}-\d{2}-\d{2}$/.test(rawDate)) return rawDate;
-      const [y, m] = rawDate.split('-');
-      const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-      return `${months[parseInt(m,10)-1]} ${y}`;
-    })();
-    document.getElementById('blog-date').textContent = fmtDate;
+    document.getElementById('blog-date').textContent          = fmtDate(postEn.date || '', 'en');
     document.getElementById('blog-content').innerHTML         = postEn.content;
     document.getElementById('blog-back-btn').textContent      = '← Back to blog';
+    document.getElementById('blog-back-link').textContent     = '← Blog';
+    document.title = `${postEn.title} — Pablo Gómez`;
+
+    const bcHome = document.getElementById('bc-home');
+    if (bcHome) bcHome.textContent = 'Home';
+    const bcCurrent = document.getElementById('bc-current');
+    if (bcCurrent) {
+      const t = postEn.title || '';
+      bcCurrent.textContent = t.length > 55 ? t.slice(0, 54) + '…' : t;
+    }
+
+    const relatedTitle = document.getElementById('related-title');
+    if (relatedTitle) relatedTitle.textContent = 'Related articles';
+
+    (relatedEn || []).forEach((p, i) => {
+      if (!p) return;
+      const catEl   = document.querySelector(`[data-rc="${i}"]`);
+      const titleEl = document.querySelector(`[data-rt="${i}"]`);
+      const dateEl  = document.querySelector(`[data-rd="${i}"]`);
+      if (catEl) {
+        catEl.textContent = p.category || '';
+        catEl.className   = `blog-related-cat ${p.category === 'Education' ? 'cat-formation' : 'cat-info'}`;
+      }
+      if (titleEl) titleEl.textContent = p.title || '';
+      if (dateEl)  dateEl.textContent  = fmtDate(p.date || '', 'en');
+    });
 
     if (postEn.tags) {
       document.getElementById('blog-post-tags').innerHTML = postEn.tags.map(t => `<span>${t}</span>`).join('');
     }
-
-    document.title = `${postEn.title} — Pablo Gómez`;
   }
 </script>

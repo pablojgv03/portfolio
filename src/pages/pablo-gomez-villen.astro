@@ -17,7 +17,10 @@ import Layout from '../layouts/Layout.astro';
     <!-- Hero -->
     <section class="sm-hero">
       <div class="sm-hero-inner">
-        <img src="/img/foto-empresa.jpg" alt="Pablo Gómez, Full Stack Developer en Granada" class="sm-photo ani" style="--d:0s">
+        <picture>
+          <source type="image/webp" srcset="/img/foto-empresa.webp">
+          <img src="/img/foto-empresa.jpg" alt="Pablo Gómez, Full Stack Developer en Granada" class="sm-photo ani" style="--d:0s">
+        </picture>
         <span class="sm-chip ani" style="--d:.05s" data-i18n="sobre-mi.chip">👨‍💻 Sobre mí</span>
         <h1 class="sm-name ani" style="--d:.1s">Pablo <span>Gómez Villén</span></h1>
         <p class="sm-role ani" style="--d:.2s" data-i18n="sobre-mi.role">Desarrollador Full Stack · Soluciones Informáticas · IA &amp; Big Data</p>

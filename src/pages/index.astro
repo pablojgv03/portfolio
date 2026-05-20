@@ -45,12 +45,15 @@ const websiteSchema = {
   canonical="https://pablogomezvillen.com/"
   keywords="Full Stack Developer, Laravel, PHP, JavaScript, MySQL, Google Cloud, ElasticSearch, desarrollador web, Granada, España"
   jsonLd={[personSchema, websiteSchema]}
-  lcp="/img/foto-empresa.jpg"
+  lcp="/img/foto-empresa.webp"
 >
   <!-- Sobre mí -->
   <section id="sobre-mi" class="section">
     <div class="about-grid">
-      <img src="/img/foto-empresa.jpg" alt="Pablo Gómez, Full Stack Developer en Granada" class="avatar" width="140" height="140" fetchpriority="high" />
+      <picture>
+        <source type="image/webp" srcset="/img/foto-empresa.webp">
+        <img src="/img/foto-empresa.jpg" alt="Pablo Gómez, Full Stack Developer en Granada" class="avatar" width="140" height="140" fetchpriority="high">
+      </picture>
       <div class="about-text">
         <h2 data-i18n="section-sobre-mi.title">🙋 Sobre mí</h2>
         <p data-i18n="section-sobre-mi.content">Desarrollador Full Stack con más de un año de experiencia en producción, especializado en PHP (Laravel), JavaScript y MySQL. He trabajado en dos proyectos reales de principio a fin en empresas del sector edtech, desde el diseño de bases de datos hasta la integración de APIs REST y la mejora de rendimiento front-end. Formación complementaria en Especialización en IA y Big Data, y actualmente cursando DAW (jun. 2026). Busco incorporarme a un equipo donde seguir creciendo como desarrollador Full Stack.</p>

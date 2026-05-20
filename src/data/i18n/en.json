@@ -129,13 +129,13 @@
     "experiencia-fullstack": {
       "hidden": true,
       "title": "Full Stack Experience",
-      "date": "2024",
+      "date": "2026-04-29",
       "content": "<p>During my <strong>full stack developer</strong> experience I worked with Laravel, PHP, and SQL databases.<br>Optimized performance and security, and deployed projects on Google Cloud.</p>"
     },
     "daw": {
       "title": "Web Application Development (DAW)",
       "subtitle": "Ongoing until June 2026. Modern PHP, JavaScript, MySQL and advanced web design — completing the full stack cycle with formal foundations.",
-      "date": "2025 – 2026",
+      "date": "2026-05-13",
       "category": "Education",
       "readTime": "4 min read",
       "tags": [
@@ -150,7 +150,7 @@
     "dam": {
       "title": "Multiplatform Application Development (DAM)",
       "subtitle": "The starting point: Java, Android, SQL and the fundamentals that remain the foundation of everything I build today.",
-      "date": "2021 – 2023",
+      "date": "2025-11-05",
       "category": "Education",
       "readTime": "5 min read",
       "tags": [
@@ -165,7 +165,7 @@
     "ia-bigdata": {
       "title": "AI and Big Data Specialization",
       "subtitle": "Python, Machine Learning and large-scale data analysis: what I learned and how I applied it in a real mental health detection project.",
-      "date": "2025",
+      "date": "2025-12-03",
       "category": "Education",
       "readTime": "8 min read",
       "tags": [
@@ -181,7 +181,7 @@
     "impacto-ia": {
       "title": "The Impact of AI on Software Development",
       "subtitle": "AI tools are redefining how we develop. What changes, what remains, and how to prepare.",
-      "date": "2025",
+      "date": "2025-11-19",
       "category": "Informative",
       "readTime": "6 min read",
       "tags": [
@@ -195,7 +195,7 @@
     "digitalizacion-empresas": {
       "title": "Why Local Businesses Must Go Digital Now",
       "subtitle": "Restaurants, clinics, shops: digitalization is no longer optional. Benefits, barriers and where to start.",
-      "date": "2025",
+      "date": "2025-11-12",
       "category": "Informative",
       "readTime": "5 min read",
       "tags": [
@@ -209,7 +209,7 @@
     "desarrollador-web-granada": {
       "title": "Full Stack Web Developer in Granada — Pablo Gómez Villén",
       "subtitle": "Who I am, how I work, and what kind of projects I can help you build",
-      "date": "2025",
+      "date": "2025-11-26",
       "category": "Informative",
       "readTime": "7 min read",
       "tags": [
@@ -223,7 +223,7 @@
     "precio-pagina-web-granada": {
       "title": "How Much Does a Website Cost in Granada? 2025 Price Guide",
       "subtitle": "Real prices, no fluff: from a simple website to an online store or custom app",
-      "date": "2025",
+      "date": "2025-12-10",
       "category": "Informative",
       "readTime": "8 min read",
       "tags": [
@@ -237,7 +237,7 @@
     "web-restaurantes-granada": {
       "title": "Website for Restaurants in Granada: Digital Menu, Online Bookings and Google Maps",
       "subtitle": "How to build your own digital channel and stop paying 30% commission to delivery platforms",
-      "date": "2025",
+      "date": "2025-12-17",
       "category": "Informative",
       "readTime": "7 min read",
       "tags": [
@@ -251,7 +251,7 @@
     "freelance-programador-granada": {
       "title": "How to Hire a Freelance Programmer in Granada: A Practical Guide",
       "subtitle": "Advantages, red flags and key questions before closing a web development project",
-      "date": "2025",
+      "date": "2025-12-22",
       "category": "Informative",
       "readTime": "8 min read",
       "tags": [
@@ -265,7 +265,7 @@
     "seo-local-granada": {
       "title": "Local SEO in Granada: How to Appear on Google if You Have a Local Business",
       "subtitle": "A practical guide to local positioning for restaurants, clinics, shops and any business with a physical presence in Granada",
-      "date": "2025",
+      "date": "2026-01-07",
       "category": "Informative",
       "readTime": "9 min read",
       "tags": [
@@ -279,7 +279,7 @@
     "laravel-php-produccion": {
       "title": "Laravel in Production: Lessons Learned Working on Platforms with Thousands of Users",
       "subtitle": "N+1 queries, jobs, testing and real technical decisions in high-demand environments",
-      "date": "2025",
+      "date": "2026-01-14",
       "category": "Informative",
       "readTime": "10 min read",
       "tags": [
@@ -295,7 +295,7 @@
     "web-clinicas-granada": {
       "title": "Website for Clinics and Practices in Granada: Online Booking, GDPR and Medical SEO",
       "subtitle": "Everything a clinic, medical practice or private health centre in Granada needs on its website",
-      "date": "2025",
+      "date": "2026-01-21",
       "category": "Informative",
       "readTime": "8 min read",
       "tags": [
@@ -309,7 +309,7 @@
     "tienda-online-granada": {
       "title": "Online Store for Businesses in Granada: When It Makes Sense and How to Do It Right",
       "subtitle": "Marketplace vs own store, technical options, payment gateways and mistakes that cost money",
-      "date": "2025",
+      "date": "2026-01-28",
       "category": "Informative",
       "readTime": "9 min read",
       "tags": [
@@ -324,7 +324,7 @@
     "mantenimiento-web-granada": {
       "title": "Web Maintenance in Granada: Why Your Website Needs Constant Care",
       "subtitle": "Security, updates and backups — what it costs to ignore web maintenance until it's too late.",
-      "date": "2025",
+      "date": "2026-02-04",
       "category": "Informative",
       "readTime": "7 min read",
       "tags": [
@@ -338,7 +338,7 @@
     "velocidad-web-seo-granada": {
       "title": "Web Loading Speed: The SEO Factor Most Granada SMEs Ignore",
       "subtitle": "Google penalises slow websites. How to measure your site speed and what to do to improve it without being technical.",
-      "date": "2025",
+      "date": "2026-02-11",
       "category": "Informative",
       "readTime": "7 min read",
       "tags": [
@@ -353,7 +353,7 @@
     "php-medida-vs-wordpress": {
       "title": "Custom PHP vs WordPress: When to Use Each Option for Your Business",
       "subtitle": "WordPress isn't always the answer and custom development isn't always necessary. The honest guide to choosing wisely.",
-      "date": "2025",
+      "date": "2026-02-18",
       "category": "Informative",
       "readTime": "8 min read",
       "tags": [
@@ -368,7 +368,7 @@
     "google-my-business-granada": {
       "title": "Complete Google My Business Guide for Businesses in Granada",
       "subtitle": "Step by step to appear on the Google map when someone searches for your service in Granada — free and without technical jargon.",
-      "date": "2025",
+      "date": "2026-02-25",
       "category": "Informative",
       "readTime": "8 min read",
       "tags": [
@@ -383,7 +383,7 @@
     "automatizacion-negocios-granada": {
       "title": "Automation for Businesses in Granada: How to Save 10 Hours a Week",
       "subtitle": "Automatic WhatsApp, appointment reminders, effortless invoicing — the automations any local business can implement today.",
-      "date": "2025",
+      "date": "2026-03-04",
       "category": "Informative",
       "readTime": "7 min read",
       "tags": [
@@ -398,7 +398,7 @@
     "como-es-trabajar-conmigo": {
       "title": "How Working With Me Works: From First Message to Your Website in Production",
       "subtitle": "The complete process, no surprises: briefing, proposal, development, delivery and post-launch support.",
-      "date": "2025",
+      "date": "2026-03-11",
       "category": "Informative",
       "readTime": "8 min read",
       "tags": [
@@ -413,7 +413,7 @@
     "errores-web-pymes-granada": {
       "title": "7 Website Mistakes That Cost Granada Businesses Customers",
       "subtitle": "If your website makes any of these mistakes, you're handing customers to the competition — and you probably don't even know it.",
-      "date": "2025",
+      "date": "2026-03-18",
       "category": "Informative",
       "readTime": "7 min read",
       "tags": [
@@ -428,7 +428,7 @@
     "app-movil-vs-web-granada": {
       "title": "Mobile App vs Web Application: What Does Your Granada Business Really Need",
       "subtitle": "Before investing in a native iOS and Android app, read this — it could save you thousands of euros.",
-      "date": "2025",
+      "date": "2026-03-25",
       "category": "Informative",
       "readTime": "8 min read",
       "tags": [
@@ -443,7 +443,7 @@
     "reputacion-online-granada": {
       "title": "Online Reputation for Businesses in Granada: How to Manage and Improve It",
       "subtitle": "93% of consumers read reviews before buying. How to build an online reputation that attracts customers in Granada.",
-      "date": "2025",
+      "date": "2026-04-08",
       "category": "Informative",
       "readTime": "7 min read",
       "tags": [
@@ -458,7 +458,7 @@
     "diseno-web-que-convierte": {
       "title": "Web Design That Converts: How to Turn Visits Into Customers",
       "subtitle": "Having traffic isn't enough — web design determines whether that traffic converts into calls, bookings and sales.",
-      "date": "2025",
+      "date": "2026-04-22",
       "category": "Informative",
       "readTime": "8 min read",
       "tags": [

@@ -43,7 +43,15 @@ const tagsHtml  = (postEs.tags || []).map(t => `<span>${t}</span>`).join('');
     <article class="blog-article">
       <div class="blog-article-meta">
         <a href="/blog" class="blog-back-link" id="blog-back-link">← Blog</a>
-        <time class="blog-date" id="blog-date">{postEs.date}</time>
+        <time class="blog-date" id="blog-date">{
+          (() => {
+            const d = postEs.date || '';
+            if (!/^\d{4}-\d{2}-\d{2}$/.test(d)) return d;
+            const [y, m] = d.split('-');
+            const months = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+            return `${months[parseInt(m,10)-1]}. ${y}`;
+          })()
+        }</time>
       </div>
       <div class="blog-article-body" id="blog-content" set:html={postEs.content}></div>
       <div class="blog-article-footer">
@@ -71,7 +79,14 @@ const tagsHtml  = (postEs.tags || []).map(t => `<span>${t}</span>`).join('');
     document.getElementById('blog-post-title').textContent    = postEn.title;
     document.getElementById('blog-post-subtitle').textContent = postEn.subtitle || '';
     document.getElementById('blog-read-time').textContent     = postEn.readTime ? `⏱ ${postEn.readTime}` : '';
-    document.getElementById('blog-date').textContent          = postEn.date || '';
+    const rawDate = postEn.date || '';
+    const fmtDate = (() => {
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(rawDate)) return rawDate;
+      const [y, m] = rawDate.split('-');
+      const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      return `${months[parseInt(m,10)-1]} ${y}`;
+    })();
+    document.getElementById('blog-date').textContent = fmtDate;
     document.getElementById('blog-content').innerHTML         = postEn.content;
     document.getElementById('blog-back-btn').textContent      = '← Back to blog';
 

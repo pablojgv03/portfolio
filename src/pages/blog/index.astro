@@ -146,9 +146,12 @@ const allPosts = { es: es.blog, en: en.blog };
       filter();
     });
 
-    function extractYear(dateStr) {
-      const m = (dateStr || '').match(/\d{4}/);
-      return m ? parseInt(m[0], 10) : 0;
+    function toSortKey(dateStr) {
+      if (!dateStr) return '0000-00-00';
+      // ISO date YYYY-MM-DD sorts lexicographically; fallback extracts first year
+      if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr;
+      const m = dateStr.match(/\d{4}/);
+      return m ? `${m[0]}-00-00` : '0000-00-00';
     }
 
     function filter() {
@@ -163,12 +166,21 @@ const allPosts = { es: es.blog, en: en.blog };
         );
       }
       if (curSort === 'newest') {
-        list.sort((a, b) => (extractYear(b.date) - extractYear(a.date)) || (a._idx - b._idx));
+        list.sort((a, b) => toSortKey(b.date).localeCompare(toSortKey(a.date)) || (a._idx - b._idx));
       } else {
-        list.sort((a, b) => (extractYear(a.date) - extractYear(b.date)) || (a._idx - b._idx));
+        list.sort((a, b) => toSortKey(a.date).localeCompare(toSortKey(b.date)) || (a._idx - b._idx));
       }
       renderCards(list);
     }
+  }
+
+  function formatDisplayDate(dateStr, lang) {
+    if (!dateStr || !/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr || '';
+    const [year, month] = dateStr.split('-');
+    const monthsES = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+    const monthsEN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const months   = lang === 'en' ? monthsEN : monthsES;
+    return `${months[parseInt(month, 10) - 1]} ${year}`;
   }
 
   function renderCards(list) {
@@ -188,13 +200,14 @@ const allPosts = { es: es.blog, en: en.blog };
       const isFormation = p.category === CAT_FORMATION;
       const catClass    = isFormation ? 'cat-formation' : 'cat-info';
       const tags        = (p.tags || []).slice(0, 3).map(t => `<span>${t}</span>`).join('');
+      const dateDisplay = formatDisplayDate(p.date, lang);
       return `
         <article class="blog-card" role="link" tabindex="0"
           onclick="location.href='/blog/${p.slug}'"
           onkeydown="if(event.key==='Enter')location.href='/blog/${p.slug}'">
           <div class="blog-card-top">
             <span class="blog-card-category ${catClass}">${p.category || ''}</span>
-            <span class="blog-card-date">${p.date || ''}</span>
+            <span class="blog-card-date">${dateDisplay}</span>
           </div>
           <h2 class="blog-card-title">${p.title}</h2>
           <p class="blog-card-subtitle">${p.subtitle || ''}</p>

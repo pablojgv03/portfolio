@@ -14,6 +14,7 @@ const badgeLabel: Record<string, string> = { web: 'Web', mobile: 'Android', desk
 const paragraphs = project['large-description'].en.split('\n\n').filter(Boolean);
 const screenshots = (project as any).screenshots ?? [];
 const darkHero = (project as any).darkHero ?? false;
+const otherProjects = projectsData.proyectos.filter((p) => p.slug !== slug);
 const rawVideoUrl: string | undefined = (project as any).videoUrl;
 const videoId = rawVideoUrl?.match(/(?:youtu\.be\/|youtube\.com\/watch\?v=)([^&\n?#]+)/)?.[1] ?? null;
 const embedUrl = videoId ? `https://www.youtube.com/embed/${videoId}?rel=0` : null;
@@ -175,6 +176,29 @@ const videoSchema = videoId ? {
         </div>
       </div>
     </div>
+  )}
+
+  {otherProjects.length > 0 && (
+    <section class="pd-otros">
+      <div class="pd-otros-inner">
+        <p class="pd-otros-eyebrow">More projects</p>
+        <h2 class="pd-otros-title">You might also like</h2>
+        <div class="pd-otros-grid">
+          {otherProjects.map((p) => (
+            <a href={`/en/proyectos/${p.slug}`} class="pd-otros-card">
+              <div class="pd-otros-img-wrap">
+                <img src={p.image} alt={p.imageAlt} loading="lazy" decoding="async" />
+              </div>
+              <div class="pd-otros-body">
+                <span class={`pd-otros-badge badge-${p.badge}`}>{badgeLabel[p.badge] ?? p.badge}</span>
+                <h3>{p.title}</h3>
+                <p>{p.description.en}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
   )}
 
   <div class="pd-back-wrap">
@@ -454,6 +478,115 @@ const videoSchema = videoId ? {
   .pd-phone { max-width: 120px; border-radius: 26px; }
   .pd-phone-label { font-size: 0.78rem; }
   .pd-screens { padding: 48px 16px 56px; }
+}
+
+/* ── Other projects ── */
+.pd-otros {
+  background: #f4f7ff;
+  border-top: 1.5px solid #e4ecf8;
+  padding: 64px 24px 72px;
+  margin-top: 64px;
+}
+
+.pd-otros-inner {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.pd-otros-eyebrow {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  color: #7c3aed;
+  margin-bottom: 8px;
+}
+
+.pd-otros-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #1e3c72;
+  letter-spacing: -0.02em;
+  margin-bottom: 32px;
+}
+
+.pd-otros-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.pd-otros-card {
+  background: #fff;
+  border: 1.5px solid #e4ecf8;
+  border-radius: 16px;
+  overflow: hidden;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.pd-otros-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(30,60,114,0.1);
+  border-color: #c4d4f0;
+}
+
+.pd-otros-img-wrap {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #0a0a1a;
+}
+
+.pd-otros-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+.pd-otros-card:hover .pd-otros-img-wrap img {
+  transform: scale(1.04);
+}
+
+.pd-otros-body {
+  padding: 16px 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pd-otros-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  width: fit-content;
+}
+
+.pd-otros-body h3 {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #1e3c72;
+  line-height: 1.2;
+}
+
+.pd-otros-body p {
+  font-size: 0.83rem;
+  color: #6b7280;
+  line-height: 1.55;
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  .pd-otros { padding: 48px 16px 56px; }
+  .pd-otros-grid { grid-template-columns: 1fr; }
 }
 
 /* ── Video section ── */

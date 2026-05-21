@@ -40,13 +40,45 @@
       "slug": "start-brawling",
       "badge": "mobile",
       "title": "Start Brawling",
+      "image": "/img/projects/start-brawling/portada.webp",
+      "imageAlt": "Start Brawling — logo de la app Android",
+      "darkHero": true,
+      "screenshots": [
+        {
+          "src": "/img/projects/start-brawling/eventos.webp",
+          "alt": "Pantalla de eventos activos con mapas en tiempo real",
+          "altEn": "Active events screen with real-time maps",
+          "title": "Eventos activos",
+          "titleEn": "Active Events",
+          "caption": "Muestra los eventos en curso, el mapa, el modo de juego y la disponibilidad en tiempo real.",
+          "captionEn": "Displays ongoing events, map, game mode and real-time availability."
+        },
+        {
+          "src": "/img/projects/start-brawling/brawlers.webp",
+          "alt": "Lista de brawlers con imagen, nombre y descripción",
+          "altEn": "Brawler roster with avatar, name and description",
+          "title": "Lista de brawlers",
+          "titleEn": "Brawler Roster",
+          "caption": "Catálogo completo con imagen y descripción de cada personaje extraídos de la API oficial.",
+          "captionEn": "Full catalogue with avatar and description for each character, fetched from the official API."
+        },
+        {
+          "src": "/img/projects/start-brawling/detalle.webp",
+          "alt": "Vista detalle del brawler Glowbert con rareza, descripción, Star Powers y gadgets",
+          "altEn": "Glowbert brawler detail view with rarity, description, Star Powers and gadgets",
+          "title": "Detalle del brawler",
+          "titleEn": "Brawler Details",
+          "caption": "Rareza, descripción, Star Powers y gadgets de cada personaje en una sola pantalla.",
+          "captionEn": "Rarity, description, Star Powers and gadgets for each character in one screen."
+        }
+      ],
       "large-description": {
-        "es": "App Android que consume la API de Brawl Stars para mostrar en tiempo real los eventos activos del juego, mapas disponibles, fichas de personajes y estadísticas de winrate de los mejores brawlers en cada modo de juego. Desarrollada en Java con Android SDK, RecyclerView para el listado dinámico, Glide para la carga de imágenes y AsyncTask para las llamadas asíncronas a la API.",
-        "en": "Android app that consumes the Brawl Stars API to display in real time the active game events, available maps, character profiles and winrate statistics of the top brawlers in each game mode. Built in Java with Android SDK, RecyclerView for dynamic listings, Glide for image loading and AsyncTask for asynchronous API calls."
+        "es": "Start Brawling es una app Android nativa que conecta en tiempo real con la API oficial de Brawl Stars para darte toda la información del juego en un solo lugar.\n\nLa pantalla principal muestra los eventos activos en este momento: nombre del mapa, modo de juego y si está disponible o ya terminó. Todo se actualiza con cada petición a la API sin necesidad de refrescar manualmente.\n\nEl catálogo de brawlers lista todos los personajes disponibles con su imagen oficial, nombre y descripción. Al pulsar en uno se abre la vista de detalle, donde puedes ver su rareza, su historia dentro del juego, los Star Powers desbloqueables y los gadgets que puede equipar.\n\nDesarrollada en Java con Android SDK. Usa RecyclerView con adaptadores personalizados para los listados dinámicos, Glide para la carga y caché de imágenes desde URLs externas, y AsyncTask para las llamadas asíncronas a la API sin bloquear el hilo principal.",
+        "en": "Start Brawling is a native Android app that connects in real time to the official Brawl Stars API to give you all the game information in one place.\n\nThe main screen displays the currently active events: map name, game mode and whether it's live or already over. Everything updates with each API request without any manual refresh.\n\nThe brawler catalogue lists all available characters with their official avatar, name and description. Tapping one opens the detail view, where you can see the character's rarity, in-game story, unlockable Star Powers and equippable gadgets.\n\nBuilt in Java with Android SDK. Uses RecyclerView with custom adapters for dynamic listings, Glide for image loading and URL caching, and AsyncTask for asynchronous API calls without blocking the main thread."
       },
       "description": {
-        "es": "App Android con la API de Brawl Stars — eventos, mapas, personajes y winrate en tiempo real.",
-        "en": "Android app using the Brawl Stars API — events, maps, characters and real-time winrate stats."
+        "es": "App Android con la API de Brawl Stars — eventos activos, fichas de personajes con rareza, Star Powers y gadgets.",
+        "en": "Android app using the Brawl Stars API — active events, character profiles with rarity, Star Powers and gadgets."
       },
       "skills": [
         { "name": "Java", "level": "high" },

@@ -13,6 +13,7 @@ if (!project) return Astro.redirect('/404');
 const badgeLabel: Record<string, string> = { web: 'Web', mobile: 'Android', desktop: 'Desktop' };
 const paragraphs = project['large-description'].en.split('\n\n').filter(Boolean);
 const screenshots = (project as any).screenshots ?? [];
+const darkHero = (project as any).darkHero ?? false;
 
 const softwareSchema = {
   "@context": "https://schema.org",
@@ -39,7 +40,7 @@ const softwareSchema = {
 >
 
   <div
-    class="pd-hero"
+    class={`pd-hero${darkHero ? ' pd-hero--dark' : ''}`}
     style={project.image ? `--hero-bg: url('${project.image}')` : ''}
   >
     <div class="pd-hero-inner">
@@ -138,6 +139,18 @@ const softwareSchema = {
   background-position: center top;
   display: flex;
   align-items: flex-end;
+}
+
+.pd-hero--dark {
+  background-image:
+    linear-gradient(
+      160deg,
+      rgba(5, 3, 12, 0.15) 0%,
+      rgba(5, 3, 12, 0.45) 55%,
+      rgba(5, 3, 12, 0.96) 100%
+    ),
+    var(--hero-bg);
+  background-position: center center;
 }
 
 .pd-hero-inner {

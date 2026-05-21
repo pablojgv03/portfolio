@@ -250,15 +250,23 @@ const videoSchema = videoId ? {
 }
 
 .pd-crumb {
-  font-size: 0.78rem;
-  color: rgba(255,255,255,0.5);
-  margin-bottom: 22px;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.75);
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 999px;
+  padding: 5px 14px;
+  margin-bottom: 20px;
 }
-.pd-crumb a { color: rgba(255,255,255,0.65); text-decoration: none; transition: color 0.15s; }
-.pd-crumb a:hover { color: #fff; }
+.pd-crumb a { color: rgba(255,255,255,0.9); text-decoration: none; transition: color 0.15s; }
+.pd-crumb a:hover { color: #fff; text-decoration: underline; }
+.pd-crumb span[aria-current] { color: rgba(255,255,255,0.6); }
 
 .pd-type-chip {
   display: inline-block;

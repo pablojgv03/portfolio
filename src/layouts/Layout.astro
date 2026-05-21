@@ -30,7 +30,14 @@ const ogLocale = isEN ? 'en_US' : 'es_ES';
 const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 const normalizedPath = currentPath.replace(/^\/en/, '') || '/';
 const navClass = (href: string) => {
-  const match = href === '/' ? normalizedPath === '/' : normalizedPath.startsWith(href);
+  let match: boolean;
+  if (href === '/') {
+    match = normalizedPath === '/';
+  } else if (href === '/proyectos') {
+    match = normalizedPath === '/proyectos';
+  } else {
+    match = normalizedPath.startsWith(href);
+  }
   return match ? 'nav-current' : undefined;
 };
 const navCurrent = (href: string) => navClass(href) ? 'page' : undefined;

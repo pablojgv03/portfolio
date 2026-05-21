@@ -14,6 +14,9 @@ const badgeLabel: Record<string, string> = { web: 'Web', mobile: 'Android', desk
 const paragraphs = project['large-description'].en.split('\n\n').filter(Boolean);
 const screenshots = (project as any).screenshots ?? [];
 const darkHero = (project as any).darkHero ?? false;
+const rawVideoUrl: string | undefined = (project as any).videoUrl;
+const videoId = rawVideoUrl?.match(/(?:youtu\.be\/|youtube\.com\/watch\?v=)([^&\n?#]+)/)?.[1] ?? null;
+const embedUrl = videoId ? `https://www.youtube.com/embed/${videoId}?rel=0` : null;
 
 const softwareSchema = {
   "@context": "https://schema.org",
@@ -25,6 +28,17 @@ const softwareSchema = {
   ...(project.image && { "image": `https://pablogomezvillen.com${project.image}` }),
   "author": { "@type": "Person", "name": "Pablo Gómez", "url": "https://pablogomezvillen.com/en/" }
 };
+
+const videoSchema = videoId ? {
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "name": `Demo — ${project.title}`,
+  "description": project.description.en,
+  "thumbnailUrl": `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
+  "uploadDate": "2026-05-21",
+  "contentUrl": rawVideoUrl,
+  "embedUrl": embedUrl
+} : null;
 ---
 
 <Layout
@@ -35,7 +49,7 @@ const softwareSchema = {
   alternateEs={`https://pablogomezvillen.com/proyectos/${slug}`}
   alternateEn={`https://pablogomezvillen.com/en/proyectos/${slug}`}
   ogImage={project.image || '/img/opengraph.png'}
-  jsonLd={[softwareSchema]}
+  jsonLd={videoSchema ? [softwareSchema, videoSchema] : [softwareSchema]}
   showHero={false}
 >
 
@@ -91,6 +105,22 @@ const softwareSchema = {
       </aside>
     </div>
   </section>
+
+  {embedUrl && (
+    <section class="pd-video-section">
+      <p class="pd-video-eyebrow">Video demo</p>
+      <h2 class="pd-video-title">See it in action</h2>
+      <div class="pd-video-wrapper">
+        <iframe
+          src={embedUrl}
+          title={`Demo — ${project.title}`}
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </section>
+  )}
 
   {screenshots.length > 0 && project.badge !== 'desktop' && (
     <div class="pd-screens">
@@ -424,6 +454,48 @@ const softwareSchema = {
   .pd-phone { max-width: 120px; border-radius: 26px; }
   .pd-phone-label { font-size: 0.78rem; }
   .pd-screens { padding: 48px 16px 56px; }
+}
+
+/* ── Video section ── */
+.pd-video-section {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 56px 24px 0;
+}
+
+.pd-video-eyebrow {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  color: #7c3aed;
+  margin-bottom: 8px;
+}
+
+.pd-video-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #1e3c72;
+  margin-bottom: 20px;
+  letter-spacing: -0.02em;
+}
+
+.pd-video-wrapper {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.13), 0 2px 8px rgba(0,0,0,0.08);
+  border: 1.5px solid #e4ecf8;
+}
+
+.pd-video-wrapper iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
 }
 
 /* ── Desktop window gallery ── */

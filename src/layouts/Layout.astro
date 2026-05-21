@@ -13,6 +13,8 @@ const {
   canonical,
   keywords,
   ogImage = '/img/opengraph.png',
+  ogType = 'website',
+  ogArticleDate,
   jsonLd,
   lcp,
   alternateEn,
@@ -37,9 +39,9 @@ const jsonLdList = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 const navHome       = isEN ? enData.nav.home       : 'Inicio';
 const navExperience = isEN ? enData.nav.experience  : 'Experiencia';
 const navAbout      = isEN ? enData.nav.about       : 'Sobre mí';
-const heroGreeting  = isEN ? enData.hero.greeting   : '👋 Hola, soy <span>Pablo Gómez</span>';
+const heroGreeting  = isEN ? enData.hero.greeting   : 'Hola, soy <span>Pablo Gómez</span>';
 const heroRole      = isEN ? enData.hero.role       : 'Desarrollador Full Stack | PHP · Laravel · JavaScript · MySQL';
-const heroBtnCV     = isEN ? enData.hero.btnCV      : '📄 Descargar CV';
+const heroBtnCV     = isEN ? enData.hero.btnCV      : 'Descargar CV';
 const cvFile        = isEN ? 'CV_Pablo_Gomez_Villen_Software-Developer.pdf' : 'CV_Full-stack_Pablo_Gomez_Villen_Desarrollador.pdf';
 const rightsText    = isEN ? enData.rights          : '© 2026 Pablo Gómez Villén || Programador Full Stack';
 ---
@@ -51,6 +53,7 @@ const rightsText    = isEN ? enData.rights          : '© 2026 Pablo Gómez Vill
     <title>{title}</title>
     <meta name="robots" content="index, follow">
     <meta name="author" content="Pablo Gómez">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     {description && <meta name="description" content={description}>}
     {keywords && <meta name="keywords" content={keywords}>}
     {canonical && <link rel="canonical" href={canonical}>}
@@ -59,13 +62,16 @@ const rightsText    = isEN ? enData.rights          : '© 2026 Pablo Gómez Vill
     {(alternateEs || alternateEn) && <link rel="alternate" hreflang="x-default" href={alternateEs ?? canonical}>}
 
     <!-- Open Graph -->
-    <meta property="og:type" content="website">
+    <meta property="og:type" content={ogType}>
     <meta property="og:locale" content={ogLocale}>
     <meta property="og:site_name" content="Pablo Gómez - Portfolio">
     <meta property="og:title" content={title}>
     {description && <meta property="og:description" content={description}>}
     {canonical && <meta property="og:url" content={canonical}>}
     <meta property="og:image" content={ogImageAbsolute}>
+    {ogType === 'article' && ogArticleDate && <meta property="article:published_time" content={ogArticleDate}>}
+    {ogType === 'article' && ogArticleDate && <meta property="article:modified_time" content={ogArticleDate}>}
+    {ogType === 'article' && <meta property="article:author" content="https://pablogomezvillen.com/pablo-gomez-villen">}
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
@@ -80,10 +86,13 @@ const rightsText    = isEN ? enData.rights          : '© 2026 Pablo Gómez Vill
 
     <link rel="icon" type="image/png" href="/favicon.png">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    <meta name="theme-color" content="#1e3c72">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="alternate" type="application/rss+xml" title="Blog — Pablo Gómez Villén" href="/rss.xml">
+    <meta name="theme-color" content="#2563eb">
     {lcp && <link rel="preload" href={lcp} as="image" fetchpriority="high">}
   </head>
   <body class="contact-open">
+    <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
     <!-- Header -->
     <header class="navbar">
       <div class="navbar-container">
@@ -104,8 +113,8 @@ const rightsText    = isEN ? enData.rights          : '© 2026 Pablo Gómez Vill
         <div class="lang-toggle desktop-only" aria-label="Cambiar idioma">
           <input type="checkbox" id="lang-switch" />
           <label for="lang-switch" class="lang-label">
-            <span class="flag flag-es " onclick="setLanguage('es')"><img src="/img/flags/es.svg" alt="Cambiar idioma a Español"></span>
-            <span class="flag flag-en" onclick="setLanguage('en')"><img src="/img/flags/gb.svg" alt="Switch language to English"></span>
+            <span class="flag flag-es"><img src="/img/flags/es.svg" alt="Cambiar idioma a Español" loading="lazy"></span>
+            <span class="flag flag-en"><img src="/img/flags/gb.svg" alt="Switch language to English" loading="lazy"></span>
             <span class="toggle-slider"></span>
           </label>
         </div>
@@ -146,7 +155,10 @@ const rightsText    = isEN ? enData.rights          : '© 2026 Pablo Gómez Vill
           <h1 set:html={heroGreeting}></h1>
           <p>{heroRole}</p>
           <div class="hero-buttons">
-            <a id="cv-link" href={cvFile} class="btn secondary">{heroBtnCV}</a>
+            <a id="cv-link" href={`/${cvFile}`} download target="_blank" rel="noopener noreferrer" class="btn secondary btn--icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                {heroBtnCV}
+              </a>
           </div>
         </div>
       </header>
@@ -208,21 +220,6 @@ const rightsText    = isEN ? enData.rights          : '© 2026 Pablo Gómez Vill
         // Sincronizar cookie con la URL actual
         document.cookie = `lang=${isEnPage ? 'en' : 'es'}; path=/; max-age=31536000`;
 
-        // CV: click abre en nueva pestaña y descarga
-        const cvLink = document.getElementById('cv-link');
-        if (cvLink) {
-          cvLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            const href = cvLink.href;
-            window.open(href, '_blank');
-            const a = document.createElement('a');
-            a.href = href;
-            a.download = href.split('/').pop();
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-          });
-        }
 
         // Toggle: navegar a la URL del idioma alternativo
         langSwitches.forEach(sw => {

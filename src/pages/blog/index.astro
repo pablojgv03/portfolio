@@ -1,9 +1,17 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import es from '../../data/i18n/es.json';
-import en from '../../data/i18n/en.json';
+import esData from '../../data/i18n/es.json';
 
-const allPosts = { es: es.blog, en: en.blog };
+function fmtDate(d) {
+  if (!d || !/^\d{4}-\d{2}-\d{2}$/.test(d)) return d || '';
+  const [y, m] = d.split('-');
+  return `${ ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'][parseInt(m,10)-1] } ${y}`;
+}
+
+const posts = Object.entries(esData.blog)
+  .filter(([, p]) => !p.hidden)
+  .sort(([, a], [, b]) => (b.date || '').localeCompare(a.date || ''))
+  .map(([slug, p]) => ({ slug, ...p }));
 ---
 
 <Layout
@@ -22,8 +30,8 @@ const allPosts = { es: es.blog, en: en.blog };
     <div class="blog-index-banner">
       <div class="blog-index-banner-inner">
         <span class="blog-index-eyebrow">Blog</span>
-        <h1 class="blog-index-title" id="idx-title">Artículos</h1>
-        <p class="blog-index-subtitle" id="idx-subtitle"></p>
+        <h1 class="blog-index-title">Artículos</h1>
+        <p class="blog-index-subtitle">Desarrollo, tecnología y formación — reflexiones desde la práctica.</p>
       </div>
     </div>
 
@@ -32,193 +40,119 @@ const allPosts = { es: es.blog, en: en.blog };
       <div class="blog-filters-bar">
         <div class="blog-search-wrap">
           <svg class="blog-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-          <input type="search" id="blog-search" class="blog-search-input" placeholder="Buscar artículos...">
+          <input type="search" id="blog-search" class="blog-search-input" placeholder="Buscar artículos..." aria-label="Buscar artículos">
         </div>
         <div class="blog-filters-row">
-          <div class="blog-cat-filters" id="blog-cat-filters"></div>
-          <div class="blog-sort-wrap" id="blog-sort-wrap"></div>
+          <div class="blog-cat-filters" id="blog-cat-filters">
+            <button class="blog-cat-btn active" data-cat="">Todos</button>
+            <button class="blog-cat-btn" data-cat="Formación">Formación</button>
+            <button class="blog-cat-btn" data-cat="Informativo">Informativo</button>
+          </div>
+          <div class="blog-sort-wrap" id="blog-sort-wrap">
+            <button class="blog-sort-btn active" data-sort="newest" aria-label="Ordenar más reciente">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+              Más reciente
+            </button>
+            <button class="blog-sort-btn" data-sort="oldest" aria-label="Ordenar más antiguo">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              Más antiguo
+            </button>
+          </div>
         </div>
       </div>
 
-      <div class="blog-grid" id="blog-grid"></div>
-      <p class="blog-no-results" id="blog-no-results" style="display:none"></p>
+      <div class="blog-grid" id="blog-grid">
+        {posts.map(p => {
+          const isFm = p.category === 'Formación';
+          const tags = (p.tags || []).slice(0, 3);
+          const searchStr = `${p.title} ${p.subtitle || ''} ${(p.tags || []).join(' ')}`.toLowerCase();
+          return (
+            <a href={`/blog/${p.slug}`}
+              class="blog-card"
+              data-cat={p.category}
+              data-date={p.date || ''}
+              data-search={searchStr}>
+              {p.image && (
+                <div class="blog-card-thumb">
+                  <img src={p.image} alt={p.imageAlt || p.title} width="400" height="210" loading="lazy" decoding="async" />
+                </div>
+              )}
+              <div class="blog-card-body">
+                <div class="blog-card-top">
+                  <span class={`blog-card-category ${isFm ? 'cat-formation' : 'cat-info'}`}>{p.category}</span>
+                  <span class="blog-card-date">{fmtDate(p.date)}</span>
+                </div>
+                <h2 class="blog-card-title">{p.title}</h2>
+                <p class="blog-card-subtitle">{p.subtitle || ''}</p>
+                <div class="blog-card-tags">
+                  {tags.map(t => <span>{t}</span>)}
+                </div>
+                <div class="blog-card-footer">
+                  <span class="blog-card-read-time">{p.readTime ? `⏱ ${p.readTime}` : ''}</span>
+                  <span class="blog-card-read-link">Leer más →</span>
+                </div>
+              </div>
+            </a>
+          );
+        })}
+      </div>
+      <p class="blog-no-results" id="blog-no-results" style="display:none">No hay artículos con esos filtros.</p>
 
     </div>
   </div>
 
 </Layout>
 
-<script define:vars={{ allPosts }}>
-  /* ── redirect old ?slug= URLs ── */
+<script>
+  /* redirect old ?slug= URLs */
   const oldSlug = new URLSearchParams(window.location.search).get('slug');
-  if (oldSlug) {
-    window.location.replace(`/blog/${oldSlug}`);
-  }
+  if (oldSlug) window.location.replace(`/blog/${oldSlug}`);
 
-  function getLang() {
-    const c = document.cookie.split('; ').find(r => r.startsWith('lang='));
-    return c ? c.split('=')[1] : (localStorage.getItem('lang') || 'es');
-  }
+  const grid     = document.getElementById('blog-grid');
+  const noResult = document.getElementById('blog-no-results');
+  const allCards = Array.from(grid.querySelectorAll('.blog-card'));
+  let curCat = '', curSearch = '', curSort = 'newest';
 
-  const lang  = getLang();
-  const isEN  = lang === 'en';
-  const posts = allPosts[lang] || allPosts['es'];
+  function applyFilters() {
+    const query = curSearch.toLowerCase().trim();
 
-  const T = {
-    indexTitle:    isEN ? 'Articles'                        : 'Artículos',
-    indexSubtitle: isEN ? 'Development, technology and education — thoughts from the trenches.'
-                        : 'Desarrollo, tecnología y formación — reflexiones desde la práctica.',
-    all:           isEN ? 'All'          : 'Todos',
-    formation:     isEN ? 'Education'   : 'Formación',
-    informative:   isEN ? 'Informative' : 'Informativo',
-    readMore:      isEN ? 'Read more'   : 'Leer más',
-    noResults:     isEN ? 'No articles match your filters.' : 'No hay artículos con esos filtros.',
-    searchPH:      isEN ? 'Search articles…' : 'Buscar artículos…',
-    newest:        isEN ? 'Newest'  : 'Más reciente',
-    oldest:        isEN ? 'Oldest'  : 'Más antiguo',
-  };
-
-  const CAT_FORMATION   = isEN ? 'Education'   : 'Formación';
-  const CAT_INFORMATIVE = isEN ? 'Informative' : 'Informativo';
-
-  document.getElementById('idx-title').textContent    = T.indexTitle;
-  document.getElementById('idx-subtitle').textContent = T.indexSubtitle;
-  document.getElementById('blog-search').placeholder  = T.searchPH;
-
-  const allList = Object.entries(posts || {})
-    .filter(([, p]) => !p.hidden)
-    .map(([s, p], i) => ({ slug: s, _idx: i, ...p }));
-
-  buildFilters(allList);
-  renderCards(allList);
-
-  function buildFilters(allList) {
-    const wrap     = document.getElementById('blog-cat-filters');
-    const sortWrap = document.getElementById('blog-sort-wrap');
-    if (!wrap) return;
-
-    const cats = [
-      { label: T.all,         value: '' },
-      { label: T.formation,   value: CAT_FORMATION },
-      { label: T.informative, value: CAT_INFORMATIVE },
-    ];
-
-    wrap.innerHTML = cats.map((c, i) =>
-      `<button class="blog-cat-btn${i === 0 ? ' active' : ''}" data-cat="${c.value}">${c.label}</button>`
-    ).join('');
-
-    if (sortWrap) {
-      sortWrap.innerHTML = `
-        <button class="blog-sort-btn active" data-sort="newest">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
-          ${T.newest}
-        </button>
-        <button class="blog-sort-btn" data-sort="oldest">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-          ${T.oldest}
-        </button>`;
-    }
-
-    let curCat    = '';
-    let curSearch = '';
-    let curSort   = 'newest';
-
-    wrap.querySelectorAll('.blog-cat-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        wrap.querySelectorAll('.blog-cat-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        curCat = btn.dataset.cat;
-        filter();
-      });
+    let visible = allCards.filter(card => {
+      if (curCat && card.dataset.cat !== curCat) return false;
+      if (query && !card.dataset.search.includes(query)) return false;
+      return true;
     });
 
-    if (sortWrap) {
-      sortWrap.querySelectorAll('.blog-sort-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          sortWrap.querySelectorAll('.blog-sort-btn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          curSort = btn.dataset.sort;
-          filter();
-        });
-      });
-    }
-
-    document.getElementById('blog-search').addEventListener('input', e => {
-      curSearch = e.target.value;
-      filter();
+    visible.sort((a, b) => {
+      const da = a.dataset.date, db = b.dataset.date;
+      return curSort === 'newest' ? db.localeCompare(da) : da.localeCompare(db);
     });
 
-    function toSortKey(dateStr) {
-      if (!dateStr) return '0000-00-00';
-      // ISO date YYYY-MM-DD sorts lexicographically; fallback extracts first year
-      if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr;
-      const m = dateStr.match(/\d{4}/);
-      return m ? `${m[0]}-00-00` : '0000-00-00';
-    }
+    allCards.forEach(c => { c.hidden = true; });
+    visible.forEach(c => { c.hidden = false; grid.appendChild(c); });
 
-    function filter() {
-      let list = allList.slice();
-      if (curCat)           list = list.filter(p => p.category === curCat);
-      if (curSearch.trim()) {
-        const q = curSearch.toLowerCase();
-        list = list.filter(p =>
-          p.title.toLowerCase().includes(q) ||
-          (p.subtitle || '').toLowerCase().includes(q) ||
-          (p.tags || []).some(t => t.toLowerCase().includes(q))
-        );
-      }
-      if (curSort === 'newest') {
-        list.sort((a, b) => toSortKey(b.date).localeCompare(toSortKey(a.date)) || (a._idx - b._idx));
-      } else {
-        list.sort((a, b) => toSortKey(a.date).localeCompare(toSortKey(b.date)) || (a._idx - b._idx));
-      }
-      renderCards(list);
-    }
+    noResult.style.display = visible.length ? 'none' : 'block';
   }
 
-  function formatDisplayDate(dateStr, lang) {
-    if (!dateStr || !/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr || '';
-    const [year, month] = dateStr.split('-');
-    const monthsES = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
-    const monthsEN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    const months   = lang === 'en' ? monthsEN : monthsES;
-    return `${months[parseInt(month, 10) - 1]} ${year}`;
-  }
+  document.querySelectorAll('.blog-cat-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.blog-cat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      curCat = btn.dataset.cat;
+      applyFilters();
+    });
+  });
 
-  function renderCards(list) {
-    const grid     = document.getElementById('blog-grid');
-    const noResult = document.getElementById('blog-no-results');
-    if (!grid) return;
+  document.querySelectorAll('.blog-sort-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.blog-sort-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      curSort = btn.dataset.sort;
+      applyFilters();
+    });
+  });
 
-    if (!list.length) {
-      noResult.textContent   = T.noResults;
-      noResult.style.display = 'block';
-      grid.innerHTML = '';
-      return;
-    }
-    noResult.style.display = 'none';
-
-    grid.innerHTML = list.map(p => {
-      const isFormation = p.category === CAT_FORMATION;
-      const catClass    = isFormation ? 'cat-formation' : 'cat-info';
-      const tags        = (p.tags || []).slice(0, 3).map(t => `<span>${t}</span>`).join('');
-      const dateDisplay = formatDisplayDate(p.date, lang);
-      return `
-        <article class="blog-card" role="link" tabindex="0"
-          onclick="location.href='/blog/${p.slug}'"
-          onkeydown="if(event.key==='Enter')location.href='/blog/${p.slug}'">
-          <div class="blog-card-top">
-            <span class="blog-card-category ${catClass}">${p.category || ''}</span>
-            <span class="blog-card-date">${dateDisplay}</span>
-          </div>
-          <h2 class="blog-card-title">${p.title}</h2>
-          <p class="blog-card-subtitle">${p.subtitle || ''}</p>
-          <div class="blog-card-tags">${tags}</div>
-          <div class="blog-card-footer">
-            <span class="blog-card-read-time">${p.readTime ? `⏱ ${p.readTime}` : ''}</span>
-            <span class="blog-card-read-link">${T.readMore} →</span>
-          </div>
-        </article>`;
-    }).join('');
-  }
+  document.getElementById('blog-search').addEventListener('input', e => {
+    curSearch = e.target.value;
+    applyFilters();
+  });
 </script>

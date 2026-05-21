@@ -1,10 +1,29 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
-import en from '../../../data/i18n/en.json';
-import es from '../../../data/i18n/es.json';
+import enData from '../../../data/i18n/en.json';
+import esData from '../../../data/i18n/es.json';
 
-// Pass both datasets to the client script
-const allPosts = { en: en.blog, es: es.blog };
+function fmtDate(d) {
+  if (!d || !/^\d{4}-\d{2}-\d{2}$/.test(d)) return d || '';
+  const [y, m] = d.split('-');
+  return `${ ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][parseInt(m,10)-1] } ${y}`;
+}
+
+const posts = Object.entries(esData.blog)
+  .filter(([slug, p]) => !p.hidden && enData.blog?.[slug]?.title)
+  .sort(([, a], [, b]) => (b.date || '').localeCompare(a.date || ''))
+  .map(([slug, p]) => {
+    const en = enData.blog[slug];
+    return {
+      slug,
+      date: p.date || '',
+      category: en.category || p.category,
+      title: en.title || p.title,
+      subtitle: en.subtitle || p.subtitle || '',
+      tags: en.tags || p.tags || [],
+      readTime: en.readTime || p.readTime || '',
+    };
+  });
 ---
 
 <Layout
@@ -33,164 +52,118 @@ const allPosts = { en: en.blog, es: es.blog };
       <div class="blog-filters-bar">
         <div class="blog-search-wrap">
           <svg class="blog-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-          <input type="search" id="blog-search" class="blog-search-input" placeholder="Search articles…">
+          <input type="search" id="blog-search" class="blog-search-input" placeholder="Search articles…" aria-label="Search articles">
         </div>
         <div class="blog-filters-row">
-          <div class="blog-cat-filters" id="blog-cat-filters"></div>
-          <div class="blog-sort-wrap" id="blog-sort-wrap"></div>
+          <div class="blog-cat-filters" id="blog-cat-filters">
+            <button class="blog-cat-btn active" data-cat="">All</button>
+            <button class="blog-cat-btn" data-cat="Education">Education</button>
+            <button class="blog-cat-btn" data-cat="Informative">Informative</button>
+          </div>
+          <div class="blog-sort-wrap" id="blog-sort-wrap">
+            <button class="blog-sort-btn active" data-sort="newest" aria-label="Sort newest first">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+              Newest
+            </button>
+            <button class="blog-sort-btn" data-sort="oldest" aria-label="Sort oldest first">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              Oldest
+            </button>
+          </div>
         </div>
       </div>
 
-      <div class="blog-grid" id="blog-grid"></div>
-      <p class="blog-no-results" id="blog-no-results" style="display:none"></p>
+      <div class="blog-grid" id="blog-grid">
+        {posts.map(p => {
+          const isFm = p.category === 'Education';
+          const tags = p.tags.slice(0, 3);
+          const searchStr = `${p.title} ${p.subtitle} ${p.tags.join(' ')}`.toLowerCase();
+          return (
+            <a href={`/en/blog/${p.slug}`}
+              class="blog-card"
+              data-cat={p.category}
+              data-date={p.date}
+              data-search={searchStr}>
+              {p.image && (
+                <div class="blog-card-thumb">
+                  <img src={p.image} alt={p.imageAlt || p.title} width="400" height="210" loading="lazy" decoding="async" />
+                </div>
+              )}
+              <div class="blog-card-body">
+                <div class="blog-card-top">
+                  <span class={`blog-card-category ${isFm ? 'cat-formation' : 'cat-info'}`}>{p.category}</span>
+                  <span class="blog-card-date">{fmtDate(p.date)}</span>
+                </div>
+                <h2 class="blog-card-title">{p.title}</h2>
+                <p class="blog-card-subtitle">{p.subtitle}</p>
+                <div class="blog-card-tags">
+                  {tags.map(t => <span>{t}</span>)}
+                </div>
+                <div class="blog-card-footer">
+                  <span class="blog-card-read-time">{p.readTime ? `⏱ ${p.readTime}` : ''}</span>
+                  <span class="blog-card-read-link">Read more →</span>
+                </div>
+              </div>
+            </a>
+          );
+        })}
+      </div>
+      <p class="blog-no-results" id="blog-no-results" style="display:none">No articles match your filters.</p>
 
     </div>
   </div>
 
 </Layout>
 
-<script define:vars={{ allPosts }}>
-  /* redirect old ?slug= URLs */
+<script>
   const oldSlug = new URLSearchParams(window.location.search).get('slug');
   if (oldSlug) window.location.replace(`/en/blog/${oldSlug}`);
 
-  const posts = allPosts['en'] || allPosts['es'];
+  const grid     = document.getElementById('blog-grid');
+  const noResult = document.getElementById('blog-no-results');
+  const allCards = Array.from(grid.querySelectorAll('.blog-card'));
+  let curCat = '', curSearch = '', curSort = 'newest';
 
-  const T = {
-    all: 'All', formation: 'Education', informative: 'Informative',
-    readMore: 'Read more', noResults: 'No articles match your filters.',
-    newest: 'Newest', oldest: 'Oldest',
-  };
+  function applyFilters() {
+    const query = curSearch.toLowerCase().trim();
 
-  const allList = Object.entries(posts || {})
-    .filter(([, p]) => !p.hidden)
-    .map(([s, p], i) => ({ slug: s, _idx: i, ...p }));
-
-  buildFilters(allList);
-  renderCards(allList);
-
-  function buildFilters(allList) {
-    const wrap     = document.getElementById('blog-cat-filters');
-    const sortWrap = document.getElementById('blog-sort-wrap');
-    if (!wrap) return;
-
-    const cats = [
-      { label: T.all, value: '' },
-      { label: T.formation, value: 'Education' },
-      { label: T.informative, value: 'Informative' },
-    ];
-
-    wrap.innerHTML = cats.map((c, i) =>
-      `<button class="blog-cat-btn${i === 0 ? ' active' : ''}" data-cat="${c.value}">${c.label}</button>`
-    ).join('');
-
-    if (sortWrap) {
-      sortWrap.innerHTML = `
-        <button class="blog-sort-btn active" data-sort="newest">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
-          ${T.newest}
-        </button>
-        <button class="blog-sort-btn" data-sort="oldest">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-          ${T.oldest}
-        </button>`;
-    }
-
-    let curCat = '', curSearch = '', curSort = 'newest';
-
-    wrap.querySelectorAll('.blog-cat-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        wrap.querySelectorAll('.blog-cat-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        curCat = btn.dataset.cat;
-        filter();
-      });
+    let visible = allCards.filter(card => {
+      if (curCat && card.dataset.cat !== curCat) return false;
+      if (query && !card.dataset.search.includes(query)) return false;
+      return true;
     });
 
-    if (sortWrap) {
-      sortWrap.querySelectorAll('.blog-sort-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          sortWrap.querySelectorAll('.blog-sort-btn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          curSort = btn.dataset.sort;
-          filter();
-        });
-      });
-    }
-
-    document.getElementById('blog-search').addEventListener('input', e => {
-      curSearch = e.target.value;
-      filter();
+    visible.sort((a, b) => {
+      const da = a.dataset.date, db = b.dataset.date;
+      return curSort === 'newest' ? db.localeCompare(da) : da.localeCompare(db);
     });
 
-    function toSortKey(dateStr) {
-      if (!dateStr) return '0000-00-00';
-      if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr;
-      const m = dateStr.match(/\d{4}/);
-      return m ? `${m[0]}-00-00` : '0000-00-00';
-    }
+    allCards.forEach(c => { c.hidden = true; });
+    visible.forEach(c => { c.hidden = false; grid.appendChild(c); });
 
-    function filter() {
-      let list = allList.slice();
-      if (curCat) list = list.filter(p => p.category === curCat);
-      if (curSearch.trim()) {
-        const q = curSearch.toLowerCase();
-        list = list.filter(p =>
-          p.title.toLowerCase().includes(q) ||
-          (p.subtitle || '').toLowerCase().includes(q) ||
-          (p.tags || []).some(t => t.toLowerCase().includes(q))
-        );
-      }
-      if (curSort === 'newest') {
-        list.sort((a, b) => toSortKey(b.date).localeCompare(toSortKey(a.date)) || (a._idx - b._idx));
-      } else {
-        list.sort((a, b) => toSortKey(a.date).localeCompare(toSortKey(b.date)) || (a._idx - b._idx));
-      }
-      renderCards(list);
-    }
+    noResult.style.display = visible.length ? 'none' : 'block';
   }
 
-  function formatDisplayDate(dateStr) {
-    if (!dateStr || !/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr || '';
-    const [year, month] = dateStr.split('-');
-    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    return `${months[parseInt(month, 10) - 1]} ${year}`;
-  }
+  document.querySelectorAll('.blog-cat-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.blog-cat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      curCat = btn.dataset.cat;
+      applyFilters();
+    });
+  });
 
-  function renderCards(list) {
-    const grid = document.getElementById('blog-grid');
-    const noResult = document.getElementById('blog-no-results');
-    if (!grid) return;
+  document.querySelectorAll('.blog-sort-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.blog-sort-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      curSort = btn.dataset.sort;
+      applyFilters();
+    });
+  });
 
-    if (!list.length) {
-      noResult.textContent = T.noResults;
-      noResult.style.display = 'block';
-      grid.innerHTML = '';
-      return;
-    }
-    noResult.style.display = 'none';
-
-    grid.innerHTML = list.map(p => {
-      const isFormation = p.category === 'Education';
-      const catClass = isFormation ? 'cat-formation' : 'cat-info';
-      const tags = (p.tags || []).slice(0, 3).map(t => `<span>${t}</span>`).join('');
-      const dateDisplay = formatDisplayDate(p.date);
-      return `
-        <article class="blog-card" role="link" tabindex="0"
-          onclick="location.href='/en/blog/${p.slug}'"
-          onkeydown="if(event.key==='Enter')location.href='/en/blog/${p.slug}'">
-          <div class="blog-card-top">
-            <span class="blog-card-category ${catClass}">${p.category || ''}</span>
-            <span class="blog-card-date">${dateDisplay}</span>
-          </div>
-          <h2 class="blog-card-title">${p.title}</h2>
-          <p class="blog-card-subtitle">${p.subtitle || ''}</p>
-          <div class="blog-card-tags">${tags}</div>
-          <div class="blog-card-footer">
-            <span class="blog-card-read-time">${p.readTime ? `⏱ ${p.readTime}` : ''}</span>
-            <span class="blog-card-read-link">${T.readMore} →</span>
-          </div>
-        </article>`;
-    }).join('');
-  }
+  document.getElementById('blog-search').addEventListener('input', e => {
+    curSearch = e.target.value;
+    applyFilters();
+  });
 </script>

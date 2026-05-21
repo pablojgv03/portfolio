@@ -61,14 +61,25 @@ const blogPosting = {
   "dateModified": postEs.date,
   "author": {
     "@type": "Person",
+    "@id": "https://pablogomezvillen.com/pablo-gomez-villen",
     "name": "Pablo Gómez Villén",
     "url": "https://pablogomezvillen.com",
-    "sameAs": ["https://www.linkedin.com/in/pablo-gomez-villen"]
+    "image": "https://pablogomezvillen.com/img/foto-empresa.jpg",
+    "jobTitle": "Full Stack Developer",
+    "sameAs": [
+      "https://www.linkedin.com/in/pablo-gomez-villen",
+      "https://pablogomezvillen.com"
+    ]
   },
-  "publisher": { "@type": "Person", "name": "Pablo Gómez Villén", "url": "https://pablogomezvillen.com" },
+  "publisher": {
+    "@type": "Person",
+    "name": "Pablo Gómez Villén",
+    "url": "https://pablogomezvillen.com",
+    "image": "https://pablogomezvillen.com/img/foto-empresa.jpg"
+  },
   "mainEntityOfPage": { "@type": "WebPage", "@id": `https://pablogomezvillen.com/en/blog/${slug}` },
   "url": `https://pablogomezvillen.com/en/blog/${slug}`,
-  "image": "https://pablogomezvillen.com/img/opengraph.png",
+  "image": postEn.image ? `https://pablogomezvillen.com${postEn.image}` : "https://pablogomezvillen.com/img/opengraph.png",
   "keywords": (postEn.tags || []).join(', '),
   "inLanguage": "en-US",
   "isPartOf": {
@@ -98,7 +109,11 @@ const breadcrumbSchema = {
   alternateEs={`https://pablogomezvillen.com/blog/${slug}`}
   alternateEn={`https://pablogomezvillen.com/en/blog/${slug}`}
   keywords={(postEn.tags || []).join(', ')}
+  ogType="article"
+  ogArticleDate={postEs.date}
+  ogImage={postEn.image || '/img/opengraph.png'}
   jsonLd={[blogPosting, breadcrumbSchema]}
+  lcp={postEn.image}
 >
 
   <div id="view-post">
@@ -124,16 +139,48 @@ const breadcrumbSchema = {
       </div>
     </div>
 
+    <div class="reading-progress-bar" id="reading-progress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+
     <article class="blog-article">
       <div class="blog-article-meta">
         <a href="/en/blog" class="blog-back-link">← Blog</a>
         <time class="blog-date" datetime={postEs.date}>{formatDate(postEs.date)}</time>
       </div>
+      {postEn.image && (
+        <figure class="blog-hero-image">
+          <img
+            src={postEn.image}
+            alt={postEn.imageAlt || postEn.title}
+            width="1200"
+            height="630"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </figure>
+      )}
       <div class="blog-article-body" set:html={postEn.content}></div>
       <div class="blog-article-footer">
         <a href="/en/blog" class="btn secondary">← Back to blog</a>
       </div>
     </article>
+
+    <!-- Author bio -->
+    <div class="author-bio">
+      <picture>
+        <source srcset="/img/foto-empresa.webp" type="image/webp">
+        <img src="/img/foto-empresa.jpg" alt="Pablo Gómez Villén, Full Stack Developer" class="author-bio-avatar" width="80" height="80">
+      </picture>
+      <div class="author-bio-content">
+        <p class="author-bio-label">Written by</p>
+        <p class="author-bio-name">Pablo Gómez Villén</p>
+        <p class="author-bio-role">Full Stack Developer · Laravel, PHP, JavaScript</p>
+        <p class="author-bio-text">Full Stack Developer with over a year of production experience. Specialized in PHP (Laravel), JavaScript and MySQL. Shares learning and technical insights on this blog.</p>
+        <div class="author-bio-links">
+          <a href="https://www.linkedin.com/in/pablo-gomez-villen" class="author-bio-link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a href="/en/pablo-gomez-villen" class="author-bio-link">About me</a>
+        </div>
+      </div>
+    </div>
 
     {relatedPosts.length > 0 && (
       <aside class="blog-related">
@@ -153,3 +200,31 @@ const breadcrumbSchema = {
   </div>
 
 </Layout>
+
+<script>
+  const bar = document.getElementById('reading-progress');
+  const article = document.querySelector('.blog-article');
+  if (bar && article) {
+    window.addEventListener('scroll', () => {
+      const rect = article.getBoundingClientRect();
+      const total = article.offsetHeight - window.innerHeight;
+      const scrolled = Math.max(0, -rect.top);
+      const pct = Math.min(100, total > 0 ? (scrolled / total) * 100 : 0);
+      bar.style.width = pct + '%';
+      bar.setAttribute('aria-valuenow', Math.round(pct));
+    }, { passive: true });
+  }
+</script>
+
+<style>
+  .reading-progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    background: #2563eb;
+    z-index: 9999;
+    transition: width 0.1s linear;
+  }
+</style>

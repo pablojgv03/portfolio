@@ -66,21 +66,28 @@ const blogPosting = {
   "dateModified": postEs.date,
   "author": {
     "@type": "Person",
+    "@id": "https://pablogomezvillen.com/pablo-gomez-villen",
     "name": "Pablo Gómez Villén",
     "url": "https://pablogomezvillen.com",
-    "sameAs": ["https://www.linkedin.com/in/pablo-gomez-villen"]
+    "image": "https://pablogomezvillen.com/img/foto-empresa.jpg",
+    "jobTitle": "Full Stack Developer",
+    "sameAs": [
+      "https://www.linkedin.com/in/pablo-gomez-villen",
+      "https://pablogomezvillen.com"
+    ]
   },
   "publisher": {
     "@type": "Person",
     "name": "Pablo Gómez Villén",
-    "url": "https://pablogomezvillen.com"
+    "url": "https://pablogomezvillen.com",
+    "image": "https://pablogomezvillen.com/img/foto-empresa.jpg"
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
     "@id": `https://pablogomezvillen.com/blog/${slug}`
   },
   "url": `https://pablogomezvillen.com/blog/${slug}`,
-  "image": "https://pablogomezvillen.com/img/opengraph.png",
+  "image": postEs.image ? `https://pablogomezvillen.com${postEs.image}` : "https://pablogomezvillen.com/img/opengraph.png",
   "keywords": (postEs.tags || []).join(', '),
   "inLanguage": "es-ES",
   "isPartOf": {
@@ -110,7 +117,11 @@ const breadcrumbSchema = {
   alternateEn={`https://pablogomezvillen.com/en/blog/${slug}`}
   alternateEs={`https://pablogomezvillen.com/blog/${slug}`}
   keywords={(postEs.tags || []).join(', ')}
+  ogType="article"
+  ogArticleDate={postEs.date}
+  ogImage={postEs.image || '/img/opengraph.png'}
   jsonLd={[blogPosting, breadcrumbSchema]}
+  lcp={postEs.image}
 >
 
   <div id="view-post">
@@ -137,16 +148,49 @@ const breadcrumbSchema = {
       </div>
     </div>
 
+    <div class="reading-progress-bar" id="reading-progress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+
     <article class="blog-article">
       <div class="blog-article-meta">
         <a href="/blog" class="blog-back-link" id="blog-back-link">← Blog</a>
         <time class="blog-date" id="blog-date" datetime={postEs.date}>{formatDate(postEs.date)}</time>
       </div>
+      {postEs.image && (
+        <figure class="blog-hero-image">
+          <img
+            src={postEs.image}
+            alt={postEs.imageAlt || postEs.title}
+            id="blog-hero-img"
+            width="1200"
+            height="630"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </figure>
+      )}
       <div class="blog-article-body" id="blog-content" set:html={postEs.content}></div>
       <div class="blog-article-footer">
         <a href="/blog" class="btn secondary" id="blog-back-btn">← Volver al blog</a>
       </div>
     </article>
+
+    <!-- Author bio -->
+    <div class="author-bio" id="author-bio">
+      <picture>
+        <source srcset="/img/foto-empresa.webp" type="image/webp">
+        <img src="/img/foto-empresa.jpg" alt="Pablo Gómez Villén, Full Stack Developer" class="author-bio-avatar" width="80" height="80">
+      </picture>
+      <div class="author-bio-content">
+        <p class="author-bio-label" id="author-bio-label">Escrito por</p>
+        <p class="author-bio-name">Pablo Gómez Villén</p>
+        <p class="author-bio-role">Full Stack Developer · Laravel, PHP, JavaScript</p>
+        <p class="author-bio-text" id="author-bio-text">Desarrollador Full Stack con más de un año de experiencia en producción. Especializado en PHP (Laravel), JavaScript y MySQL. Comparte su aprendizaje y experiencias técnicas en este blog.</p>
+        <div class="author-bio-links">
+          <a href="https://www.linkedin.com/in/pablo-gomez-villen" class="author-bio-link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a href="/pablo-gomez-villen" class="author-bio-link" id="author-bio-about">Sobre mí</a>
+        </div>
+      </div>
+    </div>
 
     <!-- Artículos relacionados (server-rendered — Google lo rastrea) -->
     {relatedEs.length > 0 && (
@@ -226,5 +270,55 @@ const breadcrumbSchema = {
     if (postEn.tags) {
       document.getElementById('blog-post-tags').innerHTML = postEn.tags.map(t => `<span>${t}</span>`).join('');
     }
+
+    // Author bio — translate to EN
+    const bioLabel = document.getElementById('author-bio-label');
+    const bioText  = document.getElementById('author-bio-text');
+    const bioAbout = document.getElementById('author-bio-about');
+    if (bioLabel) bioLabel.textContent = 'Written by';
+    if (bioText)  bioText.textContent  = 'Full Stack Developer with over a year of production experience. Specialized in PHP (Laravel), JavaScript and MySQL. Shares learning and technical insights on this blog.';
+    if (bioAbout) { bioAbout.textContent = 'About me'; bioAbout.href = '/en/pablo-gomez-villen'; }
+  }
+
+  // Reading progress bar
+  const bar = document.getElementById('reading-progress');
+  const article = document.querySelector('.blog-article');
+  if (bar && article) {
+    window.addEventListener('scroll', () => {
+      const rect = article.getBoundingClientRect();
+      const total = article.offsetHeight - window.innerHeight;
+      const scrolled = Math.max(0, -rect.top);
+      const pct = Math.min(100, total > 0 ? (scrolled / total) * 100 : 0);
+      bar.style.width = pct + '%';
+      bar.setAttribute('aria-valuenow', Math.round(pct));
+    }, { passive: true });
   }
 </script>
+
+<style>
+  .blog-hero-image {
+    margin: 0 0 2rem;
+    border-radius: 12px;
+    overflow: hidden;
+    line-height: 0;
+  }
+
+  .blog-hero-image img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1200 / 630;
+    object-fit: cover;
+    display: block;
+  }
+
+  .reading-progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    background: #2563eb;
+    z-index: 9999;
+    transition: width 0.1s linear;
+  }
+</style>

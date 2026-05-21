@@ -1,0 +1,58 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Página no encontrada — Pablo Gómez Villén"
+  description="Esta página no existe. Vuelve al inicio o explora el blog."
+  showHero={false}
+  lang="es"
+>
+  <section class="not-found">
+    <p class="not-found-code">404</p>
+    <h1>Esta página no existe</h1>
+    <p class="not-found-desc">Puede que la URL haya cambiado o que el enlace esté roto.</p>
+    <div class="not-found-actions">
+      <a href="/" class="btn">Ir al inicio</a>
+      <a href="/blog" class="btn secondary">Ver el blog</a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .not-found {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 6rem 1.5rem;
+    min-height: 60vh;
+  }
+
+  .not-found-code {
+    font-size: 7rem;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--accent, #2563eb);
+    margin: 0 0 0.5rem;
+  }
+
+  .not-found h1 {
+    font-size: 1.8rem;
+    margin: 0 0 0.75rem;
+  }
+
+  .not-found-desc {
+    color: #6b7280;
+    margin: 0 0 2rem;
+    max-width: 400px;
+  }
+
+  .not-found-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+</style>

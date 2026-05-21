@@ -2534,9 +2534,23 @@ body:has(.sm-page) footer p {
    ════════════════════════════════════ */
 
 .navbar--scrolled {
-  background: rgba(18, 38, 85, 0.88) !important;
+  background: transparent !important;
+}
+
+/* El backdrop-filter en el elemento padre convierte el navbar en containing
+   block para position:fixed, lo que hace que el menú móvil aparezca
+   transparente. Moverlo a ::before lo aísla del menú. */
+.navbar--scrolled::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(18, 38, 85, 0.92);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
+  z-index: -1;
+  border-bottom-left-radius: 55px 20px;
+  border-bottom-right-radius: 55px 20px;
+  pointer-events: none;
 }
 
 /* Language toggle — ES|EN text buttons */

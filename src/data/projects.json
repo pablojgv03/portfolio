@@ -1,72 +1,56 @@
 {
-  "proyectos":[
+  "proyectos": [
     {
-        "id": 1,
-        "slug": "etl-ecommerce",
-        "icon": "img",
-        "badge": "desktop",
-        "title": "ETL Ecommerce",
-        "large-description": {
-            "es": "Descripción larga en español",
-            "en": "Large description in English"
-        },
-        "description": {
-            "es": "Descripción breve en español",
-            "en": "Brief description in English"
-        },
-        "skills": [
-            { "name": "Python", "level": "high" },
-            { "name": "Pandas", "level": "mid" },
-            { "name": "Modelado ML", "level": "mid" }
-        ],
-        "link": "#",
-        "link-text":"#"
+      "id": 1,
+      "slug": "duowatch",
+      "badge": "web",
+      "title": "DuoWatch",
+      "large-description": {
+        "es": "¿Alguna vez has pasado media hora negociando qué ver con alguien? DuoWatch resuelve eso. Funciona como Tinder pero para películas y series: cada usuario hace swipe por su cuenta — sin ver las elecciones del otro — y cuando dos amigos coinciden en un like, la app genera un match automático y les notifica al instante. Sin negociaciones, sin spoilers de lo que le gusta al otro.\n\nDesarrollada de cero como proyecto full stack con Next.js 15 (App Router) en el frontend y NestJS 10 en el backend, comunicados por API REST y WebSocket en tiempo real (Socket.IO). La base de datos es PostgreSQL gestionada con Prisma ORM, todo contenerizado con Docker Compose. El catálogo de contenido viene de la API oficial de TMDB.\n\nEl motor de recomendaciones es propio: aprende de los swipes del usuario en tiempo real, aplica boost ×1.5 a contenido similar a sus últimos likes y excluye automáticamente lo similar a sus dislikes. El sistema de compatibilidad entre amigos usa similitud de Jaccard sobre géneros e historial compartido. La autenticación implementa JWT con access token de 15 min, refresh token de 7 días y rotación automática en el cliente.",
+        "en": "Ever spent half an hour arguing about what to watch? DuoWatch fixes that. It works like Tinder but for movies and series: each user swipes independently — without seeing the other's choices — and when two friends both like the same title, the app creates a match and notifies them instantly. No negotiations, no spoilers.\n\nBuilt from scratch as a full stack project with Next.js 15 (App Router) on the frontend and NestJS 10 on the backend, connected via REST API and real-time WebSocket (Socket.IO). PostgreSQL database managed with Prisma ORM, fully containerised with Docker Compose. Content catalogue powered by the official TMDB API.\n\nThe recommendation engine is custom-built: it learns from swipes in real time, applies a ×1.5 boost to content similar to recent likes, and automatically excludes content similar to dislikes. The friend compatibility score uses Jaccard similarity over shared genres and interaction history. Auth implements JWT with 15-min access tokens, 7-day refresh tokens and automatic rotation on the client."
+      },
+      "description": {
+        "es": "Red social de matching de películas estilo Tinder — swipe con amigos, matches en tiempo real vía WebSocket y motor de recomendaciones propio.",
+        "en": "Movie matching social app Tinder-style — swipe with friends, real-time matches via WebSocket and a custom recommendation engine."
+      },
+      "skills": [
+        { "name": "Next.js 15", "level": "high" },
+        { "name": "NestJS", "level": "high" },
+        { "name": "TypeScript", "level": "high" },
+        { "name": "PostgreSQL", "level": "high" },
+        { "name": "WebSockets", "level": "high" },
+        { "name": "Prisma ORM", "level": "mid" },
+        { "name": "Docker", "level": "mid" },
+        { "name": "Framer Motion", "level": "mid" },
+        { "name": "TailwindCSS", "level": "mid" },
+        { "name": "Zustand", "level": "mid" }
+      ],
+      "link": "https://duowatch-frontend.vercel.app/",
+      "link-text": "#"
     },
     {
-        "id": 2,
-        "slug": "start-brawling",
-        "icon": "img",
-        "badge": "mobile",
-        "title": "Start Brawling",
-        "large-description": {
-            "es": "Descripción larga en español",
-            "en": "Large description in English"
-        },
-        "description": {
-            "es": "Descripción breve en español",
-            "en": "Brief description in English"
-        },
-        "skills": [
-            { "name": "Java", "level": "high" },
-            { "name": "Android SDK", "level": "high" },
-            { "name": "AsyncTask", "level": "mid" },
-            { "name": "RecyclerView", "level": "low" },
-            { "name": "Glide", "level": "low" }
-        ],
-        "link": "http://localhost:4321/Start_Brawling", 
-        "link-text": "https://github.com/pablojgv03/Start_Brawling.git"
-    },
-    {
-        "id": 3,
-        "slug": "ml-abandono-escolar",
-        "icon": "img",
-        "badge": "web",
-        "title": "ML Abandono Escolar",
-        "large-description": {
-            "es": "Descripción larga en español",
-            "en": "Large description in English"
-        },
-        "description": {
-            "es": 	"Descripción breve en español",
-            "en": 	"Brief description in English"
-        },
-        "skills": [
-            { "name": "Scikit-learn", "level": "high" },
-            { "name": "Pandas", "level": "mid" }
-            
-        ],
-        "link": "#",
-        "link-text":"#"
-      }
+      "id": 2,
+      "slug": "start-brawling",
+      "badge": "mobile",
+      "title": "Start Brawling",
+      "large-description": {
+        "es": "App Android que consume la API de Brawl Stars para mostrar en tiempo real los eventos activos del juego, mapas disponibles, fichas de personajes y estadísticas de winrate de los mejores brawlers en cada modo de juego. Desarrollada en Java con Android SDK, RecyclerView para el listado dinámico, Glide para la carga de imágenes y AsyncTask para las llamadas asíncronas a la API.",
+        "en": "Android app that consumes the Brawl Stars API to display in real time the active game events, available maps, character profiles and winrate statistics of the top brawlers in each game mode. Built in Java with Android SDK, RecyclerView for dynamic listings, Glide for image loading and AsyncTask for asynchronous API calls."
+      },
+      "description": {
+        "es": "App Android con la API de Brawl Stars — eventos, mapas, personajes y winrate en tiempo real.",
+        "en": "Android app using the Brawl Stars API — events, maps, characters and real-time winrate stats."
+      },
+      "skills": [
+        { "name": "Java", "level": "high" },
+        { "name": "Android SDK", "level": "high" },
+        { "name": "REST API", "level": "high" },
+        { "name": "RecyclerView", "level": "mid" },
+        { "name": "Glide", "level": "mid" },
+        { "name": "AsyncTask", "level": "mid" }
+      ],
+      "link": "#",
+      "link-text": "https://github.com/pablojgv03/Start_Brawling"
+    }
   ]
 }

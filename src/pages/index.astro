@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import esData from '../data/i18n/es.json';
 import enData from '../data/i18n/en.json';
+import projectsData from '../data/projects.json';
 
 const lang = 'es';
 
@@ -80,14 +81,39 @@ const websiteSchema = {
     </div>
   </section>
 
-  <!-- PROYECTOS OCULTO temporalmente (en construcción)
+  <!-- Proyectos -->
   <section id="proyectos" class="section bg-light-rounded">
-    <h2 data-i18n="section-proyectos.title"></h2>
+    <h2 data-i18n="section-proyectos.title">
+      <svg class="section-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+      Proyectos
+    </h2>
     <div class="projects">
-      (contenido de proyectos - ver src/pages/proyectos.astro)
+      {projectsData.proyectos.map((p) => (
+        <article class="project-card" data-project-id={String(p.id)}>
+          <div class="meta">
+            <span class="center">{p.badge === 'mobile' ? 'Android' : p.badge}</span>
+          </div>
+          <h3>{p.title}</h3>
+          <p class="project-desc">{p.description.es}</p>
+          {p.skills && p.skills.length > 0 && (
+            <div class="skills" aria-label={`Aptitudes de ${p.title}`}>
+              {p.skills.map(skill => (
+                <span class={`skill ${skill.level ?? ''}`}>{skill.name}</span>
+              ))}
+            </div>
+          )}
+          <div class="links">
+            {p['link-text'] && p['link-text'] !== '#' && (
+              <a href={p['link-text']} target="_blank" rel="noopener noreferrer">GitHub →</a>
+            )}
+            {p.link && p.link !== '#' && (
+              <a href={p.link} target="_blank" rel="noopener noreferrer">Demo →</a>
+            )}
+          </div>
+        </article>
+      ))}
     </div>
   </section>
-  -->
 
   <!-- Estudios -->
   <section id="estudios" class="section">

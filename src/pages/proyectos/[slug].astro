@@ -17,7 +17,7 @@ const darkHero = (project as any).darkHero ?? false;
 const otherProjects = projectsData.proyectos.filter((p) => p.slug !== slug);
 const rawVideoUrl: string | undefined = (project as any).videoUrl;
 const videoId = rawVideoUrl?.match(/(?:youtu\.be\/|youtube\.com\/watch\?v=)([^&\n?#]+)/)?.[1] ?? null;
-const embedUrl = videoId ? `https://www.youtube.com/embed/${videoId}?rel=0` : null;
+const embedUrl = videoId ? `https://www.youtube-nocookie.com/embed/${videoId}?rel=0` : null;
 
 const softwareSchema = {
   "@context": "https://schema.org",

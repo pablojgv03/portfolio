@@ -1,12 +1,12 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from '../../layouts/Layout.astro';
 
 const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   "@id": "https://www.pablogomezvillen.com",
-  "name": "Pablo Gómez Villén — Desarrollo Web",
-  "description": "Desarrollo de páginas web profesionales y SEO local para negocios en Granada y España",
+  "name": "Pablo Gómez Villén — Web Development",
+  "description": "Professional web development and local SEO for businesses in Granada and Spain",
   "url": "https://www.pablogomezvillen.com",
   "telephone": "+34622400727",
   "email": "pablogomezvillen@gmail.com",
@@ -17,89 +17,83 @@ const localBusinessSchema = {
     "addressCountry": "ES"
   },
   "areaServed": ["Granada", "Andalucía", "España"],
-  "serviceType": ["Diseño web", "SEO local", "Desarrollo Full Stack"]
+  "serviceType": ["Web Design", "Local SEO", "Full Stack Development"]
 };
 ---
 
 <Layout
-  title="Contacto | Pablo Gómez — Desarrollo Web en Granada"
-  lang="es"
-  description="Pide presupuesto para tu página web o proyecto digital. Respuesta en menos de 24 horas. Sin compromiso."
-  canonical="https://pablogomezvillen.com/contacto"
+  title="Contact | Pablo Gómez — Web Developer in Granada"
+  lang="en"
+  description="Request a quote for your website or digital project. Response within 24 hours. No commitment."
+  canonical="https://pablogomezvillen.com/en/contact"
   showHero={false}
-  keywords="contacto desarrollador web Granada, presupuesto web, contratar programador Granada"
+  keywords="contact web developer Granada, web quote, hire programmer Granada"
   jsonLd={[localBusinessSchema]}
 >
 
   <div class="page-banner">
     <h1>
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-      Hablemos
+      Let's Talk
     </h1>
-    <p>Cuéntame qué necesitas — respondo en menos de 24 horas</p>
+    <p>Tell me what you need — I'll reply within 24 hours</p>
   </div>
 
   <div class="contacto-page">
 
-    <!-- Formulario -->
+    <!-- Form -->
     <div>
-      <h2 style="font-size:1.3rem;font-weight:700;color:#1e3c72;margin-bottom:20px;">Envíame un mensaje</h2>
+      <h2 style="font-size:1.3rem;font-weight:700;color:#1e3c72;margin-bottom:20px;">Send me a message</h2>
 
-      <!--
-        Para activar el formulario:
-        1. Crea una cuenta gratuita en https://formspree.io
-        2. Crea un nuevo formulario y copia tu endpoint
-        3. Reemplaza "YOUR_FORM_ID" por tu ID real
-      -->
       <form
         class="contact-form"
         action="https://formspree.io/f/xbdboaye"
         method="POST"
       >
         <div class="contact-form-group">
-          <label for="cf-nombre">Nombre *</label>
-          <input type="text" id="cf-nombre" name="nombre" required placeholder="Tu nombre" autocomplete="name" />
+          <label for="cf-nombre">Name *</label>
+          <input type="text" id="cf-nombre" name="nombre" required placeholder="Your name" autocomplete="name" />
         </div>
 
         <div class="contact-form-group">
           <label for="cf-email">Email *</label>
-          <input type="email" id="cf-email" name="email" required placeholder="tu@email.com" autocomplete="email" />
+          <input type="email" id="cf-email" name="email" required placeholder="you@email.com" autocomplete="email" />
         </div>
 
         <div class="contact-form-group">
-          <label for="cf-tel">Teléfono (opcional)</label>
+          <label for="cf-tel">Phone (optional)</label>
           <input type="tel" id="cf-tel" name="telefono" placeholder="+34 600 000 000" autocomplete="tel" />
         </div>
 
         <div class="contact-form-group">
-          <label for="cf-tipo">Tipo de proyecto *</label>
+          <label for="cf-tipo">Project type *</label>
           <select id="cf-tipo" name="tipo_proyecto" required>
-            <option value="" disabled selected>Selecciona una opción...</option>
-            <option value="web-negocio">Web para mi negocio</option>
-            <option value="seo">SEO y posicionamiento local</option>
-            <option value="app">App o desarrollo a medida</option>
-            <option value="mantenimiento">Mantenimiento web</option>
-            <option value="otro">Otro</option>
+            <option value="" disabled selected>Select an option...</option>
+            <option value="web-negocio">Website for my business</option>
+            <option value="seo">SEO & local search</option>
+            <option value="app">App or custom development</option>
+            <option value="mantenimiento">Website maintenance</option>
+            <option value="otro">Other</option>
           </select>
         </div>
 
         <div class="contact-form-group">
-          <label for="cf-plan">Plan de interés</label>
+          <label for="cf-plan">Plan of interest</label>
           <select id="cf-plan" name="plan_interes">
-            <option value="" selected>Sin preferencia / consultarlo</option>
-            <option value="basico">Plan Básico — desde 350 €</option>
-            <option value="negocio">Plan Negocio — desde 650 €</option>
-            <option value="premium">Plan Premium — precio a consultar</option>
+            <option value="" selected>No preference / let's discuss</option>
+            <option value="basico">Basic Plan — from €350</option>
+            <option value="negocio">Business Plan — from €650</option>
+            <option value="premium">Premium Plan — price on request</option>
           </select>
         </div>
 
         <div class="contact-form-group">
-          <label for="cf-mensaje">Mensaje *</label>
-          <textarea id="cf-mensaje" name="mensaje" required placeholder="Cuéntame en qué puedo ayudarte..."></textarea>
+          <label for="cf-mensaje">Message *</label>
+          <textarea id="cf-mensaje" name="mensaje" required placeholder="Tell me how I can help you..."></textarea>
         </div>
 
         <button type="submit" class="contact-form-btn">
-          Enviar mensaje →
+          Send message →
         </button>
       </form>
     </div>
@@ -113,16 +107,16 @@ const localBusinessSchema = {
       }
     </script>
 
-    <!-- Info de contacto -->
+    <!-- Contact info -->
     <div class="contact-info-panel">
-      <h3>Información de contacto</h3>
+      <h3>Contact information</h3>
 
       <div class="contact-info-item">
         <span class="contact-info-ico" aria-hidden="true">💬</span>
         <div>
           <span class="contact-info-label">WhatsApp</span>
           <a
-            href="https://wa.me/34622400727?text=Hola%20Pablo%2C%20me%20interesa%20hablar%20sobre%20mi%20web"
+            href="https://wa.me/34622400727?text=Hi%20Pablo%2C%20I%27m%20interested%20in%20talking%20about%20my%20website"
             target="_blank"
             rel="noopener noreferrer"
             class="contact-info-val"
@@ -149,13 +143,13 @@ const localBusinessSchema = {
       <div class="contact-info-item">
         <span class="contact-info-ico" aria-hidden="true">📍</span>
         <div>
-          <span class="contact-info-label">Ubicación</span>
-          <span class="contact-info-val" style="cursor:default">Granada, España<br><small style="font-weight:400;color:#888">Trabajo en remoto con negocios de toda España</small></span>
+          <span class="contact-info-label">Location</span>
+          <span class="contact-info-val" style="cursor:default">Granada, Spain<br><small style="font-weight:400;color:#888">Working remotely with businesses across Spain</small></span>
         </div>
       </div>
 
       <div class="contact-respuesta">
-        ⏱️ Tiempo de respuesta habitual: <strong>menos de 24 horas</strong> en días laborables
+        ⏱️ Usual response time: <strong>under 24 hours</strong> on working days
       </div>
     </div>
 

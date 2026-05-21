@@ -1,0 +1,115 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import projectsData from '../../../data/projects.json';
+
+const badgeEmojis: Record<string, string> = {
+  desktop: '🖥️',
+  mobile: '📱',
+  web: '🌐',
+};
+---
+
+<Layout
+  title="Projects — Pablo Gómez"
+  lang="en"
+  showHero={false}
+  description="Web and mobile development projects by Pablo Gómez — full stack apps, Android apps and more."
+  canonical="https://pablogomezvillen.com/en/proyectos"
+  alternateEs="https://pablogomezvillen.com/proyectos"
+  alternateEn="https://pablogomezvillen.com/en/proyectos"
+>
+
+  <div class="page-banner">
+    <h1>🚀 Projects</h1>
+    <p>A selection of my personal and professional projects</p>
+  </div>
+
+  <section class="section proyectos-page">
+
+    <div class="filtros" role="group" aria-label="Filter projects">
+      <button class="filtro active" data-filtro="todos">All</button>
+      <button class="filtro" data-filtro="desktop">🖥️ Desktop</button>
+      <button class="filtro" data-filtro="mobile">📱 Mobile</button>
+      <button class="filtro" data-filtro="web">🌐 Web</button>
+    </div>
+
+    <p class="project-count" id="project-count"></p>
+
+    <div id="lista-proyectos" class="projects">
+      {projectsData.proyectos.map((p) => (
+        <article class="project-card project-card--full" data-badge={p.badge}>
+          <a href={`/en/proyectos/${p.slug}`} class="full-link" aria-label={`View details for ${p.title}`}></a>
+          <div class={`project-badge badge-${p.badge}`} title={p.badge}>
+            {badgeEmojis[p.badge] ?? '❓'}
+          </div>
+          <h3>{p.title}</h3>
+          <p class="project-desc project-desc--large">
+            {p['large-description'].en}
+          </p>
+          {p.skills && p.skills.length > 0 && (
+            <div class="skills" aria-label={`Skills for ${p.title}`}>
+              {p.skills.map(skill => (
+                <span class={`skill ${skill.level ?? ''}`} title={skill.level ?? ''}>{skill.name}</span>
+              ))}
+            </div>
+          )}
+          <div class="links card-links--elevated">
+            {p['link-text'] && p['link-text'] !== '#' && (
+              <a href={p['link-text']} target="_blank" rel="noopener noreferrer">GitHub →</a>
+            )}
+            {p.link && p.link !== '#' && !p.link.includes('localhost') && p.link !== p['link-text'] && (
+              <a href={p.link} target="_blank" rel="noopener noreferrer">Demo →</a>
+            )}
+            <a href={`/en/proyectos/${p.slug}`} class="link-detail">Details →</a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const total = document.querySelectorAll('#lista-proyectos .project-card').length;
+      updateCount(total, total);
+
+      const botones = document.querySelectorAll('.filtro');
+      const cards = document.querySelectorAll('#lista-proyectos .project-card');
+
+      botones.forEach(btn => {
+        btn.addEventListener('click', () => {
+          botones.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const tipo = (btn as HTMLElement).dataset.filtro;
+          let visible = 0;
+          cards.forEach(card => {
+            const show = tipo === 'todos' || (card as HTMLElement).dataset.badge === tipo;
+            (card as HTMLElement).style.display = show ? '' : 'none';
+            if (show) visible++;
+          });
+          updateCount(visible, cards.length);
+        });
+      });
+
+      function updateCount(visible: number, total: number) {
+        const el = document.getElementById('project-count');
+        if (el) el.textContent = `${visible} of ${total} projects`;
+      }
+    });
+  </script>
+
+</Layout>
+
+<style>
+  .card-links--elevated a {
+    position: relative;
+    z-index: 11;
+  }
+  .link-detail {
+    margin-left: auto;
+    color: #2a5298;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+  .link-detail:hover { text-decoration: underline; }
+</style>

@@ -10,7 +10,15 @@ const badgeEmojis: Record<string, string> = {
 };
 ---
 
-<Layout title="Proyectos — Pablo Gómez" showHero={false}>
+<Layout
+  title="Proyectos — Pablo Gómez"
+  lang="es"
+  showHero={false}
+  description="Proyectos de desarrollo web y móvil de Pablo Gómez — aplicaciones full stack, apps Android y más."
+  canonical="https://pablogomezvillen.com/proyectos"
+  alternateEs="https://pablogomezvillen.com/proyectos"
+  alternateEn="https://pablogomezvillen.com/en/proyectos"
+>
 
   <!-- Banner de página -->
   <div class="page-banner">
@@ -34,6 +42,7 @@ const badgeEmojis: Record<string, string> = {
     <div id="lista-proyectos" class="projects">
       {projectsData.proyectos.map((p) => (
         <article class="project-card project-card--full" data-badge={p.badge}>
+          <a href={`/proyectos/${p.slug}`} class="full-link" aria-label={`Ver detalle de ${p.title}`}></a>
           <div class={`project-badge badge-${p.badge}`} title={p.badge}>
             {badgeEmojis[p.badge] ?? '❓'}
           </div>
@@ -51,13 +60,14 @@ const badgeEmojis: Record<string, string> = {
               ))}
             </div>
           )}
-          <div class="links">
+          <div class="links card-links--elevated">
             {p['link-text'] && p['link-text'] !== '#' && (
-              <a href={p['link-text']} target="_blank" rel="noopener noreferrer">🔗 GitHub</a>
+              <a href={p['link-text']} target="_blank" rel="noopener noreferrer">GitHub →</a>
             )}
             {p.link && p.link !== '#' && !p.link.includes('localhost') && p.link !== p['link-text'] && (
-              <a href={p.link} target="_blank" rel="noopener noreferrer">🚀 Demo</a>
+              <a href={p.link} target="_blank" rel="noopener noreferrer">Demo →</a>
             )}
+            <a href={`/proyectos/${p.slug}`} class="link-detail">Ver detalle →</a>
           </div>
         </article>
       ))}
@@ -110,4 +120,20 @@ const badgeEmojis: Record<string, string> = {
       }
     });
   </script>
+
+<style>
+  .card-links--elevated a {
+    position: relative;
+    z-index: 11;
+  }
+  .link-detail {
+    margin-left: auto;
+    color: #2a5298;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+  .link-detail:hover { text-decoration: underline; }
+</style>
+
 </Layout>

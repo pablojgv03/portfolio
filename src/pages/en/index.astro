@@ -70,6 +70,7 @@ const personSchema = {
     <div class="projects">
       {projectsData.proyectos.map((p) => (
         <article class="project-card" data-project-id={String(p.id)}>
+          <a href={`/en/proyectos/${p.slug}`} class="full-link" aria-label={`View details for ${p.title}`}></a>
           <div class="meta">
             <span class="center">{p.badge === 'mobile' ? 'Android' : p.badge}</span>
           </div>
@@ -82,7 +83,7 @@ const personSchema = {
               ))}
             </div>
           )}
-          <div class="links">
+          <div class="links" style="position:relative;z-index:11">
             {p['link-text'] && p['link-text'] !== '#' && (
               <a href={p['link-text']} target="_blank" rel="noopener noreferrer">GitHub →</a>
             )}

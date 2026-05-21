@@ -1,0 +1,202 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import projectsData from '../../../data/projects.json';
+
+export function getStaticPaths() {
+  return projectsData.proyectos.map((p) => ({ params: { slug: p.slug } }));
+}
+
+const { slug } = Astro.params;
+const project = projectsData.proyectos.find((p) => p.slug === slug);
+
+if (!project) return Astro.redirect('/404');
+
+const badgeLabel: Record<string, string> = {
+  web: 'Web',
+  mobile: 'Android',
+  desktop: 'Desktop',
+};
+
+const paragraphsEn = project['large-description'].en.split('\n\n').filter(Boolean);
+
+const softwareSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": project.title,
+  "description": project.description.en,
+  "applicationCategory": project.badge === 'mobile' ? 'MobileApplication' : 'WebApplication',
+  "url": project.link !== '#' ? project.link : undefined,
+  "author": {
+    "@type": "Person",
+    "name": "Pablo Gómez",
+    "url": "https://pablogomezvillen.com/en/"
+  }
+};
+---
+
+<Layout
+  title={`${project.title} — Project · Pablo Gómez`}
+  lang="en"
+  description={project.description.en}
+  canonical={`https://pablogomezvillen.com/en/proyectos/${slug}`}
+  alternateEs={`https://pablogomezvillen.com/proyectos/${slug}`}
+  alternateEn={`https://pablogomezvillen.com/en/proyectos/${slug}`}
+  jsonLd={[softwareSchema]}
+  showHero={false}
+>
+
+  <div class="page-banner">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/en/">Home</a>
+      <span aria-hidden="true"> › </span>
+      <a href="/en/proyectos">Projects</a>
+      <span aria-hidden="true"> › </span>
+      <span aria-current="page">{project.title}</span>
+    </nav>
+    <h1>{project.title}</h1>
+    <p>{project.description.en}</p>
+  </div>
+
+  <section class="section project-detail">
+
+    <div class="project-detail-header">
+      <span class={`project-badge-pill badge-${project.badge}`}>
+        {badgeLabel[project.badge] ?? project.badge}
+      </span>
+      <div class="project-detail-links">
+        {project['link-text'] && project['link-text'] !== '#' && (
+          <a href={project['link-text']} target="_blank" rel="noopener noreferrer" class="btn secondary btn--icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            GitHub
+          </a>
+        )}
+        {project.link && project.link !== '#' && (
+          <a href={project.link} target="_blank" rel="noopener noreferrer" class="btn btn--icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Live demo
+          </a>
+        )}
+      </div>
+    </div>
+
+    <div class="project-detail-body">
+      <div class="project-detail-desc">
+        {paragraphsEn.map((para) => <p>{para}</p>)}
+      </div>
+
+      <aside class="project-detail-aside">
+        <h2>Tech stack</h2>
+        <div class="skills skills--vertical">
+          {project.skills.map((skill) => (
+            <span class={`skill ${skill.level ?? ''}`}>{skill.name}</span>
+          ))}
+        </div>
+      </aside>
+    </div>
+
+    <div class="project-detail-actions">
+      <a href="/en/proyectos" class="btn secondary">← Back to projects</a>
+    </div>
+
+  </section>
+
+</Layout>
+
+<style>
+  .project-detail {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .breadcrumb {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 12px;
+  }
+  .breadcrumb a { color: rgba(255,255,255,0.85); text-decoration: none; }
+  .breadcrumb a:hover { text-decoration: underline; }
+
+  .project-detail-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+
+  .project-badge-pill {
+    display: inline-block;
+    padding: 4px 14px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #fff;
+  }
+  .badge-web    { background: linear-gradient(135deg, #8eb8e6, #2a5298); }
+  .badge-mobile { background: linear-gradient(135deg, #ff416c, #ff4b2b); }
+  .badge-desktop{ background: linear-gradient(135deg, #11998e, #38ef7d); color: #111; }
+
+  .project-detail-links {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-left: auto;
+  }
+
+  .project-detail-body {
+    display: grid;
+    grid-template-columns: 1fr 220px;
+    gap: 40px;
+    align-items: start;
+    margin-bottom: 40px;
+  }
+
+  .project-detail-desc p {
+    margin-bottom: 1.15em;
+    line-height: 1.72;
+    color: #333;
+    font-size: 0.97rem;
+  }
+  .project-detail-desc p:last-child { margin-bottom: 0; }
+
+  .project-detail-aside {
+    background: #f8faff;
+    border: 1.5px solid #e4ecf8;
+    border-radius: 14px;
+    padding: 20px;
+    position: sticky;
+    top: 80px;
+  }
+
+  .project-detail-aside h2 {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #2a5298;
+    margin-bottom: 14px;
+    font-weight: 700;
+  }
+
+  .skills--vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .project-detail-actions {
+    padding-top: 8px;
+    border-top: 1.5px solid #e4ecf8;
+  }
+
+  @media (max-width: 660px) {
+    .project-detail-body {
+      grid-template-columns: 1fr;
+    }
+    .project-detail-aside {
+      position: static;
+    }
+    .project-detail-links { margin-left: 0; }
+  }
+</style>

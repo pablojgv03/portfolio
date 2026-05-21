@@ -36,6 +36,63 @@
       "link-text": "#"
     },
     {
+      "id": 3,
+      "slug": "local-reviews-ai",
+      "badge": "desktop",
+      "title": "Local Reviews AI",
+      "image": "/img/projects/local-reviews-ai/portada.webp",
+      "imageAlt": "Local Reviews AI — dashboard con métricas de reseñas de Google",
+      "darkHero": true,
+      "screenshots": [
+        {
+          "src": "/img/projects/local-reviews-ai/portada.webp",
+          "alt": "Dashboard con total de reseñas, media de estrellas y estado de respuestas",
+          "altEn": "Dashboard showing total reviews, star average and response status",
+          "title": "Dashboard",
+          "titleEn": "Dashboard",
+          "caption": "Métricas en tiempo real: reseñas totales, media de estrellas, negativas pendientes y estado de las respuestas.",
+          "captionEn": "Real-time metrics: total reviews, star average, pending negatives and response pipeline status."
+        },
+        {
+          "src": "/img/projects/local-reviews-ai/resenas.webp",
+          "alt": "Panel de reseñas con lista filtrable y respuesta generada por IA en el lateral",
+          "altEn": "Reviews panel with filterable list and AI-generated response in the sidebar",
+          "title": "Respuesta IA",
+          "titleEn": "AI Response",
+          "caption": "Selecciona una reseña y la IA genera una respuesta profesional al instante. Edítala antes de usarla.",
+          "captionEn": "Select a review and the AI generates a professional reply instantly. Edit it before sending."
+        },
+        {
+          "src": "/img/projects/local-reviews-ai/configuracion.webp",
+          "alt": "Pantalla de configuración con nombre del negocio, tono de respuestas y modelo de Ollama",
+          "altEn": "Settings screen with business name, response tone and Ollama model configuration",
+          "title": "Configuración",
+          "titleEn": "Settings",
+          "caption": "Ajusta el tono (formal, cercano, profesional) y conecta tu modelo de Ollama local sin coste de API.",
+          "captionEn": "Set the tone (formal, friendly, professional) and connect your local Ollama model — zero API cost."
+        }
+      ],
+      "large-description": {
+        "es": "Local Reviews AI es una aplicación de escritorio para negocios locales — restaurantes, clínicas, tiendas — que centraliza la gestión de reseñas de Google y genera respuestas profesionales usando inteligencia artificial que corre en tu propio ordenador.\n\nEl problema que resuelve: responder reseñas de forma consistente y rápida es una tarea que la mayoría de negocios descuida, aunque tiene un impacto directo en la reputación y el SEO local. Esta app convierte esa tarea de minutos en segundos.\n\nEl flujo es simple: la app muestra todas las reseñas con su puntuación, autor y fecha. Analiza automáticamente el sentimiento de cada una (positiva, neutra, negativa) y marca las urgentes. Al seleccionar una reseña, el modelo de IA genera una respuesta adaptada al tono configurado para el negocio — formal, cercano o profesional. La respuesta se puede editar antes de copiarla y enviarla desde Google Business.\n\nLo que hace diferente a esta herramienta es que la IA corre completamente en local con Ollama (llama3, mistral, gemma2…). Sin suscripción, sin enviar datos de clientes a servidores externos, sin coste por token. El negocio mantiene el control total de sus datos.\n\nDesarrollada con Tauri 2 (app nativa en Rust) y React + TailwindCSS en el frontend. Los datos se almacenan en SQLite de forma local. El motor de IA usa la API de Ollama, configurable desde la propia app con cualquier modelo instalado en el equipo.",
+        "en": "Local Reviews AI is a desktop application for local businesses — restaurants, clinics, shops — that centralises Google review management and generates professional replies using AI running entirely on your own machine.\n\nThe problem it solves: responding to reviews consistently and quickly is a task most businesses neglect, even though it has a direct impact on reputation and local SEO. This app turns a minutes-long chore into a matter of seconds.\n\nThe workflow is straightforward: the app displays all reviews with their rating, author and date. It automatically analyses the sentiment of each one (positive, neutral, negative) and flags urgent ones. When you select a review, the AI model generates a reply adapted to the tone configured for the business — formal, friendly, or professional. The reply can be edited before copying it to Google Business.\n\nWhat makes this tool different is that the AI runs entirely locally with Ollama (llama3, mistral, gemma2…). No subscription, no sending customer data to external servers, no per-token cost. The business keeps full control of its data.\n\nBuilt with Tauri 2 (native app in Rust) and React + TailwindCSS on the frontend. Data is stored locally in SQLite. The AI engine uses the Ollama API, configurable directly from the app with any model installed on the machine."
+      },
+      "description": {
+        "es": "App de escritorio para negocios locales — gestión de reseñas de Google con respuestas automáticas generadas por IA local (Ollama), sin coste de API y sin enviar datos a terceros.",
+        "en": "Desktop app for local businesses — Google review management with automatic replies generated by local AI (Ollama), no API cost and no data sent to third parties."
+      },
+      "skills": [
+        { "name": "Tauri 2", "level": "high" },
+        { "name": "React", "level": "high" },
+        { "name": "TypeScript", "level": "high" },
+        { "name": "TailwindCSS", "level": "high" },
+        { "name": "SQLite", "level": "high" },
+        { "name": "Rust", "level": "mid" },
+        { "name": "Ollama", "level": "mid" }
+      ],
+      "link": "#",
+      "link-text": "#"
+    },
+    {
       "id": 2,
       "slug": "start-brawling",
       "badge": "mobile",

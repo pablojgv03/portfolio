@@ -55,7 +55,7 @@ const badgeEmojis: Record<string, string> = {
             <p class="project-desc">{p.description.es}</p>
             {p.skills && p.skills.length > 0 && (
               <div class="skills" aria-label={`Aptitudes de ${p.title}`}>
-                {p.skills.map(skill => (
+                {p.skills.slice(0, 6).map(skill => (
                   <span class={`skill ${skill.level ?? ''}`} title={skill.level ?? ''}>{skill.name}</span>
                 ))}
               </div>

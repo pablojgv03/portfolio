@@ -142,7 +142,7 @@ const personSchema = {
             <p class="project-desc">{p.description.en}</p>
             {p.skills && p.skills.length > 0 && (
               <div class="skills" aria-label={`Skills for ${p.title}`}>
-                {p.skills.map(skill => (
+                {p.skills.slice(0, 6).map(skill => (
                   <span class={`skill ${skill.level ?? ''}`}>{skill.name}</span>
                 ))}
               </div>

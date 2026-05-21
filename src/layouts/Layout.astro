@@ -29,6 +29,7 @@ const ogLocale = isEN ? 'en_US' : 'es_ES';
 
 const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 const normalizedPath = currentPath.replace(/^\/en/, '') || '/';
+const hideContactWidget = normalizedPath === '/contacto' || normalizedPath === '/contact';
 const navClass = (href: string) => {
   let match: boolean;
   if (href === '/') {
@@ -215,6 +216,32 @@ const heroAvailability = isEN ? 'Available for work'   : 'Disponible para trabaj
         <polyline points="18 15 12 9 6 15"></polyline>
       </svg>
     </button>
+
+    <!-- Contact fixed widget -->
+    {!hideContactWidget && (
+      <>
+        <div class="contact-fixed">
+          <div class="contact-fixed-header">
+            <p class="contact-fixed-title" role="heading" aria-level="2">
+              <span aria-hidden="true">📩 </span>{isEN ? 'Contact' : 'Contacto'}
+            </p>
+            <button class="contact-close" aria-label={isEN ? 'Close contact' : 'Cerrar contacto'}>✕</button>
+          </div>
+          <ul class="contact">
+            <li>📞 <a href="tel:+34622400727">+34 622 400 727</a></li>
+            <li>📧 <a href="mailto:pablogomezvillen@gmail.com">pablogomezvillen@gmail.com</a></li>
+            <li>💼 <a href="https://www.linkedin.com/in/pablo-gomez-villen" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+          </ul>
+          <a href={isEN ? '/en/servicios#pricing' : '/servicios#precios'} class="contact-fixed-cta btn--icon">
+            {isEN ? 'Request a quote' : 'Pedir presupuesto'}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+        <button class="contact-mini" aria-label={isEN ? 'Open contact' : 'Abrir contacto'}>
+          <span aria-hidden="true">📩</span>
+        </button>
+      </>
+    )}
 
     <!-- Contact Script -->
     <ContactScript />

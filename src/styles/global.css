@@ -2707,7 +2707,7 @@ body:has(.sm-page) footer p {
   transition: background 0.2s, transform 0.15s;
   font-family: inherit;
 }
-.btn-whatsapp:hover { background: #1eb558; transform: translateY(-2px); color: #fff; }
+.btn-whatsapp:hover { background: #1eb558; transform: translateY(-2px); color: #ffce00; }
 
 .btn-outlined {
   display: inline-block;

@@ -49,9 +49,7 @@ const badgeEmojis: Record<string, string> = {
               {badgeEmojis[p.badge] ?? '❓'}
             </div>
             <h3>{p.title}</h3>
-            <p class="project-desc project-desc--large">
-              {p['large-description'].en}
-            </p>
+            <p class="project-desc">{p.description.en}</p>
             {p.skills && p.skills.length > 0 && (
               <div class="skills" aria-label={`Skills for ${p.title}`}>
                 {p.skills.map(skill => (

@@ -2,7 +2,6 @@
 import Layout from '../layouts/Layout.astro';
 import projectsData from '../data/projects.json';
 
-const defaultLang = 'es';
 const badgeEmojis: Record<string, string> = {
   desktop: '🖥️',
   mobile: '📱',
@@ -53,12 +52,7 @@ const badgeEmojis: Record<string, string> = {
               {badgeEmojis[p.badge] ?? '❓'}
             </div>
             <h3>{p.title}</h3>
-            <p
-              class="project-desc project-desc--large"
-              data-project-id={String(p.id)}
-            >
-              {p['large-description'][defaultLang as 'es' | 'en']}
-            </p>
+            <p class="project-desc">{p.description.es}</p>
             {p.skills && p.skills.length > 0 && (
               <div class="skills" aria-label={`Aptitudes de ${p.title}`}>
                 {p.skills.map(skill => (

@@ -29,7 +29,7 @@ const ogLocale = isEN ? 'en_US' : 'es_ES';
 
 const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 const normalizedPath = currentPath.replace(/^\/en/, '') || '/';
-const hideContactWidget = normalizedPath === '/contacto' || normalizedPath === '/contact';
+const hideContactWidget = normalizedPath === '/contacto' || normalizedPath === '/contact' || normalizedPath === '/pablo-gomez-villen';
 const navClass = (href: string) => {
   let match: boolean;
   if (href === '/') {

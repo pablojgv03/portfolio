@@ -37,6 +37,7 @@ const navCurrent = (href: string) => navClass(href) ? 'page' : undefined;
 const jsonLdList = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 
 const navHome       = isEN ? enData.nav.home       : 'Inicio';
+const navProjects   = isEN ? enData.nav.projects    : 'Proyectos';
 const navExperience = isEN ? enData.nav.experience  : 'Experiencia';
 const navAbout      = isEN ? enData.nav.about       : 'Sobre mí';
 const heroGreeting  = isEN ? enData.hero.greeting   : 'Hola, soy <span>Pablo Gómez</span>';
@@ -104,6 +105,7 @@ const rightsText    = isEN ? enData.rights          : '© 2026 Pablo Gómez Vill
         <!-- Menú de escritorio -->
         <nav class="nav-links desktop">
           <a href={`${basePath}/`} class={navClass('/')} aria-current={navCurrent('/')}>{navHome}</a>
+          <a href={`${basePath}/proyectos`} class={navClass('/proyectos')} aria-current={navCurrent('/proyectos')}>{navProjects}</a>
           <a href={`${basePath}/experiencia`} class={navClass('/experiencia')} aria-current={navCurrent('/experiencia')}>{navExperience}</a>
           <a href={`${basePath}/pablo-gomez-villen`} class={navClass('/pablo-gomez-villen')} aria-current={navCurrent('/pablo-gomez-villen')}>{navAbout}</a>
           <a href={`${basePath}/blog`} class={navClass('/blog')} aria-current={navCurrent('/blog')}>Blog</a>
@@ -132,6 +134,7 @@ const rightsText    = isEN ? enData.rights          : '© 2026 Pablo Gómez Vill
           <button class="close-menu" aria-label="Cerrar menú">✕</button>
         </div>
         <a href={`${basePath}/`} class={navClass('/')} aria-current={navCurrent('/')}>{navHome}</a>
+        <a href={`${basePath}/proyectos`} class={navClass('/proyectos')} aria-current={navCurrent('/proyectos')}>{navProjects}</a>
         <a href={`${basePath}/experiencia`} class={navClass('/experiencia')} aria-current={navCurrent('/experiencia')}>{navExperience}</a>
         <a href={`${basePath}/pablo-gomez-villen`} class={navClass('/pablo-gomez-villen')} aria-current={navCurrent('/pablo-gomez-villen')}>{navAbout}</a>
         <a href={`${basePath}/blog`} class={navClass('/blog')} aria-current={navCurrent('/blog')}>Blog</a>

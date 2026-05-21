@@ -81,47 +81,29 @@ const badgeEmojis: Record<string, string> = {
     </div>
   </section>
 
-  <script type="module">
-    import { loadLanguage, getLanguage } from '/scripts/i18n.js';
-
-    window.addEventListener('DOMContentLoaded', async () => {
-      const lang = getLanguage();
-      await loadLanguage(lang);
-      const idiomaActual = window.lang || lang;
-
-      const data = await fetch('/data/projects.json').then(r => r.json());
-
-      // Actualizar descripciones largas al idioma actual
-      document.querySelectorAll('[data-project-id]').forEach(el => {
-        const id = parseInt(el.dataset.projectId);
-        const p = data.proyectos.find(proj => proj.id === id);
-        const desc = p?.['large-description']?.[idiomaActual];
-        if (desc) el.textContent = desc;
-      });
-
-      // Mostrar contador inicial
-      updateCount(data.proyectos.length, data.proyectos.length);
-
-      // Filtros
-      const botones = document.querySelectorAll('.filtro');
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
       const cards = document.querySelectorAll('#lista-proyectos .project-card');
+      const botones = document.querySelectorAll('.filtro');
+
+      updateCount(cards.length, cards.length);
 
       botones.forEach(btn => {
         btn.addEventListener('click', () => {
           botones.forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
-          const tipo = btn.dataset.filtro;
+          const tipo = (btn as HTMLElement).dataset.filtro;
           let visible = 0;
           cards.forEach(card => {
-            const show = tipo === 'todos' || card.dataset.badge === tipo;
-            card.style.display = show ? '' : 'none';
+            const show = tipo === 'todos' || (card as HTMLElement).dataset.badge === tipo;
+            (card as HTMLElement).style.display = show ? '' : 'none';
             if (show) visible++;
           });
           updateCount(visible, cards.length);
         });
       });
 
-      function updateCount(visible, total) {
+      function updateCount(visible: number, total: number) {
         const el = document.getElementById('project-count');
         if (el) el.textContent = `${visible} de ${total} proyectos`;
       }

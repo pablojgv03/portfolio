@@ -118,8 +118,11 @@ const softwareSchema = {
     </div>
   )}
 
-  <div class="section pd-back-wrap">
-    <a href="/en/proyectos" class="btn secondary">← Back to projects</a>
+  <div class="pd-back-wrap">
+    <a href="/en/proyectos" class="pd-back-link">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+      Back to projects
+    </a>
   </div>
 
 </Layout>
@@ -348,7 +351,27 @@ const softwareSchema = {
   margin-top: 20px;
 }
 
-.pd-back-wrap { max-width: 860px; margin: 0 auto; padding-top: 40px; padding-bottom: 8px; }
+.pd-back-wrap {
+  text-align: center;
+  padding: 36px 24px 52px;
+}
+
+.pd-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #9ca3af;
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  transition: color 0.18s, gap 0.18s;
+}
+
+.pd-back-link:hover {
+  color: #1e3c72;
+  gap: 10px;
+}
 
 @media (max-width: 760px) {
   .pd-body { grid-template-columns: 1fr; }

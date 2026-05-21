@@ -51,10 +51,26 @@ const personSchema = {
       {en['section-sobre-mi'].title}
     </h2>
     <div class="about-grid">
-      <picture>
-        <source type="image/webp" srcset="/img/foto-empresa.webp">
-        <img src="/img/foto-empresa.jpg" alt="Pablo Gómez, Full Stack Developer in Granada" class="avatar" width="140" height="140" fetchpriority="high">
-      </picture>
+      <div class="about-left">
+        <picture>
+          <source type="image/webp" srcset="/img/foto-empresa.webp">
+          <img src="/img/foto-empresa.jpg" alt="Pablo Gómez, Full Stack Developer in Granada" class="avatar" width="140" height="140" fetchpriority="high">
+        </picture>
+        <div class="about-quick-stats">
+          <div class="about-stat">
+            <span class="about-stat-num">1+</span>
+            <span class="about-stat-lbl">yrs exp.</span>
+          </div>
+          <div class="about-stat">
+            <span class="about-stat-num">2</span>
+            <span class="about-stat-lbl">companies</span>
+          </div>
+          <div class="about-stat">
+            <span class="about-stat-num">📍</span>
+            <span class="about-stat-lbl">Granada</span>
+          </div>
+        </div>
+      </div>
       <div class="about-text">
         <p>{en['section-sobre-mi'].content}</p>
       </div>

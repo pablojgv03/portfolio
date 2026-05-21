@@ -44,7 +44,9 @@ const heroGreeting  = isEN ? enData.hero.greeting   : 'Hola, soy <span>Pablo Gó
 const heroRole      = isEN ? enData.hero.role       : 'Desarrollador Full Stack | PHP · Laravel · JavaScript · MySQL';
 const heroBtnCV     = isEN ? enData.hero.btnCV      : 'Descargar CV';
 const cvFile        = isEN ? 'CV_Pablo_Gomez_Villen_Software-Developer.pdf' : 'CV_Full-stack_Pablo_Gomez_Villen_Desarrollador.pdf';
-const rightsText    = isEN ? enData.rights          : '© 2026 Pablo Gómez Villén || Programador Full Stack';
+const rightsText       = isEN ? enData.rights          : '© 2026 Pablo Gómez Villén || Programador Full Stack';
+const heroBtnProjects  = isEN ? 'View projects'        : 'Ver proyectos';
+const heroAvailability = isEN ? 'Available for work'   : 'Disponible para trabajar';
 ---
 
 <html lang={lang}>
@@ -92,7 +94,7 @@ const rightsText    = isEN ? enData.rights          : '© 2026 Pablo Gómez Vill
     <meta name="theme-color" content="#2563eb">
     {lcp && <link rel="preload" href={lcp} as="image" fetchpriority="high">}
   </head>
-  <body class="contact-open">
+  <body>
     <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
     <!-- Header -->
     <header class="navbar">
@@ -155,14 +157,29 @@ const rightsText    = isEN ? enData.rights          : '© 2026 Pablo Gómez Vill
     {showHero && (
       <header class="hero">
         <div class="hero-content">
+          <div class="hero-status">
+            <span class="hero-status-dot"></span>
+            <span>{heroAvailability}</span>
+          </div>
           <h1 set:html={heroGreeting}></h1>
           <p>{heroRole}</p>
-          <div class="hero-buttons">
-            <a id="cv-link" href={`/${cvFile}`} download target="_blank" rel="noopener noreferrer" class="btn secondary btn--icon">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                {heroBtnCV}
-              </a>
+          <div class="hero-chips">
+            <span>Laravel</span>
+            <span>PHP</span>
+            <span>JavaScript</span>
+            <span>MySQL</span>
+            <span>Astro</span>
           </div>
+          <div class="hero-buttons">
+            <a href={`${basePath}/proyectos`} class="btn">{heroBtnProjects}</a>
+            <a id="cv-link" href={`/${cvFile}`} download target="_blank" rel="noopener noreferrer" class="btn secondary btn--icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              {heroBtnCV}
+            </a>
+          </div>
+          <a href="#main-content" class="hero-scroll-arrow" aria-label={isEN ? 'Scroll down' : 'Ver contenido'}>
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </a>
         </div>
       </header>
     )}
@@ -196,7 +213,6 @@ const rightsText    = isEN ? enData.rights          : '© 2026 Pablo Gómez Vill
         const toggle = document.querySelector('.nav-toggle');
         const menu = document.getElementById('mobileMenu');
         const closeBtn = document.querySelector('.close-menu');
-        const langSwitches = document.querySelectorAll('#lang-switch, #lang-switch-mobile');
 
         // --- Menú móvil ---
         toggle.addEventListener('click', (e) => {
@@ -218,11 +234,11 @@ const rightsText    = isEN ? enData.rights          : '© 2026 Pablo Gómez Vill
         });
 
         // --- Idioma (URL-based) ---
+        const langSwitches = document.querySelectorAll('#lang-switch, #lang-switch-mobile');
         const isEnPage = window.location.pathname.startsWith('/en');
         langSwitches.forEach(sw => sw.checked = isEnPage);
         // Sincronizar cookie con la URL actual
         document.cookie = `lang=${isEnPage ? 'en' : 'es'}; path=/; max-age=31536000`;
-
 
         // Toggle: navegar a la URL del idioma alternativo
         langSwitches.forEach(sw => {
@@ -243,6 +259,12 @@ const rightsText    = isEN ? enData.rights          : '© 2026 Pablo Gómez Vill
           });
         });
 
+        // --- Navbar backdrop-blur al hacer scroll ---
+        const navbar = document.querySelector('.navbar');
+        window.addEventListener('scroll', () => {
+          navbar.classList.toggle('navbar--scrolled', window.scrollY > 20);
+        }, { passive: true });
+
         // --- Scroll to top ---
         const scrollBtn = document.getElementById('scroll-top-btn');
         if (scrollBtn) {
@@ -260,6 +282,25 @@ const rightsText    = isEN ? enData.rights          : '© 2026 Pablo Gómez Vill
           scrollBtn.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
           });
+        }
+
+        // --- Scroll reveal para tarjetas ---
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          const vh = window.innerHeight;
+          document.querySelectorAll('.project-card, .featured-card').forEach(el => {
+            if (el.getBoundingClientRect().top > vh * 0.88) {
+              el.classList.add('scroll-reveal');
+            }
+          });
+          const revObs = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+              if (e.isIntersecting) {
+                e.target.classList.add('visible');
+                revObs.unobserve(e.target);
+              }
+            });
+          }, { threshold: 0.05 });
+          document.querySelectorAll('.scroll-reveal').forEach(el => revObs.observe(el));
         }
       });
     </script>

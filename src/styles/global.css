@@ -1,3 +1,18 @@
+/* ── Design System ── */
+:root {
+  --c-primary:   #1e3c72;
+  --c-secondary: #2a5298;
+  --c-accent:    #ffce00;
+  --c-text:      #333;
+  --c-muted:     #6b7280;
+  --c-bg-alt:    #eef4ff;
+  --c-surface:   #fff;
+  --c-border:    #e4ecf8;
+  --radius-card: 14px;
+  --shadow-card: 0 2px 4px rgba(0,0,0,0.04), 0 8px 24px rgba(30,60,114,0.10);
+  --ease:        0.22s ease;
+}
+
 /* Reset básico */
 * {
   margin: 0;
@@ -37,15 +52,21 @@ body {
 
 /* Hero */
 .hero {
-  background: linear-gradient(to right, #1e3c72, #2a5298);
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 60%, #1b4a8a 100%);
   color: white;
   text-align: center;
-  padding: 35px 15px;
+  padding: 60px 20px 70px;
   margin-top: -20px;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   box-shadow: 0 20px 30px rgba(0,0,0,0.3);
   border-bottom-left-radius: 110px 40px;
   border-bottom-right-radius: 110px 40px;
 }
+
+.hero-content { width: 100%; max-width: 680px; }
 
 .hero h1 {
   font-size: 2.5rem;
@@ -140,8 +161,19 @@ body {
   pointer-events: none;
   cursor: default;
   font-weight: 700;
-  border-bottom: 2px solid rgba(255,255,255,0.75);
-  padding-bottom: 2px;
+  position: relative;
+}
+
+.nav-links.desktop a.nav-current::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5px;
+  height: 5px;
+  background: #ffce00;
+  border-radius: 50%;
 }
 
 /* Toggle idioma */
@@ -652,11 +684,52 @@ body.contact-paused .contact-mini {
 
 .about-grid {
   display: grid;
-  grid-template-columns: 140px 1fr;
-  gap: 1.25rem;
-  align-items: center;
+  grid-template-columns: 190px 1fr;
+  gap: 2.2rem;
+  align-items: start;
   max-width: 900px;
   margin: 0 auto;
+}
+
+.about-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.about-quick-stats {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+
+.about-stat {
+  flex: 1;
+  min-width: 52px;
+  text-align: center;
+  background: rgba(30,60,114,0.06);
+  border: 1px solid #dce8f8;
+  border-radius: 10px;
+  padding: 8px 4px;
+}
+
+.about-stat-num {
+  display: block;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #1e3c72;
+  line-height: 1;
+}
+
+.about-stat-lbl {
+  display: block;
+  font-size: 0.66rem;
+  color: #6b7280;
+  font-weight: 500;
+  margin-top: 3px;
 }
 
 .avatar {
@@ -672,6 +745,7 @@ body.contact-paused .contact-mini {
     grid-template-columns: 1fr;
     text-align: center;
   }
+  .about-left { align-items: center; }
   .avatar { margin: 0 auto; }
 }
 
@@ -2383,4 +2457,171 @@ body:has(.sm-page) footer p {
 @media (max-width: 540px) {
   .blog-related-grid { grid-template-columns: 1fr; }
   .blog-related { padding: 0 16px 48px; }
+}
+
+/* ════════════════════════════════════
+   HERO ENHANCEMENTS
+   ════════════════════════════════════ */
+
+.hero-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 999px;
+  padding: 5px 16px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin-bottom: 18px;
+  backdrop-filter: blur(6px);
+}
+
+.hero-status-dot {
+  width: 8px;
+  height: 8px;
+  background: #22c55e;
+  border-radius: 50%;
+  flex-shrink: 0;
+  animation: pulse-green 2s infinite;
+}
+
+@keyframes pulse-green {
+  0%   { box-shadow: 0 0 0 0 rgba(34,197,94,.6); }
+  70%  { box-shadow: 0 0 0 8px rgba(34,197,94,0); }
+  100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
+}
+
+.hero-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin: 16px 0 28px;
+}
+
+.hero-chips span {
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.20);
+  border-radius: 999px;
+  padding: 5px 14px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: background 0.18s;
+}
+
+.hero-chips span:hover { background: rgba(255,255,255,0.22); }
+
+.hero-scroll-arrow {
+  display: inline-block;
+  margin-top: 30px;
+  color: rgba(255,255,255,0.42);
+  text-decoration: none;
+  animation: hero-bounce 2.2s ease-in-out infinite;
+  transition: color 0.18s;
+}
+
+.hero-scroll-arrow:hover { color: rgba(255,255,255,0.82); }
+
+@keyframes hero-bounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(9px); }
+}
+
+/* ════════════════════════════════════
+   NAVBAR ENHANCEMENTS
+   ════════════════════════════════════ */
+
+.navbar--scrolled {
+  background: rgba(18, 38, 85, 0.88) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+/* Language toggle — ES|EN text buttons */
+.lang-btns {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: rgba(255,255,255,0.10);
+  border-radius: 999px;
+  padding: 3px;
+}
+
+.lang-btn {
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.6);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  padding: 4px 11px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+}
+
+.lang-btn.active,
+.lang-btn:hover {
+  background: rgba(255,255,255,0.92);
+  color: #1e3c72;
+}
+
+/* ════════════════════════════════════
+   SCROLL REVEAL
+   ════════════════════════════════════ */
+
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+
+.scroll-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ════════════════════════════════════
+   TECH PILLS — Sobre mí stack
+   ════════════════════════════════════ */
+
+.sm-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  justify-content: center;
+}
+
+.sm-pill {
+  padding: 0.42rem 1.1rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.sm-pill:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.25);
+}
+
+.sm-pill--high {
+  background: rgba(30,60,114,0.28);
+  border-color: rgba(42,82,152,0.55);
+  color: #93c5fd;
+}
+
+.sm-pill--mid {
+  background: rgba(255,206,0,0.09);
+  border-color: rgba(255,206,0,0.28);
+  color: #fbbf24;
+}
+
+.sm-pill--low {
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.12);
+  color: #94a3b8;
 }

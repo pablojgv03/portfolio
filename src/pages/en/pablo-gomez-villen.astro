@@ -41,19 +41,19 @@ const sm = enData['sobre-mi'];
     <!-- Stats -->
     <div class="sm-stats" id="stats">
       <div class="sm-stat reveal">
-        <div class="sm-stat-val"><span class="counter" data-target="1">0</span><span>+</span></div>
+        <div class="sm-stat-val"><span class="counter" data-target="1">1</span><span>+</span></div>
         <div class="sm-stat-lbl">{sm.stats.years}</div>
       </div>
       <div class="sm-stat reveal" style="--d:.1s">
-        <div class="sm-stat-val"><span class="counter" data-target="2">0</span></div>
+        <div class="sm-stat-val"><span class="counter" data-target="2">2</span></div>
         <div class="sm-stat-lbl">{sm.stats.companies}</div>
       </div>
       <div class="sm-stat reveal" style="--d:.2s">
-        <div class="sm-stat-val"><span class="counter" data-target="3">0</span></div>
+        <div class="sm-stat-val"><span class="counter" data-target="3">3</span></div>
         <div class="sm-stat-lbl">{sm.stats.formations}</div>
       </div>
       <div class="sm-stat reveal" style="--d:.3s">
-        <div class="sm-stat-val"><span class="counter" data-target="10">0</span><span>+</span></div>
+        <div class="sm-stat-val"><span class="counter" data-target="10">10</span><span>+</span></div>
         <div class="sm-stat-lbl">{sm.stats.techs}</div>
       </div>
     </div>
@@ -136,15 +136,19 @@ const sm = enData['sobre-mi'];
     <!-- Stack -->
     <section class="sm-section sm-stack-section">
       <h2 class="sm-title reveal" set:html={sm.stack.title}></h2>
-      <div class="sm-stack">
-        <div class="sm-skill reveal" style="--d:0s"><div class="sm-skill-top"><span>⚡ Laravel</span><span>90%</span></div><div class="sm-skill-bar"><div class="sm-skill-fill" style="--w:90%"></div></div></div>
-        <div class="sm-skill reveal" style="--d:.05s"><div class="sm-skill-top"><span>🐘 PHP</span><span>90%</span></div><div class="sm-skill-bar"><div class="sm-skill-fill" style="--w:90%"></div></div></div>
-        <div class="sm-skill reveal" style="--d:.1s"><div class="sm-skill-top"><span>🟨 JavaScript</span><span>90%</span></div><div class="sm-skill-bar"><div class="sm-skill-fill" style="--w:90%"></div></div></div>
-        <div class="sm-skill reveal" style="--d:.15s"><div class="sm-skill-top"><span>🗄️ MySQL</span><span>90%</span></div><div class="sm-skill-bar"><div class="sm-skill-fill" style="--w:90%"></div></div></div>
-        <div class="sm-skill reveal" style="--d:.2s"><div class="sm-skill-top"><span>🐍 Python</span><span>65%</span></div><div class="sm-skill-bar"><div class="sm-skill-fill" style="--w:65%"></div></div></div>
-        <div class="sm-skill reveal" style="--d:.25s"><div class="sm-skill-top"><span>☁️ Google Cloud</span><span>60%</span></div><div class="sm-skill-bar"><div class="sm-skill-fill" style="--w:60%"></div></div></div>
-        <div class="sm-skill reveal" style="--d:.3s"><div class="sm-skill-top"><span>🎨 HTML / CSS</span><span>95%</span></div><div class="sm-skill-bar"><div class="sm-skill-fill" style="--w:95%"></div></div></div>
-        <div class="sm-skill reveal" style="--d:.35s"><div class="sm-skill-top"><span>☕ Java</span><span>85%</span></div><div class="sm-skill-bar"><div class="sm-skill-fill" style="--w:85%"></div></div></div>
+      <div class="sm-pills">
+        <span class="sm-pill sm-pill--high reveal" style="--d:0s">⚡ Laravel</span>
+        <span class="sm-pill sm-pill--high reveal" style="--d:.05s">🐘 PHP</span>
+        <span class="sm-pill sm-pill--high reveal" style="--d:.08s">🟨 JavaScript</span>
+        <span class="sm-pill sm-pill--high reveal" style="--d:.11s">🗄️ MySQL</span>
+        <span class="sm-pill sm-pill--high reveal" style="--d:.14s">🎨 HTML / CSS</span>
+        <span class="sm-pill sm-pill--high reveal" style="--d:.17s">☕ Java</span>
+        <span class="sm-pill sm-pill--mid reveal" style="--d:.20s">🐍 Python</span>
+        <span class="sm-pill sm-pill--mid reveal" style="--d:.23s">☁️ Google Cloud</span>
+        <span class="sm-pill sm-pill--mid reveal" style="--d:.26s">🔍 ElasticSearch</span>
+        <span class="sm-pill sm-pill--low reveal" style="--d:.29s">🐙 Git</span>
+        <span class="sm-pill sm-pill--low reveal" style="--d:.32s">🐳 Docker</span>
+        <span class="sm-pill sm-pill--low reveal" style="--d:.35s">🚀 Astro</span>
       </div>
     </section>
 

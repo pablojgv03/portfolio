@@ -1,0 +1,37 @@
+---
+export interface Plan {
+  nombre: string;
+  precio: string;
+  descripcion: string;
+  incluidos: string[];
+  ctaTexto: string;
+  ctaHref?: string;
+  recomendado?: boolean;
+}
+
+export interface Props {
+  planes: Plan[];
+  recommendedLabel?: string;
+}
+
+const { planes, recommendedLabel = '⭐ Recomendado' } = Astro.props;
+---
+
+<div class="precio-grid">
+  {planes.map(plan => (
+    <div class={`precio-plan${plan.recomendado ? ' precio-plan--recomendado' : ''}`}>
+      {plan.recomendado && <span class="precio-badge-rec">{recommendedLabel}</span>}
+      <p class="precio-plan-name">{plan.nombre}</p>
+      <p class="precio-amount">
+        {plan.precio.startsWith('desde')
+          ? <><span class="desde">desde </span>{plan.precio.replace('desde ', '')}</>
+          : plan.precio}
+      </p>
+      <p class="precio-plan-desc">{plan.descripcion}</p>
+      <ul>
+        {plan.incluidos.map(item => <li>{item}</li>)}
+      </ul>
+      <a href={plan.ctaHref ?? '/contacto'} class="precio-plan-cta">{plan.ctaTexto}</a>
+    </div>
+  ))}
+</div>

@@ -1,0 +1,145 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": "https://www.pablogomezvillen.com",
+  "name": "Pablo Gómez Villén — Desarrollo Web",
+  "description": "Desarrollo de páginas web profesionales y SEO local para negocios en Granada y España",
+  "url": "https://www.pablogomezvillen.com",
+  "telephone": "+34622400727",
+  "email": "pablogomezvillen@gmail.com",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Granada",
+    "addressRegion": "Andalucía",
+    "addressCountry": "ES"
+  },
+  "areaServed": ["Granada", "Andalucía", "España"],
+  "serviceType": ["Diseño web", "SEO local", "Desarrollo Full Stack"]
+};
+---
+
+<Layout
+  title="Contacto | Pablo Gómez — Desarrollo Web en Granada"
+  lang="es"
+  description="Pide presupuesto para tu página web o proyecto digital. Respuesta en menos de 24 horas. Sin compromiso."
+  canonical="https://pablogomezvillen.com/contacto"
+  showHero={false}
+  keywords="contacto desarrollador web Granada, presupuesto web, contratar programador Granada"
+  jsonLd={[localBusinessSchema]}
+>
+
+  <div class="page-banner">
+    <h1>
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      Hablemos
+    </h1>
+    <p>Cuéntame qué necesitas — respondo en menos de 24 horas</p>
+  </div>
+
+  <div class="contacto-page">
+
+    <!-- Formulario -->
+    <div>
+      <h2 style="font-size:1.3rem;font-weight:700;color:#1e3c72;margin-bottom:20px;">Envíame un mensaje</h2>
+
+      <!--
+        Para activar el formulario:
+        1. Crea una cuenta gratuita en https://formspree.io
+        2. Crea un nuevo formulario y copia tu endpoint
+        3. Reemplaza "YOUR_FORM_ID" por tu ID real
+      -->
+      <form
+        class="contact-form"
+        action="https://formspree.io/f/xbdboaye"
+        method="POST"
+      >
+        <div class="contact-form-group">
+          <label for="cf-nombre">Nombre *</label>
+          <input type="text" id="cf-nombre" name="nombre" required placeholder="Tu nombre" autocomplete="name" />
+        </div>
+
+        <div class="contact-form-group">
+          <label for="cf-email">Email *</label>
+          <input type="email" id="cf-email" name="email" required placeholder="tu@email.com" autocomplete="email" />
+        </div>
+
+        <div class="contact-form-group">
+          <label for="cf-tel">Teléfono (opcional)</label>
+          <input type="tel" id="cf-tel" name="telefono" placeholder="+34 600 000 000" autocomplete="tel" />
+        </div>
+
+        <div class="contact-form-group">
+          <label for="cf-tipo">Tipo de proyecto *</label>
+          <select id="cf-tipo" name="tipo_proyecto" required>
+            <option value="" disabled selected>Selecciona una opción...</option>
+            <option value="web-negocio">Web para mi negocio</option>
+            <option value="seo">SEO y posicionamiento local</option>
+            <option value="app">App o desarrollo a medida</option>
+            <option value="mantenimiento">Mantenimiento web</option>
+            <option value="otro">Otro</option>
+          </select>
+        </div>
+
+        <div class="contact-form-group">
+          <label for="cf-mensaje">Mensaje *</label>
+          <textarea id="cf-mensaje" name="mensaje" required placeholder="Cuéntame en qué puedo ayudarte..."></textarea>
+        </div>
+
+        <button type="submit" class="contact-form-btn">
+          Enviar mensaje →
+        </button>
+      </form>
+    </div>
+
+    <!-- Info de contacto -->
+    <div class="contact-info-panel">
+      <h3>Información de contacto</h3>
+
+      <div class="contact-info-item">
+        <span class="contact-info-ico" aria-hidden="true">💬</span>
+        <div>
+          <span class="contact-info-label">WhatsApp</span>
+          <a
+            href="https://wa.me/34622400727?text=Hola%20Pablo%2C%20me%20interesa%20hablar%20sobre%20mi%20web"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="contact-info-val"
+          >+34 622 400 727</a>
+        </div>
+      </div>
+
+      <div class="contact-info-item">
+        <span class="contact-info-ico" aria-hidden="true">📧</span>
+        <div>
+          <span class="contact-info-label">Email</span>
+          <a href="mailto:pablogomezvillen@gmail.com" class="contact-info-val">pablogomezvillen@gmail.com</a>
+        </div>
+      </div>
+
+      <div class="contact-info-item">
+        <span class="contact-info-ico" aria-hidden="true">💼</span>
+        <div>
+          <span class="contact-info-label">LinkedIn</span>
+          <a href="https://www.linkedin.com/in/pablo-gomez-villen" target="_blank" rel="noopener noreferrer" class="contact-info-val">pablo-gomez-villen</a>
+        </div>
+      </div>
+
+      <div class="contact-info-item">
+        <span class="contact-info-ico" aria-hidden="true">📍</span>
+        <div>
+          <span class="contact-info-label">Ubicación</span>
+          <span class="contact-info-val" style="cursor:default">Granada, España<br><small style="font-weight:400;color:#888">Trabajo en remoto con negocios de toda España</small></span>
+        </div>
+      </div>
+
+      <div class="contact-respuesta">
+        ⏱️ Tiempo de respuesta habitual: <strong>menos de 24 horas</strong> en días laborables
+      </div>
+    </div>
+
+  </div>
+
+</Layout>

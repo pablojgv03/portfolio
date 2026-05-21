@@ -1,0 +1,27 @@
+---
+export interface Props {
+  icono: string;
+  titulo: string;
+  descripcion: string;
+  incluidos: string[];
+  ctaTexto: string;
+  ctaHref?: string;
+  badge?: string;
+}
+
+const { icono, titulo, descripcion, incluidos, ctaTexto, ctaHref = '/contacto', badge } = Astro.props;
+---
+
+<article class="servicio-card">
+  {badge && <span class="servicio-card-badge">{badge}</span>}
+  <span class="servicio-card-ico" aria-hidden="true">{icono}</span>
+  <h3>{titulo}</h3>
+  <p>{descripcion}</p>
+  <ul>
+    {incluidos.map(item => <li>{item}</li>)}
+  </ul>
+  <a href={ctaHref} class="servicio-card-cta">
+    {ctaTexto}
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </a>
+</article>

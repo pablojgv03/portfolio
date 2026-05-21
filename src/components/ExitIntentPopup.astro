@@ -1,5 +1,7 @@
 ---
-// Exit-intent CTA popup — aparece al salir o volver de otra pestaña, máx. 1 vez/día
+interface Props { lang?: string; }
+const { lang = 'es' } = Astro.props;
+const isEN = lang === 'en';
 ---
 
 <dialog
@@ -7,19 +9,28 @@
   class="exit-popup"
   aria-labelledby="exit-popup-title"
 >
-  <button class="exit-popup-close" aria-label="Cerrar popup">✕</button>
-  <p class="exit-popup-eyebrow">¡Antes de irte!</p>
-  <h2 class="exit-popup-title" id="exit-popup-title">¿Hablamos?</h2>
+  <button class="exit-popup-close" aria-label={isEN ? 'Close popup' : 'Cerrar popup'}>✕</button>
+  <p class="exit-popup-eyebrow">{isEN ? 'Before you go!' : '¡Antes de irte!'}</p>
+  <h2 class="exit-popup-title" id="exit-popup-title">{isEN ? "Let's talk?" : '¿Hablamos?'}</h2>
   <p class="exit-popup-desc">
-    Cuéntame tu proyecto o envíame tu oferta.<br />Respondo en menos de 24h.
+    {isEN
+      ? <>Tell me about your project or send me your offer.<br />I respond in less than 24h.</>
+      : <>Cuéntame tu proyecto o envíame tu oferta.<br />Respondo en menos de 24h.</>
+    }
   </p>
+  <a href={isEN ? '/en/servicios#pricing' : '/servicios#precios'} class="exit-btn exit-btn--budget">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    {isEN ? 'Get a free quote' : 'Pedir presupuesto gratis'}
+  </a>
   <div class="exit-popup-btns">
     <a href="tel:+34622400727" class="exit-btn exit-btn--call">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-      Llamar
+      {isEN ? 'Call' : 'Llamar'}
     </a>
     <a
-      href="https://wa.me/34622400727?text=Hola%20Pablo%2C%20he%20visto%20tu%20portfolio%20y%20me%20gustar%C3%ADa%20hablar%20contigo."
+      href={isEN
+        ? 'https://wa.me/34622400727?text=Hi%20Pablo%2C%20I%27ve%20seen%20your%20portfolio%20and%20I%27d%20like%20to%20talk%20with%20you.'
+        : 'https://wa.me/34622400727?text=Hola%20Pablo%2C%20he%20visto%20tu%20portfolio%20y%20me%20gustar%C3%ADa%20hablar%20contigo.'}
       target="_blank"
       rel="noopener noreferrer"
       class="exit-btn exit-btn--wa"
@@ -140,6 +151,13 @@
     outline-offset: 2px;
   }
 
+  .exit-btn--budget {
+    display: flex;
+    width: 100%;
+    margin-bottom: 12px;
+    background: #ffce00;
+    color: #1e3c72;
+  }
   .exit-btn--call { background: #1e3c72; color: #fff; }
   .exit-btn--wa   { background: #25d366; color: #fff; }
 

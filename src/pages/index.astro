@@ -54,13 +54,13 @@ const websiteSchema = {
 ---
 
 <Layout
-  title="Pablo Gómez — Full Stack Developer Laravel & PHP | Portfolio"
+  title="Pablo Gómez — Desarrollador Web y SEO Local en Granada | Full Stack PHP Laravel"
   lang={lang}
-  description="Portfolio de Pablo Gómez, Full Stack Developer especializado en Laravel, PHP, JavaScript y MySQL. Más de 1 año de experiencia en producción en Granada, España."
+  description="Desarrollo páginas web profesionales para negocios en Granada y España. SEO local, Google Business y soluciones Full Stack con PHP, Laravel y JavaScript."
   canonical="https://pablogomezvillen.com/"
   alternateEn="https://pablogomezvillen.com/en/"
   alternateEs="https://pablogomezvillen.com/"
-  keywords="Full Stack Developer, Laravel, PHP, JavaScript, MySQL, Google Cloud, ElasticSearch, desarrollador web, Granada, España"
+  keywords="desarrollador web Granada, Full Stack Developer, Laravel, PHP, JavaScript, MySQL, SEO local Granada, página web negocio Granada"
   jsonLd={[personSchema, websiteSchema]}
   lcp="/img/foto-empresa.webp"
 >
@@ -93,6 +93,48 @@ const websiteSchema = {
       </div>
       <div class="about-text">
         <p data-i18n="section-sobre-mi.content">Desarrollador Full Stack con más de un año de experiencia en producción, especializado en PHP (Laravel), JavaScript y MySQL. He trabajado en dos proyectos reales de principio a fin en empresas del sector edtech, desde el diseño de bases de datos hasta la integración de APIs REST y la mejora de rendimiento front-end. Formación complementaria en Especialización en IA y Big Data, y actualmente cursando DAW (jun. 2026). Busco incorporarme a un equipo donde seguir creciendo como desarrollador Full Stack.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ¿En qué puedo ayudarte? -->
+  <section class="dual-section">
+    <div class="dual-section-inner">
+      <h2>¿En qué puedo ayudarte?</h2>
+      <p class="dual-section-sub">Trabajo con dos tipos de clientes muy diferentes — ¿cuál eres tú?</p>
+      <div class="dual-grid">
+
+        <div class="dual-card dual-card--negocio">
+          <a href="/servicios" class="full-link" aria-label="Ver mis servicios"></a>
+          <span class="dual-card-ico" aria-hidden="true">🏪</span>
+          <h3>Tengo un negocio y necesito clientes</h3>
+          <p>Te hago una web profesional que aparezca en Google cuando alguien busque tu negocio en tu ciudad. Sin tecnicismos, sin complicaciones.</p>
+          <ul>
+            <li>✅ Página web moderna y rápida</li>
+            <li>✅ Optimización para Google local</li>
+            <li>✅ Google Business Profile</li>
+            <li>✅ Mantenimiento mensual</li>
+          </ul>
+          <a href="/servicios" class="btn-primary btn--icon" style="position:relative;z-index:11">Ver mis servicios <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+
+        <div class="dual-card dual-card--tech">
+          <a href="/proyectos" class="full-link" aria-label="Ver mis proyectos"></a>
+          <span class="dual-card-ico" aria-hidden="true">💻</span>
+          <h3>Soy empresa y busco un desarrollador Full Stack</h3>
+          <p>+1 año de experiencia en producción con Laravel, PHP, JavaScript y MySQL. Proyectos reales, código limpio y capacidad para trabajar en equipo.</p>
+          <ul>
+            <li>✅ Full Stack PHP / Laravel</li>
+            <li>✅ Proyectos en producción</li>
+            <li>✅ APIs REST, MySQL, JS</li>
+            <li>✅ Disponible inmediatamente</li>
+          </ul>
+          <div class="dual-card-btns">
+            <a href="/proyectos" class="btn-primary btn--icon">Ver mis proyectos <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+            <a href="/experiencia" class="btn-outlined btn--icon">Ver mi experiencia <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -260,13 +302,31 @@ const websiteSchema = {
 
   <!-- Contacto -->
   <section id="contacto" class="section bg-dark">
-    <h2 data-i18n="contact.title"><span aria-hidden="true">📩 </span>Contacto</h2>
-    <p data-i18n="contact.content">¿Interesado en colaborar o simplemente quieres saludar? ¡No dudes en contactarme! Estoy siempre abierto a nuevas oportunidades y conexiones. También puedes conocer más sobre mi trabajo aquí:</p>
-    <ul class="contact">
-      <li>💼 <a href="https://www.linkedin.com/in/pablo-gomez-villen" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-      <li>📞 <a href="tel:+34622400727">+34 622 400 727</a></li>
-      <li>📧 <a href="mailto:pablogomezvillen@gmail.com">pablogomezvillen@gmail.com</a></li>
-    </ul>
+    <h2 data-i18n="contact.title"><span aria-hidden="true">📩 </span>¿Hablamos?</h2>
+    <div class="contacto-footer-cta">
+      <p data-i18n="contact.content">
+        Si tienes un negocio y quieres más clientes online,
+        <strong>escríbeme y te respondo hoy</strong>.<br>
+        También estoy disponible para proyectos de desarrollo Full Stack.
+      </p>
+      <a
+        href="https://wa.me/34622400727?text=Hola%20Pablo%2C%20me%20interesa%20hablar%20sobre%20mi%20web"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-whatsapp"
+        aria-label="Contactar por WhatsApp"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        WhatsApp directo
+      </a>
+      <ul class="contact">
+        <li>💼 <a href="https://www.linkedin.com/in/pablo-gomez-villen" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+        <li>📞 <a href="tel:+34622400727">+34 622 400 727</a></li>
+        <li>📧 <a href="mailto:pablogomezvillen@gmail.com">pablogomezvillen@gmail.com</a></li>
+      </ul>
+    </div>
   </section>
 
   <!-- i18n para tarjetas destacadas (no cubiertas por data-i18n) -->
@@ -305,6 +365,10 @@ const websiteSchema = {
       <li>📧 <a href="mailto:pablogomezvillen@gmail.com">pablogomezvillen@gmail.com</a></li>
       <li>💼 <a href="https://www.linkedin.com/in/pablo-gomez-villen" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
     </ul>
+    <a href="/servicios#precios" class="contact-fixed-cta btn--icon">
+      Pedir presupuesto
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
   </div>
   <button class="contact-mini" aria-label="Abrir contacto"><span aria-hidden="true">📩</span></button>
 

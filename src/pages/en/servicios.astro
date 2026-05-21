@@ -1,0 +1,279 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ServicioCard from '../../components/servicios/ServicioCard.astro';
+import PrecioTable from '../../components/servicios/PrecioTable.astro';
+import FAQAccordion from '../../components/servicios/FAQAccordion.astro';
+
+const title = "Web Development & Local SEO Services in Granada, Spain | Pablo Gómez";
+const description = "Professional websites for local businesses in Granada and across Spain. Modern web design, local SEO, Google Business optimization and maintenance. Free quote, no commitment.";
+const canonical = "https://pablogomezvillen.com/en/servicios";
+
+const servicios = [
+  {
+    icono: "🌐",
+    titulo: "Professional Website",
+    descripcion: "Modern, fast and mobile-friendly website. Built so your clients find you and call you.",
+    badge: "Most requested",
+    incluidos: [
+      "Custom design",
+      "Responsive on all devices",
+      "Contact form",
+      "Google Maps integration",
+      "Domain & hosting (first year)",
+      "Optimized speed (Core Web Vitals)",
+    ],
+    ctaTexto: "Request a quote",
+    ctaHref: "/contacto",
+  },
+  {
+    icono: "📍",
+    titulo: "Local SEO & Google Business",
+    descripcion: "Show up in top results when someone searches for your business on Google Maps and local search.",
+    incluidos: [
+      "Google Business profile optimization",
+      "Local keyword strategy",
+      "Review management",
+      "Maps ranking",
+      "Monthly visibility reports",
+    ],
+    ctaTexto: "I want to appear on Google",
+    ctaHref: "/contacto",
+  },
+  {
+    icono: "🔧",
+    titulo: "Website Maintenance",
+    descripcion: "Keep your website always updated, secure and running smoothly. You focus on your business.",
+    incluidos: [
+      "Security updates",
+      "Backups",
+      "Content changes",
+      "WhatsApp support",
+      "Monthly report",
+    ],
+    ctaTexto: "See plans",
+    ctaHref: "/contacto",
+  },
+];
+
+const planes = [
+  {
+    nombre: "Basic Plan",
+    precio: "from €350",
+    descripcion: "Perfect to take your first step online",
+    incluidos: [
+      "Up to 3-page website",
+      "Responsive design",
+      "Basic on-page SEO",
+      "Contact form",
+      "Delivery in 2 weeks",
+    ],
+    ctaTexto: "Get this plan",
+    ctaHref: "/contacto",
+  },
+  {
+    nombre: "Business Plan",
+    precio: "from €650",
+    descripcion: "The most complete option to grow",
+    recomendado: true,
+    incluidos: [
+      "Up to 6-page website",
+      "Premium custom design",
+      "Full local SEO",
+      "Google Business optimization",
+      "Blog with 20 articles (+€160)",
+      "Delivery in 3 weeks",
+      "1 month support included",
+    ],
+    ctaTexto: "Get this plan",
+    ctaHref: "/contacto",
+  },
+  {
+    nombre: "Premium Plan",
+    precio: "Custom price",
+    descripcion: "For projects with special requirements",
+    incluidos: [
+      "Advanced features",
+      "Online store or bookings",
+      "API integrations",
+      "Admin dashboard",
+      "6-month priority support",
+    ],
+    ctaTexto: "Let's talk about your project",
+    ctaHref: "/contacto",
+  },
+];
+
+const sectores = [
+  { ico: "🍽️", nombre: "Restaurants & bars" },
+  { ico: "💆", nombre: "Clinics & aesthetics" },
+  { ico: "🏋️", nombre: "Gyms & personal trainers" },
+  { ico: "🏠", nombre: "Real estate & agents" },
+  { ico: "⚖️", nombre: "Lawyers & consultants" },
+  { ico: "🐾", nombre: "Veterinary & pet services" },
+  { ico: "🔨", nombre: "Plumbers & renovation" },
+  { ico: "🎓", nombre: "Academies & tutoring" },
+];
+
+const pasos = [
+  { ico: "📞", titulo: "Free call (15 min)", desc: "Tell me about your business and what you need" },
+  { ico: "📋", titulo: "Personalized proposal", desc: "You receive a detailed quote within 24 hours" },
+  { ico: "🎨", titulo: "Design & development", desc: "I build your website with your brand colors and identity" },
+  { ico: "🚀", titulo: "Launch & training", desc: "We publish together and I show you how to manage it" },
+];
+
+const faqs = [
+  {
+    q: "How much does a website for my business cost?",
+    a: "The price depends on what you need. A basic presentation website starts at €350. A website with more pages, a blog, or advanced features starts at €650. I always give you a detailed, no-commitment quote before starting.",
+  },
+  {
+    q: "How long does it take to build a website?",
+    a: "Usually between 2 and 4 weeks from the moment you approve the design. It depends on the number of pages and complexity. If you're in a hurry, we can talk about it.",
+  },
+  {
+    q: "Do I need technical knowledge to manage my website?",
+    a: "No. I deliver the website and teach you how to make basic changes yourself. Plus, with the maintenance plan I take care of everything.",
+  },
+  {
+    q: "Can my local business appear on Google?",
+    a: "Yes. Local SEO and optimizing your Google Business profile are key to showing up when someone searches for your type of business nearby. It's one of my main services.",
+  },
+  {
+    q: "Do you only work with businesses in Granada?",
+    a: "No, I work with businesses all over Spain and internationally. Most of the work is remote and works perfectly.",
+  },
+  {
+    q: "What if I need changes after delivery?",
+    a: "The first 30 days include revisions at no cost. After that, you have my monthly maintenance plans or I can make changes by the hour as needed.",
+  },
+];
+
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": "https://www.pablogomezvillen.com",
+  "name": "Pablo Gómez Villén — Web Development",
+  "description": "Professional website development and local SEO for businesses in Granada and Spain",
+  "url": "https://www.pablogomezvillen.com",
+  "telephone": "+34622400727",
+  "email": "pablogomezvillen@gmail.com",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Granada",
+    "addressRegion": "Andalucía",
+    "addressCountry": "ES"
+  },
+  "areaServed": ["Granada", "Andalucía", "España"],
+  "serviceType": ["Web design", "Local SEO", "Full Stack development"]
+};
+---
+
+<Layout
+  title={title}
+  lang="en"
+  description={description}
+  canonical={canonical}
+  alternateEs="https://pablogomezvillen.com/servicios"
+  alternateEn={canonical}
+  showHero={false}
+  keywords="web development Granada Spain, local SEO Spain, Google Business optimization, website for restaurants, website for clinics, Full Stack developer Spain"
+  jsonLd={[localBusinessSchema]}
+>
+
+  <!-- Hero -->
+  <header class="servicios-hero">
+    <span class="servicios-hero-eyebrow">🏪 For local businesses in Spain and worldwide</span>
+    <h1>Your business deserves a website<br>that brings clients</h1>
+    <p>
+      I build professional websites, optimized to rank on Google
+      and designed to convert visits into calls and bookings.
+    </p>
+    <a href="/contacto" class="btn btn-accent btn--icon">Get a free quote <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+  </header>
+
+  <!-- Services -->
+  <section class="servicios-section">
+    <h2 class="servicios-section-title">What can I do for your business?</h2>
+    <p class="servicios-section-sub">Digital solutions for businesses that want to grow online</p>
+    <div class="servicios-grid">
+      {servicios.map(s => (
+        <ServicioCard
+          icono={s.icono}
+          titulo={s.titulo}
+          descripcion={s.descripcion}
+          incluidos={s.incluidos}
+          ctaTexto={s.ctaTexto}
+          ctaHref={s.ctaHref}
+          badge={s.badge}
+        />
+      ))}
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="precio-section" id="pricing">
+    <h2>Transparent pricing</h2>
+    <p class="servicios-section-sub" style="margin-bottom:40px">No surprises. You always know what you'll pay before we start.</p>
+    <PrecioTable planes={planes} recommendedLabel="⭐ Recommended" />
+    <p class="precio-nota">* Prices are estimates. Every project is unique — ask for a no-commitment quote.</p>
+  </section>
+
+  <!-- Sectors -->
+  <section class="sectores-section">
+    <h2>What types of businesses do I work with?</h2>
+    <p class="servicios-section-sub" style="margin-bottom:32px">Specialized in local businesses that want to grow online</p>
+    <div class="sectores-grid">
+      {sectores.map(s => (
+        <div class="sector-chip">
+          <span class="sector-chip-ico" aria-hidden="true">{s.ico}</span>
+          <span>{s.nombre}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="proceso-section">
+    <h2>How do we work together?</h2>
+    <p class="servicios-section-sub" style="margin-bottom:48px">A simple, clear process — no technical jargon</p>
+    <div class="proceso-steps">
+      {pasos.map(paso => (
+        <div class="proceso-step">
+          <div class="proceso-step-ico" aria-hidden="true">{paso.ico}</div>
+          <h3>{paso.titulo}</h3>
+          <p>{paso.desc}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section">
+    <h2>Frequently asked questions</h2>
+    <p class="servicios-section-sub" style="margin-bottom:36px">What every business asks before starting</p>
+    <FAQAccordion items={faqs} />
+  </section>
+
+  <!-- Final CTA -->
+  <div class="servicios-cta-final" id="contact">
+    <h2>Ready for your business to grow online?</h2>
+    <p>Tell me about your project — I respond in less than 24 hours</p>
+    <div class="servicios-cta-btns">
+      <a
+        href="https://wa.me/34622400727?text=Hi%20Pablo%2C%20I%27m%20interested%20in%20a%20website%20for%20my%20business"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-whatsapp"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Write on WhatsApp
+      </a>
+      <a href="mailto:pablogomezvillen@gmail.com" class="btn-outlined-white">
+        Send email
+      </a>
+    </div>
+  </div>
+
+</Layout>

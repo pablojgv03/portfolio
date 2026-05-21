@@ -37,11 +37,14 @@ const navCurrent = (href: string) => navClass(href) ? 'page' : undefined;
 const jsonLdList = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 
 const navHome       = isEN ? enData.nav.home       : 'Inicio';
+const navServices   = isEN ? 'Services'             : 'Servicios';
 const navProjects   = isEN ? enData.nav.projects    : 'Proyectos';
 const navExperience = isEN ? enData.nav.experience  : 'Experiencia';
 const navAbout      = isEN ? enData.nav.about       : 'Sobre mí';
 const heroGreeting  = isEN ? enData.hero.greeting   : 'Hola, soy <span>Pablo Gómez</span>';
-const heroRole      = isEN ? enData.hero.role       : 'Desarrollador Full Stack | PHP · Laravel · JavaScript · MySQL';
+const heroRole      = isEN
+  ? enData.hero.role
+  : 'Creo webs que posicionan en Google y convierten visitas en clientes.<span class="hero-role-sub">También desarrollo aplicaciones a medida con PHP, Laravel y JavaScript.</span>';
 const heroBtnCV     = isEN ? enData.hero.btnCV      : 'Descargar CV';
 const cvFile        = isEN ? 'CV_Pablo_Gomez_Villen_Software-Developer.pdf' : 'CV_Full-stack_Pablo_Gomez_Villen_Desarrollador.pdf';
 const rightsText       = isEN ? enData.rights          : '© 2026 Pablo Gómez Villén || Programador Full Stack';
@@ -67,7 +70,9 @@ const heroAvailability = isEN ? 'Available for work'   : 'Disponible para trabaj
     <!-- Open Graph -->
     <meta property="og:type" content={ogType}>
     <meta property="og:locale" content={ogLocale}>
-    <meta property="og:site_name" content="Pablo Gómez - Portfolio">
+    <meta property="og:site_name" content="Pablo Gómez — Desarrollo Web Granada">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta property="og:title" content={title}>
     {description && <meta property="og:description" content={description}>}
     {canonical && <meta property="og:url" content={canonical}>}
@@ -107,6 +112,7 @@ const heroAvailability = isEN ? 'Available for work'   : 'Disponible para trabaj
         <!-- Menú de escritorio -->
         <nav class="nav-links desktop">
           <a href={`${basePath}/`} class={navClass('/')} aria-current={navCurrent('/')}>{navHome}</a>
+          <a href={`${basePath}/servicios`} class={`nav-link-services${navClass('/servicios') ? ' nav-current' : ''}`} aria-current={navCurrent('/servicios')}>{navServices}</a>
           <a href={`${basePath}/proyectos`} class={navClass('/proyectos')} aria-current={navCurrent('/proyectos')}>{navProjects}</a>
           <a href={`${basePath}/experiencia`} class={navClass('/experiencia')} aria-current={navCurrent('/experiencia')}>{navExperience}</a>
           <a href={`${basePath}/pablo-gomez-villen`} class={navClass('/pablo-gomez-villen')} aria-current={navCurrent('/pablo-gomez-villen')}>{navAbout}</a>
@@ -136,6 +142,7 @@ const heroAvailability = isEN ? 'Available for work'   : 'Disponible para trabaj
           <button class="close-menu" aria-label="Cerrar menú">✕</button>
         </div>
         <a href={`${basePath}/`} class={navClass('/')} aria-current={navCurrent('/')}>{navHome}</a>
+        <a href={`${basePath}/servicios`} class={`nav-link-services${navClass('/servicios') ? ' nav-current' : ''}`} aria-current={navCurrent('/servicios')}>{navServices}</a>
         <a href={`${basePath}/proyectos`} class={navClass('/proyectos')} aria-current={navCurrent('/proyectos')}>{navProjects}</a>
         <a href={`${basePath}/experiencia`} class={navClass('/experiencia')} aria-current={navCurrent('/experiencia')}>{navExperience}</a>
         <a href={`${basePath}/pablo-gomez-villen`} class={navClass('/pablo-gomez-villen')} aria-current={navCurrent('/pablo-gomez-villen')}>{navAbout}</a>
@@ -162,7 +169,7 @@ const heroAvailability = isEN ? 'Available for work'   : 'Disponible para trabaj
             <span>{heroAvailability}</span>
           </div>
           <h1 set:html={heroGreeting}></h1>
-          <p>{heroRole}</p>
+          <p set:html={heroRole}></p>
           <div class="hero-chips">
             <span>Laravel</span>
             <span>PHP</span>
@@ -172,6 +179,7 @@ const heroAvailability = isEN ? 'Available for work'   : 'Disponible para trabaj
           </div>
           <div class="hero-buttons">
             <a href={`${basePath}/proyectos`} class="btn">{heroBtnProjects}</a>
+            {!isEN && <a href="/servicios" class="btn btn-services">💼 Necesito una web</a>}
             <a id="cv-link" href={`/${cvFile}`} download target="_blank" rel="noopener noreferrer" class="btn secondary btn--icon">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
               {heroBtnCV}
@@ -205,7 +213,7 @@ const heroAvailability = isEN ? 'Available for work'   : 'Disponible para trabaj
     <ContactScript />
 
     <!-- Exit Intent Popup -->
-    <ExitIntentPopup />
+    <ExitIntentPopup lang={lang} />
 
     <!-- Scripts -->
     <script type="module">
@@ -281,6 +289,32 @@ const heroAvailability = isEN ? 'Available for work'   : 'Disponible para trabaj
 
           scrollBtn.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        }
+
+        // --- Smooth scroll flecha hero ---
+        const scrollArrow = document.querySelector('.hero-scroll-arrow');
+        if (scrollArrow) {
+          scrollArrow.addEventListener('click', e => {
+            e.preventDefault();
+            const target = document.getElementById('main-content');
+            if (!target) return;
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+              target.scrollIntoView();
+              return;
+            }
+            const start    = window.scrollY;
+            const end      = target.getBoundingClientRect().top + window.scrollY - 80;
+            const duration = 1500;
+            let startTime  = null;
+            const ease = t => t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2, 3) / 2;
+            const step = ts => {
+              if (!startTime) startTime = ts;
+              const progress = Math.min((ts - startTime) / duration, 1);
+              window.scrollTo(0, start + (end - start) * ease(progress));
+              if (progress < 1) requestAnimationFrame(step);
+            };
+            requestAnimationFrame(step);
           });
         }
 

@@ -89,27 +89,34 @@ const websiteSchema = {
     </h2>
     <div class="projects">
       {projectsData.proyectos.map((p) => (
-        <article class="project-card" data-project-id={String(p.id)}>
+        <article class={`project-card${p.image ? ' project-card--with-thumb' : ''}`} data-project-id={String(p.id)}>
           <a href={`/proyectos/${p.slug}`} class="full-link" aria-label={`Ver detalle de ${p.title}`}></a>
-          <div class="meta">
-            <span class="center">{p.badge === 'mobile' ? 'Android' : p.badge}</span>
-          </div>
-          <h3>{p.title}</h3>
-          <p class="project-desc">{p.description.es}</p>
-          {p.skills && p.skills.length > 0 && (
-            <div class="skills" aria-label={`Aptitudes de ${p.title}`}>
-              {p.skills.map(skill => (
-                <span class={`skill ${skill.level ?? ''}`}>{skill.name}</span>
-              ))}
+          {p.image && (
+            <div class="project-card-thumb">
+              <img src={p.image} alt={p.imageAlt || p.title} loading="lazy" decoding="async" width="400" height="210" />
             </div>
           )}
-          <div class="links" style="position:relative;z-index:11">
-            {p['link-text'] && p['link-text'] !== '#' && (
-              <a href={p['link-text']} target="_blank" rel="noopener noreferrer">GitHub →</a>
+          <div class={p.image ? 'project-card-body' : ''}>
+            <div class="meta">
+              <span class="center">{p.badge === 'mobile' ? 'Android' : p.badge}</span>
+            </div>
+            <h3>{p.title}</h3>
+            <p class="project-desc">{p.description.es}</p>
+            {p.skills && p.skills.length > 0 && (
+              <div class="skills" aria-label={`Aptitudes de ${p.title}`}>
+                {p.skills.map(skill => (
+                  <span class={`skill ${skill.level ?? ''}`}>{skill.name}</span>
+                ))}
+              </div>
             )}
-            {p.link && p.link !== '#' && (
-              <a href={p.link} target="_blank" rel="noopener noreferrer">Demo →</a>
-            )}
+            <div class="links" style="position:relative;z-index:11">
+              {p['link-text'] && p['link-text'] !== '#' && (
+                <a href={p['link-text']} target="_blank" rel="noopener noreferrer">GitHub →</a>
+              )}
+              {p.link && p.link !== '#' && (
+                <a href={p.link} target="_blank" rel="noopener noreferrer">Demo →</a>
+              )}
+            </div>
           </div>
         </article>
       ))}

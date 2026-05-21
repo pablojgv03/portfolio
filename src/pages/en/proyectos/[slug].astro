@@ -8,16 +8,11 @@ export function getStaticPaths() {
 
 const { slug } = Astro.params;
 const project = projectsData.proyectos.find((p) => p.slug === slug);
-
 if (!project) return Astro.redirect('/404');
 
-const badgeLabel: Record<string, string> = {
-  web: 'Web',
-  mobile: 'Android',
-  desktop: 'Desktop',
-};
-
-const paragraphsEn = project['large-description'].en.split('\n\n').filter(Boolean);
+const badgeLabel: Record<string, string> = { web: 'Web', mobile: 'Android', desktop: 'Desktop' };
+const paragraphs = project['large-description'].en.split('\n\n').filter(Boolean);
+const screenshots = (project as any).screenshots ?? [];
 
 const softwareSchema = {
   "@context": "https://schema.org",
@@ -25,12 +20,9 @@ const softwareSchema = {
   "name": project.title,
   "description": project.description.en,
   "applicationCategory": project.badge === 'mobile' ? 'MobileApplication' : 'WebApplication',
-  "url": project.link !== '#' ? project.link : undefined,
-  "author": {
-    "@type": "Person",
-    "name": "Pablo Gómez",
-    "url": "https://pablogomezvillen.com/en/"
-  }
+  ...(project.link !== '#' && { "url": project.link }),
+  ...(project.image && { "image": `https://pablogomezvillen.com${project.image}` }),
+  "author": { "@type": "Person", "name": "Pablo Gómez", "url": "https://pablogomezvillen.com/en/" }
 };
 ---
 
@@ -41,60 +33,107 @@ const softwareSchema = {
   canonical={`https://pablogomezvillen.com/en/proyectos/${slug}`}
   alternateEs={`https://pablogomezvillen.com/proyectos/${slug}`}
   alternateEn={`https://pablogomezvillen.com/en/proyectos/${slug}`}
+  ogImage={project.image || '/img/opengraph.png'}
   jsonLd={[softwareSchema]}
   showHero={false}
 >
 
+  <!-- ── Breadcrumb ── -->
   <div class="page-banner">
-    <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a href="/en/">Home</a>
-      <span aria-hidden="true"> › </span>
-      <a href="/en/proyectos">Projects</a>
-      <span aria-hidden="true"> › </span>
+    <nav class="pd-crumb" aria-label="Breadcrumb">
+      <a href="/en/">Home</a> <span aria-hidden="true">›</span>
+      <a href="/en/proyectos">Projects</a> <span aria-hidden="true">›</span>
       <span aria-current="page">{project.title}</span>
     </nav>
-    <h1>{project.title}</h1>
-    <p>{project.description.en}</p>
+    <h1 class="pd-title">{project.title}</h1>
+    <p class="pd-subtitle">{project.description.en}</p>
   </div>
 
-  <section class="section project-detail">
-
-    <div class="project-detail-header">
-      <span class={`project-badge-pill badge-${project.badge}`}>
-        {badgeLabel[project.badge] ?? project.badge}
-      </span>
-      <div class="project-detail-links">
-        {project['link-text'] && project['link-text'] !== '#' && (
-          <a href={project['link-text']} target="_blank" rel="noopener noreferrer" class="btn secondary btn--icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-            GitHub
-          </a>
-        )}
-        {project.link && project.link !== '#' && (
-          <a href={project.link} target="_blank" rel="noopener noreferrer" class="btn btn--icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-            Live demo
-          </a>
-        )}
+  <!-- ── Hero: browser mockup ── -->
+  {project.image && (
+    <div class="pd-browser-wrap">
+      <div class="pd-browser">
+        <div class="pd-browser-bar">
+          <span class="pd-dot pd-dot--red"></span>
+          <span class="pd-dot pd-dot--yellow"></span>
+          <span class="pd-dot pd-dot--green"></span>
+          <span class="pd-browser-url">
+            {project.link && project.link !== '#' ? project.link.replace('https://', '') : `pablogomezvillen.com/en/proyectos/${slug}`}
+          </span>
+        </div>
+        <div class="pd-browser-screen">
+          <img
+            src={project.image}
+            alt={project.imageAlt || project.title}
+            width="1200" height="630"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </div>
       </div>
     </div>
+  )}
 
-    <div class="project-detail-body">
-      <div class="project-detail-desc">
-        {paragraphsEn.map((para) => <p>{para}</p>)}
+  <section class="section pd-section">
+
+    <!-- ── Chips: badge + links ── -->
+    <div class="pd-chips">
+      <span class={`pd-badge badge-${project.badge}`}>{badgeLabel[project.badge] ?? project.badge}</span>
+      {project['link-text'] && project['link-text'] !== '#' && (
+        <a href={project['link-text']} target="_blank" rel="noopener noreferrer" class="btn secondary btn--icon">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          GitHub
+        </a>
+      )}
+      {project.link && project.link !== '#' && (
+        <a href={project.link} target="_blank" rel="noopener noreferrer" class="btn btn--icon">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Live demo
+        </a>
+      )}
+    </div>
+
+    <!-- ── Description + stack ── -->
+    <div class="pd-body">
+      <div class="pd-desc">
+        {paragraphs.map((p) => <p>{p}</p>)}
       </div>
-
-      <aside class="project-detail-aside">
-        <h2>Tech stack</h2>
-        <div class="skills skills--vertical">
-          {project.skills.map((skill) => (
-            <span class={`skill ${skill.level ?? ''}`}>{skill.name}</span>
+      <aside class="pd-aside">
+        <p class="pd-aside-label">Tech stack</p>
+        <div class="pd-skills">
+          {project.skills.map((s) => (
+            <span class={`skill ${s.level ?? ''}`}>{s.name}</span>
           ))}
         </div>
       </aside>
     </div>
 
-    <div class="project-detail-actions">
+    <!-- ── Screenshot gallery ── -->
+    {screenshots.length > 0 && (
+      <div class="pd-gallery">
+        <div class="pd-gallery-header">
+          <h2 class="pd-gallery-heading">Screenshots</h2>
+          <p class="pd-gallery-sub">Real app interface</p>
+        </div>
+        <div class="pd-phones">
+          {screenshots.map((s: any) => (
+            <div class="pd-phone-col">
+              <p class="pd-phone-title">{s.titleEn}</p>
+              <div class="pd-phone">
+                <div class="pd-phone-notch"></div>
+                <div class="pd-phone-screen">
+                  <img src={s.src} alt={s.altEn} loading="lazy" decoding="async" width="397" height="841" />
+                </div>
+                <div class="pd-phone-home"></div>
+              </div>
+              <p class="pd-phone-caption">{s.captionEn}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
+
+    <div class="pd-back">
       <a href="/en/proyectos" class="btn secondary">← Back to projects</a>
     </div>
 
@@ -103,34 +142,79 @@ const softwareSchema = {
 </Layout>
 
 <style>
-  .project-detail {
-    max-width: 860px;
-    margin: 0 auto;
+  .pd-crumb { font-size: 0.8rem; color: rgba(255,255,255,0.65); margin-bottom: 10px; }
+  .pd-crumb a { color: rgba(255,255,255,0.8); text-decoration: none; }
+  .pd-crumb a:hover { text-decoration: underline; }
+  .pd-crumb span[aria-hidden] { margin: 0 5px; }
+  .pd-title { font-size: 2rem; font-weight: 800; margin-bottom: 6px; }
+  .pd-subtitle { opacity: 0.85; font-size: 1rem; }
+
+  .pd-browser-wrap {
+    max-width: 900px;
+    margin: 0 auto 0;
+    padding: 0 20px;
   }
 
-  .breadcrumb {
-    font-size: 0.82rem;
-    color: rgba(255,255,255,0.75);
-    margin-bottom: 12px;
+  .pd-browser {
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow:
+      0 2px 0 #c0c0c0,
+      0 4px 0 #a8a8a8,
+      0 6px 40px rgba(0,0,0,0.28),
+      0 20px 60px rgba(30,60,114,0.18);
+    border: 1.5px solid #d0d0d0;
+    background: #e8e8e8;
   }
-  .breadcrumb a { color: rgba(255,255,255,0.85); text-decoration: none; }
-  .breadcrumb a:hover { text-decoration: underline; }
 
-  .project-detail-header {
+  .pd-browser-bar {
+    background: linear-gradient(180deg, #efefef 0%, #e0e0e0 100%);
+    padding: 9px 14px;
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 6px;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .pd-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+  .pd-dot--red    { background: #ff5f57; }
+  .pd-dot--yellow { background: #febc2e; }
+  .pd-dot--green  { background: #28c840; }
+
+  .pd-browser-url {
+    background: #fff;
+    border-radius: 6px;
+    padding: 3px 12px;
+    font-size: 0.72rem;
+    color: #555;
+    flex: 1;
+    max-width: 340px;
+    margin: 0 auto;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border: 1px solid #d8d8d8;
+  }
+
+  .pd-browser-screen img { width: 100%; display: block; }
+
+  .pd-section { max-width: 900px; margin: 0 auto; }
+
+  .pd-chips {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     flex-wrap: wrap;
     margin-bottom: 32px;
   }
 
-  .project-badge-pill {
+  .pd-badge {
     display: inline-block;
     padding: 4px 14px;
     border-radius: 999px;
-    font-size: 0.78rem;
+    font-size: 0.75rem;
     font-weight: 700;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.07em;
     text-transform: uppercase;
     color: #fff;
   }
@@ -138,30 +222,23 @@ const softwareSchema = {
   .badge-mobile { background: linear-gradient(135deg, #ff416c, #ff4b2b); }
   .badge-desktop{ background: linear-gradient(135deg, #11998e, #38ef7d); color: #111; }
 
-  .project-detail-links {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-left: auto;
-  }
-
-  .project-detail-body {
+  .pd-body {
     display: grid;
-    grid-template-columns: 1fr 220px;
+    grid-template-columns: 1fr 210px;
     gap: 40px;
     align-items: start;
-    margin-bottom: 40px;
+    margin-bottom: 56px;
   }
 
-  .project-detail-desc p {
-    margin-bottom: 1.15em;
-    line-height: 1.72;
-    color: #333;
+  .pd-desc p {
+    line-height: 1.78;
+    color: #3a3a3a;
     font-size: 0.97rem;
+    margin-bottom: 1.1em;
   }
-  .project-detail-desc p:last-child { margin-bottom: 0; }
+  .pd-desc p:last-child { margin-bottom: 0; }
 
-  .project-detail-aside {
+  .pd-aside {
     background: #f8faff;
     border: 1.5px solid #e4ecf8;
     border-radius: 14px;
@@ -169,34 +246,135 @@ const softwareSchema = {
     position: sticky;
     top: 80px;
   }
-
-  .project-detail-aside h2 {
-    font-size: 0.78rem;
+  .pd-aside-label {
+    font-size: 0.7rem;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
+    font-weight: 700;
     color: #2a5298;
     margin-bottom: 14px;
-    font-weight: 700;
+  }
+  .pd-skills { display: flex; flex-direction: column; gap: 7px; }
+
+  .pd-gallery {
+    background: linear-gradient(135deg, #0c0c1a 0%, #160930 60%, #0d1a3a 100%);
+    border-radius: 24px;
+    padding: 48px 40px 52px;
+    margin-bottom: 40px;
   }
 
-  .skills--vertical {
+  .pd-gallery-header { text-align: center; margin-bottom: 44px; }
+
+  .pd-gallery-heading {
+    font-size: 1.65rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.03em;
+    margin-bottom: 6px;
+  }
+
+  .pd-gallery-sub {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.42);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .pd-phones {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    justify-items: center;
+  }
+
+  .pd-phone-col {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    align-items: center;
   }
 
-  .project-detail-actions {
-    padding-top: 8px;
-    border-top: 1.5px solid #e4ecf8;
+  .pd-phone-title {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.01em;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  .pd-phone-title::after {
+    content: '';
+    display: block;
+    width: 28px;
+    height: 2px;
+    background: linear-gradient(90deg, #7c3aed, #a78bfa);
+    border-radius: 2px;
+    margin: 6px auto 0;
   }
 
-  @media (max-width: 660px) {
-    .project-detail-body {
-      grid-template-columns: 1fr;
-    }
-    .project-detail-aside {
-      position: static;
-    }
-    .project-detail-links { margin-left: 0; }
+  .pd-phone {
+    width: 170px;
+    background: linear-gradient(160deg, #1c1c2e, #0f0f1a);
+    border-radius: 36px;
+    padding: 10px 8px 12px;
+    box-shadow:
+      0 0 0 1.5px rgba(255,255,255,0.08),
+      0 0 0 3px rgba(255,255,255,0.03),
+      inset 0 1px 0 rgba(255,255,255,0.1),
+      0 24px 50px rgba(0,0,0,0.6);
+    transition: transform 0.3s cubic-bezier(0.2,0.9,0.2,1), box-shadow 0.3s ease;
+  }
+
+  .pd-phone:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow:
+      0 0 0 1.5px rgba(124,58,237,0.4),
+      0 0 0 3px rgba(124,58,237,0.15),
+      inset 0 1px 0 rgba(255,255,255,0.1),
+      0 32px 70px rgba(0,0,0,0.65);
+  }
+
+  .pd-phone-notch {
+    width: 52px;
+    height: 18px;
+    background: #0a0a14;
+    border-radius: 0 0 12px 12px;
+    margin: 0 auto 8px;
+  }
+
+  .pd-phone-screen { border-radius: 20px; overflow: hidden; background: #000; }
+  .pd-phone-screen img { width: 100%; height: auto; display: block; }
+
+  .pd-phone-home {
+    width: 44px;
+    height: 4px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 2px;
+    margin: 10px auto 0;
+  }
+
+  .pd-phone-caption {
+    font-size: 0.76rem;
+    color: rgba(255,255,255,0.45);
+    text-align: center;
+    max-width: 180px;
+    line-height: 1.5;
+    margin-top: 16px;
+  }
+
+  .pd-back { padding-top: 8px; border-top: 1.5px solid #e4ecf8; }
+
+  @media (max-width: 740px) {
+    .pd-body { grid-template-columns: 1fr; }
+    .pd-aside { position: static; }
+    .pd-phones { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .pd-phone { width: 140px; border-radius: 28px; }
+    .pd-phone-notch { width: 40px; height: 14px; }
+    .pd-gallery { padding: 36px 20px 40px; }
+  }
+
+  @media (max-width: 440px) {
+    .pd-phones { grid-template-columns: 1fr 1fr; gap: 14px; }
+    .pd-phone { width: 130px; }
+    .pd-gallery-heading { font-size: 1.3rem; }
   }
 </style>

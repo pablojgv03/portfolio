@@ -41,33 +41,40 @@ const badgeEmojis: Record<string, string> = {
     <!-- Grid de proyectos -->
     <div id="lista-proyectos" class="projects">
       {projectsData.proyectos.map((p) => (
-        <article class="project-card project-card--full" data-badge={p.badge}>
+        <article class={`project-card project-card--full${p.image ? ' project-card--with-thumb' : ''}`} data-badge={p.badge}>
           <a href={`/proyectos/${p.slug}`} class="full-link" aria-label={`Ver detalle de ${p.title}`}></a>
-          <div class={`project-badge badge-${p.badge}`} title={p.badge}>
-            {badgeEmojis[p.badge] ?? '❓'}
-          </div>
-          <h3>{p.title}</h3>
-          <p
-            class="project-desc project-desc--large"
-            data-project-id={String(p.id)}
-          >
-            {p['large-description'][defaultLang as 'es' | 'en']}
-          </p>
-          {p.skills && p.skills.length > 0 && (
-            <div class="skills" aria-label={`Aptitudes de ${p.title}`}>
-              {p.skills.map(skill => (
-                <span class={`skill ${skill.level ?? ''}`} title={skill.level ?? ''}>{skill.name}</span>
-              ))}
+          {p.image && (
+            <div class="project-card-thumb">
+              <img src={p.image} alt={p.imageAlt || p.title} loading="lazy" decoding="async" width="400" height="210" />
             </div>
           )}
-          <div class="links card-links--elevated">
-            {p['link-text'] && p['link-text'] !== '#' && (
-              <a href={p['link-text']} target="_blank" rel="noopener noreferrer">GitHub →</a>
+          <div class={p.image ? 'project-card-body' : ''}>
+            <div class={`project-badge badge-${p.badge}`} title={p.badge}>
+              {badgeEmojis[p.badge] ?? '❓'}
+            </div>
+            <h3>{p.title}</h3>
+            <p
+              class="project-desc project-desc--large"
+              data-project-id={String(p.id)}
+            >
+              {p['large-description'][defaultLang as 'es' | 'en']}
+            </p>
+            {p.skills && p.skills.length > 0 && (
+              <div class="skills" aria-label={`Aptitudes de ${p.title}`}>
+                {p.skills.map(skill => (
+                  <span class={`skill ${skill.level ?? ''}`} title={skill.level ?? ''}>{skill.name}</span>
+                ))}
+              </div>
             )}
-            {p.link && p.link !== '#' && !p.link.includes('localhost') && p.link !== p['link-text'] && (
-              <a href={p.link} target="_blank" rel="noopener noreferrer">Demo →</a>
-            )}
-            <a href={`/proyectos/${p.slug}`} class="link-detail">Ver detalle →</a>
+            <div class="links card-links--elevated">
+              {p['link-text'] && p['link-text'] !== '#' && (
+                <a href={p['link-text']} target="_blank" rel="noopener noreferrer">GitHub →</a>
+              )}
+              {p.link && p.link !== '#' && !p.link.includes('localhost') && p.link !== p['link-text'] && (
+                <a href={p.link} target="_blank" rel="noopener noreferrer">Demo →</a>
+              )}
+              <a href={`/proyectos/${p.slug}`} class="link-detail">Ver detalle →</a>
+            </div>
           </div>
         </article>
       ))}

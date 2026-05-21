@@ -978,6 +978,38 @@ footer {
   flex: 1;
 }
 
+/* ── Tarjeta con thumbnail (igual que blog-card) ── */
+.project-card--with-thumb {
+  padding: 0;
+  overflow: hidden;
+}
+
+.project-card-thumb {
+  width: 100%;
+  aspect-ratio: 400 / 210;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.project-card-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .4s ease;
+}
+
+.project-card--with-thumb:hover .project-card-thumb img {
+  transform: scale(1.04);
+}
+
+.project-card-body {
+  padding: 18px 20px 16px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
 /* ════════════════════════════════════
    SOBRE MÍ
    ════════════════════════════════════ */

@@ -2549,6 +2549,23 @@ body:has(.sm-page) footer p {
   50%       { transform: translateY(9px); }
 }
 
+@media (max-width: 768px) {
+  .hero {
+    padding: 28px 16px 32px;
+    min-height: auto;
+  }
+  .hero h1 { font-size: 1.75rem; }
+  .hero p  { font-size: 1rem; margin: 10px 0; }
+  .hero-status { margin-bottom: 10px; }
+  .hero-chips  { margin: 10px 0 14px; }
+  .hero-scroll-arrow { margin-top: 16px; }
+}
+
+@media (max-width: 400px) {
+  .hero h1 { font-size: 1.5rem; }
+  .hero-chips span { font-size: 0.72rem; padding: 4px 10px; }
+}
+
 /* ════════════════════════════════════
    NAVBAR ENHANCEMENTS
    ════════════════════════════════════ */

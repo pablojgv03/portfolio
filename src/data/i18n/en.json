@@ -1,7 +1,7 @@
 {
   "idioma": "en",
   "hero": {
-    "greeting": "Hi, I'm <span>Pablo Gómez</span> web developer in Granada",
+    "greeting": "Pablo Gómez — <span>Web Developer</span> &amp; Local SEO in Granada",
     "role": "I build websites that rank on Google and turn visits into clients.<span class=\"hero-role-sub\">I also develop custom applications with PHP, Laravel and JavaScript.</span>",
     "btnProjects": "View Projects",
     "btnCV": "Download CV"

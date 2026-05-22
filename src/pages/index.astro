@@ -1,7 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import esData from '../data/i18n/es.json';
-import enData from '../data/i18n/en.json';
 import projectsData from '../data/projects.json';
 
 const lang = 'es';
@@ -17,8 +16,6 @@ const featuredEs = Object.entries(esData.blog)
   .sort(([, a], [, b]) => (b.date || '').localeCompare(a.date || ''))
   .slice(0, 3)
   .map(([slug, p]) => ({ slug, ...p }));
-
-const featuredEn = featuredEs.map(({ slug }) => ({ slug, ...(enData.blog?.[slug] || {}) }));
 
 const personSchema = {
   "@context": "https://schema.org",
@@ -329,31 +326,6 @@ const websiteSchema = {
     </div>
   </section>
 
-  <!-- i18n para tarjetas destacadas (no cubiertas por data-i18n) -->
-  <script define:vars={{ featuredEn }}>
-    function applyFeaturedEN(isEN) {
-      (featuredEn || []).forEach((p, i) => {
-        if (!p) return;
-        const cat   = document.querySelector(`[data-fcat="${i}"]`);
-        const title = document.querySelector(`[data-ftitle="${i}"]`);
-        const sub   = document.querySelector(`[data-fsub="${i}"]`);
-        if (!cat) return;
-        if (isEN) {
-          cat.textContent = p.category || '';
-          cat.className = `blog-card-category ${p.category === 'Education' ? 'cat-formation' : 'cat-info'}`;
-          if (title) title.textContent = p.title || '';
-          if (sub) { const s = p.subtitle || ''; sub.textContent = s.slice(0,95) + (s.length>95?'…':''); }
-        }
-      });
-    }
-    document.addEventListener('DOMContentLoaded', () => {
-      const lang = document.cookie.split('; ').find(r=>r.startsWith('lang='))?.split('=')[1] || localStorage.getItem('lang') || 'es';
-      if (lang === 'en') applyFeaturedEN(true);
-      document.querySelectorAll('#lang-switch,#lang-switch-mobile').forEach(sw =>
-        sw.addEventListener('change', e => applyFeaturedEN(e.target.checked))
-      );
-    });
-  </script>
 
 
 </Layout>

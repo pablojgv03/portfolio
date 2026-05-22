@@ -15,7 +15,7 @@ export async function GET() {
   return rss({
     title: 'Blog — Pablo Gómez Villén',
     description: 'Artículos sobre desarrollo web, Laravel, PHP, JavaScript y tecnología. Experiencias reales de un Full Stack Developer en Granada.',
-    site: 'https://pablogomezvillen.com',
+    site: 'https://www.pablogomezvillen.com',
     items: posts,
     customData: `<language>es-ES</language><managingEditor>pablogomezvillen@gmail.com (Pablo Gómez Villén)</managingEditor><webMaster>pablogomezvillen@gmail.com (Pablo Gómez Villén)</webMaster>`,
   });

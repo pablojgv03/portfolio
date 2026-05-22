@@ -2755,6 +2755,19 @@ body:has(.sm-page) footer p {
 .nav-link-services:hover { background: #ffd633 !important; opacity: 1 !important; }
 .nav-links.mobile .nav-link-services { display: inline-block; }
 
+/* Nav Contacto accent button */
+.nav-link-contact {
+  background: #1e3c72 !important;
+  color: #fff !important;
+  padding: 5px 14px !important;
+  border-radius: 20px !important;
+  font-weight: 700 !important;
+  font-size: 0.82rem !important;
+  transition: background 0.2s !important;
+}
+.nav-link-contact:hover { background: #2a5298 !important; opacity: 1 !important; }
+.nav-links.mobile .nav-link-contact { display: inline-block; }
+
 /* Hero role secondary text */
 .hero-role-sub {
   font-size: 0.9rem;
@@ -3560,3 +3573,170 @@ body:has(.sm-page) footer p {
 }
 
 .contacto-footer-cta strong { color: #ffce00; }
+
+/* ── Sección Confianza (servicios) ── */
+.confianza-section {
+  padding: 64px 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.confianza-section h2 {
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: #1e3c72;
+  margin-bottom: 8px;
+}
+
+.confianza-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+  margin-bottom: 48px;
+}
+
+.confianza-item {
+  background: #f7faff;
+  border: 1.5px solid #e4ecf8;
+  border-radius: 14px;
+  padding: 28px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.confianza-ico { font-size: 2rem; }
+
+.confianza-item strong {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #1e3c72;
+}
+
+.confianza-item p {
+  font-size: 0.88rem;
+  color: #555;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.testimonios-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.testimonio-card {
+  background: #fff;
+  border: 1.5px solid #e4ecf8;
+  border-left: 4px solid #ffce00;
+  border-radius: 14px;
+  padding: 28px 24px;
+  text-align: left;
+  margin: 0;
+}
+
+.testimonio-card blockquote p {
+  font-size: 0.97rem;
+  color: #444;
+  line-height: 1.7;
+  font-style: italic;
+  margin-bottom: 16px;
+}
+
+.testimonio-card blockquote p::before { content: '\201C'; }
+.testimonio-card blockquote p::after  { content: '\201D'; }
+
+.testimonio-card figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.testimonio-card figcaption strong {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #1e3c72;
+}
+
+.testimonio-card figcaption span {
+  font-size: 0.78rem;
+  color: #888;
+}
+
+/* ── Blog relacionado (servicios) ── */
+.blog-relacionado-section {
+  padding: 64px 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.blog-relacionado-section h2 {
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: #1e3c72;
+  margin-bottom: 8px;
+}
+
+.blog-relacionado-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.blog-relacionado-card {
+  background: #fff;
+  border: 1.5px solid #e4ecf8;
+  border-radius: 14px;
+  padding: 28px 24px;
+  text-align: left;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.blog-relacionado-card:hover {
+  box-shadow: 0 6px 24px rgba(30,60,114,0.13);
+  transform: translateY(-3px);
+}
+
+.blog-relacionado-cat {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #2a5298;
+  background: #eef4ff;
+  padding: 3px 10px;
+  border-radius: 20px;
+  align-self: flex-start;
+}
+
+.blog-relacionado-card h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1e3c72;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.blog-relacionado-card p {
+  font-size: 0.88rem;
+  color: #555;
+  line-height: 1.5;
+  margin: 0;
+  flex: 1;
+}
+
+.blog-relacionado-cta {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #2a5298;
+}

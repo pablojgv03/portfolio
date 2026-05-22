@@ -26,8 +26,8 @@ const softwareSchema = {
   "description": project.description.en,
   "applicationCategory": project.badge === 'mobile' ? 'MobileApplication' : 'WebApplication',
   ...(project.link !== '#' && { "url": project.link }),
-  ...(project.image && { "image": `https://pablogomezvillen.com${project.image}` }),
-  "author": { "@type": "Person", "name": "Pablo Gómez", "url": "https://pablogomezvillen.com/en/" }
+  ...(project.image && { "image": `https://www.pablogomezvillen.com${project.image}` }),
+  "author": { "@type": "Person", "name": "Pablo Gómez", "url": "https://www.pablogomezvillen.com/en/" }
 };
 
 const videoSchema = videoId ? {
@@ -46,9 +46,9 @@ const videoSchema = videoId ? {
   title={`${project.title} — Project · Pablo Gómez`}
   lang="en"
   description={project.description.en}
-  canonical={`https://pablogomezvillen.com/en/proyectos/${slug}`}
-  alternateEs={`https://pablogomezvillen.com/proyectos/${slug}`}
-  alternateEn={`https://pablogomezvillen.com/en/proyectos/${slug}`}
+  canonical={`https://www.pablogomezvillen.com/en/proyectos/${slug}`}
+  alternateEs={`https://www.pablogomezvillen.com/proyectos/${slug}`}
+  alternateEn={`https://www.pablogomezvillen.com/en/proyectos/${slug}`}
   ogImage={project.image || '/img/opengraph.png'}
   jsonLd={videoSchema ? [softwareSchema, videoSchema] : [softwareSchema]}
   showHero={false}

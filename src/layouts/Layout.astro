@@ -19,12 +19,13 @@ const {
   lcp,
   alternateEn,
   alternateEs,
+  footerText,
 } = Astro.props;
 
 const isEN = lang === 'en';
 const basePath = isEN ? '/en' : '';
 
-const ogImageAbsolute = `https://pablogomezvillen.com${ogImage}`;
+const ogImageAbsolute = `https://www.pablogomezvillen.com${ogImage}`;
 const ogLocale = isEN ? 'en_US' : 'es_ES';
 
 const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
@@ -49,13 +50,15 @@ const navServices   = isEN ? 'Services'             : 'Servicios';
 const navProjects   = isEN ? enData.nav.projects    : 'Proyectos';
 const navExperience = isEN ? enData.nav.experience  : 'Experiencia';
 const navAbout      = isEN ? enData.nav.about       : 'Sobre mí';
-const heroGreeting  = isEN ? enData.hero.greeting   : 'Hola, soy <span>Pablo Gómez</span>';
+const navContact    = isEN ? 'Contact'              : 'Contacto';
+const heroGreeting  = isEN ? enData.hero.greeting   : 'Hola, soy <span>Pablo Gómez</span> — desarrollador web en Granada';
 const heroRole      = isEN
   ? enData.hero.role
   : 'Creo webs que posicionan en Google y convierten visitas en clientes.<span class="hero-role-sub">También desarrollo aplicaciones a medida con PHP, Laravel y JavaScript.</span>';
 const heroBtnCV     = isEN ? enData.hero.btnCV      : 'Descargar CV';
 const cvFile        = isEN ? 'CV_Pablo_Gomez_Villen_Software-Developer.pdf' : 'CV_Full-stack_Pablo_Gomez_Villen_Desarrollador.pdf';
-const rightsText       = isEN ? enData.rights          : '© 2026 Pablo Gómez Villén || Programador Full Stack';
+const defaultRightsText = isEN ? enData.rights : '© 2026 Pablo Gómez Villén || Programador Full Stack';
+const rightsText       = footerText ?? defaultRightsText;
 const heroBtnProjects  = isEN ? 'View projects'        : 'Ver proyectos';
 const heroAvailability = isEN ? 'Available for work'   : 'Disponible para trabajar';
 ---
@@ -87,7 +90,7 @@ const heroAvailability = isEN ? 'Available for work'   : 'Disponible para trabaj
     <meta property="og:image" content={ogImageAbsolute}>
     {ogType === 'article' && ogArticleDate && <meta property="article:published_time" content={ogArticleDate}>}
     {ogType === 'article' && ogArticleDate && <meta property="article:modified_time" content={ogArticleDate}>}
-    {ogType === 'article' && <meta property="article:author" content="https://pablogomezvillen.com/pablo-gomez-villen">}
+    {ogType === 'article' && <meta property="article:author" content="https://www.pablogomezvillen.com/pablo-gomez-villen">}
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
@@ -125,6 +128,7 @@ const heroAvailability = isEN ? 'Available for work'   : 'Disponible para trabaj
           <a href={`${basePath}/experiencia`} class={navClass('/experiencia')} aria-current={navCurrent('/experiencia')}>{navExperience}</a>
           <a href={`${basePath}/pablo-gomez-villen`} class={navClass('/pablo-gomez-villen')} aria-current={navCurrent('/pablo-gomez-villen')}>{navAbout}</a>
           <a href={`${basePath}/blog`} class={navClass('/blog')} aria-current={navCurrent('/blog')}>Blog</a>
+          <a href={isEN ? '/en/contact' : '/contacto'} class={`nav-link-contact${navClass('/contacto') ? ' nav-current' : ''}`} aria-current={navCurrent('/contacto')}>{navContact}</a>
         </nav>
 
         <!-- Toggle idioma (solo escritorio) -->
@@ -155,6 +159,7 @@ const heroAvailability = isEN ? 'Available for work'   : 'Disponible para trabaj
         <a href={`${basePath}/experiencia`} class={navClass('/experiencia')} aria-current={navCurrent('/experiencia')}>{navExperience}</a>
         <a href={`${basePath}/pablo-gomez-villen`} class={navClass('/pablo-gomez-villen')} aria-current={navCurrent('/pablo-gomez-villen')}>{navAbout}</a>
         <a href={`${basePath}/blog`} class={navClass('/blog')} aria-current={navCurrent('/blog')}>Blog</a>
+        <a href={isEN ? '/en/contact' : '/contacto'} class={`nav-link-contact${navClass('/contacto') ? ' nav-current' : ''}`} aria-current={navCurrent('/contacto')}>{navContact}</a>
 
         <!-- Toggle idioma (solo móvil) -->
         <div class="lang-toggle mobile-only" aria-label="Cambiar idioma">

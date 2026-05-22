@@ -6,7 +6,7 @@ import FAQAccordion from '../components/servicios/FAQAccordion.astro';
 
 const title = "Servicios de Desarrollo Web y SEO Local en Granada | Pablo Gómez";
 const description = "Páginas web profesionales para negocios locales en Granada y toda España. Diseño web moderno, SEO local, Google Business y mantenimiento. Presupuesto sin compromiso.";
-const canonical = "https://pablogomezvillen.com/servicios";
+const canonical = "https://www.pablogomezvillen.com/servicios";
 
 const servicios = [
   {
@@ -23,7 +23,7 @@ const servicios = [
       "Velocidad optimizada (Core Web Vitals)",
     ],
     ctaTexto: "Solicitar presupuesto",
-    ctaHref: "/contacto",
+    ctaHref: "/contacto?servicio=web",
   },
   {
     icono: "📍",
@@ -37,7 +37,7 @@ const servicios = [
       "Informes mensuales de visibilidad",
     ],
     ctaTexto: "Quiero aparecer en Google",
-    ctaHref: "/contacto",
+    ctaHref: "/contacto?servicio=seo",
   },
   {
     icono: "🔧",
@@ -51,7 +51,7 @@ const servicios = [
       "Informe mensual",
     ],
     ctaTexto: "Ver planes",
-    ctaHref: "/contacto",
+    ctaHref: "/contacto?servicio=mantenimiento",
   },
 ];
 
@@ -61,7 +61,7 @@ const planes = [
     precio: "desde 350€",
     descripcion: "Ideal para dar el primer paso online",
     incluidos: [
-      "Web de hasta 3 páginas",
+      "Web de hasta 5 páginas",
       "Diseño responsive",
       "SEO básico on-page",
       "Formulario de contacto",
@@ -76,7 +76,7 @@ const planes = [
     descripcion: "La opción más completa para crecer",
     recomendado: true,
     incluidos: [
-      "Web de hasta 6 páginas",
+      "Web de hasta 10 páginas",
       "Diseño premium personalizado",
       "SEO local completo",
       "Optimización Google Business",
@@ -174,10 +174,11 @@ const localBusinessSchema = {
   description={description}
   canonical={canonical}
   alternateEs={canonical}
-  alternateEn="https://pablogomezvillen.com/en/servicios"
+  alternateEn="https://www.pablogomezvillen.com/en/servicios"
   showHero={false}
   keywords="página web negocios locales Granada, diseño web Granada, SEO local Granada, Google Business Granada, web para restaurantes, web para clínicas"
   jsonLd={[localBusinessSchema]}
+  footerText="© 2026 Pablo Gómez Villén · Desarrollo Web y SEO Local en Granada"
 >
 
   <!-- Hero -->
@@ -252,6 +253,75 @@ const localBusinessSchema = {
     <h2>Preguntas frecuentes</h2>
     <p class="servicios-section-sub" style="margin-bottom:36px">Lo que todo negocio se pregunta antes de empezar</p>
     <FAQAccordion items={faqs} />
+  </section>
+
+  <!-- Prueba social -->
+  <section class="confianza-section">
+    <h2>¿Por qué confiar en mí?</h2>
+    <p class="servicios-section-sub" style="margin-bottom:40px">Experiencia real en producción, no promesas vacías</p>
+    <div class="confianza-grid">
+      <div class="confianza-item">
+        <span class="confianza-ico" aria-hidden="true">🏢</span>
+        <strong>2 empresas reales</strong>
+        <p>Euroinnova y EDUCA EDTECH Group — proyectos en producción con miles de usuarios</p>
+      </div>
+      <div class="confianza-item">
+        <span class="confianza-ico" aria-hidden="true">⚡</span>
+        <strong>Respuesta en 24h</strong>
+        <p>Contesto todos los mensajes el mismo día. Sin burocracia, sin esperas</p>
+      </div>
+      <div class="confianza-item">
+        <span class="confianza-ico" aria-hidden="true">🛡️</span>
+        <strong>30 días de garantía</strong>
+        <p>Revisiones ilimitadas el primer mes. Si algo no está bien, lo arreglo</p>
+      </div>
+      <div class="confianza-item">
+        <span class="confianza-ico" aria-hidden="true">📍</span>
+        <strong>Basado en Granada</strong>
+        <p>Entiendo el mercado local y puedo reunirme contigo en persona si lo necesitas</p>
+      </div>
+    </div>
+
+    <div class="testimonios-grid" style="display:none">
+      <figure class="testimonio-card">
+        <blockquote>
+          <p>"Tenía una web antigua que nadie encontraba en Google. En dos semanas Pablo me entregó una web nueva, rápida y ya aparezco en los primeros resultados cuando buscan mi clínica en Granada."</p>
+        </blockquote>
+        <figcaption>
+          <strong>Cliente — Clínica de estética</strong>
+          <span>Granada, 2026</span>
+        </figcaption>
+      </figure>
+      <figure class="testimonio-card">
+        <blockquote>
+          <p>"Lo que más me sorprendió fue la comunicación. Explicó todo sin tecnicismos, cumplió los plazos y el resultado superó lo que esperaba. 100% recomendable."</p>
+        </blockquote>
+        <figcaption>
+          <strong>Cliente — Restaurante local</strong>
+          <span>Granada, 2026</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Artículos relacionados -->
+  <section class="blog-relacionado-section">
+    <h2>Lee antes de decidir</h2>
+    <p class="servicios-section-sub" style="margin-bottom:32px">Guías gratuitas para entender cómo funciona el marketing digital para negocios locales</p>
+    <div class="blog-relacionado-grid">
+      <a href="/blog/seo-local-granada" class="blog-relacionado-card">
+        <span class="blog-relacionado-cat">SEO Local</span>
+        <h3>SEO Local en Granada: cómo aparecer en Google Maps</h3>
+        <p>Guía práctica para que tu negocio aparezca cuando alguien busca cerca de ti.</p>
+        <span class="blog-relacionado-cta">Leer artículo →</span>
+      </a>
+      <a href="/blog/diseno-web-que-convierte" class="blog-relacionado-card">
+        <span class="blog-relacionado-cat">Diseño Web</span>
+        <h3>Diseño web que convierte: 7 claves para webs que venden</h3>
+        <p>Por qué la mayoría de webs no traen clientes y qué hacer para que la tuya sí lo haga.</p>
+        <span class="blog-relacionado-cta">Leer artículo →</span>
+      </a>
+    </div>
   </section>
 
   <!-- CTA final -->

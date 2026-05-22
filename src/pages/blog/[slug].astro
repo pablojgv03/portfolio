@@ -66,33 +66,33 @@ const blogPosting = {
   "dateModified": postEs.date,
   "author": {
     "@type": "Person",
-    "@id": "https://pablogomezvillen.com/pablo-gomez-villen",
+    "@id": "https://www.pablogomezvillen.com/pablo-gomez-villen",
     "name": "Pablo Gómez Villén",
-    "url": "https://pablogomezvillen.com",
-    "image": "https://pablogomezvillen.com/img/foto-empresa.jpg",
+    "url": "https://www.pablogomezvillen.com",
+    "image": "https://www.pablogomezvillen.com/img/foto-empresa.jpg",
     "jobTitle": "Full Stack Developer",
     "sameAs": [
       "https://www.linkedin.com/in/pablo-gomez-villen",
-      "https://pablogomezvillen.com"
+      "https://www.pablogomezvillen.com"
     ]
   },
   "publisher": {
     "@type": "Person",
     "name": "Pablo Gómez Villén",
-    "url": "https://pablogomezvillen.com",
-    "image": "https://pablogomezvillen.com/img/foto-empresa.jpg"
+    "url": "https://www.pablogomezvillen.com",
+    "image": "https://www.pablogomezvillen.com/img/foto-empresa.jpg"
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": `https://pablogomezvillen.com/blog/${slug}`
+    "@id": `https://www.pablogomezvillen.com/blog/${slug}`
   },
-  "url": `https://pablogomezvillen.com/blog/${slug}`,
-  "image": postEs.image ? `https://pablogomezvillen.com${postEs.image}` : "https://pablogomezvillen.com/img/opengraph.png",
+  "url": `https://www.pablogomezvillen.com/blog/${slug}`,
+  "image": postEs.image ? `https://www.pablogomezvillen.com${postEs.image}` : "https://www.pablogomezvillen.com/img/opengraph.png",
   "keywords": (postEs.tags || []).join(', '),
   "inLanguage": "es-ES",
   "isPartOf": {
     "@type": "Blog",
-    "@id": "https://pablogomezvillen.com/blog",
+    "@id": "https://www.pablogomezvillen.com/blog",
     "name": "Blog — Pablo Gómez"
   }
 };
@@ -101,9 +101,9 @@ const breadcrumbSchema = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://pablogomezvillen.com" },
-    { "@type": "ListItem", "position": 2, "name": "Blog",   "item": "https://pablogomezvillen.com/blog" },
-    { "@type": "ListItem", "position": 3, "name": postEs.title, "item": `https://pablogomezvillen.com/blog/${slug}` }
+    { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://www.pablogomezvillen.com" },
+    { "@type": "ListItem", "position": 2, "name": "Blog",   "item": "https://www.pablogomezvillen.com/blog" },
+    { "@type": "ListItem", "position": 3, "name": postEs.title, "item": `https://www.pablogomezvillen.com/blog/${slug}` }
   ]
 };
 ---
@@ -113,9 +113,9 @@ const breadcrumbSchema = {
   lang="es"
   showHero={false}
   description={postEs.subtitle || ''}
-  canonical={`https://pablogomezvillen.com/blog/${slug}`}
-  alternateEn={`https://pablogomezvillen.com/en/blog/${slug}`}
-  alternateEs={`https://pablogomezvillen.com/blog/${slug}`}
+  canonical={`https://www.pablogomezvillen.com/blog/${slug}`}
+  alternateEn={`https://www.pablogomezvillen.com/en/blog/${slug}`}
+  alternateEs={`https://www.pablogomezvillen.com/blog/${slug}`}
   keywords={(postEs.tags || []).join(', ')}
   ogType="article"
   ogArticleDate={postEs.date}

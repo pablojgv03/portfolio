@@ -11,11 +11,11 @@ const isEN = lang === 'en';
 >
   <button class="exit-popup-close" aria-label={isEN ? 'Close popup' : 'Cerrar popup'}>✕</button>
   <p class="exit-popup-eyebrow">{isEN ? 'Before you go!' : '¡Antes de irte!'}</p>
-  <h2 class="exit-popup-title" id="exit-popup-title">{isEN ? "Let's talk?" : '¿Hablamos?'}</h2>
+  <h2 class="exit-popup-title" id="exit-popup-title">{isEN ? "Let's work together" : 'Cuéntame tu proyecto'}</h2>
   <p class="exit-popup-desc">
     {isEN
-      ? <>Tell me about your project or send me your offer.<br />I respond in less than 24h.</>
-      : <>Cuéntame tu proyecto o envíame tu oferta.<br />Respondo en menos de 24h.</>
+      ? <>Tell me about your project or send me your offer, no commitment.<br />I respond in less than 24h.</>
+      : <>Cuéntame tu proyecto o envíame tu oferta, sin compromiso.<br />Respondo en menos de 24h.</>
     }
   </p>
   <a href={isEN ? '/en/servicios#pricing' : '/servicios#precios'} class="exit-btn exit-btn--budget">

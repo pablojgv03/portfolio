@@ -801,6 +801,9 @@ footer {
   font-size: 1.1rem;
   opacity: 0.85;
 }
+.page-banner-cv {
+  margin-top: 20px;
+}
 
 /* ── Filtros ── */
 .filtros {

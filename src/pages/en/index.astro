@@ -34,9 +34,9 @@ const personSchema = {
 ---
 
 <Layout
-  title="Pablo Gómez — Full Stack Developer Laravel & PHP | Portfolio"
+  title="Pablo Gómez — Web Developer & Local SEO in Granada | Full Stack PHP Laravel"
   lang="en"
-  description="Portfolio of Pablo Gómez, Full Stack Developer specializing in Laravel, PHP, JavaScript and MySQL. Over 1 year of production experience in Granada, Spain."
+  description="Professional websites for businesses in Granada and Spain. Local SEO, Google Business and Full Stack solutions with PHP, Laravel and JavaScript."
   canonical="https://www.pablogomezvillen.com/en/"
   alternateEs="https://www.pablogomezvillen.com/"
   alternateEn="https://www.pablogomezvillen.com/en/"
@@ -227,7 +227,7 @@ const personSchema = {
     </h2>
     <div class="projects">
       <div class="project-card card--exp">
-        <a href="/experiencia#exp-1" class="full-link" aria-label="View experience at EDUCA EDTECH Group"></a>
+        <a href="/en/experiencia#exp-1" class="full-link" aria-label="View experience at EDUCA EDTECH Group"></a>
         <h3>{en['section-experiencia']['first-job'].title}</h3>
         <p>{en['section-experiencia']['first-job'].period}</p>
         <div class="skills">
@@ -240,7 +240,7 @@ const personSchema = {
       </div>
 
       <div class="project-card card--exp">
-        <a href="/experiencia#exp-2" class="full-link" aria-label="View experience at Euroinnova"></a>
+        <a href="/en/experiencia#exp-2" class="full-link" aria-label="View experience at Euroinnova"></a>
         <h3>{en['section-experiencia']['second-job'].title}</h3>
         <p>{en['section-experiencia']['second-job'].period}</p>
         <div class="skills">
@@ -284,7 +284,7 @@ const personSchema = {
   <section id="contacto" class="section bg-dark">
     <h2><span aria-hidden="true">📩 </span>{en.contact.title}</h2>
     <div class="contacto-footer-cta">
-      <p>{en.contact.content}</p>
+      <p set:html={en.contact.content}></p>
       <a
         href="https://wa.me/34622400727?text=Hi%20Pablo%2C%20I%27ve%20seen%20your%20portfolio%20and%20I%27d%20like%20to%20talk%20with%20you."
         target="_blank"

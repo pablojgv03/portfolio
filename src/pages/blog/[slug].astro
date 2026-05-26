@@ -56,6 +56,34 @@ const relatedSlugs = [...withTags, ...byCat].slice(0, 3);
 const relatedEs = relatedSlugs.map(s => ({ slug: s, ...esData.blog[s] }));
 const relatedEn = relatedSlugs.map(s => ({ slug: s, ...(enData.blog?.[s] || {}) }));
 
+// Auto-extract FAQ pairs from H2/H3 questions (¿...?) for FAQPage JSON-LD
+function extractFaqPairs(html) {
+  const pairs = [];
+  const headingRegex = /<h[23][^>]*>(¿[^<]+\?)<\/h[23]>/g;
+  let match;
+  while ((match = headingRegex.exec(html)) !== null) {
+    const question = match[1];
+    const afterHeading = html.slice(match.index + match[0].length);
+    const pMatch = afterHeading.match(/<p[^>]*>([\s\S]*?)<\/p>/);
+    if (pMatch) {
+      const answer = pMatch[1].replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim().slice(0, 500);
+      if (answer.length > 20) pairs.push({ question, answer });
+    }
+  }
+  return pairs;
+}
+
+const faqPairs = extractFaqPairs(postEs.content);
+const faqSchema = faqPairs.length > 0 ? {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqPairs.map(({ question, answer }) => ({
+    "@type": "Question",
+    "name": question,
+    "acceptedAnswer": { "@type": "Answer", "text": answer }
+  }))
+} : null;
+
 // JSON-LD: BlogPosting + BreadcrumbList
 const blogPosting = {
   "@context": "https://schema.org",
@@ -94,6 +122,10 @@ const blogPosting = {
     "@type": "Blog",
     "@id": "https://www.pablogomezvillen.com/blog",
     "name": "Blog — Pablo Gómez"
+  },
+  "speakable": {
+    "@type": "SpeakableSpecification",
+    "cssSelector": [".blog-quick-answer", ".blog-intro"]
   }
 };
 
@@ -120,7 +152,7 @@ const breadcrumbSchema = {
   ogType="article"
   ogArticleDate={postEs.date}
   ogImage={postEs.image || '/img/opengraph.png'}
-  jsonLd={[blogPosting, breadcrumbSchema]}
+  jsonLd={[blogPosting, breadcrumbSchema, ...(faqSchema ? [faqSchema] : [])]}
   lcp={postEs.image}
 >
 
@@ -167,6 +199,12 @@ const breadcrumbSchema = {
             decoding="async"
           />
         </figure>
+      )}
+      {postEs.quickAnswer && (
+        <div class="blog-quick-answer" id="blog-quick-answer" role="note">
+          <span class="blog-quick-answer-label" id="quick-answer-label">Respuesta directa</span>
+          <p id="quick-answer-text">{postEs.quickAnswer}</p>
+        </div>
       )}
       <div class="blog-article-body" id="blog-content" set:html={postEs.content}></div>
       <div class="blog-article-footer">
@@ -239,6 +277,20 @@ const breadcrumbSchema = {
     document.getElementById('blog-read-time').textContent     = postEn.readTime ? `⏱ ${postEn.readTime}` : '';
     document.getElementById('blog-date').textContent          = fmtDate(postEn.date || '', 'en');
     document.getElementById('blog-content').innerHTML         = postEn.content;
+
+    const qaBox   = document.getElementById('blog-quick-answer');
+    const qaLabel = document.getElementById('quick-answer-label');
+    const qaText  = document.getElementById('quick-answer-text');
+    if (qaBox) {
+      if (postEn.quickAnswer) {
+        if (qaLabel) qaLabel.textContent = 'Quick answer';
+        if (qaText)  qaText.textContent  = postEn.quickAnswer;
+        qaBox.style.display = '';
+      } else {
+        qaBox.style.display = 'none';
+      }
+    }
+
     document.getElementById('blog-back-btn').textContent      = '← Back to blog';
     document.getElementById('blog-back-link').textContent     = '← Blog';
     document.title = `${postEn.title} — Pablo Gómez`;
@@ -310,6 +362,44 @@ const breadcrumbSchema = {
     object-fit: cover;
     object-position: top;
     display: block;
+  }
+
+  .blog-quick-answer {
+    border-left: 4px solid #2563eb;
+    background: #eff6ff;
+    border-radius: 0 10px 10px 0;
+    padding: 1rem 1.25rem;
+    margin: 0 0 2rem;
+  }
+
+  .blog-quick-answer-label {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #2563eb;
+    margin-bottom: 0.4rem;
+  }
+
+  .blog-quick-answer p {
+    margin: 0;
+    font-size: 0.97rem;
+    line-height: 1.65;
+    color: #1e3a5f;
+  }
+
+  :global(.dark) .blog-quick-answer {
+    background: #1e3050;
+    border-left-color: #60a5fa;
+  }
+
+  :global(.dark) .blog-quick-answer-label {
+    color: #93c5fd;
+  }
+
+  :global(.dark) .blog-quick-answer p {
+    color: #bfdbfe;
   }
 
   .reading-progress-bar {

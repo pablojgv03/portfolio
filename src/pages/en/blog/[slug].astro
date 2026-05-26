@@ -52,6 +52,34 @@ const byCat = allSlugs
 const relatedSlugs = [...withTags, ...byCat].slice(0, 3);
 const relatedPosts = relatedSlugs.map(s => ({ slug: s, ...enData.blog[s] }));
 
+// Auto-extract FAQ pairs from H2/H3 questions ending in ? for FAQPage JSON-LD
+function extractFaqPairs(html) {
+  const pairs = [];
+  const headingRegex = /<h[23][^>]*>([^<]+\?)<\/h[23]>/g;
+  let match;
+  while ((match = headingRegex.exec(html)) !== null) {
+    const question = match[1].trim();
+    const afterHeading = html.slice(match.index + match[0].length);
+    const pMatch = afterHeading.match(/<p[^>]*>([\s\S]*?)<\/p>/);
+    if (pMatch) {
+      const answer = pMatch[1].replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim().slice(0, 500);
+      if (answer.length > 20) pairs.push({ question, answer });
+    }
+  }
+  return pairs;
+}
+
+const faqPairs = extractFaqPairs(postEn.content);
+const faqSchema = faqPairs.length > 0 ? {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqPairs.map(({ question, answer }) => ({
+    "@type": "Question",
+    "name": question,
+    "acceptedAnswer": { "@type": "Answer", "text": answer }
+  }))
+} : null;
+
 const blogPosting = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
@@ -86,6 +114,10 @@ const blogPosting = {
     "@type": "Blog",
     "@id": "https://www.pablogomezvillen.com/en/blog",
     "name": "Blog — Pablo Gómez"
+  },
+  "speakable": {
+    "@type": "SpeakableSpecification",
+    "cssSelector": [".blog-quick-answer", ".blog-intro"]
   }
 };
 
@@ -112,7 +144,7 @@ const breadcrumbSchema = {
   ogType="article"
   ogArticleDate={postEs.date}
   ogImage={postEn.image || '/img/opengraph.png'}
-  jsonLd={[blogPosting, breadcrumbSchema]}
+  jsonLd={[blogPosting, breadcrumbSchema, ...(faqSchema ? [faqSchema] : [])]}
   lcp={postEn.image}
 >
 
@@ -157,6 +189,12 @@ const breadcrumbSchema = {
             decoding="async"
           />
         </figure>
+      )}
+      {postEn.quickAnswer && (
+        <div class="blog-quick-answer" role="note">
+          <span class="blog-quick-answer-label">Quick answer</span>
+          <p>{postEn.quickAnswer}</p>
+        </div>
       )}
       <div class="blog-article-body" set:html={postEn.content}></div>
       <div class="blog-article-footer">

@@ -145,7 +145,8 @@
       "cats": [
         "Informativo",
         "Para negocios"
-      ]
+      ],
+      "quickAnswer": "El Kit Digital financia hasta 2.000 € para una página web de autónomos y pymes en Granada con fondos europeos Next Generation EU. Es gratis de bolsillo, pero la calidad varía mucho entre agencias. Elige un agente digitalizador que priorice resultados reales sobre cantidad."
     },
     "lighthouse-100-negocio-local": {
       "title": "Web perfecta en Google: 100/100 en Lighthouse para negocios locales",
@@ -166,7 +167,8 @@
       "cats": [
         "Informativo",
         "Para negocios"
-      ]
+      ],
+      "quickAnswer": "Lighthouse es la herramienta de Google que puntúa la velocidad, accesibilidad y SEO de tu web de 0 a 100. Por debajo de 50 pierdes visibilidad y conversiones; por encima de 90 tienes ventaja real sobre la competencia local. Cada segundo de carga extra puede reducir las conversiones hasta un 20%."
     },
     "experiencia-fullstack": {
       "hidden": true,
@@ -255,7 +257,8 @@
       "imageAlt": "Robot e inteligencia artificial en el trabajo",
       "cats": [
         "Informativo"
-      ]
+      ],
+      "quickAnswer": "La inteligencia artificial ya está transformando sectores como el comercio, la sanidad y la educación en España. Herramientas como ChatGPT, Copilot o Gemini permiten a pequeñas empresas automatizar tareas que antes requerían horas de trabajo manual. El mayor riesgo no es que la IA reemplace empleos, sino quedarse atrás mientras la competencia la adopta."
     },
     "digitalizacion-empresas": {
       "title": "Por Qué los Locales Deben Digitalizarse Ya",
@@ -275,7 +278,8 @@
       "cats": [
         "Informativo",
         "Para negocios"
-      ]
+      ],
+      "quickAnswer": "La digitalización de empresas consiste en adoptar herramientas digitales para mejorar procesos internos, alcanzar más clientes y reducir costes operativos. En España, las pymes que se digitalizan aumentan su facturación de media un 12 % en los primeros dos años. El primer paso suele ser una web profesional y la gestión online de clientes."
     },
     "desarrollador-web-granada": {
       "title": "Desarrollador web full stack en Granada — Pablo Gómez Villén",
@@ -296,7 +300,8 @@
       "cats": [
         "Informativo",
         "Para negocios"
-      ]
+      ],
+      "quickAnswer": "Un desarrollador web full stack en Granada diseña, programa y publica páginas web y aplicaciones completas, desde el diseño visual hasta la base de datos. Sin intermediarios de agencia, los tiempos son más cortos y los costes menores. Los proyectos básicos parten desde 400 €."
     },
     "precio-pagina-web-granada": {
       "title": "¿Cuánto cuesta una página web en Granada? Guía de precios 2025",
@@ -317,7 +322,8 @@
       "cats": [
         "Informativo",
         "Para negocios"
-      ]
+      ],
+      "quickAnswer": "Una página web en Granada cuesta entre 400 € y 2.500 € según complejidad. Una web de presentación básica parte desde 400 €; una con reservas o tienda online sube a 800–2.500 €. El precio varía según si contratas una agencia, un freelance o usas plataformas como WordPress."
     },
     "web-restaurantes-granada": {
       "title": "Web para restaurantes en Granada: carta digital, reservas y Google Maps",
@@ -337,7 +343,8 @@
       "cats": [
         "Informativo",
         "Para negocios"
-      ]
+      ],
+      "quickAnswer": "Una web para restaurante en Granada debe incluir menú online, sistema de reservas, galería del local y posicionamiento en Google Maps. El 75 % de los usuarios busca restaurantes en Google antes de ir: una web bien optimizada puede aumentar las reservas hasta un 40 % respecto a solo tener redes sociales."
     },
     "freelance-programador-granada": {
       "title": "Cómo contratar un programador freelance en Granada: guía práctica",
@@ -358,7 +365,8 @@
       "cats": [
         "Informativo",
         "Para negocios"
-      ]
+      ],
+      "quickAnswer": "Un programador freelance en Granada gestiona tu proyecto directamente, sin burocracia de agencia ni presupuestos inflados. El coste medio de un proyecto web freelance en Granada oscila entre 400 € y 2.500 €, frente a los 3.000–8.000 € habituales en agencia."
     },
     "seo-local-granada": {
       "title": "SEO local en Granada: cómo aparecer en Google si tienes un negocio local",
@@ -379,7 +387,8 @@
       "cats": [
         "Informativo",
         "Para negocios"
-      ]
+      ],
+      "quickAnswer": "El SEO local consiste en optimizar tu negocio para aparecer en Google cuando alguien busca tu servicio en Granada: «fontanero Granada», «restaurante cerca» o «clínica dental Granada». Requiere Google My Business optimizado, reseñas activas y contenido local relevante. Bien ejecutado, puede multiplicar llamadas y reservas sin coste publicitario."
     },
     "laravel-php-produccion": {
       "title": "Laravel en producción: lecciones aprendidas trabajando en plataformas con miles de usuarios",
@@ -400,7 +409,8 @@
       "imageAlt": "Código PHP y Laravel en producción",
       "cats": [
         "Informativo"
-      ]
+      ],
+      "quickAnswer": "Laravel es el framework PHP más popular para desarrollar aplicaciones web robustas en producción. Ofrece autenticación, ORM Eloquent, migraciones de base de datos y API REST listos desde el primer momento. Para proyectos con lógica de negocio compleja, Laravel reduce el tiempo de desarrollo entre un 30 % y un 50 % respecto a PHP nativo."
     },
     "web-clinicas-granada": {
       "title": "Web para clínicas y consultas en Granada: cita previa, RGPD y SEO médico",
@@ -420,7 +430,8 @@
       "cats": [
         "Informativo",
         "Para negocios"
-      ]
+      ],
+      "quickAnswer": "Una web para clínica o consulta en Granada debe transmitir confianza, mostrar especialidades claramente y facilitar la solicitud de cita online. Las clínicas con web optimizada reciben hasta 3 veces más solicitudes de cita que las que solo tienen perfil en redes sociales. El precio parte de 800 €."
     },
     "tienda-online-granada": {
       "title": "Tienda online para negocios de Granada: cuándo tiene sentido y cómo hacerlo bien",
@@ -441,7 +452,8 @@
       "cats": [
         "Informativo",
         "Para negocios"
-      ]
+      ],
+      "quickAnswer": "Una tienda online permite a un negocio de Granada vender las 24 horas, llegar a clientes fuera de la ciudad y reducir la dependencia de ventas presenciales. Una tienda básica parte de 800 €; una completa con gestión de stock y pagos integrados oscila entre 1.500 € y 4.000 €."
     },
     "mantenimiento-web-granada": {
       "title": "Mantenimiento Web en Granada: Por Qué Tu Página Necesita Cuidados Constantes",
@@ -461,7 +473,8 @@
       "cats": [
         "Informativo",
         "Para negocios"
-      ]
+      ],
+      "quickAnswer": "El mantenimiento web incluye actualizaciones de seguridad, copias de seguridad periódicas y corrección de errores. Una web sin mantenimiento es vulnerable a ataques y puede perder posiciones en Google. Un plan mensual básico previene costosas reparaciones de emergencia y mantiene la web siempre operativa."
     },
     "velocidad-web-seo-granada": {
       "title": "Velocidad de Carga Web: El Factor SEO que Más Ignoran las Pymes Granadinas",
@@ -482,7 +495,8 @@
       "cats": [
         "Informativo",
         "Para negocios"
-      ]
+      ],
+      "quickAnswer": "La velocidad de carga es un factor de posicionamiento directo en Google: una web lenta pierde posiciones frente a la competencia. Google recomienda que el tiempo de carga principal (LCP) sea inferior a 2,5 segundos. Para negocios locales en Granada, una web rápida puede ser la diferencia entre aparecer en primera página o no."
     },
     "php-medida-vs-wordpress": {
       "title": "PHP a Medida vs WordPress: Cuándo Usar Cada Opción para Tu Negocio",
@@ -503,7 +517,8 @@
       "cats": [
         "Informativo",
         "Para negocios"
-      ]
+      ],
+      "quickAnswer": "WordPress es rápido de lanzar y económico al inicio, pero puede tener problemas de rendimiento y seguridad con plugins mal gestionados. Un desarrollo a medida en PHP es más lento y caro inicialmente, pero escala mejor, es más seguro y no depende de actualizaciones de terceros. Para proyectos complejos o con tráfico alto, la solución a medida resulta más rentable a largo plazo."
     },
     "google-my-business-granada": {
       "title": "Guía Completa de Google My Business para Negocios en Granada",
@@ -524,7 +539,8 @@
       "cats": [
         "Informativo",
         "Para negocios"
-      ]
+      ],
+      "quickAnswer": "Google Business Profile (antes Google My Business) es el perfil gratuito que hace aparecer tu negocio en Google Maps y en los resultados locales de búsqueda. Es la herramienta de SEO local más importante para negocios físicos en Granada: un perfil completo con reseñas activas puede triplicar la visibilidad orgánica local sin coste publicitario."
     },
     "automatizacion-negocios-granada": {
       "title": "Automatización para Negocios en Granada: Cómo Ahorrar 10 Horas a la Semana",
@@ -545,7 +561,8 @@
       "cats": [
         "Informativo",
         "Para negocios"
-      ]
+      ],
+      "quickAnswer": "La automatización de negocios consiste en usar software para eliminar tareas repetitivas: respuestas automáticas, gestión de reservas, envío de facturas o recordatorios de cita. Para un negocio en Granada, automatizar dos o tres procesos puede ahorrar entre 5 y 20 horas semanales y reducir errores humanos."
     },
     "como-es-trabajar-conmigo": {
       "title": "Cómo Funciona Trabajar Conmigo: Del Primer Mensaje a Tu Web en Producción",
@@ -567,7 +584,8 @@
       "cats": [
         "Informativo",
         "Para negocios"
-      ]
+      ],
+      "quickAnswer": "Trabajar conmigo es un proceso directo: primero entiendo tu negocio y objetivos, luego propongo solución y presupuesto sin compromiso, y después desarrollo y entrego con comunicación continua. Sin intermediarios, sin sorpresas en el precio y con soporte después de la entrega. Tiempo medio de entrega: 2–4 semanas para proyectos web estándar."
     },
     "errores-web-pymes-granada": {
       "title": "7 Errores Web que Hacen Perder Clientes a los Negocios de Granada",
@@ -588,7 +606,8 @@
       "cats": [
         "Informativo",
         "Para negocios"
-      ]
+      ],
+      "quickAnswer": "Los errores más comunes en webs de pymes en Granada son: carga lenta, sin versión móvil adaptada, sin HTTPS, sin llamada a la acción clara y sin posicionamiento local. Cualquiera de estos fallos puede costar clientes a diario. La mayoría son corregibles en menos de una semana sin rehacer la web."
     },
     "app-movil-vs-web-granada": {
       "title": "App Móvil vs Aplicación Web: Qué Necesita Realmente Tu Negocio en Granada",
@@ -609,7 +628,8 @@
       "cats": [
         "Informativo",
         "Para negocios"
-      ]
+      ],
+      "quickAnswer": "Para la mayoría de negocios en Granada, una web o PWA ofrece el 90 % de lo que ofrece una app nativa a una fracción del coste. Una app nativa para iOS y Android puede costar entre 10.000 € y 40.000 €; una PWA equivalente cuesta entre 1.500 € y 6.000 €. Elige app nativa solo si necesitas acceso al hardware del dispositivo o distribución en tiendas de apps."
     },
     "reputacion-online-granada": {
       "title": "Reputación Online para Negocios en Granada: Cómo Gestionarla y Mejorarla",
@@ -630,7 +650,8 @@
       "cats": [
         "Informativo",
         "Para negocios"
-      ]
+      ],
+      "quickAnswer": "La reputación online de un negocio en Granada se construye con reseñas en Google, presencia activa en redes sociales y contenido de calidad en la web. El 88 % de los consumidores confía en las reseñas online igual que en recomendaciones personales. Responder profesionalmente a las reseñas negativas mejora la percepción del negocio."
     },
     "diseno-web-que-convierte": {
       "title": "Diseño Web que Convierte: Cómo Pasar de Tener Visitas a Tener Clientes",
@@ -652,7 +673,8 @@
       "cats": [
         "Informativo",
         "Para negocios"
-      ]
+      ],
+      "quickAnswer": "Un diseño web que convierte prioriza la claridad sobre la estética: llamada a la acción visible, beneficios claros antes de los detalles técnicos y carga rápida. El 94 % de las primeras impresiones sobre un negocio son de diseño. Una web bien estructurada puede doblar la tasa de conversión frente a una web genérica."
     },
     "desafio-joven-emprendedor-eoi": {
       "title": "Desafío Joven Emprendedor en EOI: Aptitudes Reales que Obtengo y Por Qué Me Importa",
@@ -715,7 +737,8 @@
       "cats": [
         "Informativo",
         "Para negocios"
-      ]
+      ],
+      "quickAnswer": "Una landing page es una sola página diseñada para conseguir una acción concreta (llamada, reserva, compra); una web completa tiene varias secciones y construye la imagen global del negocio. Elige landing page para campañas concretas; elige web completa si quieres posicionar en Google a largo plazo."
     }
   },
   "featured": {

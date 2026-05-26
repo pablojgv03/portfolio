@@ -95,13 +95,14 @@ const breadcrumbSchema = {
       </div>
     </div>
 
-    <div class="pillar-content">
+    <div class="pillar-layout">
+    <div class="pillar-main">
 
       <div class="pillar-intro">
         <p>I have gone through DAM, DAW and an Artificial Intelligence and Big Data specialization, as well as attending events like the SEOPlus congress and taking part in the EOI entrepreneurship programme. This page brings together everything I have written about my training: why I chose each path, what I genuinely learned and what I would do differently if I were starting over.</p>
       </div>
 
-      <nav class="pillar-toc" aria-label="Section index">
+      <nav class="pillar-toc pillar-toc--inline" aria-label="Section index">
         <p class="pillar-toc-title">In this guide</p>
         <ol>
           {sections.map(s => (
@@ -148,6 +149,18 @@ const breadcrumbSchema = {
         </div>
       </div>
 
+    </div>
+
+    <aside class="pillar-sidebar" aria-label="Guide index">
+      <nav class="pillar-toc" aria-label="Section index">
+        <p class="pillar-toc-title">In this guide</p>
+        <ol>
+          {sections.map(s => (
+            <li><a href={`#${s.id}`}>{s.title}</a></li>
+          ))}
+        </ol>
+      </nav>
+    </aside>
     </div>
   </div>
 
@@ -199,10 +212,21 @@ const breadcrumbSchema = {
     flex-wrap: wrap;
   }
 
-  .pillar-content {
-    max-width: 900px;
+  .pillar-layout {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 2rem;
+    max-width: 1160px;
     margin: 0 auto;
     padding: 2.5rem 1.5rem 4rem;
+    align-items: start;
+  }
+
+  .pillar-main { min-width: 0; }
+
+  .pillar-sidebar {
+    position: sticky;
+    top: 5.5rem;
   }
 
   .pillar-intro {
@@ -221,7 +245,12 @@ const breadcrumbSchema = {
     border: 1px solid #e2e8f0;
     border-radius: 10px;
     padding: 1.25rem 1.5rem;
-    margin-bottom: 3rem;
+    margin-bottom: 0;
+  }
+
+  .pillar-toc--inline {
+    display: none;
+    margin-bottom: 2rem;
   }
 
   :global(.dark) .pillar-toc { background: #1e293b; border-color: #334155; }
@@ -401,9 +430,18 @@ const breadcrumbSchema = {
     flex-wrap: wrap;
   }
 
+  @media (max-width: 1024px) {
+    .pillar-layout {
+      grid-template-columns: 1fr;
+      padding: 2rem 1.5rem 3rem;
+    }
+    .pillar-sidebar { display: none; }
+    .pillar-toc--inline { display: block; }
+  }
+
   @media (max-width: 640px) {
     .pillar-banner { padding: 2.5rem 1rem 2rem; }
-    .pillar-content { padding: 2rem 1rem 3rem; }
+    .pillar-layout { padding: 1.5rem 1rem 3rem; }
     .pillar-cards { grid-template-columns: 1fr; }
     .pillar-cta { padding: 1.75rem 1.25rem; }
   }

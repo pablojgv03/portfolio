@@ -22,6 +22,8 @@ const posts = Object.entries(esData.blog)
       subtitle: en.subtitle || p.subtitle || '',
       tags: en.tags || p.tags || [],
       readTime: en.readTime || p.readTime || '',
+      image: en.image || p.image || null,
+      imageAlt: en.imageAlt || p.imageAlt || '',
     };
   });
 ---

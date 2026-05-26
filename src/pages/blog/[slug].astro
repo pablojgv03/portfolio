@@ -230,6 +230,16 @@ const breadcrumbSchema = {
           <p id="quick-answer-text">{postEs.quickAnswer}</p>
         </div>
       )}
+      {showToc && (
+        <nav class="blog-toc blog-toc--inline" id="blog-toc-inline" aria-label="Tabla de contenidos">
+          <p class="blog-toc-title" id="toc-title-inline">Contenido</p>
+          <ol id="toc-list-inline">
+            {tocEs.map(({ id, text }) => (
+              <li><a href={`#${id}`}>{text}</a></li>
+            ))}
+          </ol>
+        </nav>
+      )}
       <div class="blog-article-body" id="blog-content" set:html={contentEs}></div>
       <div class="blog-article-footer">
         <a href="/blog" class="btn secondary" id="blog-back-btn">← Volver al blog</a>
@@ -327,13 +337,19 @@ const breadcrumbSchema = {
     if (sidebarLabel) sidebarLabel.textContent = 'About this article';
     if (sidebarText && postEn.excerpt) sidebarText.textContent = postEn.excerpt;
 
-    const tocEl    = document.getElementById('blog-toc');
-    const tocList  = document.getElementById('toc-list');
-    const tocTitle = document.getElementById('toc-title');
-    if (tocEl) {
+    // Actualizar ambos TOCs (sidebar + inline)
+    const tocTargets = [
+      { wrap: 'blog-toc',        list: 'toc-list',        title: 'toc-title' },
+      { wrap: 'blog-toc-inline', list: 'toc-list-inline', title: 'toc-title-inline' },
+    ];
+    for (const { wrap, list, title } of tocTargets) {
+      const tocEl = document.getElementById(wrap);
+      if (!tocEl) continue;
       if (tocEn.length >= 3) {
-        if (tocTitle) tocTitle.textContent = 'Contents';
-        if (tocList)  tocList.innerHTML = tocEn.map(({ id, text }) =>
+        const titleEl = document.getElementById(title);
+        const listEl  = document.getElementById(list);
+        if (titleEl) titleEl.textContent = 'Contents';
+        if (listEl)  listEl.innerHTML = tocEn.map(({ id, text }) =>
           `<li><a href="#${id}">${text}</a></li>`).join('');
       } else {
         tocEl.style.display = 'none';
@@ -480,12 +496,15 @@ const breadcrumbSchema = {
   :global(.dark) .sidebar-excerpt-label { color: #94a3b8; }
   :global(.dark) .sidebar-excerpt p { color: #cbd5e1; }
 
+  .blog-toc--inline { display: none; }
+
   @media (max-width: 1024px) {
     .blog-post-layout {
       grid-template-columns: 1fr;
       padding: 0;
     }
     .blog-sidebar { display: none; }
+    .blog-toc--inline { display: block; }
     :global(.blog-post-layout .blog-article) {
       max-width: 760px;
       margin: 0 auto;

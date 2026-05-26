@@ -219,6 +219,16 @@ const breadcrumbSchema = {
           <p>{postEn.quickAnswer}</p>
         </div>
       )}
+      {showToc && (
+        <nav class="blog-toc blog-toc--inline" aria-label="Table of contents">
+          <p class="blog-toc-title">Contents</p>
+          <ol>
+            {tocEn.map(({ id, text }) => (
+              <li><a href={`#${id}`}>{text}</a></li>
+            ))}
+          </ol>
+        </nav>
+      )}
       <div class="blog-article-body" set:html={contentEn}></div>
       <div class="blog-article-footer">
         <a href="/en/blog" class="btn secondary">← Back to blog</a>

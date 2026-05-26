@@ -52,6 +52,28 @@ const byCat = allSlugs
 const relatedSlugs = [...withTags, ...byCat].slice(0, 3);
 const relatedPosts = relatedSlugs.map(s => ({ slug: s, ...enData.blog[s] }));
 
+// Build TOC: add IDs to H2s and return heading list
+function buildToc(html) {
+  if (!html) return { headings: [], html: '' };
+  const headings = [];
+  const used = {};
+  const processed = html.replace(/<h2([^>]*)>([\s\S]*?)<\/h2>/g, (_, attrs, inner) => {
+    const display = inner.replace(/<[^>]+>/g, '').trim();
+    let base = display.toLowerCase()
+      .normalize('NFD').replace(/[̀-ͯ]/g, '')
+      .replace(/[?!]/g, '').replace(/[^a-z0-9\s]/g, '')
+      .trim().replace(/\s+/g, '-').slice(0, 55);
+    let id = base;
+    if (used[id]) { used[id]++; id = `${base}-${used[id]}`; } else { used[id] = 1; }
+    headings.push({ id, text: display });
+    return `<h2${attrs} id="${id}">${inner}</h2>`;
+  });
+  return { headings, html: processed };
+}
+
+const { headings: tocEn, html: contentEn } = buildToc(postEn.content);
+const showToc = tocEn.length >= 3;
+
 // Auto-extract FAQ pairs from H2/H3 questions ending in ? for FAQPage JSON-LD
 function extractFaqPairs(html) {
   const pairs = [];
@@ -196,7 +218,17 @@ const breadcrumbSchema = {
           <p>{postEn.quickAnswer}</p>
         </div>
       )}
-      <div class="blog-article-body" set:html={postEn.content}></div>
+      {showToc && (
+        <nav class="blog-toc" aria-label="Table of contents">
+          <p class="blog-toc-title">Contents</p>
+          <ol>
+            {tocEn.map(({ id, text }) => (
+              <li><a href={`#${id}`}>{text}</a></li>
+            ))}
+          </ol>
+        </nav>
+      )}
+      <div class="blog-article-body" set:html={contentEn}></div>
       <div class="blog-article-footer">
         <a href="/en/blog" class="btn secondary">← Back to blog</a>
       </div>

@@ -56,6 +56,29 @@ const relatedSlugs = [...withTags, ...byCat].slice(0, 3);
 const relatedEs = relatedSlugs.map(s => ({ slug: s, ...esData.blog[s] }));
 const relatedEn = relatedSlugs.map(s => ({ slug: s, ...(enData.blog?.[s] || {}) }));
 
+// Build TOC: add IDs to H2s and return heading list
+function buildToc(html) {
+  if (!html) return { headings: [], html: '' };
+  const headings = [];
+  const used = {};
+  const processed = html.replace(/<h2([^>]*)>([\s\S]*?)<\/h2>/g, (_, attrs, inner) => {
+    const display = inner.replace(/<[^>]+>/g, '').trim();
+    let base = display.toLowerCase()
+      .normalize('NFD').replace(/[̀-ͯ]/g, '')
+      .replace(/[¿?¡!]/g, '').replace(/[^a-z0-9\s]/g, '')
+      .trim().replace(/\s+/g, '-').slice(0, 55);
+    let id = base;
+    if (used[id]) { used[id]++; id = `${base}-${used[id]}`; } else { used[id] = 1; }
+    headings.push({ id, text: display });
+    return `<h2${attrs} id="${id}">${inner}</h2>`;
+  });
+  return { headings, html: processed };
+}
+
+const { headings: tocEs, html: contentEs } = buildToc(postEs.content);
+const { headings: tocEn, html: contentEn } = buildToc(postEn?.content || '');
+const showToc = tocEs.length >= 3;
+
 // Auto-extract FAQ pairs from H2/H3 questions (¿...?) for FAQPage JSON-LD
 function extractFaqPairs(html) {
   const pairs = [];
@@ -206,7 +229,17 @@ const breadcrumbSchema = {
           <p id="quick-answer-text">{postEs.quickAnswer}</p>
         </div>
       )}
-      <div class="blog-article-body" id="blog-content" set:html={postEs.content}></div>
+      {showToc && (
+        <nav class="blog-toc" id="blog-toc" aria-label="Tabla de contenidos">
+          <p class="blog-toc-title" id="toc-title">Contenido</p>
+          <ol id="toc-list">
+            {tocEs.map(({ id, text }) => (
+              <li><a href={`#${id}`}>{text}</a></li>
+            ))}
+          </ol>
+        </nav>
+      )}
+      <div class="blog-article-body" id="blog-content" set:html={contentEs}></div>
       <div class="blog-article-footer">
         <a href="/blog" class="btn secondary" id="blog-back-btn">← Volver al blog</a>
       </div>
@@ -250,7 +283,7 @@ const breadcrumbSchema = {
 
 </Layout>
 
-<script define:vars={{ postEn, relatedEn }}>
+<script define:vars={{ postEn, relatedEn, tocEn, contentEn }}>
   function getLang() {
     const c = document.cookie.split('; ').find(r => r.startsWith('lang='));
     return c ? c.split('=')[1] : (localStorage.getItem('lang') || 'es');
@@ -276,7 +309,20 @@ const breadcrumbSchema = {
     document.getElementById('blog-post-subtitle').textContent = postEn.subtitle || '';
     document.getElementById('blog-read-time').textContent     = postEn.readTime ? `⏱ ${postEn.readTime}` : '';
     document.getElementById('blog-date').textContent          = fmtDate(postEn.date || '', 'en');
-    document.getElementById('blog-content').innerHTML         = postEn.content;
+    document.getElementById('blog-content').innerHTML = contentEn;
+
+    const tocEl    = document.getElementById('blog-toc');
+    const tocList  = document.getElementById('toc-list');
+    const tocTitle = document.getElementById('toc-title');
+    if (tocEl) {
+      if (tocEn.length >= 3) {
+        if (tocTitle) tocTitle.textContent = 'Contents';
+        if (tocList)  tocList.innerHTML = tocEn.map(({ id, text }) =>
+          `<li><a href="#${id}">${text}</a></li>`).join('');
+      } else {
+        tocEl.style.display = 'none';
+      }
+    }
 
     const qaBox   = document.getElementById('blog-quick-answer');
     const qaLabel = document.getElementById('quick-answer-label');
@@ -362,6 +408,64 @@ const breadcrumbSchema = {
     object-fit: cover;
     object-position: top;
     display: block;
+  }
+
+  .blog-toc {
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 1rem 1.25rem 1rem 1rem;
+    margin: 0 0 2rem;
+    background: #f8fafc;
+  }
+
+  .blog-toc-title {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #64748b;
+    margin: 0 0 0.6rem;
+  }
+
+  .blog-toc ol {
+    margin: 0;
+    padding-left: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .blog-toc li {
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+
+  .blog-toc a {
+    color: #334155;
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .blog-toc a:hover {
+    color: #2563eb;
+    text-decoration: underline;
+  }
+
+  :global(.dark) .blog-toc {
+    background: #1e293b;
+    border-color: #334155;
+  }
+
+  :global(.dark) .blog-toc-title {
+    color: #94a3b8;
+  }
+
+  :global(.dark) .blog-toc a {
+    color: #cbd5e1;
+  }
+
+  :global(.dark) .blog-toc a:hover {
+    color: #60a5fa;
   }
 
   .blog-quick-answer {

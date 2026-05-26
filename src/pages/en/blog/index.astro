@@ -81,7 +81,8 @@ const posts = Object.entries(esData.blog)
         <a href="/en/blog/web-for-businesses-granada"
           class="blog-card blog-card--guide"
           data-cats={JSON.stringify(["Informative","For businesses"])}
-          data-date="9999-99-99"
+          data-date="2026-05-27"
+          data-guide="true"
           data-title="website for businesses in granada complete guide"
           data-search="web for businesses granada complete guide price website seo local design development freelance developer">
           <div class="blog-card-body">
@@ -103,7 +104,8 @@ const posts = Object.entries(esData.blog)
         <a href="/en/blog/programming-training"
           class="blog-card blog-card--guide"
           data-cats={JSON.stringify(["Education"])}
-          data-date="9999-99-98"
+          data-date="2026-05-20"
+          data-guide="true"
           data-title="programming training dam daw ai big data complete guide"
           data-search="programming training dam daw ai big data education developer courses specialization congress entrepreneurship">
           <div class="blog-card-body">
@@ -211,6 +213,11 @@ const posts = Object.entries(esData.blog)
       });
     } else {
       visible.sort((a, b) => {
+        if (curCat) {
+          const ag = a.dataset.guide === 'true', bg = b.dataset.guide === 'true';
+          if (ag && !bg) return -1;
+          if (!ag && bg) return 1;
+        }
         const da = a.dataset.date, db = b.dataset.date;
         return curSort === 'newest' ? db.localeCompare(da) : da.localeCompare(db);
       });

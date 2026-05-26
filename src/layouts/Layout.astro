@@ -338,22 +338,9 @@ const heroAvailability = isEN ? 'Available for work'   : 'Disponible para trabaj
             e.preventDefault();
             const target = document.getElementById('main-content');
             if (!target) return;
-            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-              target.scrollIntoView();
-              return;
-            }
-            const start    = window.scrollY;
-            const end      = target.getBoundingClientRect().top + window.scrollY - 80;
-            const duration = 1500;
-            let startTime  = null;
-            const ease = t => t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2, 3) / 2;
-            const step = ts => {
-              if (!startTime) startTime = ts;
-              const progress = Math.min((ts - startTime) / duration, 1);
-              window.scrollTo(0, start + (end - start) * ease(progress));
-              if (progress < 1) requestAnimationFrame(step);
-            };
-            requestAnimationFrame(step);
+            const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth';
+            const top = target.getBoundingClientRect().top + window.scrollY - 80;
+            window.scrollTo({ top, behavior });
           });
         }
 

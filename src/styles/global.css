@@ -1803,6 +1803,18 @@ body:has(.sm-page) footer p {
   border: 1px solid #9de0cc;
 }
 
+.blog-card-category.cat-business {
+  background: #ede9fe;
+  color: #5b21b6;
+  border: 1px solid #c4b5fd;
+}
+
+.blog-card-cats {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
 .blog-category-badge.cat-formation {
   background: #ffce00;
   color: #1e3c72;

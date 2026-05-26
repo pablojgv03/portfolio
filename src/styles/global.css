@@ -1876,6 +1876,14 @@ body:has(.sm-page) footer p {
 .blog-card--guide .blog-card-read-link {
   color: #fff;
   font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.blog-card:hover .blog-card--guide .blog-card-read-link,
+.blog-card--guide:hover .blog-card-read-link {
+  color: #bfdbfe;
 }
 
 .blog-card--guide .blog-card-category.cat-guide {

@@ -2050,6 +2050,7 @@ body:has(.sm-page) footer p {
   margin: 44px 0 14px;
   padding-bottom: 10px;
   border-bottom: 2px solid #eef2ff;
+  scroll-margin-top: 5.5rem;
 }
 
 .blog-article-body h3 {

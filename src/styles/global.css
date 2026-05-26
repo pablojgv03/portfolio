@@ -43,6 +43,10 @@
   top: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: 'Segoe UI', Arial, sans-serif;
   line-height: 1.6;

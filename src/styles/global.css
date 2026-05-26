@@ -2027,6 +2027,9 @@ body:has(.sm-page) footer p {
 }
 
 .blog-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
   color: #2a5298;
   text-decoration: none;
   font-size: .9rem;

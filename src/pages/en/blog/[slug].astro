@@ -198,7 +198,10 @@ const breadcrumbSchema = {
     <div class="blog-post-layout">
     <article class="blog-article">
       <div class="blog-article-meta">
-        <a href="/en/blog" class="blog-back-link">← Blog</a>
+        <a href="/en/blog" class="blog-back-link">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          Blog
+        </a>
         <time class="blog-date" datetime={postEs.date}>{formatDate(postEs.date)}</time>
       </div>
       {postEn.image && (
@@ -231,7 +234,10 @@ const breadcrumbSchema = {
       )}
       <div class="blog-article-body" set:html={contentEn}></div>
       <div class="blog-article-footer">
-        <a href="/en/blog" class="btn secondary">← Back to blog</a>
+        <a href="/en/blog" class="btn secondary">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          Back to blog
+        </a>
       </div>
     </article>
 

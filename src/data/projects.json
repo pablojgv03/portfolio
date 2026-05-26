@@ -1,6 +1,73 @@
 {
   "proyectos": [
     {
+      "id": 4,
+      "slug": "coregym-pos",
+      "badge": "desktop",
+      "title": "CoreGym POS",
+      "image": "/img/projects/coregym-pos/portada.webp",
+      "imageAlt": "CoreGym POS — pantalla de estadísticas con gráficas de ingresos y distribución por plan",
+      "darkHero": true,
+      "screenshots": [
+        {
+          "src": "/img/projects/coregym-pos/dashboard.webp",
+          "alt": "Dashboard con ingresos del mes, socios activos, check-ins del día y próximas renovaciones",
+          "altEn": "Dashboard showing monthly revenue, active members, today's check-ins and upcoming renewals",
+          "title": "Dashboard",
+          "titleEn": "Dashboard",
+          "caption": "Vista general del gimnasio en tiempo real: ingresos, socios activos, check-ins del día y membresías que vencen pronto.",
+          "captionEn": "Real-time gym overview: revenue, active members, today's check-ins and memberships expiring soon."
+        },
+        {
+          "src": "/img/projects/coregym-pos/tpv.webp",
+          "alt": "TPV con catálogo de productos por categoría, carrito y resumen de cobro con descuentos",
+          "altEn": "POS with product catalogue by category, cart and payment summary with discounts",
+          "title": "TPV",
+          "titleEn": "POS Terminal",
+          "caption": "Terminal de punto de venta con catálogo filtrable, carrito y checkout atómico. El cobro nunca queda a medias.",
+          "captionEn": "Point-of-sale terminal with filterable catalogue, cart and atomic checkout. Payments are never left incomplete."
+        },
+        {
+          "src": "/img/projects/coregym-pos/clientes.webp",
+          "alt": "Panel de clientes con modal para asignar membresía — selección de plan, método de pago y activación",
+          "altEn": "Clients panel with modal for assigning membership — plan selection, payment method and activation",
+          "title": "Clientes",
+          "titleEn": "Members",
+          "caption": "Gestión completa de socios: ficha, historial y asignación de membresía con plan, precio y método de pago desde un solo modal.",
+          "captionEn": "Full member management: profile, history and membership assignment with plan, price and payment method in one modal."
+        },
+        {
+          "src": "/img/projects/coregym-pos/estadisticas.webp",
+          "alt": "Página de estadísticas con gráfica de ingresos anuales, distribución por plan y renovaciones próximas",
+          "altEn": "Statistics page with annual revenue chart, plan distribution donut and upcoming renewals",
+          "title": "Estadísticas",
+          "titleEn": "Analytics",
+          "caption": "Análisis detallado: ingresos anuales, distribución de membresías y renovaciones próximas con alertas de urgencia.",
+          "captionEn": "Detailed analytics: annual revenue, membership distribution and upcoming renewals with urgency alerts."
+        }
+      ],
+      "large-description": {
+        "es": "CoreGym POS es un sistema de punto de venta diseñado específicamente para gimnasios pequeños y medianos. Es una aplicación de escritorio nativa que corre completamente en local: sin suscripciones en la nube, sin dependencias externas, con todos los datos almacenados en el propio equipo del negocio.\n\nEl problema que resuelve: la mayoría de soluciones de gestión para gimnasios son caras, complejas o requieren conexión constante a internet. CoreGym ofrece las herramientas esenciales de forma clara y rápida — saber quién tiene la membresía activa, cobrar en segundos, y ver los ingresos del mes de un vistazo.\n\nEl módulo de Clientes centraliza toda la información de los socios: ficha con datos de contacto, historial de pagos y estado de membresía en tiempo real. Desde aquí se puede asignar o renovar un plan directamente — Día, Mensual, Trimestral o Anual — con selección de método de pago (efectivo, tarjeta, transferencia) y activación instantánea.\n\nEl TPV es el corazón operativo de la app: catálogo de productos y membresías con filtros por categoría, carrito con selección de descuentos y resumen de cobro. Todo el proceso de checkout es atómico — ejecutado en una transacción SQL BEGIN IMMEDIATE / COMMIT — de forma que nunca puede quedar un pago registrado sin su ticket correspondiente.\n\nEl Dashboard y la sección de Estadísticas muestran ingresos del mes y del año, socios activos, check-ins del día y renovaciones próximas, con gráficas de evolución mensual y distribución por plan. Toda la información se deriva en tiempo real desde SQLite sin peticiones a servidor.\n\nDesarrollada con Tauri 2 (shell nativa en Rust) y React 19 + TypeScript en el frontend. El estado global se gestiona con Zustand 5. La base de datos es SQLite accedida vía tauri-plugin-sql, con migraciones versionadas que se aplican automáticamente en la primera ejecución. La arquitectura sigue una separación estricta en capas: UI → Stores → Services → Repositories → SQLite.",
+        "en": "CoreGym POS is a point-of-sale system designed specifically for small and medium gyms. It is a native desktop application that runs entirely offline — no cloud subscriptions, no external dependencies, all data stored on the business's own machine.\n\nThe problem it solves: most gym management solutions are expensive, complex, or require a constant internet connection. CoreGym delivers the essential tools in a clear, fast interface — know who has an active membership, charge in seconds, and see the month's revenue at a glance.\n\nThe Clients module centralises all member information: a profile with contact details, payment history and real-time membership status. From here, plans can be assigned or renewed directly — Day, Monthly, Quarterly or Annual — with payment method selection (cash, card, transfer) and instant activation.\n\nThe POS is the operational core of the app: a product and membership catalogue with category filters, a cart with discount selectors and a payment summary. The entire checkout process is atomic — executed in a SQL BEGIN IMMEDIATE / COMMIT transaction — so a payment can never be recorded without its corresponding ticket.\n\nThe Dashboard and Statistics section display monthly and annual revenue, active members, today's check-ins and upcoming renewals, with monthly evolution charts and plan distribution donut chart. All data is derived in real time from SQLite with no server requests.\n\nBuilt with Tauri 2 (native Rust shell) and React 19 + TypeScript on the frontend. Global state is managed with Zustand 5. The database is SQLite accessed via tauri-plugin-sql, with versioned migrations that apply automatically on first run. The architecture follows strict layer separation: UI → Stores → Services → Repositories → SQLite."
+      },
+      "description": {
+        "es": "Sistema POS de escritorio para gimnasios — gestión de socios, membresías, TPV con checkout atómico y estadísticas en tiempo real. Todo local, sin nube.",
+        "en": "Desktop POS system for gyms — member management, memberships, POS with atomic checkout and real-time analytics. Fully offline, no cloud."
+      },
+      "skills": [
+        { "name": "Tauri 2", "level": "high" },
+        { "name": "React 19", "level": "high" },
+        { "name": "TypeScript", "level": "high" },
+        { "name": "SQLite", "level": "high" },
+        { "name": "TailwindCSS", "level": "high" },
+        { "name": "Zustand 5", "level": "mid" },
+        { "name": "Rust", "level": "mid" },
+        { "name": "Recharts", "level": "mid" }
+      ],
+      "link": "#",
+      "link-text": "#"
+    },
+    {
       "id": 1,
       "slug": "duowatch",
       "badge": "web",

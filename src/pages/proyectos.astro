@@ -55,7 +55,7 @@ const badgeEmojis: Record<string, string> = {
             <div class={`project-badge badge-${p.badge}`} title={p.badge}>
               {badgeEmojis[p.badge] ?? '❓'}
             </div>
-            <h3>{p.title}</h3>
+            <h2>{p.title}</h2>
             <p class="project-desc">{p.description.es}</p>
             {p.skills && p.skills.length > 0 && (
               <div class="skills" aria-label={`Aptitudes de ${p.title}`}>
@@ -119,6 +119,10 @@ const badgeEmojis: Record<string, string> = {
     font-weight: 600;
     text-decoration: none;
     font-size: 0.9rem;
+    padding: 4px 0;
+    min-height: 24px;
+    display: inline-flex;
+    align-items: center;
   }
   .link-detail:hover { text-decoration: underline; }
 </style>

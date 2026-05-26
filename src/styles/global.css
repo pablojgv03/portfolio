@@ -445,7 +445,7 @@ body {
   cursor: pointer;
 }
 
-.project-card h3 {
+.project-card h2 {
   margin-bottom: 10px;
   color: #2a5298;
 }
@@ -845,7 +845,7 @@ footer {
 /* ── Contador de proyectos ── */
 .project-count {
   text-align: center;
-  color: #888;
+  color: #696969;
   font-size: 0.88rem;
   margin-bottom: 24px;
 }
@@ -1000,7 +1000,7 @@ footer {
 
 .exp-period {
   font-size: 0.88rem;
-  color: #888;
+  color: #696969;
   margin: 4px 0 14px;
 }
 
@@ -3159,7 +3159,7 @@ body:has(.sm-page) footer p {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.09em;
-  color: #888;
+  color: #696969;
   margin-bottom: 8px;
 }
 
@@ -3171,11 +3171,11 @@ body:has(.sm-page) footer p {
   margin-bottom: 4px;
 }
 
-.precio-amount .desde { font-size: 1rem; font-weight: 500; color: #888; }
+.precio-amount .desde { font-size: 1rem; font-weight: 500; color: #696969; }
 
 .precio-plan-desc {
   font-size: 0.88rem;
-  color: #888;
+  color: #696969;
   margin-bottom: 24px;
 }
 
@@ -3226,7 +3226,7 @@ body:has(.sm-page) footer p {
 
 .precio-nota {
   text-align: center;
-  color: #888;
+  color: #696969;
   font-size: 0.85rem;
   margin-top: 16px;
   max-width: 600px;
@@ -3561,7 +3561,7 @@ body:has(.sm-page) footer p {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.07em;
-  color: #888;
+  color: #696969;
   display: block;
   margin-bottom: 3px;
 }
@@ -3696,7 +3696,7 @@ body:has(.sm-page) footer p {
 
 .testimonio-card figcaption span {
   font-size: 0.78rem;
-  color: #888;
+  color: #696969;
 }
 
 /* ── Blog relacionado (servicios) ── */

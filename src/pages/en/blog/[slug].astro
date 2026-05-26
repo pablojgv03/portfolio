@@ -195,6 +195,7 @@ const breadcrumbSchema = {
 
     <div class="reading-progress-bar" id="reading-progress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
 
+    <div class="blog-post-layout">
     <article class="blog-article">
       <div class="blog-article-meta">
         <a href="/en/blog" class="blog-back-link">← Blog</a>
@@ -218,6 +219,19 @@ const breadcrumbSchema = {
           <p>{postEn.quickAnswer}</p>
         </div>
       )}
+      <div class="blog-article-body" set:html={contentEn}></div>
+      <div class="blog-article-footer">
+        <a href="/en/blog" class="btn secondary">← Back to blog</a>
+      </div>
+    </article>
+
+    <aside class="blog-sidebar" aria-label="Article information">
+      {postEn.excerpt && (
+        <div class="sidebar-excerpt">
+          <span class="sidebar-excerpt-label">About this article</span>
+          <p>{postEn.excerpt}</p>
+        </div>
+      )}
       {showToc && (
         <nav class="blog-toc" aria-label="Table of contents">
           <p class="blog-toc-title">Contents</p>
@@ -228,11 +242,8 @@ const breadcrumbSchema = {
           </ol>
         </nav>
       )}
-      <div class="blog-article-body" set:html={contentEn}></div>
-      <div class="blog-article-footer">
-        <a href="/en/blog" class="btn secondary">← Back to blog</a>
-      </div>
-    </article>
+    </aside>
+    </div>
 
     <!-- Author bio -->
     <div class="author-bio">

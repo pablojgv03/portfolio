@@ -205,6 +205,7 @@ const breadcrumbSchema = {
 
     <div class="reading-progress-bar" id="reading-progress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
 
+    <div class="blog-post-layout">
     <article class="blog-article">
       <div class="blog-article-meta">
         <a href="/blog" class="blog-back-link" id="blog-back-link">← Blog</a>
@@ -229,6 +230,19 @@ const breadcrumbSchema = {
           <p id="quick-answer-text">{postEs.quickAnswer}</p>
         </div>
       )}
+      <div class="blog-article-body" id="blog-content" set:html={contentEs}></div>
+      <div class="blog-article-footer">
+        <a href="/blog" class="btn secondary" id="blog-back-btn">← Volver al blog</a>
+      </div>
+    </article>
+
+    <aside class="blog-sidebar" id="blog-sidebar" aria-label="Información del artículo">
+      {postEs.excerpt && (
+        <div class="sidebar-excerpt">
+          <span class="sidebar-excerpt-label" id="sidebar-excerpt-label">Sobre este artículo</span>
+          <p id="sidebar-excerpt-text">{postEs.excerpt}</p>
+        </div>
+      )}
       {showToc && (
         <nav class="blog-toc" id="blog-toc" aria-label="Tabla de contenidos">
           <p class="blog-toc-title" id="toc-title">Contenido</p>
@@ -239,11 +253,8 @@ const breadcrumbSchema = {
           </ol>
         </nav>
       )}
-      <div class="blog-article-body" id="blog-content" set:html={contentEs}></div>
-      <div class="blog-article-footer">
-        <a href="/blog" class="btn secondary" id="blog-back-btn">← Volver al blog</a>
-      </div>
-    </article>
+    </aside>
+    </div>
 
     <!-- Author bio -->
     <div class="author-bio" id="author-bio">
@@ -310,6 +321,11 @@ const breadcrumbSchema = {
     document.getElementById('blog-read-time').textContent     = postEn.readTime ? `⏱ ${postEn.readTime}` : '';
     document.getElementById('blog-date').textContent          = fmtDate(postEn.date || '', 'en');
     document.getElementById('blog-content').innerHTML = contentEn;
+
+    const sidebarLabel = document.getElementById('sidebar-excerpt-label');
+    const sidebarText  = document.getElementById('sidebar-excerpt-text');
+    if (sidebarLabel) sidebarLabel.textContent = 'About this article';
+    if (sidebarText && postEn.excerpt) sidebarText.textContent = postEn.excerpt;
 
     const tocEl    = document.getElementById('blog-toc');
     const tocList  = document.getElementById('toc-list');
@@ -408,6 +424,82 @@ const breadcrumbSchema = {
     object-fit: cover;
     object-position: top;
     display: block;
+  }
+
+  .blog-post-layout {
+    display: grid;
+    grid-template-columns: 1fr 272px;
+    gap: 2.5rem;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    align-items: start;
+  }
+
+  :global(.blog-post-layout .blog-article) {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .blog-sidebar {
+    position: sticky;
+    top: 5.5rem;
+    max-height: calc(100vh - 7rem);
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+
+  .blog-sidebar::-webkit-scrollbar { display: none; }
+
+  .sidebar-excerpt {
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+    margin-bottom: 1.1rem;
+    background: #f8fafc;
+  }
+
+  .sidebar-excerpt-label {
+    display: block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #64748b;
+    margin-bottom: 0.5rem;
+  }
+
+  .sidebar-excerpt p {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.65;
+    color: #334155;
+  }
+
+  :global(.dark) .sidebar-excerpt {
+    background: #1e293b;
+    border-color: #334155;
+  }
+
+  :global(.dark) .sidebar-excerpt-label { color: #94a3b8; }
+  :global(.dark) .sidebar-excerpt p { color: #cbd5e1; }
+
+  @media (max-width: 1024px) {
+    .blog-post-layout {
+      grid-template-columns: 1fr;
+      padding: 0;
+    }
+    .blog-sidebar { display: none; }
+    :global(.blog-post-layout .blog-article) {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    :global(.blog-post-layout .blog-article) { padding: 0 16px; }
   }
 
   .blog-toc {

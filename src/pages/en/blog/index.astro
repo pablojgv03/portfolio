@@ -104,7 +104,7 @@ const posts = Object.entries(esData.blog)
                   <span class="blog-card-date">{fmtDate(p.date)}</span>
                 </div>
                 <h2 class="blog-card-title">{p.title}</h2>
-                <p class="blog-card-subtitle">{p.subtitle}</p>
+                <p class="blog-card-subtitle">{p.excerpt || p.subtitle}</p>
                 <div class="blog-card-tags">
                   {tags.map(t => <span>{t}</span>)}
                 </div>

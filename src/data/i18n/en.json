@@ -146,7 +146,8 @@
         "Informative",
         "For businesses"
       ],
-      "quickAnswer": "Kit Digital funds up to €2,000 for a website for freelancers and SMEs in Granada through EU Next Generation funds. It costs you nothing out of pocket, but quality varies greatly between agencies. Choose a digitalisation agent who prioritises real results over grant volume."
+      "quickAnswer": "Kit Digital funds up to €2,000 for a website for freelancers and SMEs in Granada through EU Next Generation funds. It costs you nothing out of pocket, but quality varies greatly between agencies. Choose a digitalisation agent who prioritises real results over grant volume.",
+      "excerpt": "Kit Digital is the Spanish government programme that funds up to €2,000 for freelancers and SMEs in Granada to get a professional website at no direct cost. Approved digitalisation agents handle the application. The real issue is quality: most subsidised websites are generic templates with no SEO, occupying space online without generating actual enquiries or bookings."
     },
     "lighthouse-100-negocio-local": {
       "title": "Perfect Web Score: 100/100 Lighthouse for Local Businesses",
@@ -168,7 +169,8 @@
         "Informative",
         "For businesses"
       ],
-      "quickAnswer": "Lighthouse is Google's tool that scores your website's speed, accessibility and SEO from 0 to 100. Below 50 you lose visibility and conversions; above 90 you have a real edge over local competitors. Each extra second of load time can reduce conversions by up to 20%."
+      "quickAnswer": "Lighthouse is Google's tool that scores your website's speed, accessibility and SEO from 0 to 100. Below 50 you lose visibility and conversions; above 90 you have a real edge over local competitors. Each extra second of load time can reduce conversions by up to 20%.",
+      "excerpt": "Google Lighthouse scores any website from 0 to 100 across performance, accessibility, best practices and SEO. For a local business in Granada, a low score is not just a technical issue — it means less Google visibility, loading times that frustrate users and lost conversions. Reaching 90+ in Lighthouse is achievable with the right techniques, without rebuilding your entire website."
     },
     "experiencia-fullstack": {
       "hidden": true,
@@ -197,7 +199,8 @@
       "imageAlt": "Screen with HTML and CSS code from DAW course",
       "cats": [
         "Education"
-      ]
+      ],
+      "excerpt": "The Higher Degree in Web Application Development covers the complete modern stack: object-oriented PHP, ES6+ JavaScript, semantic HTML, advanced CSS, MySQL and server deployment. This qualification complements hands-on experience with solid theoretical foundations across backend, frontend and database management, adding academic rigour to real-world production knowledge built over the past year."
     },
     "dam": {
       "title": "Multiplatform Application Development (DAM)",
@@ -217,7 +220,8 @@
       "imageAlt": "Mobile application development on smartphone",
       "cats": [
         "Education"
-      ]
+      ],
+      "excerpt": "The Higher Degree in Cross-Platform Application Development laid the technical foundations: object-oriented Java, native Android development, SQL databases and ERP systems with Odoo. This starting point explains why software architecture, business logic and API integration were already solid ground before entering professional work — a foundation that underpins every project and technical decision made since."
     },
     "ia-bigdata": {
       "title": "AI and Big Data Specialization",
@@ -238,7 +242,8 @@
       "imageAlt": "Artificial intelligence and neural networks",
       "cats": [
         "Education"
-      ]
+      ],
+      "excerpt": "The AI and Big Data specialisation adds Python, Machine Learning with scikit-learn and large-scale data analysis to the technical profile. Beyond the algorithms, the key skill is knowing when to apply them to real business problems. The final project — detecting mental health indicators in social media — covered the full data pipeline from collection and processing to a working production model."
     },
     "impacto-ia": {
       "title": "The Impact of AI on Software Development",
@@ -258,7 +263,8 @@
       "cats": [
         "Informative"
       ],
-      "quickAnswer": "Artificial intelligence is already transforming sectors such as retail, healthcare and education in Spain. Tools like ChatGPT, Copilot and Gemini allow small businesses to automate tasks that previously required hours of manual work. The biggest risk is not AI replacing jobs, but falling behind while competitors adopt it."
+      "quickAnswer": "Artificial intelligence is already transforming sectors such as retail, healthcare and education in Spain. Tools like ChatGPT, Copilot and Gemini allow small businesses to automate tasks that previously required hours of manual work. The biggest risk is not AI replacing jobs, but falling behind while competitors adopt it.",
+      "excerpt": "ChatGPT, Copilot and Gemini are changing how code is written, content is created and tasks are automated in small businesses. For junior developers, AI is both a powerful tool and a competitive pressure. Understanding what it can actually do — and what it still cannot — is the difference between using it as an advantage or falling behind in the job market."
     },
     "digitalizacion-empresas": {
       "title": "Why Local Businesses Must Go Digital Now",
@@ -279,7 +285,8 @@
         "Informative",
         "For businesses"
       ],
-      "quickAnswer": "Business digitalisation means adopting digital tools to improve internal processes, reach more customers and reduce operating costs. In Spain, SMEs that digitalise increase their turnover by an average of 12% in the first two years. The first step is usually a professional website and online customer management."
+      "quickAnswer": "Business digitalisation means adopting digital tools to improve internal processes, reach more customers and reduce operating costs. In Spain, SMEs that digitalise increase their turnover by an average of 12% in the first two years. The first step is usually a professional website and online customer management.",
+      "excerpt": "Restaurants, clinics and shops in Granada are still operating in 2025 without a real digital presence. Digitalisation is not just about having a website — it includes online bookings, review management, electronic invoicing and automated customer communication. Businesses that act now gain a competitive advantage that late adopters will take years to recover once they finally decide to move."
     },
     "desarrollador-web-granada": {
       "title": "Full Stack Web Developer in Granada — Pablo Gómez Villén",
@@ -301,7 +308,8 @@
         "Informative",
         "For businesses"
       ],
-      "quickAnswer": "A full stack web developer in Granada designs, codes and publishes complete websites and applications, from visual design to the database. Without agency intermediaries, timelines are shorter and costs lower. Basic projects start from €400."
+      "quickAnswer": "A full stack web developer in Granada designs, codes and publishes complete websites and applications, from visual design to the database. Without agency intermediaries, timelines are shorter and costs lower. Basic projects start from €400.",
+      "excerpt": "Pablo Gómez Villén is a full stack web developer in Granada specialised in PHP, Laravel and JavaScript. Without agency overhead or intermediary margins, every project is handled directly with the client from initial analysis through to production deployment. Solid technical training combined with real-world production experience allows tackling anything from presentation websites to complex business logic applications."
     },
     "precio-pagina-web-granada": {
       "title": "How Much Does a Website Cost in Granada? 2025 Price Guide",
@@ -323,7 +331,8 @@
         "Informative",
         "For businesses"
       ],
-      "quickAnswer": "A website in Granada costs between €400 and €2,500 depending on complexity. A basic presentation website starts at €400; a site with bookings or an online store ranges from €800 to €2,500. The price varies depending on whether you hire an agency, a freelancer, or use platforms like WordPress."
+      "quickAnswer": "A website in Granada costs between €400 and €2,500 depending on complexity. A basic presentation website starts at €400; a site with bookings or an online store ranges from €800 to €2,500. The price varies depending on whether you hire an agency, a freelancer, or use platforms like WordPress.",
+      "excerpt": "The cost of a website in Granada depends on far more than how many pages it has. The type of provider, required features, design, included SEO and ongoing maintenance all determine the real cost. This guide breaks down up-to-date 2025 price ranges so you can budget with real information before requesting a single quote from anyone."
     },
     "web-restaurantes-granada": {
       "title": "Website for Restaurants in Granada: Digital Menu, Online Bookings and Google Maps",
@@ -344,7 +353,8 @@
         "Informative",
         "For businesses"
       ],
-      "quickAnswer": "A restaurant website in Granada should include an online menu, reservation system, photo gallery and Google Maps positioning. 75% of users search for restaurants on Google before visiting: a well-optimised website can increase bookings by up to 40% compared to relying only on social media."
+      "quickAnswer": "A restaurant website in Granada should include an online menu, reservation system, photo gallery and Google Maps positioning. 75% of users search for restaurants on Google before visiting: a well-optimised website can increase bookings by up to 40% compared to relying only on social media.",
+      "excerpt": "A well-built website lets a Granada restaurant stop depending on booking and delivery platforms that charge up to 30% commission per table. A QR digital menu, your own reservation system, a photo gallery and Google Maps positioning: the four components that turn a restaurant website into the most profitable customer acquisition channel your business has."
     },
     "freelance-programador-granada": {
       "title": "How to Hire a Freelance Programmer in Granada: A Practical Guide",
@@ -366,7 +376,8 @@
         "Informative",
         "For businesses"
       ],
-      "quickAnswer": "A freelance programmer in Granada manages your project directly, without agency bureaucracy or inflated quotes. The average cost of a freelance web project in Granada ranges from €400 to €2,500, compared to €3,000–€8,000 typically charged by agencies."
+      "quickAnswer": "A freelance programmer in Granada manages your project directly, without agency bureaucracy or inflated quotes. The average cost of a freelance web project in Granada ranges from €400 to €2,500, compared to €3,000–€8,000 typically charged by agencies.",
+      "excerpt": "Hiring a freelance programmer in Granada offers advantages agencies cannot match: more competitive pricing, direct communication with the person building your project and greater flexibility for changes. But not all freelancers are equal. This guide explains how to evaluate a developer before hiring, what warning signs to spot and what questions to ask before signing anything."
     },
     "seo-local-granada": {
       "title": "Local SEO in Granada: How to Appear on Google if You Have a Local Business",
@@ -388,7 +399,8 @@
         "Informative",
         "For businesses"
       ],
-      "quickAnswer": "Local SEO means optimising your business to appear on Google when someone searches for your service in Granada: 'plumber Granada', 'restaurant near me' or 'dental clinic Granada'. It requires an optimised Google My Business profile, active reviews and relevant local content. Done right, it can multiply calls and bookings without paid advertising."
+      "quickAnswer": "Local SEO means optimising your business to appear on Google when someone searches for your service in Granada: 'plumber Granada', 'restaurant near me' or 'dental clinic Granada'. It requires an optimised Google My Business profile, active reviews and relevant local content. Done right, it can multiply calls and bookings without paid advertising.",
+      "excerpt": "Local SEO in Granada works differently from general SEO. While classic positioning competes nationally, local SEO targets geolocated searches: 'restaurant Granada', 'electrician near me' or 'physiotherapist Granada centre'. Google Business Profile, NAP consistency, reviews and local keywords are the four pillars that determine whether your business appears on the map or stays invisible to nearby customers."
     },
     "laravel-php-produccion": {
       "title": "Laravel in Production: Lessons Learned Working on Platforms with Thousands of Users",
@@ -410,7 +422,8 @@
       "cats": [
         "Informative"
       ],
-      "quickAnswer": "Laravel is the most popular PHP framework for building robust production web applications. It provides authentication, Eloquent ORM, database migrations and REST APIs out of the box. For projects with complex business logic, Laravel reduces development time by 30% to 50% compared to plain PHP."
+      "quickAnswer": "Laravel is the most popular PHP framework for building robust production web applications. It provides authentication, Eloquent ORM, database migrations and REST APIs out of the box. For projects with complex business logic, Laravel reduces development time by 30% to 50% compared to plain PHP.",
+      "excerpt": "Working with Laravel on real production systems — with thousands of active users and critical data — teaches lessons no tutorial covers. The N+1 problem in Eloquent, the difference between Query Builder and the ORM, managing jobs and queues, and why migrations are never edited: real lessons from high-traffic production platforms where every technical decision has measurable business consequences."
     },
     "web-clinicas-granada": {
       "title": "Website for Clinics and Practices in Granada: Online Booking, GDPR and Medical SEO",
@@ -431,7 +444,8 @@
         "Informative",
         "For businesses"
       ],
-      "quickAnswer": "A website for a clinic or practice in Granada must convey trust, clearly display specialities and make online appointment booking easy. Clinics with an optimised website receive up to 3 times more appointment requests than those relying only on social media. Prices start from €800."
+      "quickAnswer": "A website for a clinic or practice in Granada must convey trust, clearly display specialities and make online appointment booking easy. Clinics with an optimised website receive up to 3 times more appointment requests than those relying only on social media. Prices start from €800.",
+      "excerpt": "A clinic website in Granada has requirements beyond design: GDPR compliance for health data, an online appointment system available around the clock, content structured to rank for local medical searches and active Google review management. These four areas determine whether the website actively attracts new patients or simply functions as a static digital business card."
     },
     "tienda-online-granada": {
       "title": "Online Store for Businesses in Granada: When It Makes Sense and How to Do It Right",
@@ -453,7 +467,8 @@
         "Informative",
         "For businesses"
       ],
-      "quickAnswer": "An online store allows a Granada business to sell 24/7, reach customers outside the city and reduce dependence on in-person sales. A basic store starts from €800; a complete one with inventory management and integrated payments ranges from €1,500 to €4,000."
+      "quickAnswer": "An online store allows a Granada business to sell 24/7, reach customers outside the city and reduce dependence on in-person sales. A basic store starts from €800; a complete one with inventory management and integrated payments ranges from €1,500 to €4,000.",
+      "excerpt": "Opening an online store in Granada does not always mean competing with Amazon. In many cases the goal is to complement in-person sales, reach customers who cannot visit the shop or sell outside opening hours. This guide analyses when the investment makes sense, which platforms to use, how to handle payments and the mistakes that cost the most money at the start."
     },
     "mantenimiento-web-granada": {
       "title": "Web Maintenance in Granada: Why Your Website Needs Constant Care",
@@ -474,7 +489,8 @@
         "Informative",
         "For businesses"
       ],
-      "quickAnswer": "Website maintenance includes security updates, regular backups and bug fixes. A website without maintenance is vulnerable to attacks and can lose Google rankings. A basic monthly plan prevents costly emergency repairs and keeps your website always running."
+      "quickAnswer": "Website maintenance includes security updates, regular backups and bug fixes. A website without maintenance is vulnerable to attacks and can lose Google rankings. A basic monthly plan prevents costly emergency repairs and keeps your website always running.",
+      "excerpt": "A website without maintenance is like a shop without cleaning: it seems to function at first, but problems accumulate over time. Outdated plugins, expired SSL certificates, broken contact forms, missing backups: the most common failures in Granada business websites that end up costing far more than the annual price of a solid preventive maintenance plan."
     },
     "velocidad-web-seo-granada": {
       "title": "Web Loading Speed: The SEO Factor Most Granada SMEs Ignore",
@@ -496,7 +512,8 @@
         "Informative",
         "For businesses"
       ],
-      "quickAnswer": "Page load speed is a direct Google ranking factor: a slow website loses positions to competitors. Google recommends the main load time (LCP) be under 2.5 seconds. For local businesses in Granada, a fast website can be the difference between appearing on the first page or not."
+      "quickAnswer": "Page load speed is a direct Google ranking factor: a slow website loses positions to competitors. Google recommends the main load time (LCP) be under 2.5 seconds. For local businesses in Granada, a fast website can be the difference between appearing on the first page or not.",
+      "excerpt": "Page load speed is one of the most overlooked ranking factors among Granada SMEs. Google measures it through Core Web Vitals and directly penalises websites that fail to meet its thresholds. The result is lost positions against faster competitors and a high bounce rate: users leave before the page finishes loading, taking potential enquiries with them."
     },
     "php-medida-vs-wordpress": {
       "title": "Custom PHP vs WordPress: When to Use Each Option for Your Business",
@@ -518,7 +535,8 @@
         "Informative",
         "For businesses"
       ],
-      "quickAnswer": "WordPress is quick to launch and affordable initially, but can have performance and security issues with poorly managed plugins. A custom PHP development is slower and more expensive upfront, but scales better, is more secure and doesn't depend on third-party updates. For complex projects or high traffic, a custom solution is more cost-effective long-term."
+      "quickAnswer": "WordPress is quick to launch and affordable initially, but can have performance and security issues with poorly managed plugins. A custom PHP development is slower and more expensive upfront, but scales better, is more secure and doesn't depend on third-party updates. For complex projects or high traffic, a custom solution is more cost-effective long-term.",
+      "excerpt": "WordPress and custom PHP are not opposing choices — they are different tools for different needs. WordPress is quick to launch and affordable for simple projects. Custom PHP or Laravel is the right choice when the business needs its own logic, must scale beyond plugin limits or requires security that generic templates cannot provide. This guide helps you choose without bias."
     },
     "google-my-business-granada": {
       "title": "Complete Google My Business Guide for Businesses in Granada",
@@ -540,7 +558,8 @@
         "Informative",
         "For businesses"
       ],
-      "quickAnswer": "Google Business Profile (formerly Google My Business) is the free profile that makes your business appear on Google Maps and local search results. It is the most important local SEO tool for physical businesses in Granada: a complete profile with active reviews can triple local organic visibility at no advertising cost."
+      "quickAnswer": "Google Business Profile (formerly Google My Business) is the free profile that makes your business appear on Google Maps and local search results. It is the most important local SEO tool for physical businesses in Granada: a complete profile with active reviews can triple local organic visibility at no advertising cost.",
+      "excerpt": "Google Business Profile — formerly Google My Business — is the free listing that makes your business appear on local search maps. For a restaurant, clinic or shop in Granada it is the local SEO tool with the greatest immediate impact. Setting it up correctly, keeping it updated and managing reviews strategically can triple your visibility without spending a euro on advertising."
     },
     "automatizacion-negocios-granada": {
       "title": "Automation for Businesses in Granada: How to Save 10 Hours a Week",
@@ -562,7 +581,8 @@
         "Informative",
         "For businesses"
       ],
-      "quickAnswer": "Business automation means using software to eliminate repetitive tasks: automatic replies, booking management, invoice sending or appointment reminders. For a business in Granada, automating just two or three processes can save 5 to 20 hours per week and reduce human error."
+      "quickAnswer": "Business automation means using software to eliminate repetitive tasks: automatic replies, booking management, invoice sending or appointment reminders. For a business in Granada, automating just two or three processes can save 5 to 20 hours per week and reduce human error.",
+      "excerpt": "Automation is not just for large companies: a restaurant can send WhatsApp booking confirmations automatically, a clinic can send appointment reminders without making a single call, a shop can issue invoices without touching a computer. These automations are within reach of any Granada business with the right tools, at a monthly cost lower than one hour of manual work."
     },
     "como-es-trabajar-conmigo": {
       "title": "How Working With Me Works: From First Message to Your Website in Production",
@@ -585,7 +605,8 @@
         "Informative",
         "For businesses"
       ],
-      "quickAnswer": "Working with me is a straightforward process: first I understand your business and goals, then I propose a solution and quote with no commitment, and then I develop and deliver with continuous communication. No intermediaries, no price surprises and support after delivery. Average delivery time: 2–4 weeks for standard web projects."
+      "quickAnswer": "Working with me is a straightforward process: first I understand your business and goals, then I propose a solution and quote with no commitment, and then I develop and deliver with continuous communication. No intermediaries, no price surprises and support after delivery. Average delivery time: 2–4 weeks for standard web projects.",
+      "excerpt": "Working with a freelancer without knowing the process creates uncertainty. This page describes exactly how the collaboration works: from the first free call to production launch, including how the proposal is delivered, how revisions are handled and what support exists after go-live. No surprises, no small print and full access to the project from day one."
     },
     "errores-web-pymes-granada": {
       "title": "7 Website Mistakes That Cost Granada Businesses Customers",
@@ -607,7 +628,8 @@
         "Informative",
         "For businesses"
       ],
-      "quickAnswer": "The most common mistakes in Granada SME websites are: slow loading, no mobile version, no HTTPS, no clear call to action and no local SEO. Any of these issues can cost customers every day. Most are fixable in less than a week without rebuilding the entire website."
+      "quickAnswer": "The most common mistakes in Granada SME websites are: slow loading, no mobile version, no HTTPS, no clear call to action and no local SEO. Any of these issues can cost customers every day. Most are fixable in less than a week without rebuilding the entire website.",
+      "excerpt": "Seven specific mistakes costing Granada businesses customers every day: a website that does not work on mobile, loading times above three seconds, no visible call to action, a broken contact form, no HTTPS, no local SEO and no updates in months. Any single one of these issues is enough for a user to leave and choose a competitor immediately."
     },
     "app-movil-vs-web-granada": {
       "title": "Mobile App vs Web Application: What Does Your Granada Business Really Need",
@@ -629,7 +651,8 @@
         "Informative",
         "For businesses"
       ],
-      "quickAnswer": "For most Granada businesses, a web app or PWA delivers 90% of what a native app offers at a fraction of the cost. A native iOS and Android app can cost €10,000 to €40,000; an equivalent PWA costs €1,500 to €6,000. Choose a native app only if you need direct device hardware access or App Store distribution."
+      "quickAnswer": "For most Granada businesses, a web app or PWA delivers 90% of what a native app offers at a fraction of the cost. A native iOS and Android app can cost €10,000 to €40,000; an equivalent PWA costs €1,500 to €6,000. Choose a native app only if you need direct device hardware access or App Store distribution.",
+      "excerpt": "Before investing between €10,000 and €40,000 in a native iOS and Android app, it is worth asking whether a progressive web app (PWA) solves the same problem at a fraction of the cost. For most Granada businesses — restaurants, clinics, shops — the answer is yes. This article explains when each option makes sense and what to ask before deciding."
     },
     "reputacion-online-granada": {
       "title": "Online Reputation for Businesses in Granada: How to Manage and Improve It",
@@ -651,7 +674,8 @@
         "Informative",
         "For businesses"
       ],
-      "quickAnswer": "The online reputation of a Granada business is built through Google reviews, active social media presence and quality website content. 88% of consumers trust online reviews as much as personal recommendations. Responding professionally to negative reviews improves business perception."
+      "quickAnswer": "The online reputation of a Granada business is built through Google reviews, active social media presence and quality website content. 88% of consumers trust online reviews as much as personal recommendations. Responding professionally to negative reviews improves business perception.",
+      "excerpt": "93% of consumers read reviews before deciding. For a business in Granada, online reputation is not an add-on — it is part of the decision process for almost every potential customer you have. How to get more positive reviews ethically, how to respond to negative ones without damaging your image and which platforms matter most for your type of business."
     },
     "diseno-web-que-convierte": {
       "title": "Web Design That Converts: How to Turn Visits Into Customers",
@@ -674,7 +698,8 @@
         "Informative",
         "For businesses"
       ],
-      "quickAnswer": "A high-converting web design prioritises clarity over aesthetics: visible call to action, clear benefits before technical details and fast loading. 94% of first impressions about a business are design-related. A well-structured website can double the conversion rate compared to a generic one."
+      "quickAnswer": "A high-converting web design prioritises clarity over aesthetics: visible call to action, clear benefits before technical details and fast loading. 94% of first impressions about a business are design-related. A well-structured website can double the conversion rate compared to a generic one.",
+      "excerpt": "There is a fundamental difference between a beautiful website and one that converts: the first wins design awards, the second generates calls, bookings and sales. Conversion-oriented web design prioritises clarity over aesthetics, calls to action over visual filler and speed over animations. These are the five elements with the greatest impact on real-world business results."
     },
     "desafio-joven-emprendedor-eoi": {
       "title": "Young Entrepreneur Challenge at EOI: Real Skills I'm Gaining and Why It Matters",
@@ -694,7 +719,8 @@
       "imageAlt": "Young entrepreneurs at EOI Granada Challenge",
       "cats": [
         "Education"
-      ]
+      ],
+      "excerpt": "The EOI Young Entrepreneur Challenge is a training programme focused on entrepreneurial mindset, business model design and presentation skills beyond technical knowledge. For a freelance developer used to solving technical problems, it fills a crucial gap with business, communication and strategy skills that make a real difference when attracting and retaining your own clients independently."
     },
     "seoplus-2023-congreso-posicionamiento-web": {
       "title": "SEOPlus 2023: What I Learned at Spain's Biggest SEO Congress",
@@ -715,7 +741,8 @@
       "imageAlt": "SEOPlus 2023 web positioning conference in Spain",
       "cats": [
         "Education"
-      ]
+      ],
+      "excerpt": "SEOPlus is the most important web positioning conference in the Spanish-speaking world. The eighth edition brought together leading voices to discuss AI applied to SEO, the White Hat versus Black Hat distinction, content architecture and the new era of post-Google positioning. This is a synthesis of the most useful and actionable insights for real digital projects."
     },
     "landing-page-vs-pagina-web-negocio": {
       "title": "Landing page or full website: what does your business actually need?",
@@ -738,7 +765,8 @@
         "Informative",
         "For businesses"
       ],
-      "quickAnswer": "A landing page is a single page designed to achieve one specific action (call, booking, purchase); a full website has multiple sections and builds your overall business image. Choose a landing page for specific campaigns; choose a full website for long-term Google rankings."
+      "quickAnswer": "A landing page is a single page designed to achieve one specific action (call, booking, purchase); a full website has multiple sections and builds your overall business image. Choose a landing page for specific campaigns; choose a full website for long-term Google rankings.",
+      "excerpt": "A landing page and a full website are not different versions of the same thing — they are tools with distinct purposes. A landing page is designed for a single specific action; a full website builds the overall business image and ranks for multiple searches. Choosing the wrong one can mean months of wasted traffic or a budget invested in entirely the wrong tool."
     }
   },
   "featured": {

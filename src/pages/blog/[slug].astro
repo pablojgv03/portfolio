@@ -437,10 +437,9 @@ const breadcrumbSchema = {
     const BLEND = 0.65;
     function applyTocIntensity(link, t) {
       const dark = document.documentElement.classList.contains('dark');
-      link.style.opacity = (0.45 + t * 0.55).toFixed(3);
-      const r = dark ? Math.round(148 - 52 * t) : Math.round(100 - 63 * t);
-      const g = dark ? Math.round(163 +  2 * t) : Math.round(116 - 17 * t);
-      const b = dark ? Math.round(184 + 66 * t) : Math.round(139 + 96 * t);
+      const r = dark ? Math.round(148 - 52 * t) : Math.round(71 - 34 * t);
+      const g = dark ? Math.round(163 +  2 * t) : Math.round(85 + 14 * t);
+      const b = dark ? Math.round(184 + 66 * t) : Math.round(105 + 130 * t);
       link.style.color = `rgb(${r},${g},${b})`;
       link.style.fontWeight = t > 0.5 ? '600' : '';
     }

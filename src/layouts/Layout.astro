@@ -297,13 +297,11 @@ const heroAvailability = isEN ? 'Available for work'   : 'Disponible para trabaj
             document.cookie = `lang=${toEN ? 'en' : 'es'}; path=/; max-age=31536000`;
             const path = window.location.pathname;
             if (toEN) {
-              // ES → EN: añadir prefijo /en
-              const enPath = '/en' + (path === '/' ? '' : path);
-              window.location.href = enPath;
+              const altEn = document.querySelector('link[rel="alternate"][hreflang="en"]')?.getAttribute('href');
+              window.location.href = altEn ? new URL(altEn).pathname : '/en' + (path === '/' ? '' : path);
             } else {
-              // EN → ES: quitar prefijo /en
-              const esPath = path.replace(/^\/en/, '') || '/';
-              window.location.href = esPath;
+              const altEs = document.querySelector('link[rel="alternate"][hreflang="es"]')?.getAttribute('href');
+              window.location.href = altEs ? new URL(altEs).pathname : (path.replace(/^\/en/, '') || '/');
             }
           });
         });

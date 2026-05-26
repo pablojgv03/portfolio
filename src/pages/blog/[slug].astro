@@ -429,6 +429,45 @@ const breadcrumbSchema = {
       bar.setAttribute('aria-valuenow', Math.round(pct));
     }, { passive: true });
   }
+
+  // Scroll spy TOC — smooth intensity interpolation
+  const headings = Array.from(document.querySelectorAll('#blog-content h2[id]'));
+  const tocLinks = Array.from(document.querySelectorAll('#blog-toc a[href^="#"], #blog-toc-inline a[href^="#"]'));
+  if (headings.length && tocLinks.length) {
+    const BLEND = 0.65;
+    function applyTocIntensity(link, t) {
+      const dark = document.documentElement.classList.contains('dark');
+      link.style.opacity = (0.45 + t * 0.55).toFixed(3);
+      const r = dark ? Math.round(148 - 52 * t) : Math.round(100 - 63 * t);
+      const g = dark ? Math.round(163 +  2 * t) : Math.round(116 - 17 * t);
+      const b = dark ? Math.round(184 + 66 * t) : Math.round(139 + 96 * t);
+      link.style.color = `rgb(${r},${g},${b})`;
+      link.style.fontWeight = t > 0.5 ? '600' : '';
+    }
+    function updateActiveToc() {
+      const vp = window.innerHeight;
+      const threshold = window.scrollY + vp * 0.28;
+      let activeIdx = 0;
+      for (let i = 0; i < headings.length; i++) {
+        if (headings[i].offsetTop <= threshold) activeIdx = i;
+        else break;
+      }
+      const nxt = headings[activeIdx + 1];
+      let blend = 0;
+      if (nxt) {
+        const blendStart = nxt.offsetTop - BLEND * vp;
+        const raw = Math.max(0, Math.min(1, (threshold - blendStart) / (BLEND * vp)));
+        blend = raw * raw * (3 - 2 * raw);
+      }
+      tocLinks.forEach(a => {
+        const idx = headings.findIndex(h => '#' + h.id === a.getAttribute('href'));
+        const t = idx === activeIdx ? 1 - blend : idx === activeIdx + 1 ? blend : 0;
+        applyTocIntensity(a, t);
+      });
+    }
+    window.addEventListener('scroll', updateActiveToc, { passive: true });
+    updateActiveToc();
+  }
 </script>
 
 <style>
@@ -577,6 +616,15 @@ const breadcrumbSchema = {
   }
 
   :global(.dark) .blog-toc a:hover {
+    color: #60a5fa;
+  }
+
+  .blog-toc a.toc-active {
+    color: #2563eb;
+    font-weight: 600;
+  }
+
+  :global(.dark) .blog-toc a.toc-active {
     color: #60a5fa;
   }
 

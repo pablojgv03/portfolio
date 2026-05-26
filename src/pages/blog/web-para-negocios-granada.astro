@@ -1,0 +1,433 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import esData from '../../data/i18n/es.json';
+
+function fmtDate(d) {
+  if (!d || !/^\d{4}-\d{2}-\d{2}$/.test(d)) return d || '';
+  const [y, m] = d.split('-');
+  return `${ ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'][parseInt(m,10)-1] } ${y}`;
+}
+
+const sections = [
+  {
+    id: 'que-necesita',
+    title: '¿Qué necesita tu negocio?',
+    desc: 'Antes de invertir, entiende qué tipo de presencia digital encaja mejor con tu negocio y tu presupuesto.',
+    slugs: ['digitalizacion-empresas','precio-pagina-web-granada','landing-page-vs-pagina-web-negocio','app-movil-vs-web-granada','php-medida-vs-wordpress'],
+  },
+  {
+    id: 'webs-por-sector',
+    title: 'Webs por tipo de negocio',
+    desc: 'Guías prácticas para los sectores más comunes: restaurantes, clínicas y tiendas online.',
+    slugs: ['web-restaurantes-granada','web-clinicas-granada','tienda-online-granada'],
+  },
+  {
+    id: 'seo-visibilidad',
+    title: 'Posicionamiento y visibilidad local',
+    desc: 'Cómo aparecer en Google cuando alguien en Granada busca lo que tú ofreces.',
+    slugs: ['seo-local-granada','google-my-business-granada','velocidad-web-seo-granada','reputacion-online-granada','lighthouse-100-negocio-local'],
+  },
+  {
+    id: 'diseno-rendimiento',
+    title: 'Diseño, rendimiento y mantenimiento',
+    desc: 'Una web que carga rápido, convierte visitas en clientes y no da problemas con el tiempo.',
+    slugs: ['diseno-web-que-convierte','errores-web-pymes-granada','mantenimiento-web-granada','automatizacion-negocios-granada'],
+  },
+  {
+    id: 'contratar',
+    title: 'Contratación y proceso',
+    desc: 'Cómo funciona trabajar con un programador freelance local y qué puedes esperar del proceso.',
+    slugs: ['como-es-trabajar-conmigo','freelance-programador-granada','kit-digital-granada-pagina-web','desarrollador-web-granada'],
+  },
+];
+
+const sectionData = sections.map(s => ({
+  ...s,
+  posts: s.slugs
+    .filter(slug => esData.blog[slug] && !esData.blog[slug].hidden)
+    .map(slug => ({ slug, ...esData.blog[slug] })),
+}));
+
+const allPosts = sectionData.flatMap(s => s.posts);
+
+const itemList = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Desarrollo web para negocios en Granada — Guía completa",
+  "description": "Recursos y artículos sobre cómo tener una web profesional y rentable si tienes un negocio local en Granada.",
+  "url": "https://www.pablogomezvillen.com/blog/web-para-negocios-granada",
+  "itemListElement": allPosts.map((p, i) => ({
+    "@type": "ListItem",
+    "position": i + 1,
+    "url": `https://www.pablogomezvillen.com/blog/${p.slug}`,
+    "name": p.title,
+  })),
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://www.pablogomezvillen.com" },
+    { "@type": "ListItem", "position": 2, "name": "Blog",   "item": "https://www.pablogomezvillen.com/blog" },
+    { "@type": "ListItem", "position": 3, "name": "Web para negocios en Granada", "item": "https://www.pablogomezvillen.com/blog/web-para-negocios-granada" },
+  ],
+};
+---
+
+<Layout
+  title="Web para negocios en Granada — Guía completa 2025 | Pablo Gómez"
+  lang="es"
+  showHero={false}
+  description="Todo lo que necesitas saber para tener una web profesional en Granada: precios reales, SEO local, diseño que convierte y mantenimiento. Guía completa para negocios locales."
+  canonical="https://www.pablogomezvillen.com/blog/web-para-negocios-granada"
+  alternateEs="https://www.pablogomezvillen.com/blog/web-para-negocios-granada"
+  alternateEn="https://www.pablogomezvillen.com/en/blog/web-for-businesses-granada"
+  keywords="web para negocios granada, página web negocio local, desarrollo web granada, precio web granada, SEO local granada, programador freelance granada"
+  ogType="website"
+  jsonLd={[itemList, breadcrumbSchema]}
+>
+
+  <div id="view-pillar">
+
+    <div class="pillar-banner">
+      <div class="pillar-banner-inner">
+        <nav class="blog-breadcrumb" aria-label="Breadcrumb">
+          <ol>
+            <li><a href="/">Inicio</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li aria-current="page">Web para negocios</li>
+          </ol>
+        </nav>
+        <span class="pillar-eyebrow">Guía completa</span>
+        <h1 class="pillar-title">Web para negocios en Granada</h1>
+        <p class="pillar-subtitle">Todo lo que necesitas saber para tener presencia digital profesional y rentable — desde elegir el tipo de web hasta posicionarte en Google.</p>
+        <div class="pillar-stats">
+          <span>{allPosts.length} artículos</span>
+          <span>·</span>
+          <span>5 temas</span>
+          <span>·</span>
+          <span>Actualizado {fmtDate(allPosts[0]?.date)}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pillar-content">
+
+      <div class="pillar-intro">
+        <p>Si tienes un negocio en Granada y estás pensando en tener (o mejorar) tu web, esta guía reúne todo lo que he escrito sobre el tema: desde cuánto cuesta y qué tipo de web necesitas, hasta cómo aparecer en Google y qué errores evitar. Cada sección enlaza con artículos específicos para que puedas profundizar en lo que más te interesa.</p>
+      </div>
+
+      <nav class="pillar-toc" aria-label="Índice de secciones">
+        <p class="pillar-toc-title">En esta guía</p>
+        <ol>
+          {sections.map(s => (
+            <li><a href={`#${s.id}`}>{s.title}</a></li>
+          ))}
+        </ol>
+      </nav>
+
+      {sectionData.map(section => (
+        <section class="pillar-section" id={section.id}>
+          <div class="pillar-section-header">
+            <h2 class="pillar-section-title">{section.title}</h2>
+            <p class="pillar-section-desc">{section.desc}</p>
+          </div>
+          <div class="pillar-cards">
+            {section.posts.map(p => (
+              <a href={`/blog/${p.slug}`} class="pillar-card">
+                {p.image && (
+                  <div class="pillar-card-thumb">
+                    <img src={p.image} alt={p.imageAlt || p.title} width="400" height="210" loading="lazy" decoding="async" />
+                  </div>
+                )}
+                <div class="pillar-card-body">
+                  <h3 class="pillar-card-title">{p.title}</h3>
+                  <p class="pillar-card-excerpt">{p.excerpt || p.subtitle || ''}</p>
+                  <span class="pillar-card-meta">
+                    {p.readTime ? `⏱ ${p.readTime}` : ''}
+                    {p.readTime && p.date ? ' · ' : ''}
+                    {fmtDate(p.date)}
+                  </span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+      ))}
+
+      <div class="pillar-cta">
+        <h2 class="pillar-cta-title">¿Necesitas una web para tu negocio?</h2>
+        <p class="pillar-cta-desc">Soy programador freelance en Granada. Te ayudo a tener una web profesional, rápida y que aparezca en Google — sin rodeos y sin sobreprecios.</p>
+        <div class="pillar-cta-actions">
+          <a href="/servicios" class="btn primary">Ver servicios</a>
+          <a href="/contacto" class="btn secondary">Hablemos</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</Layout>
+
+<style>
+  .pillar-banner {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 60%, #1e40af 100%);
+    color: #fff;
+    padding: 3.5rem 1.5rem 3rem;
+  }
+
+  .pillar-banner-inner {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .pillar-eyebrow {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #93c5fd;
+    margin-bottom: 0.75rem;
+  }
+
+  .pillar-title {
+    font-size: clamp(1.75rem, 4vw, 2.6rem);
+    font-weight: 800;
+    line-height: 1.15;
+    margin: 0 0 0.9rem;
+    color: #fff;
+  }
+
+  .pillar-subtitle {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: #bfdbfe;
+    margin: 0 0 1.25rem;
+    max-width: 640px;
+  }
+
+  .pillar-stats {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+    color: #93c5fd;
+    flex-wrap: wrap;
+  }
+
+  .pillar-content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+  }
+
+  .pillar-intro {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: #334155;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  :global(.dark) .pillar-intro { color: #cbd5e1; border-color: #334155; }
+
+  .pillar-toc {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  :global(.dark) .pillar-toc { background: #1e293b; border-color: #334155; }
+
+  .pillar-toc-title {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #64748b;
+    margin: 0 0 0.75rem;
+  }
+
+  :global(.dark) .pillar-toc-title { color: #94a3b8; }
+
+  .pillar-toc ol {
+    margin: 0;
+    padding-left: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .pillar-toc li { font-size: 0.95rem; }
+
+  .pillar-toc a {
+    color: #334155;
+    text-decoration: none;
+  }
+
+  .pillar-toc a:hover { color: #2563eb; text-decoration: underline; }
+
+  :global(.dark) .pillar-toc a { color: #cbd5e1; }
+  :global(.dark) .pillar-toc a:hover { color: #60a5fa; }
+
+  .pillar-section {
+    margin-bottom: 3.5rem;
+    scroll-margin-top: 5.5rem;
+  }
+
+  .pillar-section-header {
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #2563eb;
+  }
+
+  .pillar-section-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 0.4rem;
+  }
+
+  :global(.dark) .pillar-section-title { color: #f1f5f9; }
+
+  .pillar-section-desc {
+    font-size: 0.95rem;
+    color: #64748b;
+    margin: 0;
+    line-height: 1.55;
+  }
+
+  :global(.dark) .pillar-section-desc { color: #94a3b8; }
+
+  .pillar-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .pillar-card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    overflow: hidden;
+    text-decoration: none;
+    background: #fff;
+    transition: box-shadow 0.18s, transform 0.18s, border-color 0.18s;
+  }
+
+  .pillar-card:hover {
+    box-shadow: 0 6px 24px rgba(37,99,235,0.10);
+    transform: translateY(-2px);
+    border-color: #93c5fd;
+  }
+
+  :global(.dark) .pillar-card { background: #1e293b; border-color: #334155; }
+  :global(.dark) .pillar-card:hover { border-color: #60a5fa; box-shadow: 0 6px 24px rgba(96,165,250,0.10); }
+
+  .pillar-card-thumb {
+    width: 100%;
+    aspect-ratio: 400 / 210;
+    overflow: hidden;
+    background: #f1f5f9;
+  }
+
+  .pillar-card-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    display: block;
+    transition: transform 0.3s;
+  }
+
+  .pillar-card:hover .pillar-card-thumb img { transform: scale(1.04); }
+
+  .pillar-card-body {
+    padding: 1rem 1.1rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 0.4rem;
+  }
+
+  .pillar-card-title {
+    font-size: 0.97rem;
+    font-weight: 600;
+    color: #0f172a;
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  :global(.dark) .pillar-card-title { color: #f1f5f9; }
+
+  .pillar-card-excerpt {
+    font-size: 0.83rem;
+    color: #64748b;
+    line-height: 1.55;
+    margin: 0;
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  :global(.dark) .pillar-card-excerpt { color: #94a3b8; }
+
+  .pillar-card-meta {
+    font-size: 0.78rem;
+    color: #94a3b8;
+    margin-top: 0.25rem;
+  }
+
+  .pillar-cta {
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    border: 1px solid #bfdbfe;
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    margin-top: 1rem;
+  }
+
+  :global(.dark) .pillar-cta { background: linear-gradient(135deg, #1e3050, #1e293b); border-color: #334155; }
+
+  .pillar-cta-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 0.75rem;
+  }
+
+  :global(.dark) .pillar-cta-title { color: #f1f5f9; }
+
+  .pillar-cta-desc {
+    font-size: 1rem;
+    color: #334155;
+    line-height: 1.65;
+    margin: 0 0 1.5rem;
+    max-width: 520px;
+    margin-inline: auto;
+    margin-bottom: 1.5rem;
+  }
+
+  :global(.dark) .pillar-cta-desc { color: #cbd5e1; }
+
+  .pillar-cta-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 640px) {
+    .pillar-banner { padding: 2.5rem 1rem 2rem; }
+    .pillar-content { padding: 2rem 1rem 3rem; }
+    .pillar-cards { grid-template-columns: 1fr; }
+    .pillar-cta { padding: 1.75rem 1.25rem; }
+  }
+</style>

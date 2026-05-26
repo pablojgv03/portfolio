@@ -172,10 +172,13 @@ body {
 }
 
 .nav-links a.nav-current {
-  pointer-events: none;
-  cursor: default;
   font-weight: 700;
   position: relative;
+}
+
+.nav-links a.nav-current--exact {
+  pointer-events: none;
+  cursor: default;
 }
 
 .nav-links.desktop a.nav-current::after {

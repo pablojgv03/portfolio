@@ -40,7 +40,9 @@ const navClass = (href: string) => {
   } else {
     match = normalizedPath.startsWith(href);
   }
-  return match ? 'nav-current' : undefined;
+  if (!match) return undefined;
+  const exact = normalizedPath === href || normalizedPath === href + '/';
+  return exact ? 'nav-current nav-current--exact' : 'nav-current';
 };
 const navCurrent = (href: string) => navClass(href) ? 'page' : undefined;
 const jsonLdList = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];

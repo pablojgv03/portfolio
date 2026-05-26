@@ -11,7 +11,7 @@ function fmtDate(d) {
 const posts = Object.entries(esData.blog)
   .filter(([, p]) => !p.hidden)
   .sort(([, a], [, b]) => (b.date || '').localeCompare(a.date || ''))
-  .map(([slug, p]) => ({ slug, ...p }));
+  .map(([slug, p]) => ({ slug, ...p, cats: p.cats || [p.category] }));
 ---
 
 <Layout
@@ -70,7 +70,7 @@ const posts = Object.entries(esData.blog)
           return (
             <a href={`/blog/${p.slug}`}
               class="blog-card"
-              data-cat={p.category}
+              data-cats={JSON.stringify(p.cats)}
               data-date={p.date || ''}
               data-search={searchStr}>
               {p.image && (
@@ -114,12 +114,19 @@ const posts = Object.entries(esData.blog)
   const allCards = Array.from(grid.querySelectorAll('.blog-card'));
   let curCat = '', curSearch = '', curSort = 'newest';
 
+  function norm(s) {
+    return (s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  }
+
   function applyFilters() {
-    const query = curSearch.toLowerCase().trim();
+    const query = norm(curSearch.trim());
 
     let visible = allCards.filter(card => {
-      if (curCat && card.dataset.cat !== curCat) return false;
-      if (query && !card.dataset.search.includes(query)) return false;
+      if (curCat) {
+        const cats = JSON.parse(card.dataset.cats || '[]');
+        if (!cats.includes(curCat)) return false;
+      }
+      if (query && !norm(card.dataset.search).includes(query)) return false;
       return true;
     });
 

@@ -18,6 +18,7 @@ const posts = Object.entries(esData.blog)
       slug,
       date: p.date || '',
       category: en.category || p.category,
+      cats: en.cats || p.cats || [en.category || p.category],
       title: en.title || p.title,
       subtitle: en.subtitle || p.subtitle || '',
       tags: en.tags || p.tags || [],
@@ -61,6 +62,7 @@ const posts = Object.entries(esData.blog)
             <button class="blog-cat-btn active" data-cat="">All</button>
             <button class="blog-cat-btn" data-cat="Education">Education</button>
             <button class="blog-cat-btn" data-cat="Informative">Informative</button>
+            <button class="blog-cat-btn" data-cat="For businesses">For businesses</button>
           </div>
           <div class="blog-sort-wrap" id="blog-sort-wrap">
             <button class="blog-sort-btn active" data-sort="newest" aria-label="Sort newest first">
@@ -83,7 +85,7 @@ const posts = Object.entries(esData.blog)
           return (
             <a href={`/en/blog/${p.slug}`}
               class="blog-card"
-              data-cat={p.category}
+              data-cats={JSON.stringify(p.cats)}
               data-date={p.date}
               data-search={searchStr}>
               {p.image && (
@@ -126,12 +128,19 @@ const posts = Object.entries(esData.blog)
   const allCards = Array.from(grid.querySelectorAll('.blog-card'));
   let curCat = '', curSearch = '', curSort = 'newest';
 
+  function norm(s) {
+    return (s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  }
+
   function applyFilters() {
-    const query = curSearch.toLowerCase().trim();
+    const query = norm(curSearch.trim());
 
     let visible = allCards.filter(card => {
-      if (curCat && card.dataset.cat !== curCat) return false;
-      if (query && !card.dataset.search.includes(query)) return false;
+      if (curCat) {
+        const cats = JSON.parse(card.dataset.cats || '[]');
+        if (!cats.includes(curCat)) return false;
+      }
+      if (query && !norm(card.dataset.search).includes(query)) return false;
       return true;
     });
 

@@ -135,8 +135,8 @@ const posts = Object.entries(esData.blog)
       return curSort === 'newest' ? db.localeCompare(da) : da.localeCompare(db);
     });
 
-    allCards.forEach(c => { c.hidden = true; });
-    visible.forEach(c => { c.hidden = false; grid.appendChild(c); });
+    allCards.forEach(c => { c.style.display = 'none'; });
+    visible.forEach(c => { c.style.display = ''; grid.appendChild(c); });
 
     noResult.style.display = visible.length ? 'none' : 'block';
   }

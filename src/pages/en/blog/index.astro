@@ -100,6 +100,28 @@ const posts = Object.entries(esData.blog)
             </div>
           </div>
         </a>
+        <a href="/en/blog/programming-training"
+          class="blog-card blog-card--guide"
+          data-cats={JSON.stringify(["Education"])}
+          data-date="9999-99-98"
+          data-title="programming training dam daw ai big data complete guide"
+          data-search="programming training dam daw ai big data education developer courses specialization congress entrepreneurship">
+          <div class="blog-card-body">
+            <div class="blog-card-top">
+              <div class="blog-card-cats">
+                <span class="blog-card-category cat-guide">Complete guide</span>
+                <span class="blog-card-category cat-formation">Education</span>
+              </div>
+              <span class="blog-card-date">5 articles</span>
+            </div>
+            <h2 class="blog-card-title">Programming training — DAM, DAW and AI</h2>
+            <p class="blog-card-subtitle">My educational path as a developer: formal courses, AI and Big Data specialization, and experiences at industry events.</p>
+            <div class="blog-card-footer">
+              <span class="blog-card-read-time">⏱ 2 sections</span>
+              <span class="blog-card-read-link">View guide →</span>
+            </div>
+          </div>
+        </a>
         {posts.map(p => {
           const isFm = p.category === 'Education';
           const extraCats = (p.cats || []).filter(c => c !== p.category);

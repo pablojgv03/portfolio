@@ -85,6 +85,28 @@ const posts = Object.entries(esData.blog)
             </div>
           </div>
         </a>
+        <a href="/blog/formacion-programacion"
+          class="blog-card blog-card--guide"
+          data-cats={JSON.stringify(["Formación"])}
+          data-date="9999-99-98"
+          data-title="formacion programacion dam daw ia big data guia completa"
+          data-search="formacion programacion dam daw ia big data ciclo formativo emprendimiento seoplus congreso desarrollador">
+          <div class="blog-card-body">
+            <div class="blog-card-top">
+              <div class="blog-card-cats">
+                <span class="blog-card-category cat-guide">Guía completa</span>
+                <span class="blog-card-category cat-formation">Formación</span>
+              </div>
+              <span class="blog-card-date">5 artículos</span>
+            </div>
+            <h2 class="blog-card-title">Formación en programación — DAM, DAW e IA</h2>
+            <p class="blog-card-subtitle">Mi trayectoria formativa como desarrollador: ciclos formativos, especialización en IA y Big Data, y experiencias en eventos del sector.</p>
+            <div class="blog-card-footer">
+              <span class="blog-card-read-time">⏱ 2 secciones</span>
+              <span class="blog-card-read-link">Ver guía →</span>
+            </div>
+          </div>
+        </a>
         {posts.map(p => {
           const isFm = p.category === 'Formación';
           const extraCats = (p.cats || []).filter(c => c !== p.category);

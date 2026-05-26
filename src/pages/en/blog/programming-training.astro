@@ -1,0 +1,410 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import esData from '../../../data/i18n/es.json';
+import enData from '../../../data/i18n/en.json';
+
+function fmtDate(d) {
+  if (!d || !/^\d{4}-\d{2}-\d{2}$/.test(d)) return d || '';
+  const [y, m] = d.split('-');
+  return `${ ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][parseInt(m,10)-1] } ${y}`;
+}
+
+const sections = [
+  {
+    id: 'courses-specializations',
+    title: 'Courses and specializations',
+    desc: 'My formal training as a developer: from the DAM cycle to the AI and Big Data specialization.',
+    slugs: ['dam','daw','ia-bigdata'],
+  },
+  {
+    id: 'events-experiences',
+    title: 'Events and experiences',
+    desc: 'What I have learned outside the classroom: congresses, competitions and entrepreneurship programmes.',
+    slugs: ['seoplus-2023-congreso-posicionamiento-web','desafio-joven-emprendedor-eoi'],
+  },
+];
+
+const sectionData = sections.map(s => ({
+  ...s,
+  posts: s.slugs
+    .filter(slug => esData.blog[slug] && !esData.blog[slug].hidden && enData.blog?.[slug]?.title)
+    .map(slug => ({ slug, ...enData.blog[slug], date: esData.blog[slug].date })),
+}));
+
+const allPosts = sectionData.flatMap(s => s.posts);
+
+const itemList = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Programming training — Pablo Gómez's educational path",
+  "description": "Formal courses, specializations and educational experiences of Pablo Gómez Villén as a full stack web developer.",
+  "url": "https://www.pablogomezvillen.com/en/blog/programming-training",
+  "itemListElement": allPosts.map((p, i) => ({
+    "@type": "ListItem",
+    "position": i + 1,
+    "url": `https://www.pablogomezvillen.com/en/blog/${p.slug}`,
+    "name": p.title,
+  })),
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.pablogomezvillen.com/en/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://www.pablogomezvillen.com/en/blog" },
+    { "@type": "ListItem", "position": 3, "name": "Programming training", "item": "https://www.pablogomezvillen.com/en/blog/programming-training" },
+  ],
+};
+---
+
+<Layout
+  title="Programming Training — DAM, DAW and AI | Pablo Gómez"
+  lang="en"
+  showHero={false}
+  description="My educational path as a developer: DAM cycle, DAW, AI and Big Data specialization, SEOPlus congress and EOI entrepreneurship programme."
+  canonical="https://www.pablogomezvillen.com/en/blog/programming-training"
+  alternateEn="https://www.pablogomezvillen.com/en/blog/programming-training"
+  alternateEs="https://www.pablogomezvillen.com/blog/formacion-programacion"
+  keywords="programming training, DAM, DAW, AI Big Data, web development, developer education, granada developer"
+  ogType="website"
+  jsonLd={[itemList, breadcrumbSchema]}
+>
+
+  <div id="view-pillar">
+
+    <div class="pillar-banner">
+      <div class="pillar-banner-inner">
+        <nav class="blog-breadcrumb" aria-label="Breadcrumb">
+          <ol>
+            <li><a href="/en/">Home</a></li>
+            <li><a href="/en/blog">Blog</a></li>
+            <li aria-current="page">Training</li>
+          </ol>
+        </nav>
+        <span class="pillar-eyebrow">Educational path</span>
+        <h1 class="pillar-title">Programming training</h1>
+        <p class="pillar-subtitle">DAM, DAW, AI and Big Data specialization — how I learned to code and what each stage has given me.</p>
+        <div class="pillar-stats">
+          <span>{allPosts.length} articles</span>
+          <span>·</span>
+          <span>2 topics</span>
+          <span>·</span>
+          <span>Updated {fmtDate(allPosts[0]?.date)}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pillar-content">
+
+      <div class="pillar-intro">
+        <p>I have gone through DAM, DAW and an Artificial Intelligence and Big Data specialization, as well as attending events like the SEOPlus congress and taking part in the EOI entrepreneurship programme. This page brings together everything I have written about my training: why I chose each path, what I genuinely learned and what I would do differently if I were starting over.</p>
+      </div>
+
+      <nav class="pillar-toc" aria-label="Section index">
+        <p class="pillar-toc-title">In this guide</p>
+        <ol>
+          {sections.map(s => (
+            <li><a href={`#${s.id}`}>{s.title}</a></li>
+          ))}
+        </ol>
+      </nav>
+
+      {sectionData.map(section => (
+        <section class="pillar-section" id={section.id}>
+          <div class="pillar-section-header">
+            <h2 class="pillar-section-title">{section.title}</h2>
+            <p class="pillar-section-desc">{section.desc}</p>
+          </div>
+          <div class="pillar-cards">
+            {section.posts.map(p => (
+              <a href={`/en/blog/${p.slug}`} class="pillar-card">
+                {p.image && (
+                  <div class="pillar-card-thumb">
+                    <img src={p.image} alt={p.imageAlt || p.title} width="400" height="210" loading="lazy" decoding="async" />
+                  </div>
+                )}
+                <div class="pillar-card-body">
+                  <h3 class="pillar-card-title">{p.title}</h3>
+                  <p class="pillar-card-excerpt">{p.excerpt || p.subtitle || ''}</p>
+                  <span class="pillar-card-meta">
+                    {p.readTime ? `⏱ ${p.readTime}` : ''}
+                    {p.readTime && p.date ? ' · ' : ''}
+                    {fmtDate(p.date)}
+                  </span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+      ))}
+
+      <div class="pillar-cta">
+        <h2 class="pillar-cta-title">Looking for a developer with solid training?</h2>
+        <p class="pillar-cta-desc">I combine formal technical education with hands-on experience on real projects. If you need custom web development, let's talk.</p>
+        <div class="pillar-cta-actions">
+          <a href="/en/servicios" class="btn primary">View services</a>
+          <a href="/en/contacto" class="btn secondary">Get in touch</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</Layout>
+
+<style>
+  .pillar-banner {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 60%, #1e40af 100%);
+    color: #fff;
+    padding: 3.5rem 1.5rem 3rem;
+  }
+
+  .pillar-banner-inner {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .pillar-eyebrow {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #93c5fd;
+    margin-bottom: 0.75rem;
+  }
+
+  .pillar-title {
+    font-size: clamp(1.75rem, 4vw, 2.6rem);
+    font-weight: 800;
+    line-height: 1.15;
+    margin: 0 0 0.9rem;
+    color: #fff;
+  }
+
+  .pillar-subtitle {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: #bfdbfe;
+    margin: 0 0 1.25rem;
+    max-width: 640px;
+  }
+
+  .pillar-stats {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+    color: #93c5fd;
+    flex-wrap: wrap;
+  }
+
+  .pillar-content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+  }
+
+  .pillar-intro {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: #334155;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  :global(.dark) .pillar-intro { color: #cbd5e1; border-color: #334155; }
+
+  .pillar-toc {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  :global(.dark) .pillar-toc { background: #1e293b; border-color: #334155; }
+
+  .pillar-toc-title {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #64748b;
+    margin: 0 0 0.75rem;
+  }
+
+  :global(.dark) .pillar-toc-title { color: #94a3b8; }
+
+  .pillar-toc ol {
+    margin: 0;
+    padding-left: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .pillar-toc li { font-size: 0.95rem; }
+
+  .pillar-toc a { color: #334155; text-decoration: none; }
+  .pillar-toc a:hover { color: #2563eb; text-decoration: underline; }
+
+  :global(.dark) .pillar-toc a { color: #cbd5e1; }
+  :global(.dark) .pillar-toc a:hover { color: #60a5fa; }
+
+  .pillar-section {
+    margin-bottom: 3.5rem;
+    scroll-margin-top: 5.5rem;
+  }
+
+  .pillar-section-header {
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #2563eb;
+  }
+
+  .pillar-section-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 0.4rem;
+  }
+
+  :global(.dark) .pillar-section-title { color: #f1f5f9; }
+
+  .pillar-section-desc {
+    font-size: 0.95rem;
+    color: #64748b;
+    margin: 0;
+    line-height: 1.55;
+  }
+
+  :global(.dark) .pillar-section-desc { color: #94a3b8; }
+
+  .pillar-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .pillar-card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    overflow: hidden;
+    text-decoration: none;
+    background: #fff;
+    transition: box-shadow 0.18s, transform 0.18s, border-color 0.18s;
+  }
+
+  .pillar-card:hover {
+    box-shadow: 0 6px 24px rgba(37,99,235,0.10);
+    transform: translateY(-2px);
+    border-color: #93c5fd;
+  }
+
+  :global(.dark) .pillar-card { background: #1e293b; border-color: #334155; }
+  :global(.dark) .pillar-card:hover { border-color: #60a5fa; box-shadow: 0 6px 24px rgba(96,165,250,0.10); }
+
+  .pillar-card-thumb {
+    width: 100%;
+    aspect-ratio: 400 / 210;
+    overflow: hidden;
+    background: #f1f5f9;
+  }
+
+  .pillar-card-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    display: block;
+    transition: transform 0.3s;
+  }
+
+  .pillar-card:hover .pillar-card-thumb img { transform: scale(1.04); }
+
+  .pillar-card-body {
+    padding: 1rem 1.1rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 0.4rem;
+  }
+
+  .pillar-card-title {
+    font-size: 0.97rem;
+    font-weight: 600;
+    color: #0f172a;
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  :global(.dark) .pillar-card-title { color: #f1f5f9; }
+
+  .pillar-card-excerpt {
+    font-size: 0.83rem;
+    color: #64748b;
+    line-height: 1.55;
+    margin: 0;
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  :global(.dark) .pillar-card-excerpt { color: #94a3b8; }
+
+  .pillar-card-meta {
+    font-size: 0.78rem;
+    color: #94a3b8;
+    margin-top: 0.25rem;
+  }
+
+  .pillar-cta {
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    border: 1px solid #bfdbfe;
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    margin-top: 1rem;
+  }
+
+  :global(.dark) .pillar-cta { background: linear-gradient(135deg, #1e3050, #1e293b); border-color: #334155; }
+
+  .pillar-cta-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 0.75rem;
+  }
+
+  :global(.dark) .pillar-cta-title { color: #f1f5f9; }
+
+  .pillar-cta-desc {
+    font-size: 1rem;
+    color: #334155;
+    line-height: 1.65;
+    margin: 0 auto 1.5rem;
+    max-width: 520px;
+  }
+
+  :global(.dark) .pillar-cta-desc { color: #cbd5e1; }
+
+  .pillar-cta-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 640px) {
+    .pillar-banner { padding: 2.5rem 1rem 2rem; }
+    .pillar-content { padding: 2rem 1rem 3rem; }
+    .pillar-cards { grid-template-columns: 1fr; }
+    .pillar-cta { padding: 1.75rem 1.25rem; }
+  }
+</style>

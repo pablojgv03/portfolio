@@ -382,6 +382,10 @@ body {
   color: #ffce00;
 }
 
+.bg-dark a.btn-whatsapp {
+  color: #0b3d20;
+}
+
 /* Contacto con fusion al footer */
 #contacto {
   width: 100%;

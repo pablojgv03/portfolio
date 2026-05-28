@@ -35,7 +35,7 @@ const videoSchema = videoId ? {
   "@type": "VideoObject",
   "name": `Demo — ${project.title}`,
   "description": project.description.es,
-  "thumbnailUrl": `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
+  "thumbnailUrl": `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`,
   "uploadDate": "2026-05-21",
   "contentUrl": rawVideoUrl,
   "embedUrl": embedUrl
@@ -52,6 +52,7 @@ const videoSchema = videoId ? {
   ogImage={project.image || '/img/opengraph.png'}
   jsonLd={videoSchema ? [softwareSchema, videoSchema] : [softwareSchema]}
   showHero={false}
+  lcp={project.image || undefined}
 >
 
   <!-- ══════════════════════════════════════
@@ -116,21 +117,47 @@ const videoSchema = videoId ? {
   <!-- ══════════════════════════════════════
        GALERÍA DE CAPTURAS
        ══════════════════════════════════════ -->
-  {embedUrl && (
+  {embedUrl && videoId && (
     <section class="pd-video-section">
       <p class="pd-video-eyebrow">Demo en vídeo</p>
       <h2 class="pd-video-title">Míralo en acción</h2>
       <div class="pd-video-wrapper">
-        <iframe
-          src={embedUrl}
-          title={`Demo — ${project.title}`}
-          loading="lazy"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen
-        ></iframe>
+        <div class="pd-video-facade" data-embed={embedUrl} data-title={`Demo — ${project.title}`}>
+          <img
+            src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
+            alt={`Miniatura del vídeo: Demo — ${project.title}`}
+            loading="lazy"
+            decoding="async"
+            width="480"
+            height="360"
+          />
+          <button class="pd-video-play" aria-label="Reproducir vídeo">
+            <svg viewBox="0 0 68 48" width="68" height="48" aria-hidden="true">
+              <path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55c-2.93.78-4.63 3.26-5.42 6.19C.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26z" fill="#f00"/>
+              <path d="M45 24L27 14v20" fill="#fff"/>
+            </svg>
+          </button>
+        </div>
       </div>
     </section>
   )}
+  <script>
+    document.querySelectorAll('.pd-video-facade').forEach(facade => {
+      facade.addEventListener('click', () => {
+        const embed = facade.getAttribute('data-embed');
+        const title = facade.getAttribute('data-title');
+        const iframe = document.createElement('iframe');
+        iframe.src = embed + '&autoplay=1';
+        iframe.title = title;
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        iframe.setAttribute('allowfullscreen', '');
+        iframe.width = '100%';
+        iframe.height = '100%';
+        iframe.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;border:0';
+        facade.replaceWith(iframe);
+      }, { once: true });
+    });
+  </script>
 
   {screenshots.length > 0 && project.badge !== 'desktop' && (
     <div class="pd-screens">
@@ -312,9 +339,9 @@ const videoSchema = videoId ? {
   color: #fff;
   margin-bottom: 16px;
 }
-.badge-web    { background: rgba(124, 58, 237, 0.85); backdrop-filter: blur(4px); }
-.badge-mobile { background: rgba(239, 68, 68, 0.85);  backdrop-filter: blur(4px); }
-.badge-desktop{ background: rgba(16, 185, 129, 0.85); backdrop-filter: blur(4px); }
+.badge-web    { background: #5b21b6; }
+.badge-mobile { background: #b91c1c; }
+.badge-desktop{ background: #065f46; }
 
 .pd-hero-title {
   font-size: clamp(2.2rem, 5vw, 3.4rem);
@@ -412,6 +439,8 @@ const videoSchema = videoId ? {
   margin-top: 64px;
   background: linear-gradient(170deg, #09090f 0%, #130820 50%, #0a1628 100%);
   padding: 72px 24px 80px;
+  content-visibility: auto;
+  contain-intrinsic-size: 0 600px;
 }
 
 .pd-screens-inner {
@@ -560,7 +589,7 @@ const videoSchema = videoId ? {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: #9ca3af;
+  color: #6b7280;
   text-decoration: none;
   font-size: 0.88rem;
   font-weight: 600;
@@ -609,6 +638,8 @@ const videoSchema = videoId ? {
   border-top: 1.5px solid #e4ecf8;
   padding: 64px 24px 72px;
   margin-top: 64px;
+  content-visibility: auto;
+  contain-intrinsic-size: 0 450px;
 }
 
 .pd-otros-inner {
@@ -752,6 +783,43 @@ const videoSchema = videoId ? {
   height: 100%;
   border: none;
   display: block;
+}
+
+.pd-video-facade {
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pd-video-facade img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.85;
+  transition: opacity 0.2s;
+}
+
+.pd-video-facade:hover img { opacity: 1; }
+
+.pd-video-play {
+  position: relative;
+  z-index: 1;
+  background: none;
+  border: none;
+  cursor: pointer;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.4));
+  transition: transform 0.15s, filter 0.15s;
+}
+
+.pd-video-facade:hover .pd-video-play {
+  transform: scale(1.1);
+  filter: drop-shadow(0 4px 16px rgba(0,0,0,0.5));
 }
 
 /* ── Galería de escritorio ── */

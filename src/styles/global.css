@@ -1834,6 +1834,8 @@ body:has(.sm-page) footer p {
   flex-direction: column;
   text-decoration: none;
   color: inherit;
+  content-visibility: auto;
+  contain-intrinsic-size: 0 320px;
 }
 
 .blog-card-thumb {
@@ -2620,6 +2622,8 @@ body:has(.sm-page) footer p {
   max-width: 820px;
   margin: 56px auto 0;
   padding: 0 24px 64px;
+  content-visibility: auto;
+  contain-intrinsic-size: 0 400px;
 }
 .blog-related-title {
   font-size: 1.05rem;

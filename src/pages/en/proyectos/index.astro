@@ -17,6 +17,7 @@ const badgeEmojis: Record<string, string> = {
   canonical="https://www.pablogomezvillen.com/en/proyectos"
   alternateEs="https://www.pablogomezvillen.com/proyectos"
   alternateEn="https://www.pablogomezvillen.com/en/proyectos"
+  lcp={projectsData.proyectos[0]?.image}
 >
 
   <div class="page-banner">
@@ -40,19 +41,27 @@ const badgeEmojis: Record<string, string> = {
     <p class="project-count" id="project-count"></p>
 
     <div id="lista-proyectos" class="projects">
-      {projectsData.proyectos.map((p) => (
+      {projectsData.proyectos.map((p, idx) => (
         <article class={`project-card project-card--full${p.image ? ' project-card--with-thumb' : ''}`} data-badge={p.badge}>
           <a href={`/en/proyectos/${p.slug}`} class="full-link" aria-label={`View details for ${p.title}`}></a>
           {p.image && (
             <div class="project-card-thumb">
-              <img src={p.image} alt={p.imageAlt || p.title} loading="lazy" decoding="async" width="400" height="210" />
+              <img
+                src={p.image}
+                alt={p.imageAlt || p.title}
+                loading={idx === 0 ? 'eager' : 'lazy'}
+                fetchpriority={idx === 0 ? 'high' : undefined}
+                decoding={idx === 0 ? 'sync' : 'async'}
+                width="400"
+                height="210"
+              />
             </div>
           )}
           <div class={p.image ? 'project-card-body' : ''}>
             <div class={`project-badge badge-${p.badge}`} title={p.badge}>
               {badgeEmojis[p.badge] ?? '❓'}
             </div>
-            <h3>{p.title}</h3>
+            <h2>{p.title}</h2>
             <p class="project-desc">{p.description.en}</p>
             {p.skills && p.skills.length > 0 && (
               <div class="skills" aria-label={`Skills for ${p.title}`}>
@@ -119,6 +128,14 @@ const badgeEmojis: Record<string, string> = {
     font-weight: 600;
     text-decoration: none;
     font-size: 0.9rem;
+    padding: 4px 0;
+    min-height: 24px;
+    display: inline-flex;
+    align-items: center;
   }
   .link-detail:hover { text-decoration: underline; }
+  .proyectos-page .project-card {
+    content-visibility: auto;
+    contain-intrinsic-size: 0 380px;
+  }
 </style>

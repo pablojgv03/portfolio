@@ -6,6 +6,9 @@ export default defineConfig({
   site: 'https://pablogomezvillen.com',
   output: 'static',
   integrations: [sitemap()],
+  build: {
+    inlineStylesheets: 'always',
+  },
   redirects: {
     '/sobre-mi': '/pablo-gomez-villen',
     '/en/sobre-mi': '/en/pablo-gomez-villen',

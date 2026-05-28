@@ -640,7 +640,7 @@ body {
 .contact-fixed .contact { text-align: left; }
 .contact-fixed .contact li { margin: 8px 0; }
 .contact-fixed .contact a { color: #ffce00; font-weight: 600; }
-.contact-fixed-title { margin: 0 0 8px 0; font-size: 0.95rem; font-weight: 700; color: #fff; }
+.contact-fixed-title { margin: 0 0 8px 0; font-size: 1.1rem; font-weight: 700; color: #fff; }
 
 .contact-fixed-cta {
   display: flex;
@@ -794,6 +794,84 @@ footer {
   padding: 20px;
   background: #222;
   color: white;
+}
+
+.footer-socials {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.footer-social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  color: #ccc;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+
+.footer-social-link:hover {
+  background: #2563eb;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.mobile-socials {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.mobile-social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+
+.mobile-social-icon:hover {
+  background: #2563eb;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.contact-socials-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4px;
+  list-style: none;
+  padding: 0;
+}
+
+.contact-social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  color: #ffce00;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+
+.contact-social-icon:hover {
+  background: #ffce00;
+  color: #1e3c72;
+  transform: translateY(-2px);
 }
 
 /* ── Page banner (subpáginas sin hero) ── */

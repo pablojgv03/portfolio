@@ -317,7 +317,6 @@ const breadcrumbSchema = {
   const headings = Array.from(document.querySelectorAll('#blog-content h2[id]'));
   const tocLinks = Array.from(document.querySelectorAll('#blog-toc a[href^="#"], #blog-toc-inline a[href^="#"]'));
   if (headings.length && tocLinks.length) {
-    const BLEND = 0.65;
     function applyTocIntensity(link, t) {
       const dark = document.documentElement.classList.contains('dark');
       const r = dark ? Math.round(148 - 52 * t) : Math.round(71 - 34 * t);
@@ -337,8 +336,10 @@ const breadcrumbSchema = {
       const nxt = headings[activeIdx + 1];
       let blend = 0;
       if (nxt) {
-        const blendStart = nxt.offsetTop - BLEND * vp;
-        const raw = Math.max(0, Math.min(1, (threshold - blendStart) / (BLEND * vp)));
+        const sectionH  = nxt.offsetTop - headings[activeIdx].offsetTop;
+        const blendDist = Math.min(sectionH * 0.4, vp * 0.3);
+        const blendStart = nxt.offsetTop - blendDist;
+        const raw = Math.max(0, Math.min(1, (threshold - blendStart) / blendDist));
         blend = raw * raw * (3 - 2 * raw);
       }
       tocLinks.forEach(a => {

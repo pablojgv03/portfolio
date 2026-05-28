@@ -200,8 +200,19 @@ import Layout from '../layouts/Layout.astro';
     let particles = [];
 
     function resize() {
+      const oldW = canvas.width || window.innerWidth;
+      const oldH = canvas.height || window.innerHeight;
       canvas.width  = window.innerWidth;
       canvas.height = window.innerHeight;
+      // Scale existing particles proportionally instead of reinitializing
+      if (particles.length) {
+        const scaleX = canvas.width / oldW;
+        const scaleY = canvas.height / oldH;
+        for (const p of particles) {
+          p.x *= scaleX;
+          p.y *= scaleY;
+        }
+      }
     }
 
     function initParticles() {
@@ -264,8 +275,17 @@ import Layout from '../layouts/Layout.astro';
       requestAnimationFrame(drawFrame);
     }
 
-    window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
-    window.addEventListener('resize',    () => { resize(); initParticles(); });
+    // Mouse repulsion only on non-touch devices to avoid spurious events on mobile scroll
+    if (!('ontouchstart' in window)) {
+      window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+    }
+
+    // Debounced resize — scales particles instead of reinitializing (prevents "crazy" jump on mobile address-bar show/hide)
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(resize, 120);
+    });
 
     // ── SMOOTH SCROLL "Conóceme" ──
     document.querySelector('.sm-scroll-hint').addEventListener('click', e => {

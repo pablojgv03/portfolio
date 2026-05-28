@@ -200,8 +200,18 @@ const sm = enData['sobre-mi'];
     let particles = [];
 
     function resize() {
+      const oldW = canvas.width || window.innerWidth;
+      const oldH = canvas.height || window.innerHeight;
       canvas.width  = window.innerWidth;
       canvas.height = window.innerHeight;
+      if (particles.length) {
+        const scaleX = canvas.width / oldW;
+        const scaleY = canvas.height / oldH;
+        for (const p of particles) {
+          p.x *= scaleX;
+          p.y *= scaleY;
+        }
+      }
     }
 
     function initParticles() {
@@ -250,8 +260,15 @@ const sm = enData['sobre-mi'];
       requestAnimationFrame(drawFrame);
     }
 
-    window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
-    window.addEventListener('resize', () => { resize(); initParticles(); });
+    if (!('ontouchstart' in window)) {
+      window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+    }
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(resize, 120);
+    });
 
     document.querySelector('.sm-scroll-hint').addEventListener('click', e => {
       e.preventDefault();

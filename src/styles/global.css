@@ -341,10 +341,10 @@ body {
 
   .nav-links.mobile a.nav-current {
     font-weight: 700;
-    opacity: 0.55;
   }
 
   .nav-links.mobile a.nav-current--exact {
+    opacity: 0.55;
     pointer-events: none;
     cursor: default;
   }

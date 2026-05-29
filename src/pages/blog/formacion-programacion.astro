@@ -55,6 +55,23 @@ const breadcrumbSchema = {
     { "@type": "ListItem", "position": 3, "name": "Formación en programación", "item": "https://www.pablogomezvillen.com/blog/formacion-programacion" },
   ],
 };
+
+const collectionPage = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "@id": "https://www.pablogomezvillen.com/blog/formacion-programacion",
+  "name": "Formación en programación — DAM, DAW e IA",
+  "description": "Mi trayectoria formativa como desarrollador: ciclo DAM, DAW, especialización en IA y Big Data, congreso SEOPlus y programa de emprendimiento EOI.",
+  "url": "https://www.pablogomezvillen.com/blog/formacion-programacion",
+  "inLanguage": "es-ES",
+  "author": { "@type": "Person", "@id": "https://www.pablogomezvillen.com/pablo-gomez-villen", "name": "Pablo Gómez Villén" },
+  "hasPart": allPosts.map(p => ({
+    "@type": "BlogPosting",
+    "@id": `https://www.pablogomezvillen.com/blog/${p.slug}`,
+    "url": `https://www.pablogomezvillen.com/blog/${p.slug}`,
+    "name": p.title,
+  })),
+};
 ---
 
 <Layout
@@ -67,7 +84,7 @@ const breadcrumbSchema = {
   alternateEn="https://www.pablogomezvillen.com/en/blog/programming-training"
   keywords="formación programación, DAM, DAW, IA Big Data, desarrollo web, ciclo formativo, programador granada"
   ogType="website"
-  jsonLd={[itemList, breadcrumbSchema]}
+  jsonLd={[collectionPage, itemList, breadcrumbSchema]}
 >
 
   <div id="view-pillar">

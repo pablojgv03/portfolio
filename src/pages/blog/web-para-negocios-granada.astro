@@ -73,6 +73,23 @@ const breadcrumbSchema = {
     { "@type": "ListItem", "position": 3, "name": "Web para negocios en Granada", "item": "https://www.pablogomezvillen.com/blog/web-para-negocios-granada" },
   ],
 };
+
+const collectionPage = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "@id": "https://www.pablogomezvillen.com/blog/web-para-negocios-granada",
+  "name": "Web para negocios en Granada — Guía completa 2025",
+  "description": "Todo lo que necesitas saber para tener una web profesional en Granada: precios reales, SEO local, diseño que convierte y mantenimiento.",
+  "url": "https://www.pablogomezvillen.com/blog/web-para-negocios-granada",
+  "inLanguage": "es-ES",
+  "author": { "@type": "Person", "@id": "https://www.pablogomezvillen.com/pablo-gomez-villen", "name": "Pablo Gómez Villén" },
+  "hasPart": allPosts.map(p => ({
+    "@type": "BlogPosting",
+    "@id": `https://www.pablogomezvillen.com/blog/${p.slug}`,
+    "url": `https://www.pablogomezvillen.com/blog/${p.slug}`,
+    "name": p.title,
+  })),
+};
 ---
 
 <Layout
@@ -85,7 +102,7 @@ const breadcrumbSchema = {
   alternateEn="https://www.pablogomezvillen.com/en/blog/web-for-businesses-granada"
   keywords="web para negocios granada, página web negocio local, desarrollo web granada, precio web granada, SEO local granada, programador freelance granada"
   ogType="website"
-  jsonLd={[itemList, breadcrumbSchema]}
+  jsonLd={[collectionPage, itemList, breadcrumbSchema]}
 >
 
   <div id="view-pillar">

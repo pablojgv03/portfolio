@@ -74,6 +74,23 @@ const breadcrumbSchema = {
     { "@type": "ListItem", "position": 3, "name": "Web for businesses in Granada", "item": "https://www.pablogomezvillen.com/en/blog/web-for-businesses-granada" },
   ],
 };
+
+const collectionPage = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "@id": "https://www.pablogomezvillen.com/en/blog/web-for-businesses-granada",
+  "name": "Website for businesses in Granada — Complete guide",
+  "description": "Everything you need to know to have a professional and effective website in Granada: real prices, local SEO, design that converts and maintenance.",
+  "url": "https://www.pablogomezvillen.com/en/blog/web-for-businesses-granada",
+  "inLanguage": "en-US",
+  "author": { "@type": "Person", "@id": "https://www.pablogomezvillen.com/pablo-gomez-villen", "name": "Pablo Gómez Villén" },
+  "hasPart": allPosts.map(p => ({
+    "@type": "BlogPosting",
+    "@id": `https://www.pablogomezvillen.com/en/blog/${p.slug}`,
+    "url": `https://www.pablogomezvillen.com/en/blog/${p.slug}`,
+    "name": p.title,
+  })),
+};
 ---
 
 <Layout
@@ -86,7 +103,7 @@ const breadcrumbSchema = {
   alternateEs="https://www.pablogomezvillen.com/blog/web-para-negocios-granada"
   keywords="website for businesses granada, local business website, web development granada, website price granada, local SEO granada, freelance developer granada"
   ogType="website"
-  jsonLd={[itemList, breadcrumbSchema]}
+  jsonLd={[collectionPage, itemList, breadcrumbSchema]}
 >
 
   <div id="view-pillar">

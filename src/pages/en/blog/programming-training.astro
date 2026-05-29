@@ -56,6 +56,23 @@ const breadcrumbSchema = {
     { "@type": "ListItem", "position": 3, "name": "Programming training", "item": "https://www.pablogomezvillen.com/en/blog/programming-training" },
   ],
 };
+
+const collectionPage = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "@id": "https://www.pablogomezvillen.com/en/blog/programming-training",
+  "name": "Programming Training — DAM, DAW and AI",
+  "description": "My educational path as a developer: DAM cycle, DAW, AI and Big Data specialization, SEOPlus congress and EOI entrepreneurship programme.",
+  "url": "https://www.pablogomezvillen.com/en/blog/programming-training",
+  "inLanguage": "en-US",
+  "author": { "@type": "Person", "@id": "https://www.pablogomezvillen.com/pablo-gomez-villen", "name": "Pablo Gómez Villén" },
+  "hasPart": allPosts.map(p => ({
+    "@type": "BlogPosting",
+    "@id": `https://www.pablogomezvillen.com/en/blog/${p.slug}`,
+    "url": `https://www.pablogomezvillen.com/en/blog/${p.slug}`,
+    "name": p.title,
+  })),
+};
 ---
 
 <Layout
@@ -68,7 +85,7 @@ const breadcrumbSchema = {
   alternateEs="https://www.pablogomezvillen.com/blog/formacion-programacion"
   keywords="programming training, DAM, DAW, AI Big Data, web development, developer education, granada developer"
   ogType="website"
-  jsonLd={[itemList, breadcrumbSchema]}
+  jsonLd={[collectionPage, itemList, breadcrumbSchema]}
 >
 
   <div id="view-pillar">

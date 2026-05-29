@@ -343,6 +343,18 @@ body {
     font-weight: 700;
   }
 
+  .nav-links.mobile a.nav-current::before {
+    content: '';
+    position: absolute;
+    left: -14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 6px;
+    background: #ffce00;
+    border-radius: 50%;
+  }
+
   .nav-links.mobile a.nav-current--exact {
     opacity: 0.55;
     pointer-events: none;

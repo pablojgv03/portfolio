@@ -90,7 +90,7 @@ const clusterEn = cluster ? {
   pillarUrl: cluster.enPillarUrl,
 } : null;
 
-const catClass = postEs.category === 'Formación' ? 'cat-formation' : 'cat-info';
+const catClass = postEs.category === 'Formación' ? 'cat-formation' : postEs.category === 'Para negocios' ? 'cat-business' : 'cat-info';
 const tagsHtml = (postEs.tags || []).map(t => `<span>${t}</span>`).join('');
 
 function formatDate(dateStr, lang = 'es') {
@@ -401,7 +401,7 @@ const breadcrumbSchema = {
                 </div>
               )}
               <div class="blog-related-card-body">
-                <span class={`blog-related-cat ${p.category === 'Formación' ? 'cat-formation' : 'cat-info'}`} data-rc={i}>{p.category}</span>
+                <span class={`blog-related-cat ${p.category === 'Formación' ? 'cat-formation' : p.category === 'Para negocios' ? 'cat-business' : 'cat-info'}`} data-rc={i}>{p.category}</span>
                 <h3 class="blog-related-card-title" data-rt={i}>{p.title}</h3>
                 <span class="blog-related-date" data-rd={i}>{formatDate(p.date)}</span>
               </div>
@@ -435,7 +435,7 @@ const breadcrumbSchema = {
 
     const catEl = document.getElementById('blog-category');
     catEl.textContent = postEn.category || '';
-    catEl.className   = `blog-category-badge ${isFormationEn ? 'cat-formation' : 'cat-info'}`;
+    catEl.className   = `blog-category-badge ${isFormationEn ? 'cat-formation' : postEn.category === 'For businesses' ? 'cat-business' : 'cat-info'}`;
 
     document.getElementById('blog-post-title').textContent    = postEn.title;
     document.getElementById('blog-post-subtitle').textContent = postEn.subtitle || '';
@@ -501,7 +501,7 @@ const breadcrumbSchema = {
       const dateEl  = document.querySelector(`[data-rd="${i}"]`);
       if (catEl) {
         catEl.textContent = p.category || '';
-        catEl.className   = `blog-related-cat ${p.category === 'Education' ? 'cat-formation' : 'cat-info'}`;
+        catEl.className   = `blog-related-cat ${p.category === 'Education' ? 'cat-formation' : p.category === 'For businesses' ? 'cat-business' : 'cat-info'}`;
       }
       if (titleEl) titleEl.textContent = p.title || '';
       if (dateEl)  dateEl.textContent  = fmtDate(p.date || '', 'en');

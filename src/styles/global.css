@@ -1918,6 +1918,7 @@ body:has(.sm-page) footer p {
 
 .blog-card:has(.cat-formation) { border-top: 3px solid #ffce00; }
 .blog-card:has(.cat-info)      { border-top: 3px solid #0d9488; }
+.blog-card:has(.cat-business)  { border-top: 3px solid #ef4444; }
 
 .blog-card:hover {
   transform: translateY(-5px);
@@ -2061,6 +2062,11 @@ body:has(.sm-page) footer p {
 
 .blog-category-badge.cat-info {
   background: #17c99a;
+  color: #fff;
+}
+
+.blog-category-badge.cat-business {
+  background: #ef4444;
   color: #fff;
 }
 
@@ -2716,6 +2722,7 @@ body:has(.sm-page) footer p {
 }
 .featured-card:has(.cat-formation) { border-top: 3px solid #ffce00; }
 .featured-card:has(.cat-info)      { border-top: 3px solid #0d9488; }
+.featured-card:has(.cat-business)  { border-top: 3px solid #ef4444; }
 
 .featured-card:hover {
   border-color: #1e3c72;
@@ -2853,6 +2860,7 @@ body:has(.sm-page) footer p {
 }
 .blog-related-card:has(.cat-formation) { border-top: 3px solid #ffce00; }
 .blog-related-card:has(.cat-info)      { border-top: 3px solid #0d9488; }
+.blog-related-card:has(.cat-business)  { border-top: 3px solid #ef4444; }
 
 .blog-related-card:hover {
   border-color: #1e3c72;

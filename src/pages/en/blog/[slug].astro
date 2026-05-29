@@ -60,7 +60,7 @@ const clusterSiblings = cluster
       .map(s => ({ slug: s, title: enData.blog[s].title }))
   : [];
 
-const catClass = postEn.category === 'Education' ? 'cat-formation' : 'cat-info';
+const catClass = postEn.category === 'Education' ? 'cat-formation' : postEn.category === 'For businesses' ? 'cat-business' : 'cat-info';
 const tagsHtml = (postEn.tags || []).map(t => `<span>${t}</span>`).join('');
 
 function formatDate(dateStr) {
@@ -359,7 +359,7 @@ const breadcrumbSchema = {
                 </div>
               )}
               <div class="blog-related-card-body">
-                <span class={`blog-related-cat ${p.category === 'Education' ? 'cat-formation' : 'cat-info'}`}>{p.category}</span>
+                <span class={`blog-related-cat ${p.category === 'Education' ? 'cat-formation' : p.category === 'For businesses' ? 'cat-business' : 'cat-info'}`}>{p.category}</span>
                 <h3 class="blog-related-card-title">{p.title}</h3>
                 <span class="blog-related-date">{formatDate(esData.blog[p.slug]?.date)}</span>
               </div>

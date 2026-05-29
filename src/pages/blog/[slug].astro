@@ -335,7 +335,7 @@ const breadcrumbSchema = {
           <p class="cluster-nav-siblings-label" id="cluster-siblings-label">En esta guía:</p>
           <div class="cluster-nav-items">
             {clusterSiblings.map((s, i) => (
-              <a href={`/blog/${s.slug}`} class="cluster-nav-item" data-ci={i}>{s.title}</a>
+              <a href={`/blog/${s.slug}`} class="cluster-nav-item" data-ci={i}><span class="cluster-nav-item-text">{s.title}</span></a>
             ))}
           </div>
         </nav>
@@ -521,7 +521,7 @@ const breadcrumbSchema = {
       if (clusterPillarLinkEl) clusterPillarLinkEl.href = clusterEn.pillarUrl;
       if (clusterSiblingsLabelEl) clusterSiblingsLabelEl.textContent = 'In this guide:';
       (clusterSiblingsEn || []).forEach((s, i) => {
-        const el = document.querySelector(`.cluster-nav-item[data-ci="${i}"]`);
+        const el = document.querySelector(`.cluster-nav-item[data-ci="${i}"] .cluster-nav-item-text`);
         if (el && s.title) el.textContent = s.title;
       });
     }

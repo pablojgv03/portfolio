@@ -294,7 +294,7 @@ const breadcrumbSchema = {
           <p class="cluster-nav-siblings-label">In this guide:</p>
           <div class="cluster-nav-items">
             {clusterSiblings.map((s) => (
-              <a href={`/en/blog/${s.slug}`} class="cluster-nav-item">{s.title}</a>
+              <a href={`/en/blog/${s.slug}`} class="cluster-nav-item"><span class="cluster-nav-item-text">{s.title}</span></a>
             ))}
           </div>
         </nav>

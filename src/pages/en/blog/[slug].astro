@@ -13,6 +13,44 @@ const { slug } = Astro.params;
 const postEn = enData.blog[slug];
 const postEs = esData.blog[slug];
 
+// ─── Topic cluster definitions (EN) ─────────────────────────────────────────
+const CLUSTERS_EN: Record<string, {
+  label: string; pillarTitle: string; pillarUrl: string; siblings: string[];
+}> = {
+  'web-negocios': {
+    label: 'Complete guide',
+    pillarTitle: 'Web for businesses in Granada',
+    pillarUrl: '/en/blog/web-for-businesses-granada',
+    siblings: [
+      'web-restaurantes-granada','web-clinicas-granada','web-seo-abogados-granada',
+      'seo-local-peluquerias-granada','web-para-gimnasios-granada','web-para-fontaneros-granada',
+      'web-para-academias-granada','tienda-online-granada','precio-pagina-web-granada',
+      'diseno-web-que-convierte','errores-web-pymes-granada','mantenimiento-web-granada',
+      'como-es-trabajar-conmigo','freelance-programador-granada','landing-page-vs-pagina-web-negocio',
+      'app-movil-vs-web-granada','php-medida-vs-wordpress','automatizacion-negocios-granada',
+    ],
+  },
+  'seo-local': {
+    label: 'Complete guide',
+    pillarTitle: 'Local SEO in Granada',
+    pillarUrl: '/en/blog/seo-local-granada',
+    siblings: [
+      'google-my-business-granada','reputacion-online-granada','velocidad-web-seo-granada',
+      'lighthouse-100-negocio-local','kit-digital-granada-pagina-web','google-ads-vs-seo-granada',
+    ],
+  },
+};
+
+const clusterKey = Object.keys(CLUSTERS_EN).find(k => CLUSTERS_EN[k].siblings.includes(slug));
+const cluster = clusterKey ? CLUSTERS_EN[clusterKey] : null;
+
+const clusterSiblings = cluster
+  ? cluster.siblings
+      .filter(s => s !== slug && enData.blog?.[s]?.content && !esData.blog[s]?.hidden)
+      .slice(0, 6)
+      .map(s => ({ slug: s, title: enData.blog[s].title }))
+  : [];
+
 const catClass = postEn.category === 'Education' ? 'cat-formation' : 'cat-info';
 const tagsHtml = (postEn.tags || []).map(t => `<span>${t}</span>`).join('');
 
@@ -230,6 +268,27 @@ const breadcrumbSchema = {
               <li><a href={`#${id}`}>{text}</a></li>
             ))}
           </ol>
+        </nav>
+      )}
+      {cluster && clusterSiblings.length > 0 && (
+        <nav class="cluster-nav" aria-label={`Articles in this guide: ${cluster.pillarTitle}`}>
+          <div class="cluster-nav-header">
+            <span class="cluster-nav-icon" aria-hidden="true">🗺️</span>
+            <div>
+              <span class="cluster-nav-label">{cluster.label}</span>
+              <a href={cluster.pillarUrl} class="cluster-nav-pillar-link">
+                <span>{cluster.pillarTitle}</span>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </a>
+            </div>
+          </div>
+          <div class="cluster-nav-divider" aria-hidden="true"></div>
+          <p class="cluster-nav-siblings-label">In this guide:</p>
+          <div class="cluster-nav-items">
+            {clusterSiblings.map((s) => (
+              <a href={`/en/blog/${s.slug}`} class="cluster-nav-item">{s.title}</a>
+            ))}
+          </div>
         </nav>
       )}
       <div class="blog-article-body" set:html={contentEn}></div>

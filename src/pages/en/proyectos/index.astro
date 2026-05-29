@@ -104,6 +104,7 @@ const badgeEmojis: Record<string, string> = {
             (card as HTMLElement).style.display = show ? '' : 'none';
             if (show) visible++;
           });
+          document.getElementById('lista-proyectos')?.classList.toggle('projects--single', visible === 1);
           updateCount(visible, cards.length);
         });
       });

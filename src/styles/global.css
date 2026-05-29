@@ -2321,6 +2321,41 @@ body:has(.sm-page) footer p {
   line-height: 1.5;
 }
 
+.blog-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+  font-size: 0.9rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+}
+.blog-table thead {
+  background: #2563eb;
+  color: #fff;
+}
+.blog-table thead th {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.82rem;
+  letter-spacing: 0.03em;
+}
+.blog-table tbody tr:nth-child(even) { background: #f8fafc; }
+.blog-table tbody tr:nth-child(odd)  { background: #fff; }
+.blog-table tbody tr:hover           { background: #eff6ff; }
+.blog-table td {
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid #e2e8f0;
+  vertical-align: top;
+  line-height: 1.5;
+}
+:global(.dark) .blog-table { border-color: #334155; }
+:global(.dark) .blog-table tbody tr:nth-child(even) { background: #1e293b; }
+:global(.dark) .blog-table tbody tr:nth-child(odd)  { background: #0f172a; }
+:global(.dark) .blog-table tbody tr:hover           { background: #1e3050; }
+:global(.dark) .blog-table td { border-color: #334155; color: #cbd5e1; }
+
 .blog-callout {
   background: linear-gradient(135deg, #1e3c72, #2a5298);
   color: #fff;

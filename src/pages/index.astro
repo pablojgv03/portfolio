@@ -20,7 +20,8 @@ const featuredEs = Object.entries(esData.blog)
 const personSchema = {
   "@context": "https://schema.org",
   "@type": "Person",
-  "name": "Pablo Gómez",
+  "@id": "https://www.pablogomezvillen.com/pablo-gomez-villen",
+  "name": "Pablo Gómez Villén",
   "jobTitle": "Full Stack Developer",
   "url": "https://www.pablogomezvillen.com",
   "email": "pablogomezvillen@gmail.com",
@@ -29,9 +30,41 @@ const personSchema = {
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "Granada",
+    "addressRegion": "Andalucía",
     "addressCountry": "ES"
   },
-  "sameAs": ["https://www.linkedin.com/in/pablo-gomez-villen"]
+  "knowsAbout": [
+    "Desarrollo web", "SEO local", "PHP", "Laravel", "JavaScript",
+    "MySQL", "Full Stack Development", "Google Business Profile",
+    "Inteligencia Artificial", "Big Data", "APIs REST"
+  ],
+  "alumniOf": [
+    {
+      "@type": "EducationalOrganization",
+      "name": "IES Francisco Ayala",
+      "description": "Técnico Superior en Desarrollo de Aplicaciones Multiplataforma (DAM)"
+    },
+    {
+      "@type": "EducationalOrganization",
+      "name": "Campus Net Manyanet Les Corts",
+      "description": "Especialización en Inteligencia Artificial y Big Data"
+    },
+    {
+      "@type": "EducationalOrganization",
+      "name": "iLERNA",
+      "description": "Técnico Superior en Desarrollo de Aplicaciones Web (DAW, en curso)"
+    }
+  ],
+  "hasOccupation": {
+    "@type": "Occupation",
+    "name": "Full Stack Developer",
+    "occupationLocation": { "@type": "City", "name": "Granada" },
+    "skills": "PHP, Laravel, JavaScript, MySQL, Astro, SEO local"
+  },
+  "sameAs": [
+    "https://www.linkedin.com/in/pablo-gomez-villen",
+    "https://www.pablogomezvillen.com/pablo-gomez-villen"
+  ]
 };
 
 const websiteSchema = {

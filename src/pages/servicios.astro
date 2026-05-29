@@ -157,14 +157,59 @@ const localBusinessSchema = {
   "url": "https://www.pablogomezvillen.com",
   "telephone": "+34622400727",
   "email": "pablogomezvillen@gmail.com",
+  "priceRange": "€€",
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "Granada",
     "addressRegion": "Andalucía",
     "addressCountry": "ES"
   },
-  "areaServed": ["Granada", "Andalucía", "España"],
-  "serviceType": ["Diseño web", "SEO local", "Desarrollo Full Stack"]
+  "areaServed": [
+    { "@type": "City", "name": "Granada" },
+    { "@type": "AdministrativeArea", "name": "Andalucía" },
+    { "@type": "Country", "name": "España" }
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Servicios de desarrollo web y SEO",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Página Web Profesional",
+          "description": "Web moderna, rápida y adaptada a móvil, optimizada para Google"
+        },
+        "priceSpecification": { "@type": "PriceSpecification", "minPrice": 350, "priceCurrency": "EUR" }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "SEO Local y Google Business",
+          "description": "Optimización para aparecer en Google Maps y búsqueda local en Granada"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Mantenimiento Web",
+          "description": "Actualizaciones de seguridad, copias de seguridad y soporte mensual"
+        }
+      }
+    ]
+  }
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(({ q, a }) => ({
+    "@type": "Question",
+    "name": q,
+    "acceptedAnswer": { "@type": "Answer", "text": a }
+  }))
 };
 ---
 
@@ -177,7 +222,7 @@ const localBusinessSchema = {
   alternateEn="https://www.pablogomezvillen.com/en/servicios"
   showHero={false}
   keywords="página web negocios locales Granada, diseño web Granada, SEO local Granada, Google Business Granada, web para restaurantes, web para clínicas"
-  jsonLd={[localBusinessSchema]}
+  jsonLd={[localBusinessSchema, faqSchema]}
   footerText="© 2026 Pablo Gómez Villén · Desarrollo Web y SEO Local en Granada"
 >
 

@@ -13,6 +13,70 @@ const { slug } = Astro.params;
 const postEs = esData.blog[slug];
 const postEn = enData.blog?.[slug];
 
+// ─── Topic cluster definitions ───────────────────────────────────────────────
+const CLUSTERS: Record<string, {
+  label: string; enLabel: string;
+  pillarTitle: string; enPillarTitle: string;
+  pillarUrl: string; enPillarUrl: string;
+  pillarId: string;
+  siblings: string[];
+}> = {
+  'web-negocios': {
+    label: 'Guía completa',
+    enLabel: 'Complete guide',
+    pillarTitle: 'Web para negocios en Granada',
+    enPillarTitle: 'Web for businesses in Granada',
+    pillarUrl: '/blog/web-para-negocios-granada',
+    enPillarUrl: '/en/blog/web-for-businesses-granada',
+    pillarId: 'https://www.pablogomezvillen.com/blog/web-para-negocios-granada',
+    siblings: [
+      'web-restaurantes-granada','web-clinicas-granada','web-seo-abogados-granada',
+      'seo-local-peluquerias-granada','web-para-gimnasios-granada','web-para-fontaneros-granada',
+      'web-para-academias-granada','tienda-online-granada','precio-pagina-web-granada',
+      'diseno-web-que-convierte','errores-web-pymes-granada','mantenimiento-web-granada',
+      'como-es-trabajar-conmigo','freelance-programador-granada','landing-page-vs-pagina-web-negocio',
+      'app-movil-vs-web-granada','php-medida-vs-wordpress','automatizacion-negocios-granada',
+    ],
+  },
+  'seo-local': {
+    label: 'Guía completa',
+    enLabel: 'Complete guide',
+    pillarTitle: 'SEO local en Granada',
+    enPillarTitle: 'Local SEO in Granada',
+    pillarUrl: '/blog/seo-local-granada',
+    enPillarUrl: '/en/blog/seo-local-granada',
+    pillarId: 'https://www.pablogomezvillen.com/blog/seo-local-granada',
+    siblings: [
+      'google-my-business-granada','reputacion-online-granada','velocidad-web-seo-granada',
+      'lighthouse-100-negocio-local','kit-digital-granada-pagina-web','google-ads-vs-seo-granada',
+    ],
+  },
+};
+
+const clusterKey = Object.keys(CLUSTERS).find(k => CLUSTERS[k].siblings.includes(slug));
+const cluster = clusterKey ? CLUSTERS[clusterKey] : null;
+
+// Sibling articles to show in widget (exclude current, max 6, only published)
+const clusterSiblings = cluster
+  ? cluster.siblings
+      .filter(s => s !== slug && esData.blog[s] && !esData.blog[s].hidden)
+      .slice(0, 6)
+      .map(s => ({ slug: s, title: esData.blog[s].title }))
+  : [];
+
+const clusterSiblingsEn = cluster
+  ? cluster.siblings
+      .filter(s => s !== slug && esData.blog[s] && !esData.blog[s].hidden)
+      .slice(0, 6)
+      .map(s => ({ slug: s, title: enData.blog?.[s]?.title || esData.blog[s].title }))
+  : [];
+
+const clusterEn = cluster ? {
+  label: cluster.enLabel,
+  pillarTitle: cluster.enPillarTitle,
+  pillarUrl: cluster.enPillarUrl,
+} : null;
+
 const catClass = postEs.category === 'Formación' ? 'cat-formation' : 'cat-info';
 const tagsHtml = (postEs.tags || []).map(t => `<span>${t}</span>`).join('');
 
@@ -243,6 +307,27 @@ const breadcrumbSchema = {
           </ol>
         </nav>
       )}
+      {cluster && clusterSiblings.length > 0 && (
+        <nav class="cluster-nav" id="cluster-nav" aria-label={`Artículos de la guía: ${cluster.pillarTitle}`}>
+          <div class="cluster-nav-header">
+            <span class="cluster-nav-icon" aria-hidden="true">🗺️</span>
+            <div>
+              <span class="cluster-nav-label" id="cluster-nav-label">{cluster.label}</span>
+              <a href={cluster.pillarUrl} class="cluster-nav-pillar-link" id="cluster-nav-pillar">
+                <span id="cluster-nav-pillar-text">{cluster.pillarTitle}</span>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </a>
+            </div>
+          </div>
+          <div class="cluster-nav-divider" aria-hidden="true"></div>
+          <p class="cluster-nav-siblings-label" id="cluster-siblings-label">En esta guía:</p>
+          <div class="cluster-nav-items">
+            {clusterSiblings.map((s, i) => (
+              <a href={`/blog/${s.slug}`} class="cluster-nav-item" data-ci={i}>{s.title}</a>
+            ))}
+          </div>
+        </nav>
+      )}
       <div class="blog-article-body" id="blog-content" set:html={contentEs}></div>
     </article>
 
@@ -311,7 +396,7 @@ const breadcrumbSchema = {
 
 </Layout>
 
-<script define:vars={{ postEn, relatedEn, tocEn, contentEn }}>
+<script define:vars={{ postEn, relatedEn, tocEn, contentEn, clusterEn, clusterSiblingsEn }}>
   function getLang() {
     const c = document.cookie.split('; ').find(r => r.startsWith('lang='));
     return c ? c.split('=')[1] : (localStorage.getItem('lang') || 'es');
@@ -405,6 +490,21 @@ const breadcrumbSchema = {
 
     if (postEn.tags) {
       document.getElementById('blog-post-tags').innerHTML = postEn.tags.map(t => `<span>${t}</span>`).join('');
+    }
+
+    if (clusterEn) {
+      const clusterLabelEl = document.getElementById('cluster-nav-label');
+      const clusterPillarTextEl = document.getElementById('cluster-nav-pillar-text');
+      const clusterPillarLinkEl = document.getElementById('cluster-nav-pillar');
+      const clusterSiblingsLabelEl = document.getElementById('cluster-siblings-label');
+      if (clusterLabelEl) clusterLabelEl.textContent = clusterEn.label;
+      if (clusterPillarTextEl) clusterPillarTextEl.textContent = clusterEn.pillarTitle;
+      if (clusterPillarLinkEl) clusterPillarLinkEl.href = clusterEn.pillarUrl;
+      if (clusterSiblingsLabelEl) clusterSiblingsLabelEl.textContent = 'In this guide:';
+      (clusterSiblingsEn || []).forEach((s, i) => {
+        const el = document.querySelector(`.cluster-nav-item[data-ci="${i}"]`);
+        if (el && s.title) el.textContent = s.title;
+      });
     }
 
     // Author bio — translate to EN

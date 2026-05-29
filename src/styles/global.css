@@ -1858,12 +1858,12 @@ body:has(.sm-page) footer p {
 .blog-cat-btn[data-cat="Informativo"].active { background: #0d9488; border-color: #0a7055; color: #fff; }
 
 .blog-cat-btn[data-cat="Para negocios"] {
-  background: #fff1f0;
-  border-color: #fca5a5;
-  color: #b91c1c;
+  background: #ede9fe;
+  border-color: #c4b5fd;
+  color: #5b21b6;
 }
-.blog-cat-btn[data-cat="Para negocios"]:hover { background: #ffe0de; border-color: #ef4444; color: #991b1b; }
-.blog-cat-btn[data-cat="Para negocios"].active { background: #ef4444; border-color: #dc2626; color: #fff; }
+.blog-cat-btn[data-cat="Para negocios"]:hover { background: #ddd6fe; border-color: #8b5cf6; color: #4c1d95; }
+.blog-cat-btn[data-cat="Para negocios"].active { background: #5b21b6; border-color: #4c1d95; color: #fff; }
 
 /* Cards grid */
 .blog-grid {
@@ -1918,7 +1918,7 @@ body:has(.sm-page) footer p {
 
 .blog-card:has(.cat-formation) { border-top: 3px solid #ffce00; }
 .blog-card:has(.cat-info)      { border-top: 3px solid #0d9488; }
-.blog-card:has(.cat-business)  { border-top: 3px solid #ef4444; }
+.blog-card:has(.cat-business)  { border-top: 3px solid #8b5cf6; }
 
 .blog-card:hover {
   transform: translateY(-5px);
@@ -2066,7 +2066,7 @@ body:has(.sm-page) footer p {
 }
 
 .blog-category-badge.cat-business {
-  background: #ef4444;
+  background: #5b21b6;
   color: #fff;
 }
 
@@ -2722,7 +2722,7 @@ body:has(.sm-page) footer p {
 }
 .featured-card:has(.cat-formation) { border-top: 3px solid #ffce00; }
 .featured-card:has(.cat-info)      { border-top: 3px solid #0d9488; }
-.featured-card:has(.cat-business)  { border-top: 3px solid #ef4444; }
+.featured-card:has(.cat-business)  { border-top: 3px solid #8b5cf6; }
 
 .featured-card:hover {
   border-color: #1e3c72;
@@ -2860,7 +2860,7 @@ body:has(.sm-page) footer p {
 }
 .blog-related-card:has(.cat-formation) { border-top: 3px solid #ffce00; }
 .blog-related-card:has(.cat-info)      { border-top: 3px solid #0d9488; }
-.blog-related-card:has(.cat-business)  { border-top: 3px solid #ef4444; }
+.blog-related-card:has(.cat-business)  { border-top: 3px solid #8b5cf6; }
 
 .blog-related-card:hover {
   border-color: #1e3c72;

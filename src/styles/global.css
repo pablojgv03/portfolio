@@ -1841,6 +1841,30 @@ body:has(.sm-page) footer p {
   color: #fff;
 }
 
+.blog-cat-btn[data-cat="Formación"] {
+  background: #fffbe6;
+  border-color: #ffe58f;
+  color: #7a5200;
+}
+.blog-cat-btn[data-cat="Formación"]:hover { background: #fff3b0; border-color: #f0c000; color: #5a3800; }
+.blog-cat-btn[data-cat="Formación"].active { background: #f0c000; border-color: #d4a017; color: #3d2200; }
+
+.blog-cat-btn[data-cat="Informativo"] {
+  background: #e6f7f2;
+  border-color: #9de0cc;
+  color: #0a7055;
+}
+.blog-cat-btn[data-cat="Informativo"]:hover { background: #c8f0e4; border-color: #0d9488; color: #075e49; }
+.blog-cat-btn[data-cat="Informativo"].active { background: #0d9488; border-color: #0a7055; color: #fff; }
+
+.blog-cat-btn[data-cat="Para negocios"] {
+  background: #fff1f0;
+  border-color: #fca5a5;
+  color: #b91c1c;
+}
+.blog-cat-btn[data-cat="Para negocios"]:hover { background: #ffe0de; border-color: #ef4444; color: #991b1b; }
+.blog-cat-btn[data-cat="Para negocios"].active { background: #ef4444; border-color: #dc2626; color: #fff; }
+
 /* Cards grid */
 .blog-grid {
   display: grid;

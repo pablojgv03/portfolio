@@ -184,6 +184,7 @@ const posts = Object.entries(esData.blog)
     const query = norm(curSearch.trim());
 
     let visible = allCards.filter(card => {
+      if (card.dataset.guide === 'true' && !curCat) return false;
       if (curCat) {
         const cats = JSON.parse(card.dataset.cats || '[]');
         if (!cats.includes(curCat)) return false;

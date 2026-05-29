@@ -39,6 +39,15 @@ const CLUSTERS_EN: Record<string, {
       'lighthouse-100-negocio-local','kit-digital-granada-pagina-web','google-ads-vs-seo-granada',
     ],
   },
+  'formacion': {
+    label: 'Complete guide',
+    pillarTitle: 'Programming Training — DAM, DAW and AI',
+    pillarUrl: '/en/blog/programming-training',
+    siblings: [
+      'daw','dam','ia-bigdata',
+      'desafio-joven-emprendedor-eoi','seoplus-2023-congreso-posicionamiento-web',
+    ],
+  },
 };
 
 const clusterKey = Object.keys(CLUSTERS_EN).find(k => CLUSTERS_EN[k].siblings.includes(slug));
@@ -170,11 +179,10 @@ const blogPosting = {
   "image": postEn.image ? `https://www.pablogomezvillen.com${postEn.image}` : "https://www.pablogomezvillen.com/img/opengraph.png",
   "keywords": (postEn.tags || []).join(', '),
   "inLanguage": "en-US",
-  "isPartOf": {
-    "@type": "Blog",
-    "@id": "https://www.pablogomezvillen.com/en/blog",
-    "name": "Blog — Pablo Gómez"
-  },
+  "isPartOf": cluster ? [
+    { "@type": "Blog", "@id": "https://www.pablogomezvillen.com/en/blog", "name": "Blog — Pablo Gómez" },
+    { "@type": "WebPage", "@id": `https://www.pablogomezvillen.com${cluster.pillarUrl}`, "name": cluster.pillarTitle, "url": `https://www.pablogomezvillen.com${cluster.pillarUrl}` }
+  ] : { "@type": "Blog", "@id": "https://www.pablogomezvillen.com/en/blog", "name": "Blog — Pablo Gómez" },
   "speakable": {
     "@type": "SpeakableSpecification",
     "cssSelector": [".blog-quick-answer", ".blog-intro"]

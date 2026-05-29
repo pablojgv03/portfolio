@@ -395,9 +395,16 @@ const breadcrumbSchema = {
         <div class="blog-related-grid">
           {relatedEs.map((p, i) => (
             <a href={`/blog/${p.slug}`} class="blog-related-card" data-ri={i}>
-              <span class={`blog-related-cat ${p.category === 'Formación' ? 'cat-formation' : 'cat-info'}`} data-rc={i}>{p.category}</span>
-              <h3 class="blog-related-card-title" data-rt={i}>{p.title}</h3>
-              <span class="blog-related-date" data-rd={i}>{formatDate(p.date)}</span>
+              {p.image && (
+                <div class="blog-related-thumb">
+                  <img src={p.image} alt={p.imageAlt || p.title} width="280" height="147" loading="lazy" decoding="async" />
+                </div>
+              )}
+              <div class="blog-related-card-body">
+                <span class={`blog-related-cat ${p.category === 'Formación' ? 'cat-formation' : 'cat-info'}`} data-rc={i}>{p.category}</span>
+                <h3 class="blog-related-card-title" data-rt={i}>{p.title}</h3>
+                <span class="blog-related-date" data-rd={i}>{formatDate(p.date)}</span>
+              </div>
             </a>
           ))}
         </div>

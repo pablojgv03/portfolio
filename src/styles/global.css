@@ -1865,6 +1865,30 @@ body:has(.sm-page) footer p {
 .blog-cat-btn[data-cat="Para negocios"]:hover { background: #ddd6fe; border-color: #8b5cf6; color: #4c1d95; }
 .blog-cat-btn[data-cat="Para negocios"].active { background: #5b21b6; border-color: #4c1d95; color: #fff; }
 
+.blog-cat-btn[data-cat="Education"] {
+  background: #fffbe6;
+  border-color: #ffe58f;
+  color: #7a5200;
+}
+.blog-cat-btn[data-cat="Education"]:hover { background: #fff3b0; border-color: #f0c000; color: #5a3800; }
+.blog-cat-btn[data-cat="Education"].active { background: #f0c000; border-color: #d4a017; color: #3d2200; }
+
+.blog-cat-btn[data-cat="Informative"] {
+  background: #e6f7f2;
+  border-color: #9de0cc;
+  color: #0a7055;
+}
+.blog-cat-btn[data-cat="Informative"]:hover { background: #c8f0e4; border-color: #0d9488; color: #075e49; }
+.blog-cat-btn[data-cat="Informative"].active { background: #0d9488; border-color: #0a7055; color: #fff; }
+
+.blog-cat-btn[data-cat="For businesses"] {
+  background: #ede9fe;
+  border-color: #c4b5fd;
+  color: #5b21b6;
+}
+.blog-cat-btn[data-cat="For businesses"]:hover { background: #ddd6fe; border-color: #8b5cf6; color: #4c1d95; }
+.blog-cat-btn[data-cat="For businesses"].active { background: #5b21b6; border-color: #4c1d95; color: #fff; }
+
 /* Cards grid */
 .blog-grid {
   display: grid;

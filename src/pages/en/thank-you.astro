@@ -1,0 +1,168 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout
+  title="Message received — Pablo Gómez"
+  lang="en"
+  description="Your message has been received. I'll reply within 24 hours."
+  canonical="https://www.pablogomezvillen.com/en/thank-you"
+  alternateEs="https://www.pablogomezvillen.com/gracias"
+  alternateEn="https://www.pablogomezvillen.com/en/thank-you"
+  showHero={false}
+  noindex={true}
+>
+  <div class="gracias-wrap">
+
+    <div class="gracias-icon-wrap" aria-hidden="true">
+      <svg class="gracias-svg" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle class="gracias-circle" cx="40" cy="40" r="38" stroke="url(#g1)" stroke-width="3" stroke-linecap="round"/>
+        <polyline class="gracias-check" points="18 42 30 55 62 25" stroke="url(#g2)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        <defs>
+          <linearGradient id="g1" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#2563eb"/>
+            <stop offset="100%" stop-color="#1e3c72"/>
+          </linearGradient>
+          <linearGradient id="g2" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#2563eb"/>
+            <stop offset="100%" stop-color="#1e3c72"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+
+    <h1>Message received!</h1>
+    <p class="gracias-sub">
+      Thanks for reaching out. <strong>I'll reply within 24 hours</strong> on working days.
+    </p>
+
+    <div class="gracias-steps">
+      <p>While you wait, you might be interested in:</p>
+      <ul>
+        <li><a href="/en/servicios#precios">View pricing</a></li>
+        <li><a href="/en/proyectos">Browse my past projects</a></li>
+        <li>
+          Or if it's urgent, message me on{' '}
+          <a href="https://wa.me/34622400727?text=Hi%20Pablo%2C%20I%20just%20sent%20you%20a%20message%20through%20the%20form" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+        </li>
+      </ul>
+    </div>
+
+    <a href="/en/" class="btn-primary">Back to home</a>
+  </div>
+</Layout>
+
+<style>
+  .gracias-wrap {
+    max-width: 540px;
+    margin: 80px auto;
+    padding: 48px 32px;
+    text-align: center;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 24px rgba(0,0,0,0.08);
+  }
+
+  .gracias-icon-wrap {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 24px;
+  }
+
+  .gracias-svg {
+    width: 80px;
+    height: 80px;
+  }
+
+  .gracias-circle {
+    stroke-dasharray: 239;
+    stroke-dashoffset: 239;
+    animation: draw-circle 0.6s ease forwards;
+  }
+
+  .gracias-check {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    animation: draw-check 0.4s ease 0.5s forwards;
+  }
+
+  @keyframes draw-circle {
+    to { stroke-dashoffset: 0; }
+  }
+
+  @keyframes draw-check {
+    to { stroke-dashoffset: 0; }
+  }
+
+  .gracias-wrap h1 {
+    font-size: 2rem;
+    color: #1e3c72;
+    margin-bottom: 12px;
+    animation: fade-up 0.4s ease 0.8s both;
+  }
+
+  .gracias-sub {
+    font-size: 1.05rem;
+    color: #444;
+    margin-bottom: 32px;
+    line-height: 1.6;
+    animation: fade-up 0.4s ease 0.95s both;
+  }
+
+  .gracias-steps {
+    background: #f0f7ff;
+    border-radius: 10px;
+    padding: 20px 24px;
+    text-align: left;
+    margin-bottom: 32px;
+    animation: fade-up 0.4s ease 1.1s both;
+  }
+
+  .gracias-steps p {
+    font-weight: 600;
+    color: #1e3c72;
+    margin-bottom: 10px;
+  }
+
+  .gracias-steps ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .gracias-steps li {
+    color: #444;
+    font-size: 0.95rem;
+  }
+
+  .gracias-steps li::before {
+    content: '→ ';
+    color: #2563eb;
+    font-weight: 700;
+  }
+
+  .gracias-steps a {
+    color: #2563eb;
+    text-decoration: underline;
+  }
+
+  .btn-primary {
+    animation: fade-up 0.4s ease 1.2s both;
+    display: inline-block;
+  }
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 600px) {
+    .gracias-wrap {
+      margin: 40px 16px;
+      padding: 32px 20px;
+    }
+  }
+</style>

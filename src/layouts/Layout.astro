@@ -119,7 +119,7 @@ const heroAvailability = isEN ? 'Available for work'   : 'Disponible para trabaj
     <header class="navbar">
       <div class="navbar-container">
         <!-- Logo -->
-        <a href="/" class="logo" aria-label="Ir al inicio">
+        <a href={`${basePath}/`} class="logo" aria-label={isEN ? 'Go to homepage' : 'Ir al inicio'}>
           <picture>
             <source srcset="/favicon.webp" type="image/webp">
             <img src="/favicon.png" alt="Pablo Gómez - Portfolio" width="32" height="32" />

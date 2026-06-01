@@ -15,6 +15,7 @@ const {
   ogImage = '/img/opengraph.png',
   ogType = 'website',
   ogArticleDate,
+  ogArticleModified,
   jsonLd,
   lcp,
   alternateEn,
@@ -99,7 +100,7 @@ const heroAvailability = isEN ? 'Available for work'   : 'Disponible para trabaj
     {canonical && <meta property="og:url" content={canonical}>}
     <meta property="og:image" content={ogImageAbsolute}>
     {ogType === 'article' && ogArticleDate && <meta property="article:published_time" content={ogArticleDate}>}
-    {ogType === 'article' && ogArticleDate && <meta property="article:modified_time" content={ogArticleDate}>}
+    {ogType === 'article' && (ogArticleModified || ogArticleDate) && <meta property="article:modified_time" content={ogArticleModified ?? ogArticleDate}>}
     {ogType === 'article' && <meta property="article:author" content="https://www.pablogomezvillen.com/pablo-gomez-villen">}
 
     <!-- Twitter Card -->

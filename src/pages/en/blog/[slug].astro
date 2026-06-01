@@ -211,6 +211,7 @@ const breadcrumbSchema = {
   keywords={(postEn.tags || []).join(', ')}
   ogType="article"
   ogArticleDate={postEs.date}
+  ogArticleModified={postEs.modified ?? postEs.date}
   ogImage={postEn.image || '/img/opengraph.png'}
   jsonLd={[blogPosting, breadcrumbSchema, ...(faqSchema ? [faqSchema] : [])]}
   lcp={postEn.image}

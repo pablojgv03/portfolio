@@ -3442,6 +3442,13 @@ body:has(.sm-page) footer p {
   margin-bottom: 20px;
 }
 
+.servicios-hero-local {
+  font-size: 0.95rem;
+  opacity: 0.88;
+  margin-top: 8px;
+  line-height: 1.6;
+}
+
 .servicios-hero h1 {
   font-size: clamp(1.9rem, 5vw, 2.8rem);
   font-weight: 800;

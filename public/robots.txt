@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /api/
 
-Sitemap: https://pablogomezvillen.com/sitemap-index.xml
+Sitemap: https://www.pablogomezvillen.com/sitemap-index.xml

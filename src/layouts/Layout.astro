@@ -20,6 +20,7 @@ const {
   alternateEn,
   alternateEs,
   footerText,
+  noindex = false,
 } = Astro.props;
 
 const isEN = lang === 'en';
@@ -70,7 +71,7 @@ const heroAvailability = isEN ? 'Available for work'   : 'Disponible para trabaj
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{title}</title>
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'}>
     <meta name="author" content="Pablo Gómez">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     {description && <meta name="description" content={description}>}

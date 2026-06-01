@@ -2295,7 +2295,10 @@ body:has(.sm-page) footer p {
 .blog-article {
   padding: 0 28px;
   max-width: 760px;
+  width: 100%;
+  min-width: 0;
   margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .blog-article-meta {

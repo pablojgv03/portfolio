@@ -219,6 +219,25 @@ const faqSchema = {
     "acceptedAnswer": { "@type": "Answer", "text": a }
   }))
 };
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Inicio",
+      "item": "https://www.pablogomezvillen.com"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Servicios de Desarrollo Web y SEO Local en Granada",
+      "item": "https://www.pablogomezvillen.com/servicios"
+    }
+  ]
+};
 ---
 
 <Layout
@@ -230,14 +249,15 @@ const faqSchema = {
   alternateEn="https://www.pablogomezvillen.com/en/servicios"
   showHero={false}
   keywords="página web negocios locales Granada, diseño web Granada, SEO local Granada, Google Business Granada, web para restaurantes, web para clínicas"
-  jsonLd={[localBusinessSchema, faqSchema]}
+  jsonLd={[localBusinessSchema, faqSchema, breadcrumbSchema]}
   footerText="© 2026 Pablo Gómez Villén · Desarrollo Web y SEO Local en Granada"
 >
 
   <!-- Hero -->
   <header class="servicios-hero">
     <span class="servicios-hero-eyebrow">🏪 Para negocios locales en Granada y toda España</span>
-    <h1>Tu negocio merece una web<br>que traiga clientes</h1>
+    <h1>Desarrollo Web y SEO Local en Granada</h1>
+    <p class="servicios-hero-sub">Tu negocio merece una web que traiga clientes</p>
     <p>
       Desarrollo páginas web profesionales, optimizadas para aparecer en Google
       y diseñadas para convertir visitas en llamadas y reservas.

@@ -3453,6 +3453,13 @@ body:has(.sm-page) footer p {
   font-size: clamp(1.9rem, 5vw, 2.8rem);
   font-weight: 800;
   line-height: 1.2;
+  margin-bottom: 10px;
+}
+
+.servicios-hero-sub {
+  font-size: clamp(1.15rem, 3vw, 1.45rem);
+  font-weight: 600;
+  color: rgba(255,255,255,0.92);
   margin-bottom: 16px;
 }
 

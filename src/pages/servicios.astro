@@ -476,6 +476,18 @@ const breadcrumbSchema = {
     });
 
     window.addEventListener('resize', function () { goTo(currentPos, false); });
+
+    // Click en card lateral → moverla al centro
+    track.addEventListener('click', function (e) {
+      var card = e.target.closest('.servicio-card');
+      if (!card || card.classList.contains('is-active')) return;
+      e.preventDefault();
+      var idx = allCards.indexOf(card);
+      if (idx === -1) return;
+      stopAuto();
+      goTo(idx);
+      startAuto();
+    });
   })();
   </script>
 

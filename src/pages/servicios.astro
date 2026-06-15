@@ -53,6 +53,36 @@ const servicios = [
     ctaTexto: "Ver planes",
     ctaHref: "/contacto?servicio=mantenimiento",
   },
+  {
+    icono: "📅",
+    titulo: "Sistema de Gestión de Citas",
+    descripcion: "Aplicación a medida para que tus clientes reserven online y tú controles tu agenda sin depender de plataformas externas con cuotas mensuales.",
+    badge: "A medida",
+    incluidos: [
+      "Reservas online 24/7",
+      "Panel de administración propio",
+      "Notificaciones automáticas por email",
+      "Sincronización con Google Calendar",
+      "Sin cuotas mensuales de terceros",
+    ],
+    ctaTexto: "Quiero gestionar mis citas",
+    ctaHref: "/contacto?servicio=citas",
+  },
+  {
+    icono: "📊",
+    titulo: "Analizador de Clientes",
+    descripcion: "Sabe exactamente de dónde vienen tus clientes — Google, redes sociales, tu web — y cuántos han repetido visita.",
+    badge: "Nuevo",
+    incluidos: [
+      "Origen del cliente (Google, redes, web...)",
+      "Detección de clientes recurrentes",
+      "Panel visual con estadísticas",
+      "Análisis por canal de captación",
+      "Exportación de informes",
+    ],
+    ctaTexto: "Quiero conocer a mis clientes",
+    ctaHref: "/contacto?servicio=analizador",
+  },
 ];
 
 const planes = [
@@ -96,6 +126,7 @@ const planes = [
       "Tienda online o reservas",
       "Integraciones API",
       "Dashboard de administración",
+      "Sistemas personalizados (gestión de clientes, citas...)",
       "Soporte prioritario 6 meses",
     ],
     ctaTexto: "Hablemos de tu proyecto",
@@ -258,34 +289,227 @@ const breadcrumbSchema = {
     <span class="servicios-hero-eyebrow">🏪 Para negocios locales en Granada y toda España</span>
     <h1>Desarrollo Web y SEO Local en Granada</h1>
     <p class="servicios-hero-sub">Tu negocio merece una web que traiga clientes</p>
-    <p>
-      Desarrollo páginas web profesionales, optimizadas para aparecer en Google
-      y diseñadas para convertir visitas en llamadas y reservas.
-    </p>
-    <p class="servicios-hero-local">
-      Basado en <strong>Granada</strong> — trabajo presencialmente en la ciudad y en remoto con negocios de toda España. Si buscas un desarrollador web o experto en SEO <strong>cerca de ti en Granada</strong>, estoy a tu disposición.
-    </p>
-    <a href="/contacto" class="btn btn-accent btn--icon">Pedir presupuesto gratis <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    <a href="/contacto" class="btn-accent">Pedir presupuesto gratis</a>
   </header>
+
+  <!-- Quién hay detrás -->
+  <section class="servicios-quien">
+    <div class="servicios-quien-bio">
+      <p>
+        Soy Pablo, desarrollador web <strong>autónomo en Granada</strong>. No soy una gran empresa
+        — soy yo quien atiende tu consulta, analiza tu negocio y construye la solución. Sin
+        intermediarios, sin presupuestos inflados y con la personalización que solo un profesional
+        independiente puede ofrecerte.
+      </p>
+      <p>
+        Trabajo en remoto con negocios de toda España y presencialmente en Granada. Creo
+        páginas web profesionales, optimizo tu visibilidad en Google y desarrollo
+        <strong>sistemas a medida</strong> — reservas online, analizadores de clientes,
+        automatizaciones — adaptados exactamente a cómo funciona tu negocio.
+      </p>
+    </div>
+    <div class="servicios-quien-pilares">
+      <div class="servicios-pilar">
+        <strong>Trato directo</strong>
+        <span>Hablas siempre conmigo. Soy a la vez tu comercial, el analista de tus procesos y el desarrollador.</span>
+      </div>
+      <div class="servicios-pilar">
+        <strong>Soluciones a medida</strong>
+        <span>Analizo tu negocio antes de proponer nada. Sin plantillas genéricas ni soluciones de copia-pega.</span>
+      </div>
+      <div class="servicios-pilar">
+        <strong>Granada y toda España</strong>
+        <span>Presencial en Granada, remoto sin barreras. El 90 % del trabajo funciona perfectamente online.</span>
+      </div>
+    </div>
+  </section>
 
   <!-- Servicios -->
   <section class="servicios-section">
     <h2 class="servicios-section-title">¿Qué puedo hacer por tu negocio?</h2>
     <p class="servicios-section-sub">Soluciones digitales para negocios que quieren crecer online</p>
-    <div class="servicios-grid">
-      {servicios.map(s => (
-        <ServicioCard
-          icono={s.icono}
-          titulo={s.titulo}
-          descripcion={s.descripcion}
-          incluidos={s.incluidos}
-          ctaTexto={s.ctaTexto}
-          ctaHref={s.ctaHref}
-          badge={s.badge}
-        />
+
+    <div class="servicios-carousel-outer">
+      <button class="carousel-btn carousel-btn--prev" id="carouselPrev" aria-label="Servicio anterior">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+
+      <div class="servicios-carousel-mask">
+        <div class="servicios-carousel-track" id="serviciosTrack">
+          {servicios.map(s => (
+            <ServicioCard
+              icono={s.icono}
+              titulo={s.titulo}
+              descripcion={s.descripcion}
+              incluidos={s.incluidos}
+              ctaTexto={s.ctaTexto}
+              ctaHref={s.ctaHref}
+              badge={s.badge}
+            />
+          ))}
+        </div>
+      </div>
+
+      <button class="carousel-btn carousel-btn--next" id="carouselNext" aria-label="Servicio siguiente">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+
+    <div class="carousel-dots" id="carouselDots">
+      {servicios.map((_, i) => (
+        <button class={`carousel-dot${i === 0 ? ' is-active' : ''}`} data-index={i} aria-label={`Ver servicio ${i + 1}`}></button>
       ))}
     </div>
   </section>
+
+  <script is:inline>
+  (function () {
+    var track = document.getElementById('serviciosTrack');
+    var prevBtn = document.getElementById('carouselPrev');
+    var nextBtn = document.getElementById('carouselNext');
+    var dotsEl = document.getElementById('carouselDots');
+    if (!track) return;
+
+    var origCards = Array.from(track.querySelectorAll('.servicio-card'));
+    var total = origCards.length;
+    var GAP = 24;
+    var autoTimer = null;
+    var isDragging = false;
+    var dragStartX = 0;
+    var dragStartTranslate = 0;
+    var currentTranslate = 0;
+    var currentPos = 1;
+
+    // Clonar primero y último para loop infinito
+    var lastClone = origCards[total - 1].cloneNode(true);
+    var firstClone = origCards[0].cloneNode(true);
+    track.insertBefore(lastClone, origCards[0]);
+    track.appendChild(firstClone);
+
+    var allCards = Array.from(track.querySelectorAll('.servicio-card'));
+    var dots = dotsEl ? Array.from(dotsEl.querySelectorAll('.carousel-dot')) : [];
+
+    function cardW() { return allCards[0].offsetWidth; }
+
+    function targetX(pos) {
+      var cw = track.parentElement.offsetWidth;
+      var w = cardW();
+      return cw / 2 - pos * (w + GAP) - w / 2;
+    }
+
+    function applyX(x, anim) {
+      track.style.transition = anim
+        ? 'transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94)'
+        : 'none';
+      track.style.transform = 'translateX(' + x + 'px)';
+    }
+
+    function realIdx(pos) {
+      if (pos === 0) return total - 1;
+      if (pos === total + 1) return 0;
+      return pos - 1;
+    }
+
+    function updateActive(pos) {
+      var ri = realIdx(pos);
+      allCards.forEach(function (c, i) { c.classList.toggle('is-active', i === pos); });
+      dots.forEach(function (d, i) { d.classList.toggle('is-active', i === ri); });
+    }
+
+    function goTo(pos, anim) {
+      currentPos = pos;
+      currentTranslate = targetX(currentPos);
+      applyX(currentTranslate, anim !== false);
+      if (anim === false) {
+        // Salto instantáneo: fijar opacity/transform en línea en todos los cards
+        // para que los cards adyacentes no aparezcan con retraso desde fuera del viewport
+        allCards.forEach(function (c, i) {
+          c.style.transition = 'none';
+          c.style.opacity = (i === pos) ? '1' : '0.5';
+          c.style.transform = (i === pos) ? 'scale(1)' : 'scale(0.93)';
+        });
+        void track.offsetWidth;
+        updateActive(currentPos);
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            allCards.forEach(function (c) {
+              c.style.transition = '';
+              c.style.opacity = '';
+              c.style.transform = '';
+            });
+          });
+        });
+      } else {
+        updateActive(currentPos);
+      }
+    }
+
+    // Salto silencioso: solo al acabar el transform del propio track (no eventos de cards hijos)
+    track.addEventListener('transitionend', function (e) {
+      if (e.target !== track || e.propertyName !== 'transform') return;
+      if (currentPos === 0) goTo(total, false);
+      else if (currentPos === total + 1) goTo(1, false);
+    });
+
+    function startAuto() {
+      stopAuto();
+      autoTimer = setInterval(function () { goTo(currentPos + 1); }, 3500);
+    }
+
+    function stopAuto() { clearInterval(autoTimer); autoTimer = null; }
+
+    goTo(1, false);
+    startAuto();
+
+    prevBtn && prevBtn.addEventListener('click', function () { stopAuto(); goTo(currentPos - 1); startAuto(); });
+    nextBtn && nextBtn.addEventListener('click', function () { stopAuto(); goTo(currentPos + 1); startAuto(); });
+    dots.forEach(function (dot, i) {
+      dot.addEventListener('click', function () { stopAuto(); goTo(i + 1); startAuto(); });
+    });
+
+    var mask = track.parentElement;
+    mask.addEventListener('mouseenter', stopAuto);
+    mask.addEventListener('mouseleave', startAuto);
+
+    track.addEventListener('mousedown', function (e) {
+      isDragging = true;
+      dragStartX = e.clientX;
+      dragStartTranslate = currentTranslate;
+      track.classList.add('is-dragging');
+      stopAuto();
+      e.preventDefault();
+    });
+    document.addEventListener('mousemove', function (e) {
+      if (!isDragging) return;
+      applyX(dragStartTranslate + e.clientX - dragStartX, false);
+    });
+    document.addEventListener('mouseup', function (e) {
+      if (!isDragging) return;
+      isDragging = false;
+      track.classList.remove('is-dragging');
+      var delta = e.clientX - dragStartX;
+      goTo(Math.abs(delta) > 60 ? (delta < 0 ? currentPos + 1 : currentPos - 1) : currentPos);
+      startAuto();
+    });
+
+    var touchStartX = 0;
+    track.addEventListener('touchstart', function (e) {
+      touchStartX = e.touches[0].clientX;
+      dragStartTranslate = currentTranslate;
+      stopAuto();
+    }, { passive: true });
+    track.addEventListener('touchmove', function (e) {
+      applyX(dragStartTranslate + e.touches[0].clientX - touchStartX, false);
+    }, { passive: true });
+    track.addEventListener('touchend', function (e) {
+      var delta = e.changedTouches[0].clientX - touchStartX;
+      goTo(Math.abs(delta) > 50 ? (delta < 0 ? currentPos + 1 : currentPos - 1) : currentPos);
+      startAuto();
+    });
+
+    window.addEventListener('resize', function () { goTo(currentPos, false); });
+  })();
+  </script>
 
   <!-- Precios -->
   <section class="precio-section" id="precios">

@@ -53,6 +53,36 @@ const servicios = [
     ctaTexto: "See plans",
     ctaHref: "/en/contact?service=maintenance",
   },
+  {
+    icono: "📅",
+    titulo: "Custom Appointment System",
+    descripcion: "A tailor-made app so your clients book online and you manage your schedule without paying monthly fees to third-party platforms.",
+    badge: "Custom",
+    incluidos: [
+      "Online bookings 24/7",
+      "Your own admin panel",
+      "Automatic email notifications",
+      "Google Calendar sync",
+      "No third-party monthly fees",
+    ],
+    ctaTexto: "I want to manage my appointments",
+    ctaHref: "/en/contact?service=appointments",
+  },
+  {
+    icono: "📊",
+    titulo: "Client Analytics Dashboard",
+    descripcion: "Know exactly where your clients come from — Google, social media, your website — and how many come back for a second visit.",
+    badge: "New",
+    incluidos: [
+      "Client source tracking (Google, social, web...)",
+      "Returning client detection",
+      "Visual stats dashboard",
+      "Analysis by acquisition channel",
+      "Report export",
+    ],
+    ctaTexto: "I want to know my clients",
+    ctaHref: "/en/contact?service=analytics",
+  },
 ];
 
 const planes = [
@@ -96,6 +126,7 @@ const planes = [
       "Online store or bookings",
       "API integrations",
       "Admin dashboard",
+      "Custom systems (client management, appointments...)",
       "6-month priority support",
     ],
     ctaTexto: "Let's talk about your project",
@@ -192,35 +223,226 @@ const localBusinessSchema = {
   <!-- Hero -->
   <header class="servicios-hero">
     <span class="servicios-hero-eyebrow">🏪 For local businesses in Spain and worldwide</span>
-    <h1>Your business deserves a website<br>that brings clients</h1>
-    <p>
-      I build professional websites, optimized to rank on Google
-      and designed to convert visits into calls and bookings.
-    </p>
-    <p class="servicios-hero-local">
-      Based in <strong>Granada, Spain</strong> — I work in person locally and remotely with businesses across Spain and internationally. If you're looking for a web developer or local SEO expert <strong>near you in Granada</strong>, I'm available.
-    </p>
-    <a href="/en/contact" class="btn btn-accent btn--icon">Get a free quote <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    <h1>Web Development & Local SEO in Granada</h1>
+    <p class="servicios-hero-sub">Your business deserves a website that brings clients</p>
+    <a href="/en/contact" class="btn-accent">Get a free quote</a>
   </header>
+
+  <!-- Who's behind it -->
+  <section class="servicios-quien">
+    <div class="servicios-quien-bio">
+      <p>
+        I'm Pablo, a <strong>freelance web developer based in Granada, Spain</strong>. I'm not a big agency
+        — I'm the one who answers your call, analyses your business and writes the code. No middlemen,
+        no inflated quotes and the level of personalisation only an independent professional can offer.
+      </p>
+      <p>
+        I work remotely with businesses across Spain and in person in Granada. I build professional
+        websites, improve your Google visibility and develop <strong>custom systems</strong> — online
+        booking, client analytics, automations — tailored exactly to how your business works.
+      </p>
+    </div>
+    <div class="servicios-quien-pilares">
+      <div class="servicios-pilar">
+        <strong>Direct contact</strong>
+        <span>You always speak to me. I'm your account manager, business analyst and developer all in one.</span>
+      </div>
+      <div class="servicios-pilar">
+        <strong>Truly bespoke</strong>
+        <span>I analyse your business before proposing anything. No templates, no copy-paste solutions.</span>
+      </div>
+      <div class="servicios-pilar">
+        <strong>Granada & all of Spain</strong>
+        <span>In person in Granada, remote everywhere else. 90 % of the work runs perfectly online.</span>
+      </div>
+    </div>
+  </section>
 
   <!-- Services -->
   <section class="servicios-section">
     <h2 class="servicios-section-title">What can I do for your business?</h2>
     <p class="servicios-section-sub">Digital solutions for businesses that want to grow online</p>
-    <div class="servicios-grid">
-      {servicios.map(s => (
-        <ServicioCard
-          icono={s.icono}
-          titulo={s.titulo}
-          descripcion={s.descripcion}
-          incluidos={s.incluidos}
-          ctaTexto={s.ctaTexto}
-          ctaHref={s.ctaHref}
-          badge={s.badge}
-        />
+
+    <div class="servicios-carousel-outer">
+      <button class="carousel-btn carousel-btn--prev" id="carouselPrev" aria-label="Previous service">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+
+      <div class="servicios-carousel-mask">
+        <div class="servicios-carousel-track" id="serviciosTrack">
+          {servicios.map(s => (
+            <ServicioCard
+              icono={s.icono}
+              titulo={s.titulo}
+              descripcion={s.descripcion}
+              incluidos={s.incluidos}
+              ctaTexto={s.ctaTexto}
+              ctaHref={s.ctaHref}
+              badge={s.badge}
+            />
+          ))}
+        </div>
+      </div>
+
+      <button class="carousel-btn carousel-btn--next" id="carouselNext" aria-label="Next service">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+
+    <div class="carousel-dots" id="carouselDots">
+      {servicios.map((_, i) => (
+        <button class={`carousel-dot${i === 0 ? ' is-active' : ''}`} data-index={i} aria-label={`View service ${i + 1}`}></button>
       ))}
     </div>
   </section>
+
+  <script is:inline>
+  (function () {
+    var track = document.getElementById('serviciosTrack');
+    var prevBtn = document.getElementById('carouselPrev');
+    var nextBtn = document.getElementById('carouselNext');
+    var dotsEl = document.getElementById('carouselDots');
+    if (!track) return;
+
+    var origCards = Array.from(track.querySelectorAll('.servicio-card'));
+    var total = origCards.length;
+    var GAP = 24;
+    var autoTimer = null;
+    var isDragging = false;
+    var dragStartX = 0;
+    var dragStartTranslate = 0;
+    var currentTranslate = 0;
+    var currentPos = 1;
+
+    var lastClone = origCards[total - 1].cloneNode(true);
+    var firstClone = origCards[0].cloneNode(true);
+    track.insertBefore(lastClone, origCards[0]);
+    track.appendChild(firstClone);
+
+    var allCards = Array.from(track.querySelectorAll('.servicio-card'));
+    var dots = dotsEl ? Array.from(dotsEl.querySelectorAll('.carousel-dot')) : [];
+
+    function cardW() { return allCards[0].offsetWidth; }
+
+    function targetX(pos) {
+      var cw = track.parentElement.offsetWidth;
+      var w = cardW();
+      return cw / 2 - pos * (w + GAP) - w / 2;
+    }
+
+    function applyX(x, anim) {
+      track.style.transition = anim
+        ? 'transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94)'
+        : 'none';
+      track.style.transform = 'translateX(' + x + 'px)';
+    }
+
+    function realIdx(pos) {
+      if (pos === 0) return total - 1;
+      if (pos === total + 1) return 0;
+      return pos - 1;
+    }
+
+    function updateActive(pos) {
+      var ri = realIdx(pos);
+      allCards.forEach(function (c, i) { c.classList.toggle('is-active', i === pos); });
+      dots.forEach(function (d, i) { d.classList.toggle('is-active', i === ri); });
+    }
+
+    function goTo(pos, anim) {
+      currentPos = pos;
+      currentTranslate = targetX(currentPos);
+      applyX(currentTranslate, anim !== false);
+      if (anim === false) {
+        // Instant jump: set explicit opacity/transform on all cards so adjacent
+        // cards don't pop in from an unpainted off-screen state
+        allCards.forEach(function (c, i) {
+          c.style.transition = 'none';
+          c.style.opacity = (i === pos) ? '1' : '0.5';
+          c.style.transform = (i === pos) ? 'scale(1)' : 'scale(0.93)';
+        });
+        void track.offsetWidth;
+        updateActive(currentPos);
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            allCards.forEach(function (c) {
+              c.style.transition = '';
+              c.style.opacity = '';
+              c.style.transform = '';
+            });
+          });
+        });
+      } else {
+        updateActive(currentPos);
+      }
+    }
+
+    // Only react to the track's own transform transition end (ignore bubbled card events)
+    track.addEventListener('transitionend', function (e) {
+      if (e.target !== track || e.propertyName !== 'transform') return;
+      if (currentPos === 0) goTo(total, false);
+      else if (currentPos === total + 1) goTo(1, false);
+    });
+
+    function startAuto() {
+      stopAuto();
+      autoTimer = setInterval(function () { goTo(currentPos + 1); }, 3500);
+    }
+
+    function stopAuto() { clearInterval(autoTimer); autoTimer = null; }
+
+    goTo(1, false);
+    startAuto();
+
+    prevBtn && prevBtn.addEventListener('click', function () { stopAuto(); goTo(currentPos - 1); startAuto(); });
+    nextBtn && nextBtn.addEventListener('click', function () { stopAuto(); goTo(currentPos + 1); startAuto(); });
+    dots.forEach(function (dot, i) {
+      dot.addEventListener('click', function () { stopAuto(); goTo(i + 1); startAuto(); });
+    });
+
+    var mask = track.parentElement;
+    mask.addEventListener('mouseenter', stopAuto);
+    mask.addEventListener('mouseleave', startAuto);
+
+    track.addEventListener('mousedown', function (e) {
+      isDragging = true;
+      dragStartX = e.clientX;
+      dragStartTranslate = currentTranslate;
+      track.classList.add('is-dragging');
+      stopAuto();
+      e.preventDefault();
+    });
+    document.addEventListener('mousemove', function (e) {
+      if (!isDragging) return;
+      applyX(dragStartTranslate + e.clientX - dragStartX, false);
+    });
+    document.addEventListener('mouseup', function (e) {
+      if (!isDragging) return;
+      isDragging = false;
+      track.classList.remove('is-dragging');
+      var delta = e.clientX - dragStartX;
+      goTo(Math.abs(delta) > 60 ? (delta < 0 ? currentPos + 1 : currentPos - 1) : currentPos);
+      startAuto();
+    });
+
+    var touchStartX = 0;
+    track.addEventListener('touchstart', function (e) {
+      touchStartX = e.touches[0].clientX;
+      dragStartTranslate = currentTranslate;
+      stopAuto();
+    }, { passive: true });
+    track.addEventListener('touchmove', function (e) {
+      applyX(dragStartTranslate + e.touches[0].clientX - touchStartX, false);
+    }, { passive: true });
+    track.addEventListener('touchend', function (e) {
+      var delta = e.changedTouches[0].clientX - touchStartX;
+      goTo(Math.abs(delta) > 50 ? (delta < 0 ? currentPos + 1 : currentPos - 1) : currentPos);
+      startAuto();
+    });
+
+    window.addEventListener('resize', function () { goTo(currentPos, false); });
+  })();
+  </script>
 
   <!-- Pricing -->
   <section class="precio-section" id="pricing">

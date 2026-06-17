@@ -1,0 +1,330 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import CalEmbed from '../../components/CalEmbed.astro';
+
+/**
+ * ⚙️  SET YOUR CAL.COM LINK HERE:
+ *   Change CAL_LINK to your username/event-type
+ *   Find it at Cal.com → Event Types → copy the last part of the URL
+ *   Example: if your event is https://cal.com/pablogomez/free-meeting
+ *   then write: "pablogomez/free-meeting"
+ */
+const CAL_LINK = 'pablo-gomez-villen/primera-reunion';
+
+const bookingSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Free digital consultancy meeting",
+  "description": "Book a free 20-minute meeting to analyse your digital project and define an improvement strategy.",
+  "provider": {
+    "@type": "Person",
+    "name": "Pablo Gómez Villén",
+    "url": "https://www.pablogomezvillen.com"
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "EUR",
+    "description": "Free initial consultancy with no commitment"
+  }
+};
+---
+
+<Layout
+  title="Book a Free Meeting | Pablo Gómez — Web Developer Granada"
+  lang="en"
+  description="Schedule a free 20-minute meeting. We'll analyse your digital presence, SEO, and automation opportunities. No commitment."
+  canonical="https://www.pablogomezvillen.com/en/book"
+  alternateEs="https://www.pablogomezvillen.com/reserva"
+  alternateEn="https://www.pablogomezvillen.com/en/book"
+  showHero={false}
+  keywords="book free meeting, free web consultancy, schedule call web developer Granada"
+  jsonLd={[bookingSchema]}
+>
+
+  <div class="page-banner">
+    <div class="banner-badge">
+      <span class="badge-dot"></span>
+      Free · No commitment · 20 minutes
+    </div>
+    <h1>Book a free 20-minute meeting</h1>
+    <p>Tell me about your project and we'll analyse how to improve your digital presence and attract more clients.</p>
+  </div>
+
+  <div class="booking-page">
+
+    <!-- Benefits -->
+    <section class="benefits-section" aria-label="What's included in the meeting">
+      <h2 class="benefits-title">What will you get from this call?</h2>
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <div class="benefit-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          </div>
+          <div>
+            <strong>Free digital presence audit</strong>
+            <p>We review how clients find you on Google, social media, and your current website.</p>
+          </div>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <div>
+            <strong>Website and SEO review</strong>
+            <p>I identify what's stopping you from ranking on Google and propose concrete solutions.</p>
+          </div>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <div>
+            <strong>Automation ideas to save time</strong>
+            <p>I show you which repetitive tasks you can automate to focus on what really matters.</p>
+          </div>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <div>
+            <strong>No commitment</strong>
+            <p>This meeting doesn't oblige you to anything. It's just to get to know each other and see how I can help.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Meeting details -->
+    <div class="meeting-meta" aria-label="Meeting details">
+      <span class="meta-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        20 minutes
+      </span>
+      <span class="meta-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Video call (Google Meet)
+      </span>
+      <span class="meta-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        Timezone auto-detected
+      </span>
+    </div>
+
+    <!-- Cal.com calendar -->
+    <section class="calendar-section" aria-label="Select date and time">
+      <CalEmbed calLink={CAL_LINK} lang="en" />
+    </section>
+
+    <!-- Trust signals -->
+    <div class="trust-row">
+      <div class="trust-item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Instant email confirmation
+      </div>
+      <div class="trust-item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+        Google Calendar sync
+      </div>
+      <div class="trust-item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        30+ completed projects
+      </div>
+    </div>
+
+  </div>
+</Layout>
+
+<style>
+  .page-banner {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 60%, #1b4a8a 100%);
+    color: #fff;
+    text-align: center;
+    padding: 56px 20px 52px;
+    border-bottom-left-radius: 110px 40px;
+    border-bottom-right-radius: 110px 40px;
+    box-shadow: 0 12px 32px rgba(30,60,114,0.18);
+  }
+
+  .banner-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 999px;
+    padding: 5px 16px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    margin-bottom: 16px;
+    color: #ffce00;
+  }
+
+  .badge-dot {
+    width: 8px;
+    height: 8px;
+    background: #4ade80;
+    border-radius: 50%;
+    animation: pulse-dot 2s infinite;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.3); }
+  }
+
+  .page-banner h1 {
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 14px;
+  }
+
+  .page-banner p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+
+  .booking-page {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 48px 20px 64px;
+  }
+
+  .benefits-section {
+    margin-bottom: 36px;
+  }
+
+  .benefits-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #1e3c72;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .benefit-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: #eef4ff;
+    border: 1px solid #c7d9f5;
+    border-radius: 12px;
+    padding: 18px 20px;
+  }
+
+  .benefit-card strong {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1e3c72;
+    margin-bottom: 4px;
+  }
+
+  .benefit-card p {
+    font-size: 0.85rem;
+    color: #4b5563;
+    line-height: 1.45;
+    margin: 0;
+  }
+
+  .benefit-icon {
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    background: #1e3c72;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffce00;
+  }
+
+  .meeting-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 32px;
+  }
+
+  .meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: #fff;
+    border: 1px solid #e4ecf8;
+    border-radius: 999px;
+    padding: 7px 16px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: #374151;
+    box-shadow: 0 1px 4px rgba(30,60,114,0.07);
+  }
+
+  .meta-item svg {
+    color: #2a5298;
+  }
+
+  .calendar-section {
+    margin-bottom: 36px;
+  }
+
+  .trust-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    padding-top: 8px;
+  }
+
+  .trust-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.85rem;
+    color: #6b7280;
+    font-weight: 500;
+  }
+
+  .trust-item svg {
+    color: #2a5298;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 640px) {
+    .benefits-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .booking-page {
+      padding: 32px 16px 48px;
+    }
+
+    .page-banner {
+      padding: 40px 16px 36px;
+    }
+
+    .meeting-meta {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .trust-row {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+</style>

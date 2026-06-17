@@ -1,0 +1,103 @@
+---
+/**
+ * CalEmbed.astro — Widget embebido de Cal.com
+ *
+ * ⚙️ VARIABLE A CONFIGURAR:
+ *   calLink — tu username/event-type de Cal.com
+ *   Ejemplo: "pablogomez/reunion-20min"
+ *   Para encontrarlo: Cal.com → Event Types → copia la URL del evento
+ */
+
+export interface Props {
+  calLink?: string;
+  lang?: 'es' | 'en';
+}
+
+const {
+  calLink = 'YOUR_USERNAME/reunion-20min', // ← CAMBIA ESTO por tu enlace de Cal.com
+  lang = 'es',
+} = Astro.props;
+
+const embedId = 'cal-embed-' + Math.random().toString(36).slice(2, 8);
+---
+
+<div class="cal-wrapper" role="region" aria-label={lang === 'en' ? 'Booking calendar' : 'Calendario de reservas'}>
+  <div id={embedId} class="cal-container"></div>
+</div>
+
+<script define:vars={{ calLink, embedId }}>
+  // Patrón oficial de Cal.com: define el stub primero, luego carga el script.
+  // El stub encola todas las llamadas a Cal() y las ejecuta cuando el script real carga.
+  (function (C, A, L) {
+    let p = function (a, ar) { a.q.push(ar); };
+    let d = C.document;
+    C.Cal = C.Cal || function () {
+      let cal = C.Cal;
+      let ar = arguments;
+      if (!cal.loaded) {
+        cal.ns = {};
+        cal.q = cal.q || [];
+        d.head.appendChild(d.createElement('script')).src = A;
+        cal.loaded = true;
+      }
+      if (ar[0] === L) {
+        const api = function () { p(api, arguments); };
+        const namespace = ar[1];
+        api.q = api.q || [];
+        if (typeof namespace === 'string') {
+          cal.ns[namespace] = api;
+          p(api, ar);
+        } else {
+          p(cal, ar);
+        }
+        return;
+      }
+      p(cal, ar);
+    };
+  })(window, 'https://app.cal.com/embed/embed.js', 'init');
+
+  Cal('init', { origin: 'https://app.cal.com' });
+
+  Cal('inline', {
+    elementOrSelector: '#' + embedId,
+    calLink: calLink,
+    config: { layout: 'month_view' },
+  });
+
+  Cal('ui', {
+    hideEventTypeDetails: false,
+    layout: 'month_view',
+  });
+</script>
+
+<style>
+  .cal-wrapper {
+    width: 100%;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(30, 60, 114, 0.12);
+    border: 1px solid #e4ecf8;
+    background: #fff;
+  }
+
+  .cal-container {
+    width: 100%;
+    min-height: 600px;
+  }
+
+  /* Cal.com inyecta un iframe — asegurar que ocupa todo el espacio */
+  .cal-container :global(iframe) {
+    width: 100% !important;
+    min-height: 600px !important;
+    border: none !important;
+  }
+
+  @media (max-width: 640px) {
+    .cal-container {
+      min-height: 700px;
+    }
+    .cal-container :global(iframe) {
+      min-height: 700px !important;
+    }
+  }
+</style>

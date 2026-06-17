@@ -4,6 +4,8 @@ import esData from '../data/i18n/es.json';
 import projectsData from '../data/projects.json';
 
 const lang = 'es';
+// Cambia a true para mostrar las secciones de proyectos, estudios y experiencia
+const SHOW_DEV_SECTIONS = false;
 
 function fmtDate(d) {
   if (!d || !/^\d{4}-\d{2}-\d{2}$/.test(d)) return d || '';
@@ -128,33 +130,82 @@ const websiteSchema = {
 
         <div class="dual-card dual-card--negocio">
           <a href="/servicios" class="full-link" aria-label="Ver mis servicios"></a>
-          <span class="dual-card-ico" aria-hidden="true">🏪</span>
-          <h3>Tengo un negocio y necesito clientes</h3>
+          <div class="dual-card-header">
+            <span class="dual-card-badge dual-card-badge--negocio">Para negocios</span>
+            <span class="dual-card-ico" aria-hidden="true">🏪</span>
+          </div>
+          <h3>Tengo un negocio y necesito más clientes</h3>
           <p>Te hago una web profesional que aparezca en Google cuando alguien busque tu negocio en tu ciudad. Sin tecnicismos, sin complicaciones.</p>
           <ul>
-            <li>✅ Página web moderna y rápida</li>
-            <li>✅ Optimización para Google local</li>
-            <li>✅ Google Business Profile</li>
-            <li>✅ Mantenimiento mensual</li>
+            <li>
+              <span class="dual-card-check" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              Página web moderna y rápida
+            </li>
+            <li>
+              <span class="dual-card-check" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              Optimización para Google local
+            </li>
+            <li>
+              <span class="dual-card-check" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              Google Business Profile
+            </li>
+            <li>
+              <span class="dual-card-check" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              Mantenimiento mensual
+            </li>
           </ul>
-          <a href="/servicios" class="btn-primary btn--icon" style="position:relative;z-index:11">Ver mis servicios <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          <a href="/servicios" class="dual-card-cta dual-card-cta--negocio btn--icon" style="position:relative;z-index:11">
+            Ver mis servicios
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
         </div>
 
         <div class="dual-card dual-card--tech">
-          <a href="/proyectos" class="full-link" aria-label="Ver mis proyectos"></a>
-          <span class="dual-card-ico" aria-hidden="true">💻</span>
+          <a href="/pablo-gomez-villen" class="full-link" aria-label="Conoce más sobre mí"></a>
+          <div class="dual-card-header">
+            <span class="dual-card-badge dual-card-badge--tech">Para empresas</span>
+            <span class="dual-card-ico" aria-hidden="true">💻</span>
+          </div>
           <h3>Soy empresa y busco un desarrollador Full Stack</h3>
           <p>+1 año de experiencia en producción con Laravel, PHP, JavaScript y MySQL. Proyectos reales, código limpio y capacidad para trabajar en equipo.</p>
           <ul>
-            <li>✅ Full Stack PHP / Laravel</li>
-            <li>✅ Proyectos en producción</li>
-            <li>✅ APIs REST, MySQL, JS</li>
-            <li>✅ Disponible inmediatamente</li>
+            <li>
+              <span class="dual-card-check dual-card-check--tech" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              Full Stack PHP / Laravel
+            </li>
+            <li>
+              <span class="dual-card-check dual-card-check--tech" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              Proyectos en producción
+            </li>
+            <li>
+              <span class="dual-card-check dual-card-check--tech" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              APIs REST, MySQL, JS
+            </li>
+            <li>
+              <span class="dual-card-check dual-card-check--tech" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              Disponible inmediatamente
+            </li>
           </ul>
-          <div class="dual-card-btns">
-            <a href="/proyectos" class="btn-primary btn--icon">Ver mis proyectos <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-            <a href="/experiencia" class="btn-outlined btn--icon">Ver mi experiencia <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-          </div>
+          <a href="/pablo-gomez-villen" class="dual-card-cta dual-card-cta--tech btn--icon" style="position:relative;z-index:11">
+            Conoce más sobre mí
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
         </div>
 
       </div>
@@ -162,7 +213,7 @@ const websiteSchema = {
   </section>
 
   <!-- Proyectos -->
-  <section id="proyectos" class="section bg-light-rounded">
+  {SHOW_DEV_SECTIONS && <section id="proyectos" class="section bg-light-rounded">
     <h2 data-i18n="section-proyectos.title">
       <svg class="section-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
       Proyectos
@@ -201,10 +252,10 @@ const websiteSchema = {
         </article>
       ))}
     </div>
-  </section>
+  </section>}
 
   <!-- Estudios -->
-  <section id="estudios" class="section">
+  {SHOW_DEV_SECTIONS && <section id="estudios" class="section">
     <h2 data-i18n="section-estudios.title">
       <svg class="section-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
       Estudios
@@ -259,10 +310,10 @@ const websiteSchema = {
       </div>
 
     </div>
-  </section>
+  </section>}
 
   <!-- Experiencia -->
-  <section id="experiencia" class="section bg-light-rounded">
+  {SHOW_DEV_SECTIONS && <section id="experiencia" class="section bg-light-rounded">
     <h2 data-i18n="section-experiencia.title">
       <svg class="section-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
       Experiencia
@@ -294,7 +345,7 @@ const websiteSchema = {
         <span class="tech">PHP | Laravel | MySQL</span>
       </div>
     </div>
-  </section>
+  </section>}
 
   <!-- Artículos destacados -->
   {featuredEs.length > 0 && (

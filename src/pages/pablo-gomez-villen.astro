@@ -123,6 +123,30 @@ const breadcrumbSchema = {
       </div>
     </div>
 
+    <!-- Accesos rápidos -->
+    <div class="sm-quick-links reveal">
+      <a href="/proyectos" class="sm-ql-card">
+        <div class="sm-ql-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <div class="sm-ql-text">
+          <strong>Mis proyectos</strong>
+          <span>Trabajo real aplicado</span>
+        </div>
+        <svg class="sm-ql-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="/experiencia" class="sm-ql-card">
+        <div class="sm-ql-icon sm-ql-icon--exp">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        </div>
+        <div class="sm-ql-text">
+          <strong>Experiencia laboral</strong>
+          <span>+1 año en producción</span>
+        </div>
+        <svg class="sm-ql-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
     <!-- Trayectoria -->
     <section class="sm-section">
       <h2 class="sm-title reveal" data-i18n="sobre-mi.timeline.title">Mi <span>Trayectoria</span></h2>
@@ -256,6 +280,91 @@ const breadcrumbSchema = {
     </section>
 
   </div>
+
+  <style>
+    .sm-quick-links {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      max-width: 700px;
+      margin: 0 auto 56px;
+      padding: 0 20px;
+    }
+
+    .sm-ql-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 16px;
+      padding: 20px 18px;
+      text-decoration: none;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transition: transform 0.22s ease, background 0.22s ease, border-color 0.22s ease;
+    }
+
+    .sm-ql-card:hover {
+      transform: translateY(-3px);
+      background: rgba(255,255,255,0.14);
+      border-color: rgba(255,206,0,0.5);
+    }
+
+    .sm-ql-icon {
+      flex-shrink: 0;
+      width: 48px;
+      height: 48px;
+      background: rgba(255,206,0,0.15);
+      border: 1px solid rgba(255,206,0,0.35);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffce00;
+    }
+
+    .sm-ql-icon--exp {
+      background: rgba(13,148,136,0.2);
+      border-color: rgba(13,148,136,0.4);
+      color: #5eead4;
+    }
+
+    .sm-ql-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .sm-ql-text strong {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 2px;
+    }
+
+    .sm-ql-text span {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .sm-ql-arrow {
+      flex-shrink: 0;
+      color: rgba(255,255,255,0.4);
+      transition: opacity 0.2s, transform 0.2s, color 0.2s;
+    }
+
+    .sm-ql-card:hover .sm-ql-arrow {
+      color: #ffce00;
+      transform: translateX(3px);
+    }
+
+    @media (max-width: 560px) {
+      .sm-quick-links {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 
   <script>
     // ── PARTICLES ──

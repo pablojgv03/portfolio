@@ -37,7 +37,7 @@ const t = labels[lang];
 <script define:vars={{ lang, t }}>
   async function loadBookings() {
     try {
-      const res = await fetch('/api/bookings.json');
+      const res = await fetch('/api/bookings');
       if (!res.ok) return;
       const { slots } = await res.json();
       if (!slots || slots.length === 0) return;

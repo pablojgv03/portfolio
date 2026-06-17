@@ -15,7 +15,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const url = new URL('https://api.cal.com/v1/bookings');
     url.searchParams.set('apiKey', apiKey);
-    url.searchParams.set('status', 'accepted');
+    url.searchParams.set('status', 'upcoming');
     url.searchParams.set('limit', '20');
 
     const calRes = await fetch(url.toString());

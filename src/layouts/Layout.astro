@@ -60,7 +60,7 @@ const navBook       = isEN ? 'Book a call'          : 'Reserva reunión';
 const heroGreeting  = isEN ? enData.hero.greeting   : 'Pablo Gómez, <span>Desarrollador Web</span> y SEO Local en Granada';
 const heroRole      = isEN
   ? enData.hero.role
-  : 'Creo webs que posicionan en Google y convierten visitas en clientes.<span class="hero-role-sub">También desarrollo aplicaciones a medida con PHP, Laravel y JavaScript.</span>';
+  : 'Webs, SEO local y sistemas de reservas pensados para llenar tu agenda, no para acumular visitas que no llaman.<span class="hero-role-sub">También trabajo como desarrollador Full Stack — Laravel, PHP, JavaScript — en proyectos reales en producción.</span>';
 const heroBtnCV     = isEN ? enData.hero.btnCV      : 'Descargar CV';
 const cvFile        = isEN ? 'CV_Pablo_Gomez_Villen_Software-Developer.pdf' : 'CV_Full-stack_Pablo_Gomez_Villen_Desarrollador.pdf';
 const defaultRightsText = isEN ? enData.rights : '© 2026 Pablo Gómez Villén || Programador Full Stack';
@@ -142,12 +142,12 @@ const heroAvailability = isEN ? 'Available for work'   : 'Disponible para trabaj
 
         <!-- Menú de escritorio -->
         <nav class="nav-links desktop">
-          <a href={`${basePath}/`} class={navClass('/')} aria-current={navCurrent('/')}>{navHome}</a>
+          <a href={`${basePath}/`} class={`nav-link-home${navClass('/') ? ' nav-current' : ''}`} aria-current={navCurrent('/')}>{navHome}</a>
           {!isAboutPage && <a href={`${basePath}/servicios`} class={`nav-link-services${navClass('/servicios') ? ' nav-current' : ''}`} aria-current={navCurrent('/servicios')}>{navServices}</a>}
           {isAboutPage && <a href={`${basePath}/proyectos`} class={navClass('/proyectos')} aria-current={navCurrent('/proyectos')}>{navProjects}</a>}
           {isAboutPage && <a href={`${basePath}/experiencia`} class={navClass('/experiencia')} aria-current={navCurrent('/experiencia')}>{navExperience}</a>}
           {isAboutPage && <a href={`${basePath}/pablo-gomez-villen`} class={navClass('/pablo-gomez-villen')} aria-current={navCurrent('/pablo-gomez-villen')}>{navAbout}</a>}
-          <a href={`${basePath}/blog`} class={navClass('/blog')} aria-current={navCurrent('/blog')}>Blog</a>
+          <a href={`${basePath}/blog`} class={`nav-link-blog${navClass('/blog') ? ' nav-current' : ''}`} aria-current={navCurrent('/blog')}>Blog</a>
           <a href={isEN ? '/en/contact' : '/contacto'} class={`nav-link-contact${navClass('/contacto') ? ' nav-current' : ''}`} aria-current={navCurrent('/contacto')}>{navContact}</a>
           {!isAboutPage && <a href={isEN ? '/en/book' : '/reserva'} class={`nav-book-btn${navClass('/reserva') || navClass('/book') ? ' nav-current' : ''}`} aria-current={navClass('/reserva') || navClass('/book') ? 'page' : undefined}>{navBook}</a>}
         </nav>
@@ -177,12 +177,12 @@ const heroAvailability = isEN ? 'Available for work'   : 'Disponible para trabaj
           </a>
           <button class="close-menu" aria-label="Cerrar menú">✕</button>
         </div>
-        <a href={`${basePath}/`} class={navClass('/')} aria-current={navCurrent('/')}>{navHome}</a>
+        <a href={`${basePath}/`} class={`nav-link-home${navClass('/') ? ' nav-current' : ''}`} aria-current={navCurrent('/')}>{navHome}</a>
         {!isAboutPage && <a href={`${basePath}/servicios`} class={`nav-link-services${navClass('/servicios') ? ' nav-current' : ''}`} aria-current={navCurrent('/servicios')}>{navServices}</a>}
         {isAboutPage && <a href={`${basePath}/proyectos`} class={navClass('/proyectos')} aria-current={navCurrent('/proyectos')}>{navProjects}</a>}
         {isAboutPage && <a href={`${basePath}/experiencia`} class={navClass('/experiencia')} aria-current={navCurrent('/experiencia')}>{navExperience}</a>}
         <a href={`${basePath}/pablo-gomez-villen`} class={navClass('/pablo-gomez-villen')} aria-current={navCurrent('/pablo-gomez-villen')}>{navAbout}</a>
-        <a href={`${basePath}/blog`} class={navClass('/blog')} aria-current={navCurrent('/blog')}>Blog</a>
+        <a href={`${basePath}/blog`} class={`nav-link-blog${navClass('/blog') ? ' nav-current' : ''}`} aria-current={navCurrent('/blog')}>Blog</a>
         <a href={isEN ? '/en/contact' : '/contacto'} class={`nav-link-contact${navClass('/contacto') ? ' nav-current' : ''}`} aria-current={navCurrent('/contacto')}>{navContact}</a>
         {!isAboutPage && <a href={isEN ? '/en/book' : '/reserva'} class={`nav-book-btn nav-book-btn--mobile${navClass('/reserva') || navClass('/book') ? ' nav-current' : ''}`} aria-current={navClass('/reserva') || navClass('/book') ? 'page' : undefined}>{navBook}</a>}
 
@@ -229,8 +229,8 @@ const heroAvailability = isEN ? 'Available for work'   : 'Disponible para trabaj
             <span>Astro</span>
           </div>
           <div class="hero-buttons">
-            <a href={`${basePath}/proyectos`} class="btn">{heroBtnProjects}</a>
-            <a href={isEN ? '/en/servicios' : '/servicios'} class="btn btn-services">{isEN ? '💼 I need a website' : '💼 Necesito una web'}</a>
+            <a href={`${basePath}/proyectos`} class="btn secondary">{heroBtnProjects}</a>
+            <a href={isEN ? '/en/servicios' : '/servicios'} class="btn">{isEN ? '💼 I need a website' : '💼 Necesito una web'}</a>
             <a id="cv-link" href={`/${cvFile}`} download target="_blank" rel="noopener noreferrer" class="btn secondary btn--icon">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
               {heroBtnCV}

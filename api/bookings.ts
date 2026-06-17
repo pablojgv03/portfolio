@@ -24,22 +24,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       },
     });
 
-    if (!calRes.ok) throw new Error(`Cal.com error: ${calRes.status}`);
-
     const data = await calRes.json();
-    // v2 response: { status: "success", data: [...] }
-    const bookings: { startTime: string; endTime: string }[] = data.data ?? [];
-
-    const slots = bookings
-      .filter(b => {
-        const start = new Date(b.startTime);
-        return start >= now && start <= twoWeeksOut;
-      })
-      .map(b => ({ start: b.startTime, end: b.endTime }))
-      .slice(0, 10);
-
-    return res.status(200).json({ slots });
-  } catch {
-    return res.status(200).json({ slots: [] });
+    return res.status(200).json({ _debug: true, httpStatus: calRes.status, data });
+  } catch (e) {
+    return res.status(200).json({ _debug: true, error: String(e) });
   }
 }

@@ -74,30 +74,27 @@ const embedId = 'cal-embed-' + Math.random().toString(36).slice(2, 8);
   .cal-wrapper {
     width: 100%;
     border-radius: 14px;
-    overflow: hidden;
     box-shadow: 0 4px 24px rgba(30, 60, 114, 0.12);
     border: 1px solid #e4ecf8;
     background: #fff;
+    /* clip-path recorta el branding de Cal.com del fondo del iframe */
+    clip-path: inset(0 0 185px 0 round 14px);
   }
 
   .cal-container {
     width: 100%;
-    min-height: 600px;
+    min-height: 660px;
   }
 
-  /* Cal.com inyecta un iframe — asegurar que ocupa todo el espacio */
   .cal-container :global(iframe) {
     width: 100% !important;
-    min-height: 600px !important;
+    min-height: 660px !important;
     border: none !important;
   }
 
   @media (max-width: 640px) {
-    .cal-container {
-      min-height: 700px;
-    }
-    .cal-container :global(iframe) {
-      min-height: 700px !important;
-    }
+    .cal-wrapper { clip-path: none; }
+    .cal-container { min-height: 700px; }
+    .cal-container :global(iframe) { min-height: 700px !important; }
   }
 </style>

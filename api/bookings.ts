@@ -24,9 +24,22 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       },
     });
 
+    if (!calRes.ok) throw new Error(`Cal.com error: ${calRes.status}`);
+
     const data = await calRes.json();
-    return res.status(200).json({ _debug: true, httpStatus: calRes.status, data });
-  } catch (e) {
-    return res.status(200).json({ _debug: true, error: String(e) });
+    // v2 response: { status: "success", data: [...] }
+    const bookings: { start: string; end: string }[] = data.data ?? [];
+
+    const slots = bookings
+      .filter(b => {
+        const start = new Date(b.start);
+        return start >= now && start <= twoWeeksOut;
+      })
+      .map(b => ({ start: b.start, end: b.end }))
+      .slice(0, 10);
+
+    return res.status(200).json({ slots });
+  } catch {
+    return res.status(200).json({ slots: [] });
   }
 }

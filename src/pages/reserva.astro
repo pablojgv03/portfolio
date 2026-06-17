@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import CalEmbed from '../components/CalEmbed.astro';
+import BookedSlotsWidget from '../components/BookedSlotsWidget.astro';
 
 /**
  * ⚙️  CONFIGURA TU ENLACE DE CAL.COM AQUÍ:
@@ -111,6 +112,9 @@ const bookingSchema = {
         Zona horaria detectada automáticamente
       </span>
     </div>
+
+    <!-- Slots ya reservados (prueba social) -->
+    <BookedSlotsWidget lang="es" />
 
     <!-- Calendario Cal.com -->
     <section class="calendar-section" aria-label="Selecciona fecha y hora">

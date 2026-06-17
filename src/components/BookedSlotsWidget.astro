@@ -1,0 +1,153 @@
+---
+interface Props {
+  lang?: 'es' | 'en';
+}
+const { lang = 'es' } = Astro.props;
+
+const labels = {
+  es: {
+    title: 'Agenda esta semana',
+    booked: 'reunión reservada',
+    bookedPlural: 'reuniones reservadas',
+    cta: 'Elige tu hueco antes de que se llene',
+    empty: null,
+  },
+  en: {
+    title: 'This week\'s schedule',
+    booked: 'meeting booked',
+    bookedPlural: 'meetings booked',
+    cta: 'Pick your slot before it fills up',
+    empty: null,
+  },
+};
+const t = labels[lang];
+---
+
+<div class="booked-widget" id="booked-widget" aria-live="polite">
+  <div class="booked-widget-inner" id="booked-widget-inner" style="display:none">
+    <div class="booked-header">
+      <span class="booked-dot-live"></span>
+      <strong id="booked-count-label"></strong>
+    </div>
+    <ul class="booked-list" id="booked-list" aria-label="Slots reservados"></ul>
+    <p class="booked-cta">{t.cta}</p>
+  </div>
+</div>
+
+<script define:vars={{ lang, t }}>
+  async function loadBookings() {
+    try {
+      const res = await fetch('/api/bookings.json');
+      if (!res.ok) return;
+      const { slots } = await res.json();
+      if (!slots || slots.length === 0) return;
+
+      const fmt = new Intl.DateTimeFormat(lang === 'es' ? 'es-ES' : 'en-GB', {
+        weekday: 'short',
+        day: 'numeric',
+        month: 'short',
+        hour: '2-digit',
+        minute: '2-digit',
+        timeZone: 'Europe/Madrid',
+      });
+
+      const widget = document.getElementById('booked-widget-inner');
+      const list = document.getElementById('booked-list');
+      const countLabel = document.getElementById('booked-count-label');
+
+      const label = slots.length === 1 ? t.booked : t.bookedPlural;
+      countLabel.textContent = `${slots.length} ${label}`;
+
+      list.innerHTML = slots.map(s => {
+        const date = new Date(s.start);
+        return `<li class="booked-slot"><span class="booked-slot-dot"></span>${fmt.format(date)}</li>`;
+      }).join('');
+
+      widget.style.display = '';
+    } catch {
+      // Silently fail — widget is optional
+    }
+  }
+
+  loadBookings();
+</script>
+
+<style>
+  .booked-widget {
+    margin-bottom: 24px;
+  }
+
+  .booked-widget-inner {
+    background: linear-gradient(135deg, #fff5f5 0%, #fff8f0 100%);
+    border: 1px solid #fecaca;
+    border-radius: 14px;
+    padding: 18px 22px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .booked-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .booked-dot-live {
+    width: 10px;
+    height: 10px;
+    background: #ef4444;
+    border-radius: 50%;
+    flex-shrink: 0;
+    animation: pulse-red 2s infinite;
+  }
+
+  @keyframes pulse-red {
+    0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 rgba(239,68,68,0.4); }
+    50% { opacity: 0.8; transform: scale(1.1); box-shadow: 0 0 0 6px rgba(239,68,68,0); }
+  }
+
+  .booked-header strong {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #991b1b;
+  }
+
+  .booked-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .booked-slot {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #fee2e2;
+    border: 1px solid #fca5a5;
+    border-radius: 999px;
+    padding: 4px 12px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #7f1d1d;
+  }
+
+  .booked-slot-dot {
+    width: 7px;
+    height: 7px;
+    background: #ef4444;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .booked-cta {
+    font-size: 0.82rem;
+    color: #92400e;
+    font-weight: 600;
+    margin: 0;
+    font-style: italic;
+  }
+</style>

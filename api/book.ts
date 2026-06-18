@@ -20,8 +20,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // Check if this email already has an upcoming booking for this event
     const checkUrl = new URL('https://api.cal.com/v2/bookings');
     checkUrl.searchParams.set('attendeeEmail', email);
-    checkUrl.searchParams.set('status', 'upcoming');
-    checkUrl.searchParams.set('limit', '10');
+    checkUrl.searchParams.set('limit', '50'); // no status filter → past + upcoming
 
     const checkRes = await fetch(checkUrl.toString(), {
       headers: {

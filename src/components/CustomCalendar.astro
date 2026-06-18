@@ -430,7 +430,8 @@ const { lang = 'es', calLink } = Astro.props;
     text-align: center;
   }
 
-  .ccal-weekdays span {
+  /* Weekday spans and day cells are created dynamically — need :global() */
+  :global(.ccal-weekdays span) {
     font-size: 0.72rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -446,7 +447,7 @@ const { lang = 'es', calLink } = Astro.props;
     gap: 2px;
   }
 
-  .ccal-day {
+  :global(.ccal-day) {
     position: relative;
     overflow: hidden;
     display: flex;
@@ -462,23 +463,23 @@ const { lang = 'es', calLink } = Astro.props;
     user-select: none;
   }
 
-  .ccal-day:not(.past):hover {
+  :global(.ccal-day:not(.past):hover) {
     background: rgba(30,60,114,0.1);
     transform: scale(1.08);
   }
 
-  .ccal-day.past {
+  :global(.ccal-day.past) {
     opacity: 0.3;
     cursor: default;
   }
 
-  .ccal-day.today span {
+  :global(.ccal-day.today span) {
     text-decoration: underline;
     text-underline-offset: 3px;
     text-decoration-color: #2a5298;
   }
 
-  .ccal-day.selected {
+  :global(.ccal-day.selected) {
     background: #1e3c72 !important;
     color: #fff !important;
     font-weight: 700;
@@ -486,9 +487,8 @@ const { lang = 'es', calLink } = Astro.props;
     box-shadow: 0 4px 16px rgba(30,60,114,0.35);
   }
 
-  /* Dot indicators */
-  .ccal-day.has-avail::after,
-  .ccal-day.has-booked::after {
+  :global(.ccal-day.has-avail::after),
+  :global(.ccal-day.has-booked::after) {
     content: '';
     position: absolute;
     bottom: 3px;
@@ -499,11 +499,10 @@ const { lang = 'es', calLink } = Astro.props;
     border-radius: 50%;
   }
 
-  .ccal-day.has-avail::after  { background: #16a34a; }
-  .ccal-day.has-booked::after { background: #ef4444; }
+  :global(.ccal-day.has-avail::after)  { background: #16a34a; }
+  :global(.ccal-day.has-booked::after) { background: #ef4444; }
 
-  /* Ripple */
-  .ccal-ripple {
+  :global(.ccal-ripple) {
     position: absolute;
     border-radius: 50%;
     background: rgba(30,60,114,0.2);
@@ -652,8 +651,8 @@ const { lang = 'es', calLink } = Astro.props;
     margin: 0;
   }
 
-  /* ── Slot pills ──────────────────────────────────────────────────────── */
-  .ccal-pill {
+  /* ── Slot pills (created dynamically → :global) ────────────────────── */
+  :global(.ccal-pill) {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -667,15 +666,14 @@ const { lang = 'es', calLink } = Astro.props;
     transition: background 0.18s, color 0.18s, transform 0.18s, box-shadow 0.18s;
   }
 
-  /* Free slot */
-  .ccal-pill-free {
+  :global(.ccal-pill-free) {
     background: #f0fdf4;
     border-color: #86efac;
     color: #15803d;
     cursor: pointer;
   }
 
-  .ccal-pill-free:hover {
+  :global(.ccal-pill-free:hover) {
     background: #16a34a;
     border-color: #16a34a;
     color: #fff;
@@ -683,19 +681,18 @@ const { lang = 'es', calLink } = Astro.props;
     box-shadow: 0 8px 20px rgba(22,163,74,0.32);
   }
 
-  .ccal-pill-free:active {
+  :global(.ccal-pill-free:active) {
     transform: translateY(-1px) scale(1.01);
   }
 
-  /* Booked slot */
-  .ccal-pill-booked {
+  :global(.ccal-pill-booked) {
     background: #fef2f2;
     border-color: #fca5a5;
     color: #991b1b;
     cursor: not-allowed;
   }
 
-  .ccal-pill-dot {
+  :global(.ccal-pill-dot) {
     width: 7px;
     height: 7px;
     border-radius: 50%;

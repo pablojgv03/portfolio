@@ -14,8 +14,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     const url = new URL('https://api.cal.com/v2/slots/available');
-    url.searchParams.set('username', 'pablo-gomez-villen');
-    url.searchParams.set('eventTypeSlug', 'primera-reunion');
+    url.searchParams.set('eventTypeId', '6041762');
     url.searchParams.set('startTime', String(startTime));
     url.searchParams.set('endTime', String(endTime));
     url.searchParams.set('timeZone', 'Europe/Madrid');
@@ -29,8 +28,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     if (!calRes.ok) throw new Error(`Cal.com slots error: ${calRes.status}`);
     const { data } = await calRes.json();
-    // data.slots: { "YYYY-MM-DD": [{ start: "...Z" }, ...] }
-    return res.status(200).json(data ?? { slots: {} });
+
+    // Normalize slot times to UTC ISO strings (Cal.com returns local+offset)
+    // data.slots: { "YYYY-MM-DD": [{ time: "...+02:00" }, ...] }
+    const normalized: Record<string, string[]> = {};
+    for (const [date, arr] of Object.entries((data?.slots ?? {}) as Record<string, { time: string }[]>)) {
+      normalized[date] = arr.map(s => new Date(s.time).toISOString());
+    }
+    return res.status(200).json({ slots: normalized });
   } catch {
     return res.status(200).json({ slots: {} });
   }

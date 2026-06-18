@@ -8,8 +8,39 @@ const { lang = 'es', calLink } = Astro.props;
 
 <div class="ccal" id="ccal" role="region" aria-label={lang === 'es' ? 'Calendario de reservas' : 'Booking calendar'}>
 
-  <!-- LEFT: month grid -->
+  <!-- ── LEFT PANEL ────────────────────────────────────────────── -->
   <div class="ccal-left">
+
+    <!-- Event info -->
+    <div class="ccal-event-info">
+      <img class="ccal-avatar" src="/img/foto-empresa.jpg" alt="Pablo Gómez Villén" />
+      <div class="ccal-event-meta">
+        <span class="ccal-organizer">Pablo Gómez Villén</span>
+        <strong class="ccal-event-name">
+          {lang === 'es' ? 'AUDITORÍA GRATUITA' : 'FREE AUDIT'}
+        </strong>
+        <span class="ccal-event-detail">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          20 {lang === 'es' ? 'min' : 'min'}
+        </span>
+        <span class="ccal-event-detail">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1a73e8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          Google Meet
+        </span>
+      </div>
+    </div>
+
+    <!-- Timezone selector - custom dropdown -->
+    <div class="ccal-tz-wrap" id="ccal-tz-wrap">
+      <button class="ccal-tz-btn" id="ccal-tz-btn" type="button" aria-haspopup="listbox" aria-expanded="false">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        <span class="ccal-tz-label" id="ccal-tz-label">Europe/Madrid</span>
+        <span class="ccal-tz-gmt" id="ccal-tz-gmt">GMT+2</span>
+        <svg class="ccal-tz-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+    </div>
+
+    <!-- Month navigation -->
     <div class="ccal-month-nav">
       <button class="ccal-arrow" id="ccal-prev" aria-label={lang === 'es' ? 'Mes anterior' : 'Previous month'}>&#8249;</button>
       <span class="ccal-month-title" id="ccal-month-title"></span>
@@ -26,19 +57,21 @@ const { lang = 'es', calLink } = Astro.props;
       </span>
       <span class="ccal-legend-item">
         <span class="ccal-dot ccal-dot-red"></span>
-        {lang === 'es' ? 'Reservado' : 'Booked'}
+        {lang === 'es' ? 'Ocupado' : 'Busy'}
       </span>
     </div>
   </div>
 
-  <!-- RIGHT: slots panel -->
+  <!-- ── RIGHT PANEL ───────────────────────────────────────────── -->
   <div class="ccal-right">
 
+    <!-- Empty state -->
     <div class="ccal-empty" id="ccal-empty">
       <div class="ccal-empty-arrow">&#8598;</div>
       <p>{lang === 'es' ? 'Elige un día para ver los huecos disponibles' : 'Pick a day to see available slots'}</p>
     </div>
 
+    <!-- Loading skeleton -->
     <div class="ccal-loading" id="ccal-loading" style="display:none" aria-hidden="true">
       <div class="ccal-skeleton ccal-skeleton-title"></div>
       <div class="ccal-skeleton-pills">
@@ -51,6 +84,7 @@ const { lang = 'es', calLink } = Astro.props;
       </div>
     </div>
 
+    <!-- Slots list -->
     <div class="ccal-slots" id="ccal-slots" style="display:none">
       <h4 class="ccal-slots-date" id="ccal-slots-date"></h4>
       <div class="ccal-slots-grid" id="ccal-slots-grid"></div>
@@ -59,76 +93,180 @@ const { lang = 'es', calLink } = Astro.props;
       </p>
     </div>
 
+    <!-- Booking form -->
+    <div class="ccal-form-panel" id="ccal-form-panel" style="display:none">
+      <button class="ccal-back-btn" id="ccal-back">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        {lang === 'es' ? 'Volver' : 'Back'}
+      </button>
+
+      <div class="ccal-form-slot-info" id="ccal-form-slot-info"></div>
+
+      <form class="ccal-form" id="ccal-form" novalidate>
+        <div class="ccal-field">
+          <label class="ccal-label" for="ccal-name">
+            {lang === 'es' ? 'Nombre completo' : 'Full name'} <span aria-hidden="true">*</span>
+          </label>
+          <input class="ccal-input" id="ccal-name" type="text" autocomplete="name"
+            placeholder={lang === 'es' ? 'Tu nombre' : 'Your name'} required />
+        </div>
+        <div class="ccal-field">
+          <label class="ccal-label" for="ccal-email">
+            Email <span aria-hidden="true">*</span>
+          </label>
+          <input class="ccal-input" id="ccal-email" type="email" autocomplete="email"
+            placeholder={lang === 'es' ? 'tu@email.com' : 'you@email.com'} required />
+        </div>
+        <div class="ccal-field">
+          <label class="ccal-label" for="ccal-notes">
+            {lang === 'es' ? 'Cuéntame sobre tu proyecto (opcional)' : 'Tell me about your project (optional)'}
+          </label>
+          <textarea class="ccal-input ccal-textarea" id="ccal-notes" rows="3"
+            placeholder={lang === 'es' ? 'Describe brevemente qué quieres mejorar...' : 'Briefly describe what you want to improve...'}></textarea>
+        </div>
+        <p class="ccal-form-error" id="ccal-form-error" style="display:none"></p>
+        <button type="submit" class="ccal-submit-btn" id="ccal-submit">
+          {lang === 'es' ? 'Confirmar reserva' : 'Confirm booking'}
+        </button>
+      </form>
+    </div>
+
+    <!-- Confirmation -->
+    <div class="ccal-confirm-panel" id="ccal-confirm-panel" style="display:none">
+      <div class="ccal-confirm-icon" aria-hidden="true">✓</div>
+      <h4 class="ccal-confirm-title">
+        {lang === 'es' ? '¡Reunión confirmada!' : 'Meeting confirmed!'}
+      </h4>
+      <p class="ccal-confirm-detail" id="ccal-confirm-detail"></p>
+      <a class="ccal-meet-link" id="ccal-meet-link" href="#" target="_blank" rel="noopener noreferrer" style="display:none">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        {lang === 'es' ? 'Unirse a Google Meet' : 'Join Google Meet'}
+      </a>
+      <p class="ccal-confirm-email-note">
+        {lang === 'es' ? 'Recibirás la confirmación por email.' : 'You will receive a confirmation email.'}
+      </p>
+    </div>
+
   </div>
 </div>
 
 <script define:vars={{ lang, calLink }}>
 (function () {
-  const TZ = 'Europe/Madrid';
+  // ── State ────────────────────────────────────────────────────────────
+  let currentTZ    = 'Europe/Madrid';
+  let viewYear     = new Date().getFullYear();
+  let viewMonth    = new Date().getMonth();
+  let selectedDate = null;
+  let selectedSlot = null;
+  let bookedSlots  = [];
+  let availSlots   = {};
+  let fetchPromises = {};
 
+  // ── i18n ─────────────────────────────────────────────────────────────
   const i18n = {
     es: {
       months: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
       wdays:  ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'],
-      booked: 'Reservado',
-      bookBtn: 'Reservar',
+      busy:   'Ocupado',
+      back:   'Volver',
+      book:   'Reservar',
+      submitting: 'Confirmando...',
+      errRequired: 'Por favor rellena nombre y email.',
+      errServer:   'Error al crear la reserva. Inténtalo de nuevo.',
     },
     en: {
       months: ['January','February','March','April','May','June','July','August','September','October','November','December'],
       wdays:  ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
-      booked: 'Booked',
-      bookBtn: 'Book',
+      busy:   'Busy',
+      back:   'Back',
+      book:   'Book',
+      submitting: 'Confirming...',
+      errRequired: 'Please fill in your name and email.',
+      errServer:   'Error creating booking. Please try again.',
     },
   };
   const t = i18n[lang] || i18n.es;
 
-  // ── DOM refs ────────────────────────────────────────────────────────
-  const elMonthTitle = document.getElementById('ccal-month-title');
-  const elWeekdays   = document.getElementById('ccal-weekdays');
-  const elDays       = document.getElementById('ccal-days');
-  const elEmpty      = document.getElementById('ccal-empty');
-  const elLoading    = document.getElementById('ccal-loading');
-  const elSlots      = document.getElementById('ccal-slots');
-  const elSlotsDate  = document.getElementById('ccal-slots-date');
-  const elSlotsGrid  = document.getElementById('ccal-slots-grid');
-  const elNoSlots    = document.getElementById('ccal-no-slots');
+  // ── DOM refs ──────────────────────────────────────────────────────────
+  const elMonthTitle  = document.getElementById('ccal-month-title');
+  const elWeekdays    = document.getElementById('ccal-weekdays');
+  const elDays        = document.getElementById('ccal-days');
+  const elEmpty       = document.getElementById('ccal-empty');
+  const elLoading     = document.getElementById('ccal-loading');
+  const elSlots       = document.getElementById('ccal-slots');
+  const elSlotsDate   = document.getElementById('ccal-slots-date');
+  const elSlotsGrid   = document.getElementById('ccal-slots-grid');
+  const elNoSlots     = document.getElementById('ccal-no-slots');
+  const elFormPanel   = document.getElementById('ccal-form-panel');
+  const elFormSlotInfo= document.getElementById('ccal-form-slot-info');
+  const elForm        = document.getElementById('ccal-form');
+  const elName        = document.getElementById('ccal-name');
+  const elEmail       = document.getElementById('ccal-email');
+  const elNotes       = document.getElementById('ccal-notes');
+  const elFormError   = document.getElementById('ccal-form-error');
+  const elSubmit      = document.getElementById('ccal-submit');
+  const elConfirm     = document.getElementById('ccal-confirm-panel');
+  const elConfirmDetail = document.getElementById('ccal-confirm-detail');
+  const elMeetLink    = document.getElementById('ccal-meet-link');
 
-  // ── State ────────────────────────────────────────────────────────────
-  let viewYear  = new Date().getFullYear();
-  let viewMonth = new Date().getMonth(); // 0-indexed
-  let selectedDate   = null;
-  let bookedSlots    = [];         // [{ start: "...Z", end: "...Z" }]
-  let availSlots     = {};         // { "YYYY-MM-DD": ["UTCstring", ...] }
-  let fetchPromises  = {};         // { "YYYY-MM": Promise }
-
-  // ── Helpers ──────────────────────────────────────────────────────────
+  // ── Helpers ───────────────────────────────────────────────────────────
   function dateKey(d) {
-    // Returns YYYY-MM-DD in Europe/Madrid — sv-SE locale gives that format
-    return new Intl.DateTimeFormat('sv-SE', { timeZone: TZ }).format(d);
+    return new Intl.DateTimeFormat('sv-SE', { timeZone: currentTZ }).format(d);
   }
-
-  function todayKey() { return dateKey(new Date()); }
 
   function fmtTime(utcStr) {
     return new Intl.DateTimeFormat(lang === 'es' ? 'es-ES' : 'en-GB', {
-      hour: '2-digit', minute: '2-digit', timeZone: TZ,
+      hour: '2-digit', minute: '2-digit', timeZone: currentTZ,
     }).format(new Date(utcStr));
   }
 
   function fmtDayHeader(d) {
     const s = d.toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-GB', {
-      weekday: 'long', day: 'numeric', month: 'long', timeZone: TZ,
+      weekday: 'long', day: 'numeric', month: 'long', timeZone: currentTZ,
     });
     return s.charAt(0).toUpperCase() + s.slice(1);
   }
 
-  // ── Fetch bookings once ───────────────────────────────────────────────
+  function fmtConfirmDate(utcStr) {
+    return new Intl.DateTimeFormat(lang === 'es' ? 'es-ES' : 'en-GB', {
+      weekday: 'long', day: 'numeric', month: 'long',
+      hour: '2-digit', minute: '2-digit', timeZone: currentTZ,
+    }).format(new Date(utcStr));
+  }
+
+  // ── Panel switcher ────────────────────────────────────────────────────
+  function showPanel(which) {
+    elEmpty.style.display    = which === 'empty'   ? '' : 'none';
+    elLoading.style.display  = which === 'loading' ? '' : 'none';
+    elSlots.style.display    = which === 'slots'   ? '' : 'none';
+    elFormPanel.style.display= which === 'form'    ? '' : 'none';
+    elConfirm.style.display  = which === 'confirm' ? '' : 'none';
+    if (which === 'slots' || which === 'form') {
+      const el = which === 'slots' ? elSlots : elFormPanel;
+      el.classList.remove('ccal-fade-in');
+      void el.offsetWidth;
+      el.classList.add('ccal-fade-in');
+    }
+  }
+
+  // ── Ripple ────────────────────────────────────────────────────────────
+  function ripple(el, e) {
+    const r  = el.getBoundingClientRect();
+    const sz = Math.max(r.width, r.height);
+    const sp = document.createElement('span');
+    sp.className = 'ccal-ripple';
+    sp.style.cssText = `width:${sz}px;height:${sz}px;left:${e.clientX-r.left-sz/2}px;top:${e.clientY-r.top-sz/2}px`;
+    el.appendChild(sp);
+    setTimeout(() => sp.remove(), 500);
+  }
+
+  // ── Fetch bookings ────────────────────────────────────────────────────
   fetch('/api/bookings')
     .then(r => r.json())
     .then(d => { bookedSlots = d.slots || []; renderMonth(); })
     .catch(() => {});
 
-  // ── Fetch available slots for a month (Promise-cached) ────────────────
+  // ── Fetch available slots (Promise-cached per month) ──────────────────
   function fetchMonth(year, month) {
     const key = `${year}-${String(month + 1).padStart(2, '0')}`;
     if (fetchPromises[key]) return fetchPromises[key];
@@ -142,10 +280,9 @@ const { lang = 'es', calLink } = Astro.props;
         const data = await res.json();
         const slotsMap = data.slots || {};
         for (const [dk, arr] of Object.entries(slotsMap)) {
-          availSlots[dk] = arr.map(s => s.start);
+          availSlots[dk] = arr; // already UTC strings
         }
-        renderMonth(); // refresh dots after load
-        // If user already clicked a day this month, re-render slots
+        renderMonth();
         if (selectedDate) {
           const sk = dateKey(selectedDate);
           if (availSlots[sk] !== undefined) renderSlots(selectedDate);
@@ -156,11 +293,36 @@ const { lang = 'es', calLink } = Astro.props;
     return fetchPromises[key];
   }
 
-  // ── Render month grid ────────────────────────────────────────────────
+  // ── Infer occupied slots ──────────────────────────────────────────────
+  function getOccupiedSlots(freeSet) {
+    if (freeSet.size === 0) return [];
+
+    let minMins = Infinity, maxMins = -Infinity;
+    for (const slots of Object.values(availSlots)) {
+      for (const s of slots) {
+        const d = new Date(s);
+        const m = d.getUTCHours() * 60 + d.getUTCMinutes();
+        if (m < minMins) minMins = m;
+        if (m > maxMins) maxMins = m;
+      }
+    }
+    if (minMins === Infinity) return [];
+
+    const utcDatePrefix = [...freeSet][0].substring(0, 10);
+    const occupied = [];
+    for (let m = minMins; m <= maxMins; m += 20) {
+      const hh = String(Math.floor(m / 60)).padStart(2, '0');
+      const mm = String(m % 60).padStart(2, '0');
+      const slot = `${utcDatePrefix}T${hh}:${mm}:00.000Z`;
+      if (!freeSet.has(slot)) occupied.push(slot);
+    }
+    return occupied;
+  }
+
+  // ── Render month grid ─────────────────────────────────────────────────
   function renderMonth() {
     elMonthTitle.textContent = `${t.months[viewMonth]} ${viewYear}`;
 
-    // Weekday headers (only once)
     if (!elWeekdays.children.length) {
       t.wdays.forEach(wd => {
         const s = document.createElement('span');
@@ -169,38 +331,27 @@ const { lang = 'es', calLink } = Astro.props;
       });
     }
 
-    const today    = new Date(); today.setHours(0,0,0,0);
-    const todayStr = dateKey(today);
-    const selStr   = selectedDate ? dateKey(selectedDate) : null;
+    const today   = new Date(); today.setHours(0,0,0,0);
+    const todayStr= dateKey(today);
+    const selStr  = selectedDate ? dateKey(selectedDate) : null;
 
-    // First day of month → which weekday (Mon=0)
     let dow = new Date(viewYear, viewMonth, 1).getDay();
     dow = dow === 0 ? 6 : dow - 1;
-
-    // Last day of month
     const lastDate = new Date(viewYear, viewMonth + 1, 0).getDate();
 
     elDays.innerHTML = '';
-
-    // Empty cells
-    for (let i = 0; i < dow; i++) {
-      elDays.appendChild(document.createElement('div'));
-    }
+    for (let i = 0; i < dow; i++) elDays.appendChild(document.createElement('div'));
 
     for (let d = 1; d <= lastDate; d++) {
-      const date    = new Date(viewYear, viewMonth, d);
-      const dk      = dateKey(date);
-      const isPast  = date < today;
-      const isToday = dk === todayStr;
-      const isSel   = dk === selStr;
-
+      const date   = new Date(viewYear, viewMonth, d);
+      const dk     = dateKey(date);
+      const isPast = date < today;
+      const isSel  = dk === selStr;
       const hasAvail  = (availSlots[dk] || []).length > 0;
       const hasBooked = bookedSlots.some(b => dateKey(new Date(b.start)) === dk);
 
       const cell = document.createElement('div');
       cell.className = 'ccal-day';
-      cell.setAttribute('data-date', dk);
-
       const num = document.createElement('span');
       num.textContent = d;
       cell.appendChild(num);
@@ -208,48 +359,48 @@ const { lang = 'es', calLink } = Astro.props;
       if (isPast) {
         cell.classList.add('past');
       } else {
-        if (isToday)    cell.classList.add('today');
-        if (isSel)      cell.classList.add('selected');
-        if (hasAvail)   cell.classList.add('has-avail');
-        if (hasBooked)  cell.classList.add('has-booked');
-
-        cell.addEventListener('click', e => {
-          ripple(cell, e);
-          selectDay(date);
-        });
+        if (dk === todayStr)  cell.classList.add('today');
+        if (isSel)            cell.classList.add('selected');
+        if (hasAvail)         cell.classList.add('has-avail');
+        else if (hasBooked)   cell.classList.add('has-booked'); // red only if zero free slots
+        cell.addEventListener('click', e => { ripple(cell, e); selectDay(date); });
       }
-
       elDays.appendChild(cell);
     }
   }
 
-  // ── Select a day ─────────────────────────────────────────────────────
+  // ── Select day ────────────────────────────────────────────────────────
   async function selectDay(date) {
     selectedDate = date;
-    renderMonth(); // update highlight
+    selectedSlot = null;
+    renderMonth();
     showPanel('loading');
     await fetchMonth(date.getFullYear(), date.getMonth());
     renderSlots(date);
   }
 
-  // ── Render slots for selected day ─────────────────────────────────────
+  // ── Render slots ──────────────────────────────────────────────────────
   function renderSlots(date) {
-    const dk   = dateKey(date);
-    const free = availSlots[dk] || [];
+    const dk      = dateKey(date);
+    const free    = availSlots[dk] || [];
+    const freeSet = new Set(free);
 
-    // Booked start times for this day
     const bookedTimes = new Set(
-      bookedSlots
-        .filter(b => dateKey(new Date(b.start)) === dk)
-        .map(b => b.start)
+      bookedSlots.filter(b => dateKey(new Date(b.start)) === dk).map(b => b.start)
     );
+    const occupied = getOccupiedSlots(freeSet);
 
     elSlotsDate.textContent = fmtDayHeader(date);
 
-    // All slots to display = free + booked (sorted by UTC time)
+    const now = new Date();
+
+    // free = green, past = grey, future occupied = red
     const allSlots = [
-      ...free.map(s => ({ start: s, isBooked: false })),
-      ...[...bookedTimes].map(s => ({ start: s, isBooked: true })),
+      ...free.map(s => ({ start: s, type: 'free' })),
+      ...occupied.map(s => ({
+        start: s,
+        type: new Date(s) < now ? 'past' : 'busy',
+      })),
     ].sort((a, b) => a.start.localeCompare(b.start));
 
     if (allSlots.length === 0) {
@@ -257,59 +408,244 @@ const { lang = 'es', calLink } = Astro.props;
       elNoSlots.style.display = '';
     } else {
       elNoSlots.style.display = 'none';
-      elSlotsGrid.innerHTML = allSlots.map(({ start, isBooked }) => {
+      elSlotsGrid.innerHTML = allSlots.map(({ start, type }) => {
         const time = fmtTime(start);
-        if (isBooked) {
-          return `<div class="ccal-pill ccal-pill-booked" title="${t.booked}" aria-label="${time} – ${t.booked}">
+        if (type === 'past') {
+          return `<div class="ccal-pill ccal-pill-past" aria-label="${time}" aria-hidden="true">${time}</div>`;
+        }
+        if (type === 'busy') {
+          return `<div class="ccal-pill ccal-pill-busy" title="${t.busy}" aria-label="${time} – ${t.busy}">
             <span class="ccal-pill-dot"></span>${time}
           </div>`;
         }
-        return `<button class="ccal-pill ccal-pill-free" data-slot="${start}" aria-label="${lang === 'es' ? 'Reservar' : 'Book'} ${time}">
+        return `<button class="ccal-pill ccal-pill-free" data-slot="${start}" aria-label="${t.book} ${time}">
           ${time}
         </button>`;
       }).join('');
 
       elSlotsGrid.querySelectorAll('.ccal-pill-free').forEach(btn => {
-        btn.addEventListener('click', () => bookSlot(dk, btn.dataset.slot));
+        btn.addEventListener('click', () => openForm(btn.dataset.slot));
       });
     }
-
     showPanel('slots');
   }
 
-  // ── Open Cal.com modal ────────────────────────────────────────────────
-  function bookSlot(dateStr, slotUTC) {
-    if (window.Cal) {
-      Cal('modal', { calLink, config: { date: dateStr } });
-    } else {
-      window.open(`https://cal.com/${calLink}?date=${dateStr}`, '_blank');
+  // ── Open booking form ─────────────────────────────────────────────────
+  function openForm(slotUTC) {
+    selectedSlot = slotUTC;
+    const time = fmtTime(slotUTC);
+    const day  = fmtDayHeader(selectedDate);
+    elFormSlotInfo.innerHTML = `
+      <div class="ccal-form-slot-badge">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <span>${day}</span>
+      </div>
+      <div class="ccal-form-slot-badge">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span>${time} · 20 min</span>
+      </div>`;
+    elFormError.style.display = 'none';
+    elSubmit.disabled = false;
+    elSubmit.textContent = lang === 'es' ? 'Confirmar reserva' : 'Confirm booking';
+    showPanel('form');
+  }
+
+  // ── Submit booking ────────────────────────────────────────────────────
+  elForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    const name  = elName.value.trim();
+    const email = elEmail.value.trim();
+    const notes = elNotes.value.trim();
+    if (!name || !email) {
+      elFormError.textContent = t.errRequired;
+      elFormError.style.display = '';
+      return;
     }
-  }
+    elFormError.style.display = 'none';
+    elSubmit.disabled = true;
+    elSubmit.textContent = t.submitting;
 
-  // ── Panel switcher ────────────────────────────────────────────────────
-  function showPanel(which) {
-    elEmpty.style.display   = which === 'empty'   ? '' : 'none';
-    elLoading.style.display = which === 'loading' ? '' : 'none';
-    elSlots.style.display   = which === 'slots'   ? '' : 'none';
-    if (which === 'slots') {
-      elSlots.classList.remove('ccal-fade-in');
-      void elSlots.offsetWidth;
-      elSlots.classList.add('ccal-fade-in');
+    try {
+      const res = await fetch('/api/book', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ start: selectedSlot, name, email, notes, timeZone: currentTZ, language: lang }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || t.errServer);
+
+      // Show confirmation
+      elConfirmDetail.textContent = fmtConfirmDate(data.start || selectedSlot);
+      if (data.meetingUrl) {
+        elMeetLink.href = data.meetingUrl;
+        elMeetLink.style.display = '';
+      } else {
+        elMeetLink.style.display = 'none';
+      }
+      showPanel('confirm');
+
+      // Refresh bookings in background
+      fetch('/api/bookings').then(r => r.json()).then(d => {
+        bookedSlots = d.slots || [];
+        renderMonth();
+      }).catch(() => {});
+    } catch (err) {
+      elFormError.textContent = err.message || t.errServer;
+      elFormError.style.display = '';
+      elSubmit.disabled = false;
+      elSubmit.textContent = lang === 'es' ? 'Confirmar reserva' : 'Confirm booking';
     }
+  });
+
+  // ── Back button ───────────────────────────────────────────────────────
+  document.getElementById('ccal-back').addEventListener('click', () => {
+    if (selectedDate) renderSlots(selectedDate);
+    else showPanel('empty');
+  });
+
+  // ── Custom timezone dropdown ──────────────────────────────────────────
+  const TIMEZONES = [
+    { tz: 'Europe/Madrid',        city: lang === 'es' ? 'Madrid'           : 'Madrid' },
+    { tz: 'Europe/London',        city: lang === 'es' ? 'Londres'          : 'London' },
+    { tz: 'Europe/Lisbon',        city: lang === 'es' ? 'Lisboa'           : 'Lisbon' },
+    { tz: 'Europe/Paris',         city: lang === 'es' ? 'París'            : 'Paris' },
+    { tz: 'Europe/Berlin',        city: lang === 'es' ? 'Berlín'           : 'Berlin' },
+    { tz: 'Europe/Rome',          city: lang === 'es' ? 'Roma'             : 'Rome' },
+    { tz: 'Europe/Amsterdam',     city: lang === 'es' ? 'Ámsterdam'        : 'Amsterdam' },
+    { tz: 'Europe/Brussels',      city: lang === 'es' ? 'Bruselas'         : 'Brussels' },
+    { tz: 'Europe/Warsaw',        city: lang === 'es' ? 'Varsovia'         : 'Warsaw' },
+    { tz: 'Europe/Moscow',        city: lang === 'es' ? 'Moscú'            : 'Moscow' },
+    { tz: 'America/New_York',     city: lang === 'es' ? 'Nueva York'       : 'New York' },
+    { tz: 'America/Chicago',      city: 'Chicago' },
+    { tz: 'America/Denver',       city: 'Denver' },
+    { tz: 'America/Los_Angeles',  city: lang === 'es' ? 'Los Ángeles'      : 'Los Angeles' },
+    { tz: 'America/Toronto',      city: 'Toronto' },
+    { tz: 'America/Mexico_City',  city: lang === 'es' ? 'Ciudad de México' : 'Mexico City' },
+    { tz: 'America/Bogota',       city: lang === 'es' ? 'Bogotá'           : 'Bogotá' },
+    { tz: 'America/Lima',         city: 'Lima' },
+    { tz: 'America/Santiago',     city: 'Santiago' },
+    { tz: 'America/Buenos_Aires', city: lang === 'es' ? 'Buenos Aires'     : 'Buenos Aires' },
+    { tz: 'America/Sao_Paulo',    city: lang === 'es' ? 'São Paulo'        : 'São Paulo' },
+    { tz: 'Asia/Dubai',           city: lang === 'es' ? 'Dubái'            : 'Dubai' },
+    { tz: 'Asia/Kolkata',         city: lang === 'es' ? 'Mumbai/Delhi'     : 'Mumbai/Delhi' },
+    { tz: 'Asia/Singapore',       city: lang === 'es' ? 'Singapur'         : 'Singapore' },
+    { tz: 'Asia/Tokyo',           city: lang === 'es' ? 'Tokio'            : 'Tokyo' },
+    { tz: 'Asia/Shanghai',        city: lang === 'es' ? 'Pekín/Shanghái'   : 'Beijing/Shanghai' },
+    { tz: 'Asia/Seoul',           city: lang === 'es' ? 'Seúl'             : 'Seoul' },
+    { tz: 'Australia/Sydney',     city: lang === 'es' ? 'Sídney'           : 'Sydney' },
+    { tz: 'Pacific/Auckland',     city: 'Auckland' },
+    { tz: 'Africa/Cairo',         city: lang === 'es' ? 'El Cairo'         : 'Cairo' },
+    { tz: 'Africa/Johannesburg',  city: 'Johannesburg' },
+    { tz: 'UTC',                  city: 'UTC' },
+  ];
+
+  function getGMTOffset(tz) {
+    try {
+      const parts = new Intl.DateTimeFormat('en', {
+        timeZone: tz, timeZoneName: 'shortOffset',
+      }).formatToParts(new Date());
+      const v = parts.find(p => p.type === 'timeZoneName')?.value ?? 'GMT';
+      return v.replace('GMT+0', 'GMT').replace('GMT-0', 'GMT');
+    } catch { return 'GMT'; }
   }
 
-  // ── Ripple effect ────────────────────────────────────────────────────
-  function ripple(el, e) {
-    const r   = el.getBoundingClientRect();
-    const sz  = Math.max(r.width, r.height);
-    const sp  = document.createElement('span');
-    sp.className = 'ccal-ripple';
-    sp.style.cssText = `width:${sz}px;height:${sz}px;left:${e.clientX - r.left - sz/2}px;top:${e.clientY - r.top - sz/2}px`;
-    el.appendChild(sp);
-    setTimeout(() => sp.remove(), 500);
+  function updateTzButton(tz) {
+    document.getElementById('ccal-tz-label').textContent = TIMEZONES.find(z => z.tz === tz)?.city ?? tz;
+    document.getElementById('ccal-tz-gmt').textContent   = getGMTOffset(tz);
   }
 
-  // ── Navigation ───────────────────────────────────────────────────────
+  // Build dropdown (appended to body to escape overflow:hidden)
+  let tzDropdown = null;
+
+  function buildTzDropdown() {
+    if (tzDropdown) return;
+    tzDropdown = document.createElement('div');
+    tzDropdown.className = 'ccal-tz-dropdown';
+    tzDropdown.innerHTML = `
+      <div class="ccal-tz-search-wrap">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input class="ccal-tz-search" id="ccal-tz-search" type="text"
+          placeholder="${lang === 'es' ? 'Buscar ciudad o zona...' : 'Search city or zone...'}"
+          autocomplete="off" spellcheck="false" />
+      </div>
+      <ul class="ccal-tz-list" id="ccal-tz-list" role="listbox"></ul>`;
+    document.body.appendChild(tzDropdown);
+
+    tzDropdown.querySelector('#ccal-tz-search').addEventListener('input', e => {
+      renderTzList(e.target.value.toLowerCase());
+    });
+
+    // Close on click outside
+    document.addEventListener('click', e => {
+      const btn = document.getElementById('ccal-tz-btn');
+      if (!tzDropdown.contains(e.target) && !btn.contains(e.target)) closeTzDropdown();
+    });
+  }
+
+  function renderTzList(filter = '') {
+    const list = document.getElementById('ccal-tz-list');
+    const filtered = TIMEZONES.filter(z =>
+      z.city.toLowerCase().includes(filter) || z.tz.toLowerCase().includes(filter)
+    );
+    list.innerHTML = filtered.map(z => {
+      const offset   = getGMTOffset(z.tz);
+      const isSel    = z.tz === currentTZ;
+      return `<li class="ccal-tz-item${isSel ? ' ccal-tz-item-sel' : ''}"
+                  role="option" aria-selected="${isSel}" data-tz="${z.tz}">
+        <span class="ccal-tz-item-city">${z.city}</span>
+        <span class="ccal-tz-item-offset">${offset}</span>
+      </li>`;
+    }).join('');
+
+    list.querySelectorAll('.ccal-tz-item').forEach(li => {
+      li.addEventListener('click', () => selectTz(li.dataset.tz));
+    });
+  }
+
+  function openTzDropdown() {
+    buildTzDropdown();
+    const btn  = document.getElementById('ccal-tz-btn');
+    const rect = btn.getBoundingClientRect();
+    tzDropdown.style.top    = `${rect.bottom + 6 + window.scrollY}px`;
+    tzDropdown.style.left   = `${rect.left + window.scrollX}px`;
+    tzDropdown.style.width  = `${Math.max(rect.width, 240)}px`;
+    tzDropdown.style.display = 'block';
+    btn.setAttribute('aria-expanded', 'true');
+    renderTzList();
+    // Scroll to selected
+    setTimeout(() => {
+      const sel = tzDropdown.querySelector('.ccal-tz-item-sel');
+      if (sel) sel.scrollIntoView({ block: 'nearest' });
+      tzDropdown.querySelector('#ccal-tz-search')?.focus();
+    }, 30);
+  }
+
+  function closeTzDropdown() {
+    if (!tzDropdown) return;
+    tzDropdown.style.display = 'none';
+    document.getElementById('ccal-tz-btn')?.setAttribute('aria-expanded', 'false');
+  }
+
+  function selectTz(tz) {
+    currentTZ = tz;
+    updateTzButton(tz);
+    closeTzDropdown();
+    availSlots = {};
+    fetchPromises = {};
+    renderMonth();
+    if (selectedDate) {
+      showPanel('loading');
+      fetchMonth(selectedDate.getFullYear(), selectedDate.getMonth()).then(() => renderSlots(selectedDate));
+    }
+    fetchMonth(viewYear, viewMonth);
+  }
+
+  document.getElementById('ccal-tz-btn').addEventListener('click', () => {
+    if (!tzDropdown || tzDropdown.style.display === 'none') openTzDropdown();
+    else closeTzDropdown();
+  });
+
+  // ── Month navigation ──────────────────────────────────────────────────
   document.getElementById('ccal-prev').addEventListener('click', () => {
     viewMonth--;
     if (viewMonth < 0) { viewMonth = 11; viewYear--; }
@@ -324,33 +660,13 @@ const { lang = 'es', calLink } = Astro.props;
     fetchMonth(viewYear, viewMonth);
   });
 
-  // ── Cal.com embed init (for modal) ────────────────────────────────────
-  (function (C, A, L) {
-    let p = function (a, ar) { a.q.push(ar); };
-    let d = C.document;
-    C.Cal = C.Cal || function () {
-      let cal = C.Cal, ar = arguments;
-      if (!cal.loaded) {
-        cal.ns = {}; cal.q = cal.q || [];
-        d.head.appendChild(d.createElement('script')).src = A;
-        cal.loaded = true;
-      }
-      if (ar[0] === L) {
-        const api = function () { p(api, arguments); };
-        const ns  = ar[1];
-        api.q = api.q || [];
-        if (typeof ns === 'string') { cal.ns[ns] = api; p(api, ar); } else p(cal, ar);
-        return;
-      }
-      p(cal, ar);
-    };
-  })(window, 'https://app.cal.com/embed/embed.js', 'init');
-  Cal('init', { origin: 'https://app.cal.com' });
-
-  // ── Boot ─────────────────────────────────────────────────────────────
+  // ── Boot ──────────────────────────────────────────────────────────────
+  updateTzButton(currentTZ);
   renderMonth();
-  fetchMonth(viewYear, viewMonth);
-  showPanel('empty');
+  // Auto-select today
+  const today = new Date();
+  fetchMonth(viewYear, viewMonth).then(() => selectDay(today));
+  showPanel('loading');
 })();
 </script>
 
@@ -358,7 +674,7 @@ const { lang = 'es', calLink } = Astro.props;
   /* ── Container ─────────────────────────────────────────────────────── */
   .ccal {
     display: grid;
-    grid-template-columns: 320px 1fr;
+    grid-template-columns: 300px 1fr;
     background: #fff;
     border-radius: 20px;
     box-shadow: 0 8px 48px rgba(30,60,114,0.13);
@@ -377,23 +693,111 @@ const { lang = 'es', calLink } = Astro.props;
   /* ── Left panel ─────────────────────────────────────────────────────── */
   .ccal-left {
     background: linear-gradient(160deg, #f0f4ff 0%, #e8f0fe 100%);
-    padding: 28px 22px 20px;
+    padding: 24px 20px 20px;
     border-right: 1px solid #dde8f8;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 14px;
   }
 
-  /* Month navigation */
+  /* Event info */
+  .ccal-event-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #dde8f8;
+  }
+
+  .ccal-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 2px solid #dde8f8;
+  }
+
+  .ccal-event-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .ccal-organizer {
+    font-size: 0.75rem;
+    color: #64748b;
+    font-weight: 500;
+  }
+
+  .ccal-event-name {
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: #1e3c72;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+
+  .ccal-event-detail {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.78rem;
+    color: #475569;
+  }
+
+  .ccal-event-detail svg { flex-shrink: 0; }
+
+  /* Timezone custom dropdown */
+  .ccal-tz-wrap { position: relative; }
+
+  .ccal-tz-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    background: rgba(255,255,255,0.7);
+    border: 1px solid #dde8f8;
+    border-radius: 8px;
+    padding: 7px 10px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.78rem;
+    color: #374151;
+    transition: background 0.15s, border-color 0.15s;
+    text-align: left;
+  }
+
+  .ccal-tz-btn:hover { background: #fff; border-color: #bfdbfe; }
+  .ccal-tz-btn[aria-expanded="true"] { background: #fff; border-color: #2a5298; }
+  .ccal-tz-btn svg { color: #64748b; flex-shrink: 0; }
+
+  .ccal-tz-label { flex: 1; font-weight: 600; color: #1e3c72; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  .ccal-tz-gmt {
+    font-size: 0.7rem;
+    font-weight: 700;
+    background: #eff6ff;
+    color: #2563eb;
+    border: 1px solid #bfdbfe;
+    border-radius: 4px;
+    padding: 1px 5px;
+    flex-shrink: 0;
+  }
+
+  .ccal-tz-chevron { transition: transform 0.2s; flex-shrink: 0; }
+  .ccal-tz-btn[aria-expanded="true"] .ccal-tz-chevron { transform: rotate(180deg); }
+
+  /* Month nav */
   .ccal-month-nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 8px;
+    gap: 4px;
   }
 
   .ccal-month-title {
-    font-size: 1rem;
+    font-size: 0.92rem;
     font-weight: 700;
     color: #1e3c72;
     letter-spacing: -0.01em;
@@ -402,19 +806,18 @@ const { lang = 'es', calLink } = Astro.props;
   }
 
   .ccal-arrow {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
     border: none;
     background: transparent;
     cursor: pointer;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     color: #64748b;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: background 0.15s, color 0.15s, transform 0.15s;
-    line-height: 1;
   }
 
   .ccal-arrow:hover {
@@ -423,21 +826,20 @@ const { lang = 'es', calLink } = Astro.props;
     transform: scale(1.08);
   }
 
-  /* Weekday headers */
+  /* Weekdays */
   .ccal-weekdays {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     text-align: center;
   }
 
-  /* Weekday spans and day cells are created dynamically — need :global() */
   :global(.ccal-weekdays span) {
-    font-size: 0.72rem;
+    font-size: 0.68rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: #94a3b8;
-    padding-bottom: 4px;
+    padding-bottom: 2px;
   }
 
   /* Days grid */
@@ -455,7 +857,7 @@ const { lang = 'es', calLink } = Astro.props;
     justify-content: center;
     aspect-ratio: 1;
     border-radius: 50%;
-    font-size: 0.88rem;
+    font-size: 0.84rem;
     font-weight: 500;
     color: #374151;
     cursor: pointer;
@@ -468,10 +870,7 @@ const { lang = 'es', calLink } = Astro.props;
     transform: scale(1.08);
   }
 
-  :global(.ccal-day.past) {
-    opacity: 0.3;
-    cursor: default;
-  }
+  :global(.ccal-day.past) { opacity: 0.3; cursor: default; }
 
   :global(.ccal-day.today span) {
     text-decoration: underline;
@@ -491,7 +890,7 @@ const { lang = 'es', calLink } = Astro.props;
   :global(.ccal-day.has-booked::after) {
     content: '';
     position: absolute;
-    bottom: 3px;
+    bottom: 2px;
     left: 50%;
     transform: translateX(-50%);
     width: 5px;
@@ -508,7 +907,6 @@ const { lang = 'es', calLink } = Astro.props;
     background: rgba(30,60,114,0.2);
     pointer-events: none;
     animation: ccal-ripple 0.45s ease-out forwards;
-    transform-origin: center;
   }
 
   @keyframes ccal-ripple {
@@ -519,32 +917,29 @@ const { lang = 'es', calLink } = Astro.props;
   /* Legend */
   .ccal-legend {
     display: flex;
-    gap: 16px;
+    gap: 12px;
+    flex-wrap: wrap;
     margin-top: auto;
-    padding-top: 8px;
+    padding-top: 4px;
   }
 
   .ccal-legend-item {
     display: flex;
     align-items: center;
-    gap: 6px;
-    font-size: 0.78rem;
+    gap: 5px;
+    font-size: 0.74rem;
     color: #64748b;
     font-weight: 500;
   }
 
   .ccal-dot {
-    width: 8px;
-    height: 8px;
+    width: 8px; height: 8px;
     border-radius: 50%;
     flex-shrink: 0;
   }
 
   .ccal-dot-green { background: #16a34a; }
-  .ccal-dot-red   {
-    background: #ef4444;
-    animation: ccal-pulse-red 2s infinite;
-  }
+  .ccal-dot-red   { background: #ef4444; animation: ccal-pulse-red 2s infinite; }
 
   @keyframes ccal-pulse-red {
     0%, 100% { box-shadow: 0 0 0 0 rgba(239,68,68,0.4); }
@@ -553,13 +948,13 @@ const { lang = 'es', calLink } = Astro.props;
 
   /* ── Right panel ────────────────────────────────────────────────────── */
   .ccal-right {
-    padding: 28px 24px;
+    padding: 24px 22px;
     display: flex;
     flex-direction: column;
-    min-height: 380px;
+    min-height: 420px;
   }
 
-  /* Empty state */
+  /* Empty */
   .ccal-empty {
     display: flex;
     flex-direction: column;
@@ -572,7 +967,7 @@ const { lang = 'es', calLink } = Astro.props;
   }
 
   .ccal-empty-arrow {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
     animation: ccal-bounce-arrow 2s ease-in-out infinite;
   }
 
@@ -581,21 +976,10 @@ const { lang = 'es', calLink } = Astro.props;
     50%       { transform: translate(0, 0); }
   }
 
-  .ccal-empty p {
-    font-size: 0.92rem;
-    font-weight: 500;
-    max-width: 200px;
-    line-height: 1.4;
-    margin: 0;
-  }
+  .ccal-empty p { font-size: 0.88rem; font-weight: 500; max-width: 180px; line-height: 1.4; margin: 0; }
 
-  /* Loading skeleton */
-  .ccal-loading {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    padding-top: 4px;
-  }
+  /* Skeleton */
+  .ccal-loading { display: flex; flex-direction: column; gap: 14px; }
 
   .ccal-skeleton {
     border-radius: 8px;
@@ -606,10 +990,10 @@ const { lang = 'es', calLink } = Astro.props;
 
   @keyframes ccal-shimmer {
     from { background-position: -300px 0; }
-    to   { background-position: 300px 0; }
+    to   { background-position:  300px 0; }
   }
 
-  .ccal-skeleton-title { height: 22px; width: 60%; }
+  .ccal-skeleton-title { height: 20px; width: 55%; }
 
   .ccal-skeleton-pills {
     display: grid;
@@ -617,14 +1001,16 @@ const { lang = 'es', calLink } = Astro.props;
     gap: 10px;
   }
 
-  .ccal-skeleton-pill { height: 44px; border-radius: 10px; }
+  .ccal-skeleton-pill { height: 42px; border-radius: 10px; }
 
-  /* Slots panel */
-  .ccal-slots { display: flex; flex-direction: column; gap: 16px; }
-
-  .ccal-fade-in {
-    animation: ccal-fadein 0.25s ease both;
+  /* Slots */
+  .ccal-slots, .ccal-form-panel, .ccal-confirm-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
   }
+
+  .ccal-fade-in { animation: ccal-fadein 0.22s ease both; }
 
   @keyframes ccal-fadein {
     from { opacity: 0; transform: translateY(6px); }
@@ -632,34 +1018,29 @@ const { lang = 'es', calLink } = Astro.props;
   }
 
   .ccal-slots-date {
-    font-size: 1rem;
+    font-size: 0.96rem;
     font-weight: 700;
     color: #1e3c72;
     margin: 0;
-    letter-spacing: -0.01em;
   }
 
   .ccal-slots-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
-    gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+    gap: 8px;
   }
 
-  .ccal-no-slots {
-    color: #94a3b8;
-    font-size: 0.88rem;
-    margin: 0;
-  }
+  .ccal-no-slots { color: #94a3b8; font-size: 0.85rem; margin: 0; }
 
-  /* ── Slot pills (created dynamically → :global) ────────────────────── */
+  /* ── Slot pills ──────────────────────────────────────────────────────── */
   :global(.ccal-pill) {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 5px;
-    padding: 10px 8px;
+    padding: 9px 6px;
     border-radius: 10px;
-    font-size: 0.88rem;
+    font-size: 0.85rem;
     font-weight: 600;
     text-align: center;
     border: 1.5px solid;
@@ -681,11 +1062,18 @@ const { lang = 'es', calLink } = Astro.props;
     box-shadow: 0 8px 20px rgba(22,163,74,0.32);
   }
 
-  :global(.ccal-pill-free:active) {
-    transform: translateY(-1px) scale(1.01);
+  :global(.ccal-pill-free:active) { transform: translateY(-1px) scale(1.01); }
+
+  :global(.ccal-pill-past) {
+    background: #f8fafc;
+    border-color: #e2e8f0;
+    color: #cbd5e1;
+    cursor: default;
+    text-decoration: line-through;
+    text-decoration-color: #e2e8f0;
   }
 
-  :global(.ccal-pill-booked) {
+  :global(.ccal-pill-busy) {
     background: #fef2f2;
     border-color: #fca5a5;
     color: #991b1b;
@@ -693,12 +1081,310 @@ const { lang = 'es', calLink } = Astro.props;
   }
 
   :global(.ccal-pill-dot) {
-    width: 7px;
-    height: 7px;
+    width: 6px; height: 6px;
     border-radius: 50%;
     background: #ef4444;
     flex-shrink: 0;
     animation: ccal-pulse-red 2s infinite;
+  }
+
+  /* ── Booking form ────────────────────────────────────────────────────── */
+  :global(.ccal-back-btn) {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    color: #64748b;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 6px 10px 6px 8px;
+    border-radius: 7px;
+    transition: background 0.15s, color 0.15s;
+    width: fit-content;
+    margin-left: -8px;
+  }
+
+  :global(.ccal-back-btn:hover) {
+    background: #f1f5f9;
+    color: #1e3c72;
+  }
+
+  :global(.ccal-form-slot-info) {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: linear-gradient(135deg, #eff6ff, #f0f9ff);
+    border: 1px solid #bfdbfe;
+    border-radius: 12px;
+    padding: 12px 14px;
+  }
+
+  :global(.ccal-form-slot-badge) {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: #1e40af;
+  }
+
+  :global(.ccal-form-slot-badge svg) { color: #3b82f6; flex-shrink: 0; }
+
+  :global(.ccal-form) { display: flex; flex-direction: column; gap: 14px; }
+
+  :global(.ccal-field) { display: flex; flex-direction: column; gap: 6px; }
+
+  :global(.ccal-label) {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #374151;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  :global(.ccal-label span) { color: #ef4444; }
+
+  :global(.ccal-input) {
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 11px 14px;
+    font-size: 0.88rem;
+    color: #111827;
+    outline: none;
+    transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
+    font-family: inherit;
+    background: #fafbfc;
+    width: 100%;
+    box-sizing: border-box;
+    line-height: 1.5;
+  }
+
+  :global(.ccal-input::placeholder) { color: #9ca3af; }
+
+  :global(.ccal-input:hover) {
+    border-color: #cbd5e1;
+    background: #fff;
+  }
+
+  :global(.ccal-input:focus) {
+    border-color: #2a5298;
+    background: #fff;
+    box-shadow: 0 0 0 3.5px rgba(42,82,152,0.14);
+  }
+
+  :global(.ccal-textarea) {
+    resize: vertical;
+    min-height: 80px;
+  }
+
+  :global(.ccal-form-error) {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+    font-size: 0.8rem;
+    color: #b91c1c;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    padding: 9px 12px;
+    margin: 0;
+  }
+
+  :global(.ccal-submit-btn) {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 22px;
+    font-size: 0.94rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.18s, box-shadow 0.18s, opacity 0.15s;
+    letter-spacing: -0.01em;
+    width: 100%;
+    margin-top: 2px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  :global(.ccal-submit-btn::after) {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  :global(.ccal-submit-btn:hover:not(:disabled)) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(30,60,114,0.35);
+  }
+
+  :global(.ccal-submit-btn:active:not(:disabled)) {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(30,60,114,0.2);
+  }
+
+  :global(.ccal-submit-btn:disabled) {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* ── Confirmation ────────────────────────────────────────────────────── */
+  .ccal-confirm-panel {
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    text-align: center;
+    gap: 14px;
+    padding: 12px 0;
+  }
+
+  .ccal-confirm-icon {
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #16a34a, #22c55e);
+    color: #fff;
+    font-size: 1.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 24px rgba(22,163,74,0.35);
+    animation: ccal-pop 0.45s cubic-bezier(0.34,1.56,0.64,1) both;
+  }
+
+  @keyframes ccal-pop {
+    from { opacity: 0; transform: scale(0.3); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  .ccal-confirm-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #1e3c72;
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+
+  .ccal-confirm-detail {
+    font-size: 0.88rem;
+    color: #374151;
+    font-weight: 600;
+    margin: 0;
+    background: #f0fdf4;
+    border: 1px solid #86efac;
+    border-radius: 10px;
+    padding: 10px 16px;
+    line-height: 1.5;
+  }
+
+  .ccal-meet-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: #1a73e8;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    padding: 11px 20px;
+    font-size: 0.86rem;
+    font-weight: 700;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 14px rgba(26,115,232,0.3);
+  }
+
+  .ccal-meet-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(26,115,232,0.4);
+  }
+
+  .ccal-confirm-email-note {
+    font-size: 0.77rem;
+    color: #94a3b8;
+    margin: 0;
+  }
+
+  /* ── Timezone dropdown (body-appended → global) ─────────────────────── */
+  :global(.ccal-tz-dropdown) {
+    position: absolute;
+    z-index: 9999;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.14), 0 2px 8px rgba(0,0,0,0.06);
+    overflow: hidden;
+    display: none;
+  }
+
+  :global(.ccal-tz-search-wrap) {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  :global(.ccal-tz-search-wrap svg) { color: #94a3b8; flex-shrink: 0; }
+
+  :global(.ccal-tz-search) {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 0.82rem;
+    color: #111827;
+    font-family: inherit;
+    background: transparent;
+  }
+
+  :global(.ccal-tz-search::placeholder) { color: #9ca3af; }
+
+  :global(.ccal-tz-list) {
+    list-style: none;
+    margin: 0;
+    padding: 4px 0;
+    max-height: 220px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  :global(.ccal-tz-list::-webkit-scrollbar) { width: 4px; }
+  :global(.ccal-tz-list::-webkit-scrollbar-track) { background: transparent; }
+  :global(.ccal-tz-list::-webkit-scrollbar-thumb) { background: #e2e8f0; border-radius: 4px; }
+
+  :global(.ccal-tz-item) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 8px 14px;
+    cursor: pointer;
+    transition: background 0.1s;
+    font-size: 0.82rem;
+  }
+
+  :global(.ccal-tz-item:hover) { background: #f8fafc; }
+
+  :global(.ccal-tz-item-sel) {
+    background: #eff6ff;
+    font-weight: 600;
+  }
+
+  :global(.ccal-tz-item-sel:hover) { background: #dbeafe; }
+
+  :global(.ccal-tz-item-city) { color: #1e293b; flex: 1; }
+
+  :global(.ccal-tz-item-offset) {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #2563eb;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 4px;
+    padding: 1px 6px;
+    flex-shrink: 0;
   }
 
   /* ── Responsive ─────────────────────────────────────────────────────── */
@@ -711,20 +1397,12 @@ const { lang = 'es', calLink } = Astro.props;
     .ccal-left {
       border-right: none;
       border-bottom: 1px solid #dde8f8;
-      padding: 20px 16px;
+      padding: 18px 16px;
     }
 
-    .ccal-right {
-      padding: 20px 16px;
-      min-height: 280px;
-    }
+    .ccal-right { padding: 18px 16px; min-height: 300px; }
 
-    .ccal-skeleton-pills {
-      grid-template-columns: repeat(4, 1fr);
-    }
-
-    .ccal-slots-grid {
-      grid-template-columns: repeat(auto-fill, minmax(68px, 1fr));
-    }
+    .ccal-skeleton-pills { grid-template-columns: repeat(4, 1fr); }
+    .ccal-slots-grid { grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); }
   }
 </style>

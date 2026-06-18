@@ -170,8 +170,9 @@ const { lang = 'es', calLink } = Astro.props;
       busy:   'Ocupado',
       back:   'Volver',
       book:   'Reservar',
-      submitting: 'Confirmando...',
+      submitting:  'Confirmando...',
       errRequired: 'Por favor rellena nombre y email.',
+      errDuplicate:'Este email ya tiene una reunión reservada. Revisa tu bandeja de entrada.',
       errServer:   'Error al crear la reserva. Inténtalo de nuevo.',
     },
     en: {
@@ -180,8 +181,9 @@ const { lang = 'es', calLink } = Astro.props;
       busy:   'Busy',
       back:   'Back',
       book:   'Book',
-      submitting: 'Confirming...',
+      submitting:  'Confirming...',
       errRequired: 'Please fill in your name and email.',
+      errDuplicate:'This email already has a meeting booked. Check your inbox.',
       errServer:   'Error creating booking. Please try again.',
     },
   };
@@ -472,7 +474,7 @@ const { lang = 'es', calLink } = Astro.props;
         body: JSON.stringify({ start: selectedSlot, name, email, notes, timeZone: currentTZ, language: lang }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || t.errServer);
+      if (!res.ok) throw new Error(data.error === 'duplicate' ? t.errDuplicate : (data.error || t.errServer));
 
       // Show confirmation
       elConfirmDetail.textContent = fmtConfirmDate(data.start || selectedSlot);

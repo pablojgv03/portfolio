@@ -17,6 +17,30 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
+    // Check if this email already has an upcoming booking for this event
+    const checkUrl = new URL('https://api.cal.com/v2/bookings');
+    checkUrl.searchParams.set('attendeeEmail', email);
+    checkUrl.searchParams.set('status', 'upcoming');
+    checkUrl.searchParams.set('limit', '10');
+
+    const checkRes = await fetch(checkUrl.toString(), {
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'cal-api-version': '2024-08-13',
+      },
+    });
+
+    if (checkRes.ok) {
+      const checkData = await checkRes.json();
+      const existing = (checkData.data ?? []).find(
+        (b: { eventType?: { id: number }; status: string }) =>
+          b.eventType?.id === 6041762 && b.status === 'accepted'
+      );
+      if (existing) {
+        return res.status(409).json({ error: 'duplicate' });
+      }
+    }
+
     const body: Record<string, unknown> = {
       start,
       eventTypeId: 6041762,

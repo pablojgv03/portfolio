@@ -139,8 +139,8 @@ const { lang = 'es', calLink } = Astro.props;
       </h4>
       <p class="ccal-confirm-detail" id="ccal-confirm-detail"></p>
       <a class="ccal-meet-link" id="ccal-meet-link" href="#" target="_blank" rel="noopener noreferrer" style="display:none">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-        {lang === 'es' ? 'Unirse a Google Meet' : 'Join Google Meet'}
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+        {lang === 'es' ? 'Unirse a la videollamada' : 'Join video call'}
       </a>
       <p class="ccal-confirm-email-note">
         {lang === 'es' ? 'Recibirás la confirmación por email.' : 'You will receive a confirmation email.'}
@@ -478,6 +478,11 @@ const { lang = 'es', calLink } = Astro.props;
       elConfirmDetail.textContent = fmtConfirmDate(data.start || selectedSlot);
       if (data.meetingUrl) {
         elMeetLink.href = data.meetingUrl;
+        const isGoogleMeet = data.meetingUrl.includes('meet.google.com');
+        const linkLabel = isGoogleMeet
+          ? (lang === 'es' ? 'Unirse a Google Meet' : 'Join Google Meet')
+          : (lang === 'es' ? 'Unirse a la videollamada' : 'Join video call');
+        elMeetLink.childNodes[elMeetLink.childNodes.length - 1].textContent = ' ' + linkLabel;
         elMeetLink.style.display = '';
       } else {
         elMeetLink.style.display = 'none';

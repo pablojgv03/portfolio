@@ -1,7 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import CalEmbed from '../../components/CalEmbed.astro';
-import BookedSlotsWidget from '../../components/BookedSlotsWidget.astro';
+import CustomCalendar from '../../components/CustomCalendar.astro';
 
 /**
  * ⚙️  SET YOUR CAL.COM LINK HERE:
@@ -113,12 +112,9 @@ const bookingSchema = {
       </span>
     </div>
 
-    <!-- Booked slots (social proof) -->
-    <BookedSlotsWidget lang="en" />
-
-    <!-- Cal.com calendar -->
+    <!-- Custom calendar -->
     <section class="calendar-section" aria-label="Select date and time">
-      <CalEmbed calLink={CAL_LINK} lang="en" />
+      <CustomCalendar calLink={CAL_LINK} lang="en" />
     </section>
 
     <!-- Trust signals -->

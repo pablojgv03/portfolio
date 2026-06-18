@@ -1,0 +1,733 @@
+---
+interface Props {
+  lang?: 'es' | 'en';
+  calLink: string;
+}
+const { lang = 'es', calLink } = Astro.props;
+---
+
+<div class="ccal" id="ccal" role="region" aria-label={lang === 'es' ? 'Calendario de reservas' : 'Booking calendar'}>
+
+  <!-- LEFT: month grid -->
+  <div class="ccal-left">
+    <div class="ccal-month-nav">
+      <button class="ccal-arrow" id="ccal-prev" aria-label={lang === 'es' ? 'Mes anterior' : 'Previous month'}>&#8249;</button>
+      <span class="ccal-month-title" id="ccal-month-title"></span>
+      <button class="ccal-arrow" id="ccal-next" aria-label={lang === 'es' ? 'Mes siguiente' : 'Next month'}>&#8250;</button>
+    </div>
+
+    <div class="ccal-weekdays" id="ccal-weekdays"></div>
+    <div class="ccal-days" id="ccal-days"></div>
+
+    <div class="ccal-legend">
+      <span class="ccal-legend-item">
+        <span class="ccal-dot ccal-dot-green"></span>
+        {lang === 'es' ? 'Libre' : 'Free'}
+      </span>
+      <span class="ccal-legend-item">
+        <span class="ccal-dot ccal-dot-red"></span>
+        {lang === 'es' ? 'Reservado' : 'Booked'}
+      </span>
+    </div>
+  </div>
+
+  <!-- RIGHT: slots panel -->
+  <div class="ccal-right">
+
+    <div class="ccal-empty" id="ccal-empty">
+      <div class="ccal-empty-arrow">&#8598;</div>
+      <p>{lang === 'es' ? 'Elige un día para ver los huecos disponibles' : 'Pick a day to see available slots'}</p>
+    </div>
+
+    <div class="ccal-loading" id="ccal-loading" style="display:none" aria-hidden="true">
+      <div class="ccal-skeleton ccal-skeleton-title"></div>
+      <div class="ccal-skeleton-pills">
+        <div class="ccal-skeleton ccal-skeleton-pill"></div>
+        <div class="ccal-skeleton ccal-skeleton-pill"></div>
+        <div class="ccal-skeleton ccal-skeleton-pill"></div>
+        <div class="ccal-skeleton ccal-skeleton-pill"></div>
+        <div class="ccal-skeleton ccal-skeleton-pill"></div>
+        <div class="ccal-skeleton ccal-skeleton-pill"></div>
+      </div>
+    </div>
+
+    <div class="ccal-slots" id="ccal-slots" style="display:none">
+      <h4 class="ccal-slots-date" id="ccal-slots-date"></h4>
+      <div class="ccal-slots-grid" id="ccal-slots-grid"></div>
+      <p class="ccal-no-slots" id="ccal-no-slots" style="display:none">
+        {lang === 'es' ? 'Sin huecos disponibles este día' : 'No slots available this day'}
+      </p>
+    </div>
+
+  </div>
+</div>
+
+<script define:vars={{ lang, calLink }}>
+(function () {
+  const TZ = 'Europe/Madrid';
+
+  const i18n = {
+    es: {
+      months: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+      wdays:  ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'],
+      booked: 'Reservado',
+      bookBtn: 'Reservar',
+    },
+    en: {
+      months: ['January','February','March','April','May','June','July','August','September','October','November','December'],
+      wdays:  ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+      booked: 'Booked',
+      bookBtn: 'Book',
+    },
+  };
+  const t = i18n[lang] || i18n.es;
+
+  // ── DOM refs ────────────────────────────────────────────────────────
+  const elMonthTitle = document.getElementById('ccal-month-title');
+  const elWeekdays   = document.getElementById('ccal-weekdays');
+  const elDays       = document.getElementById('ccal-days');
+  const elEmpty      = document.getElementById('ccal-empty');
+  const elLoading    = document.getElementById('ccal-loading');
+  const elSlots      = document.getElementById('ccal-slots');
+  const elSlotsDate  = document.getElementById('ccal-slots-date');
+  const elSlotsGrid  = document.getElementById('ccal-slots-grid');
+  const elNoSlots    = document.getElementById('ccal-no-slots');
+
+  // ── State ────────────────────────────────────────────────────────────
+  let viewYear  = new Date().getFullYear();
+  let viewMonth = new Date().getMonth(); // 0-indexed
+  let selectedDate   = null;
+  let bookedSlots    = [];         // [{ start: "...Z", end: "...Z" }]
+  let availSlots     = {};         // { "YYYY-MM-DD": ["UTCstring", ...] }
+  let fetchPromises  = {};         // { "YYYY-MM": Promise }
+
+  // ── Helpers ──────────────────────────────────────────────────────────
+  function dateKey(d) {
+    // Returns YYYY-MM-DD in Europe/Madrid — sv-SE locale gives that format
+    return new Intl.DateTimeFormat('sv-SE', { timeZone: TZ }).format(d);
+  }
+
+  function todayKey() { return dateKey(new Date()); }
+
+  function fmtTime(utcStr) {
+    return new Intl.DateTimeFormat(lang === 'es' ? 'es-ES' : 'en-GB', {
+      hour: '2-digit', minute: '2-digit', timeZone: TZ,
+    }).format(new Date(utcStr));
+  }
+
+  function fmtDayHeader(d) {
+    const s = d.toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-GB', {
+      weekday: 'long', day: 'numeric', month: 'long', timeZone: TZ,
+    });
+    return s.charAt(0).toUpperCase() + s.slice(1);
+  }
+
+  // ── Fetch bookings once ───────────────────────────────────────────────
+  fetch('/api/bookings')
+    .then(r => r.json())
+    .then(d => { bookedSlots = d.slots || []; renderMonth(); })
+    .catch(() => {});
+
+  // ── Fetch available slots for a month (Promise-cached) ────────────────
+  function fetchMonth(year, month) {
+    const key = `${year}-${String(month + 1).padStart(2, '0')}`;
+    if (fetchPromises[key]) return fetchPromises[key];
+
+    fetchPromises[key] = (async () => {
+      const start = new Date(year, month, 1).toISOString();
+      const end   = new Date(year, month + 1, 0, 23, 59, 59).toISOString();
+      try {
+        const res  = await fetch(`/api/slots?startTime=${encodeURIComponent(start)}&endTime=${encodeURIComponent(end)}`);
+        if (!res.ok) return;
+        const data = await res.json();
+        const slotsMap = data.slots || {};
+        for (const [dk, arr] of Object.entries(slotsMap)) {
+          availSlots[dk] = arr.map(s => s.start);
+        }
+        renderMonth(); // refresh dots after load
+        // If user already clicked a day this month, re-render slots
+        if (selectedDate) {
+          const sk = dateKey(selectedDate);
+          if (availSlots[sk] !== undefined) renderSlots(selectedDate);
+        }
+      } catch {}
+    })();
+
+    return fetchPromises[key];
+  }
+
+  // ── Render month grid ────────────────────────────────────────────────
+  function renderMonth() {
+    elMonthTitle.textContent = `${t.months[viewMonth]} ${viewYear}`;
+
+    // Weekday headers (only once)
+    if (!elWeekdays.children.length) {
+      t.wdays.forEach(wd => {
+        const s = document.createElement('span');
+        s.textContent = wd;
+        elWeekdays.appendChild(s);
+      });
+    }
+
+    const today    = new Date(); today.setHours(0,0,0,0);
+    const todayStr = dateKey(today);
+    const selStr   = selectedDate ? dateKey(selectedDate) : null;
+
+    // First day of month → which weekday (Mon=0)
+    let dow = new Date(viewYear, viewMonth, 1).getDay();
+    dow = dow === 0 ? 6 : dow - 1;
+
+    // Last day of month
+    const lastDate = new Date(viewYear, viewMonth + 1, 0).getDate();
+
+    elDays.innerHTML = '';
+
+    // Empty cells
+    for (let i = 0; i < dow; i++) {
+      elDays.appendChild(document.createElement('div'));
+    }
+
+    for (let d = 1; d <= lastDate; d++) {
+      const date    = new Date(viewYear, viewMonth, d);
+      const dk      = dateKey(date);
+      const isPast  = date < today;
+      const isToday = dk === todayStr;
+      const isSel   = dk === selStr;
+
+      const hasAvail  = (availSlots[dk] || []).length > 0;
+      const hasBooked = bookedSlots.some(b => dateKey(new Date(b.start)) === dk);
+
+      const cell = document.createElement('div');
+      cell.className = 'ccal-day';
+      cell.setAttribute('data-date', dk);
+
+      const num = document.createElement('span');
+      num.textContent = d;
+      cell.appendChild(num);
+
+      if (isPast) {
+        cell.classList.add('past');
+      } else {
+        if (isToday)    cell.classList.add('today');
+        if (isSel)      cell.classList.add('selected');
+        if (hasAvail)   cell.classList.add('has-avail');
+        if (hasBooked)  cell.classList.add('has-booked');
+
+        cell.addEventListener('click', e => {
+          ripple(cell, e);
+          selectDay(date);
+        });
+      }
+
+      elDays.appendChild(cell);
+    }
+  }
+
+  // ── Select a day ─────────────────────────────────────────────────────
+  async function selectDay(date) {
+    selectedDate = date;
+    renderMonth(); // update highlight
+    showPanel('loading');
+    await fetchMonth(date.getFullYear(), date.getMonth());
+    renderSlots(date);
+  }
+
+  // ── Render slots for selected day ─────────────────────────────────────
+  function renderSlots(date) {
+    const dk   = dateKey(date);
+    const free = availSlots[dk] || [];
+
+    // Booked start times for this day
+    const bookedTimes = new Set(
+      bookedSlots
+        .filter(b => dateKey(new Date(b.start)) === dk)
+        .map(b => b.start)
+    );
+
+    elSlotsDate.textContent = fmtDayHeader(date);
+
+    // All slots to display = free + booked (sorted by UTC time)
+    const allSlots = [
+      ...free.map(s => ({ start: s, isBooked: false })),
+      ...[...bookedTimes].map(s => ({ start: s, isBooked: true })),
+    ].sort((a, b) => a.start.localeCompare(b.start));
+
+    if (allSlots.length === 0) {
+      elSlotsGrid.innerHTML = '';
+      elNoSlots.style.display = '';
+    } else {
+      elNoSlots.style.display = 'none';
+      elSlotsGrid.innerHTML = allSlots.map(({ start, isBooked }) => {
+        const time = fmtTime(start);
+        if (isBooked) {
+          return `<div class="ccal-pill ccal-pill-booked" title="${t.booked}" aria-label="${time} – ${t.booked}">
+            <span class="ccal-pill-dot"></span>${time}
+          </div>`;
+        }
+        return `<button class="ccal-pill ccal-pill-free" data-slot="${start}" aria-label="${lang === 'es' ? 'Reservar' : 'Book'} ${time}">
+          ${time}
+        </button>`;
+      }).join('');
+
+      elSlotsGrid.querySelectorAll('.ccal-pill-free').forEach(btn => {
+        btn.addEventListener('click', () => bookSlot(dk, btn.dataset.slot));
+      });
+    }
+
+    showPanel('slots');
+  }
+
+  // ── Open Cal.com modal ────────────────────────────────────────────────
+  function bookSlot(dateStr, slotUTC) {
+    if (window.Cal) {
+      Cal('modal', { calLink, config: { date: dateStr } });
+    } else {
+      window.open(`https://cal.com/${calLink}?date=${dateStr}`, '_blank');
+    }
+  }
+
+  // ── Panel switcher ────────────────────────────────────────────────────
+  function showPanel(which) {
+    elEmpty.style.display   = which === 'empty'   ? '' : 'none';
+    elLoading.style.display = which === 'loading' ? '' : 'none';
+    elSlots.style.display   = which === 'slots'   ? '' : 'none';
+    if (which === 'slots') {
+      elSlots.classList.remove('ccal-fade-in');
+      void elSlots.offsetWidth;
+      elSlots.classList.add('ccal-fade-in');
+    }
+  }
+
+  // ── Ripple effect ────────────────────────────────────────────────────
+  function ripple(el, e) {
+    const r   = el.getBoundingClientRect();
+    const sz  = Math.max(r.width, r.height);
+    const sp  = document.createElement('span');
+    sp.className = 'ccal-ripple';
+    sp.style.cssText = `width:${sz}px;height:${sz}px;left:${e.clientX - r.left - sz/2}px;top:${e.clientY - r.top - sz/2}px`;
+    el.appendChild(sp);
+    setTimeout(() => sp.remove(), 500);
+  }
+
+  // ── Navigation ───────────────────────────────────────────────────────
+  document.getElementById('ccal-prev').addEventListener('click', () => {
+    viewMonth--;
+    if (viewMonth < 0) { viewMonth = 11; viewYear--; }
+    renderMonth();
+    fetchMonth(viewYear, viewMonth);
+  });
+
+  document.getElementById('ccal-next').addEventListener('click', () => {
+    viewMonth++;
+    if (viewMonth > 11) { viewMonth = 0; viewYear++; }
+    renderMonth();
+    fetchMonth(viewYear, viewMonth);
+  });
+
+  // ── Cal.com embed init (for modal) ────────────────────────────────────
+  (function (C, A, L) {
+    let p = function (a, ar) { a.q.push(ar); };
+    let d = C.document;
+    C.Cal = C.Cal || function () {
+      let cal = C.Cal, ar = arguments;
+      if (!cal.loaded) {
+        cal.ns = {}; cal.q = cal.q || [];
+        d.head.appendChild(d.createElement('script')).src = A;
+        cal.loaded = true;
+      }
+      if (ar[0] === L) {
+        const api = function () { p(api, arguments); };
+        const ns  = ar[1];
+        api.q = api.q || [];
+        if (typeof ns === 'string') { cal.ns[ns] = api; p(api, ar); } else p(cal, ar);
+        return;
+      }
+      p(cal, ar);
+    };
+  })(window, 'https://app.cal.com/embed/embed.js', 'init');
+  Cal('init', { origin: 'https://app.cal.com' });
+
+  // ── Boot ─────────────────────────────────────────────────────────────
+  renderMonth();
+  fetchMonth(viewYear, viewMonth);
+  showPanel('empty');
+})();
+</script>
+
+<style>
+  /* ── Container ─────────────────────────────────────────────────────── */
+  .ccal {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 8px 48px rgba(30,60,114,0.13);
+    border: 1px solid #e4ecf8;
+    overflow: hidden;
+    max-width: 860px;
+    margin: 0 auto;
+    animation: ccal-appear 0.4s ease both;
+  }
+
+  @keyframes ccal-appear {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Left panel ─────────────────────────────────────────────────────── */
+  .ccal-left {
+    background: linear-gradient(160deg, #f0f4ff 0%, #e8f0fe 100%);
+    padding: 28px 22px 20px;
+    border-right: 1px solid #dde8f8;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* Month navigation */
+  .ccal-month-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .ccal-month-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1e3c72;
+    letter-spacing: -0.01em;
+    flex: 1;
+    text-align: center;
+  }
+
+  .ccal-arrow {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 1.3rem;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s, color 0.15s, transform 0.15s;
+    line-height: 1;
+  }
+
+  .ccal-arrow:hover {
+    background: #1e3c72;
+    color: #fff;
+    transform: scale(1.08);
+  }
+
+  /* Weekday headers */
+  .ccal-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+  }
+
+  .ccal-weekdays span {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #94a3b8;
+    padding-bottom: 4px;
+  }
+
+  /* Days grid */
+  .ccal-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+  }
+
+  .ccal-day {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: #374151;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, transform 0.15s;
+    user-select: none;
+  }
+
+  .ccal-day:not(.past):hover {
+    background: rgba(30,60,114,0.1);
+    transform: scale(1.08);
+  }
+
+  .ccal-day.past {
+    opacity: 0.3;
+    cursor: default;
+  }
+
+  .ccal-day.today span {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: #2a5298;
+  }
+
+  .ccal-day.selected {
+    background: #1e3c72 !important;
+    color: #fff !important;
+    font-weight: 700;
+    transform: scale(1.1);
+    box-shadow: 0 4px 16px rgba(30,60,114,0.35);
+  }
+
+  /* Dot indicators */
+  .ccal-day.has-avail::after,
+  .ccal-day.has-booked::after {
+    content: '';
+    position: absolute;
+    bottom: 3px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+  }
+
+  .ccal-day.has-avail::after  { background: #16a34a; }
+  .ccal-day.has-booked::after { background: #ef4444; }
+
+  /* Ripple */
+  .ccal-ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(30,60,114,0.2);
+    pointer-events: none;
+    animation: ccal-ripple 0.45s ease-out forwards;
+    transform-origin: center;
+  }
+
+  @keyframes ccal-ripple {
+    from { opacity: 1; transform: scale(0); }
+    to   { opacity: 0; transform: scale(2.5); }
+  }
+
+  /* Legend */
+  .ccal-legend {
+    display: flex;
+    gap: 16px;
+    margin-top: auto;
+    padding-top: 8px;
+  }
+
+  .ccal-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.78rem;
+    color: #64748b;
+    font-weight: 500;
+  }
+
+  .ccal-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .ccal-dot-green { background: #16a34a; }
+  .ccal-dot-red   {
+    background: #ef4444;
+    animation: ccal-pulse-red 2s infinite;
+  }
+
+  @keyframes ccal-pulse-red {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(239,68,68,0.4); }
+    50%       { box-shadow: 0 0 0 5px rgba(239,68,68,0); }
+  }
+
+  /* ── Right panel ────────────────────────────────────────────────────── */
+  .ccal-right {
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    min-height: 380px;
+  }
+
+  /* Empty state */
+  .ccal-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    gap: 12px;
+    color: #94a3b8;
+    text-align: center;
+  }
+
+  .ccal-empty-arrow {
+    font-size: 2.5rem;
+    animation: ccal-bounce-arrow 2s ease-in-out infinite;
+  }
+
+  @keyframes ccal-bounce-arrow {
+    0%, 100% { transform: translate(-4px, -4px); }
+    50%       { transform: translate(0, 0); }
+  }
+
+  .ccal-empty p {
+    font-size: 0.92rem;
+    font-weight: 500;
+    max-width: 200px;
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  /* Loading skeleton */
+  .ccal-loading {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-top: 4px;
+  }
+
+  .ccal-skeleton {
+    border-radius: 8px;
+    background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+    background-size: 300px 100%;
+    animation: ccal-shimmer 1.4s infinite linear;
+  }
+
+  @keyframes ccal-shimmer {
+    from { background-position: -300px 0; }
+    to   { background-position: 300px 0; }
+  }
+
+  .ccal-skeleton-title { height: 22px; width: 60%; }
+
+  .ccal-skeleton-pills {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .ccal-skeleton-pill { height: 44px; border-radius: 10px; }
+
+  /* Slots panel */
+  .ccal-slots { display: flex; flex-direction: column; gap: 16px; }
+
+  .ccal-fade-in {
+    animation: ccal-fadein 0.25s ease both;
+  }
+
+  @keyframes ccal-fadein {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .ccal-slots-date {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1e3c72;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  .ccal-slots-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
+    gap: 10px;
+  }
+
+  .ccal-no-slots {
+    color: #94a3b8;
+    font-size: 0.88rem;
+    margin: 0;
+  }
+
+  /* ── Slot pills ──────────────────────────────────────────────────────── */
+  .ccal-pill {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 10px 8px;
+    border-radius: 10px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-align: center;
+    border: 1.5px solid;
+    transition: background 0.18s, color 0.18s, transform 0.18s, box-shadow 0.18s;
+  }
+
+  /* Free slot */
+  .ccal-pill-free {
+    background: #f0fdf4;
+    border-color: #86efac;
+    color: #15803d;
+    cursor: pointer;
+  }
+
+  .ccal-pill-free:hover {
+    background: #16a34a;
+    border-color: #16a34a;
+    color: #fff;
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 8px 20px rgba(22,163,74,0.32);
+  }
+
+  .ccal-pill-free:active {
+    transform: translateY(-1px) scale(1.01);
+  }
+
+  /* Booked slot */
+  .ccal-pill-booked {
+    background: #fef2f2;
+    border-color: #fca5a5;
+    color: #991b1b;
+    cursor: not-allowed;
+  }
+
+  .ccal-pill-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #ef4444;
+    flex-shrink: 0;
+    animation: ccal-pulse-red 2s infinite;
+  }
+
+  /* ── Responsive ─────────────────────────────────────────────────────── */
+  @media (max-width: 700px) {
+    .ccal {
+      grid-template-columns: 1fr;
+      border-radius: 16px;
+    }
+
+    .ccal-left {
+      border-right: none;
+      border-bottom: 1px solid #dde8f8;
+      padding: 20px 16px;
+    }
+
+    .ccal-right {
+      padding: 20px 16px;
+      min-height: 280px;
+    }
+
+    .ccal-skeleton-pills {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .ccal-slots-grid {
+      grid-template-columns: repeat(auto-fill, minmax(68px, 1fr));
+    }
+  }
+</style>

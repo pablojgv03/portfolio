@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
 Disallow: /api/
+Disallow: /reclutadores/
+Disallow: /recruiter/
 
 Sitemap: https://www.pablogomezvillen.com/sitemap-index.xml

@@ -3,6 +3,7 @@
     {
       "id": 4,
       "slug": "coregym-pos",
+      "audience": "negocios",
       "badge": "desktop",
       "title": "CoreGym POS",
       "image": "/img/projects/coregym-pos/portada.webp",
@@ -70,6 +71,7 @@
     {
       "id": 1,
       "slug": "duowatch",
+      "audience": "negocios",
       "badge": "web",
       "title": "DuoWatch",
       "image": "/img/projects/duowatch/portada.webp",
@@ -105,6 +107,7 @@
     {
       "id": 3,
       "slug": "local-reviews-ai",
+      "audience": "negocios",
       "badge": "desktop",
       "title": "Local Reviews AI",
       "image": "/img/projects/local-reviews-ai/portada.webp",

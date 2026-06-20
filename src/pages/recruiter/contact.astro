@@ -1,0 +1,136 @@
+---
+import LayoutReclutadores from '../../layouts/LayoutReclutadores.astro';
+---
+
+<LayoutReclutadores title="Contact — Pablo Gómez | Full Stack Developer" lang="en">
+
+  <div class="page-banner">
+    <h1>
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      Let's Talk
+    </h1>
+    <p>Tell me what you're looking for — I'll reply within 24 hours</p>
+  </div>
+
+  <div class="contacto-page">
+
+    <div>
+      <h2 style="font-size:1.3rem;font-weight:700;color:#1e3c72;margin-bottom:20px;">Send me a message</h2>
+
+      <form class="contact-form" action="https://formspree.io/f/xbdboaye" method="POST">
+        <div class="contact-form-group">
+          <label for="cf-nombre">Name *</label>
+          <input type="text" id="cf-nombre" name="nombre" required placeholder="Your name" autocomplete="name" />
+        </div>
+
+        <div class="contact-form-group">
+          <label for="cf-email">Email *</label>
+          <input type="email" id="cf-email" name="email" required placeholder="you@company.com" autocomplete="email" />
+        </div>
+
+        <div class="contact-form-group">
+          <label for="cf-empresa">Company (optional)</label>
+          <input type="text" id="cf-empresa" name="empresa" placeholder="Your company name" autocomplete="organization" />
+        </div>
+
+        <div class="contact-form-group">
+          <label for="cf-tipo">Reason for contact *</label>
+          <select id="cf-tipo" name="tipo_proyecto" required>
+            <option value="" disabled selected>Select an option...</option>
+            <option value="incorporacion">Full-time developer position</option>
+            <option value="freelance">Freelance / temporary contract</option>
+            <option value="colaboracion">One-off collaboration</option>
+            <option value="otro">Other</option>
+          </select>
+        </div>
+
+        <div class="contact-form-group">
+          <label for="cf-mensaje">Message *</label>
+          <textarea id="cf-mensaje" name="mensaje" required placeholder="Tell me how I can help you..."></textarea>
+        </div>
+
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div id="form-feedback" role="alert" aria-live="polite" style="display:none;padding:12px 16px;border-radius:8px;font-size:0.9rem;margin-bottom:12px"></div>
+
+        <button type="submit" class="contact-form-btn" id="form-submit-btn">
+          Send message →
+        </button>
+      </form>
+    </div>
+
+    <script>
+      const form = document.querySelector('.contact-form');
+      const feedback = document.getElementById('form-feedback');
+      const btn = document.getElementById('form-submit-btn');
+
+      form?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!btn || !feedback) return;
+        const originalText = btn.textContent ?? 'Send message →';
+        btn.textContent = 'Sending...';
+        btn.disabled = true;
+        feedback.style.display = 'none';
+        try {
+          const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+          if (res.ok) {
+            window.location.href = '/en/thank-you';
+          } else {
+            const data = await res.json().catch(() => ({}));
+            const msg = data.errors?.map((err) => err.message).join('. ') || 'Something went wrong. Please try again.';
+            showError(msg);
+          }
+        } catch {
+          showError('Connection error. Check your internet and try again.');
+        }
+        function showError(msg) {
+          feedback.textContent = msg;
+          Object.assign(feedback.style, { display: 'block', background: '#fee2e2', color: '#991b1b', border: '1px solid #fca5a5' });
+          btn.textContent = originalText;
+          btn.disabled = false;
+        }
+      });
+    </script>
+
+    <div class="contact-info-panel">
+      <h3>Contact information</h3>
+
+      <div class="contact-info-item">
+        <span class="contact-info-ico" aria-hidden="true">📧</span>
+        <div>
+          <span class="contact-info-label">Email</span>
+          <a href="mailto:pablogomezvillen@gmail.com" class="contact-info-val">pablogomezvillen@gmail.com</a>
+        </div>
+      </div>
+
+      <div class="contact-info-item">
+        <span class="contact-info-ico" aria-hidden="true">💼</span>
+        <div>
+          <span class="contact-info-label">LinkedIn</span>
+          <a href="https://www.linkedin.com/in/pablo-gomez-villen" target="_blank" rel="noopener noreferrer" class="contact-info-val">pablo-gomez-villen</a>
+        </div>
+      </div>
+
+      <div class="contact-info-item">
+        <span class="contact-info-ico" aria-hidden="true">📞</span>
+        <div>
+          <span class="contact-info-label">Phone</span>
+          <a href="tel:+34622400727" class="contact-info-val">+34 622 400 727</a>
+        </div>
+      </div>
+
+      <div class="contact-info-item">
+        <span class="contact-info-ico" aria-hidden="true">📍</span>
+        <div>
+          <span class="contact-info-label">Location</span>
+          <span class="contact-info-val" style="cursor:default">Granada, Spain<br><small style="font-weight:400;color:#696969">Available on-site, hybrid or fully remote</small></span>
+        </div>
+      </div>
+
+      <div class="contact-respuesta">
+        ⏱️ Usual response time: <strong>under 24 hours</strong> on working days
+      </div>
+    </div>
+
+  </div>
+
+</LayoutReclutadores>

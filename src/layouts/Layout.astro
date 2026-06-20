@@ -59,8 +59,8 @@ const navContact    = isEN ? 'Contact'              : 'Contacto';
 const navBook       = isEN ? 'Book a call'          : 'Reserva reunión';
 const heroGreeting  = isEN ? enData.hero.greeting   : 'Pablo Gómez, <span>Desarrollador Web</span> y SEO Local en Granada';
 const heroRole      = isEN
-  ? enData.hero.role
-  : 'Webs, SEO local y sistemas de reservas pensados para llenar tu agenda, no para acumular visitas que no llaman.<span class="hero-role-sub">También trabajo como desarrollador Full Stack — Laravel, PHP, JavaScript — en proyectos reales en producción.</span>';
+  ? 'I build websites that rank on Google and turn visits into clients.'
+  : 'Webs, SEO local y sistemas de reservas pensados para llenar tu agenda, no para acumular visitas que no llaman.';
 const heroBtnCV     = isEN ? enData.hero.btnCV      : 'Descargar CV';
 const cvFile        = isEN ? 'CV_Pablo_Gomez_Villen_Software-Developer.pdf' : 'CV_Full-stack_Pablo_Gomez_Villen_Desarrollador.pdf';
 const defaultRightsText = isEN ? enData.rights : '© 2026 Pablo Gómez Villén || Programador Full Stack';
@@ -229,12 +229,7 @@ const heroAvailability = isEN ? 'Available for work'   : 'Disponible para trabaj
             <span>Astro</span>
           </div>
           <div class="hero-buttons">
-            <a href={`${basePath}/proyectos`} class="btn secondary">{heroBtnProjects}</a>
             <a href={isEN ? '/en/servicios' : '/servicios'} class="btn">{isEN ? '💼 I need a website' : '💼 Necesito una web'}</a>
-            <a id="cv-link" href={`/${cvFile}`} download target="_blank" rel="noopener noreferrer" class="btn secondary btn--icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              {heroBtnCV}
-            </a>
             <a href={isEN ? '/en/book' : '/reserva'} class="btn btn-book">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
               {isEN ? 'Book a free call' : 'Agendar llamada gratuita'}

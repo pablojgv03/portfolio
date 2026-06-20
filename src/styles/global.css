@@ -89,16 +89,12 @@ body {
 
 .hero-buttons {
   margin-top: 20px;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  grid-template-rows: auto auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
-  gap: 0;
+  gap: 12px;
 }
-.hero-buttons > :first-child  { justify-self: end; }
-.hero-buttons > :nth-child(2) { justify-self: center; }
-.hero-buttons > :nth-child(3) { justify-self: start; }
-.hero-buttons > :nth-child(4) { grid-column: 1 / -1; justify-self: center; }
 
 @media (max-width: 640px) {
   .hero-buttons {
@@ -3747,6 +3743,134 @@ body:has(.sm-page) footer p {
   background: #2a5298;
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(30,60,114,0.3);
+}
+
+/* ── Especialización en clínicas (homepage) ── */
+.sector-focus {
+  padding: 0 20px 48px;
+}
+
+.sector-focus-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  background: linear-gradient(135deg, #d1fae5 0%, #ecfdf5 50%, #ccfbf1 100%);
+  border: 1px solid #6ee7b7;
+  border-radius: 24px;
+  padding: 48px 40px;
+}
+
+.sector-focus-eyebrow {
+  display: inline-block;
+  background: #0d9488;
+  color: #fff;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  border-radius: 99px;
+  padding: 4px 14px;
+  margin-bottom: 16px;
+}
+
+.sector-focus-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #134e4a;
+  margin-bottom: 8px;
+}
+
+.sector-focus-sub {
+  color: #374151;
+  margin-bottom: 32px;
+  font-size: 1.05rem;
+}
+
+.sector-focus-items {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.sector-focus-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: rgba(255,255,255,0.65);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.sector-focus-ico {
+  font-size: 1.6rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.sector-focus-item strong {
+  display: block;
+  color: #134e4a;
+  font-weight: 600;
+  font-size: .95rem;
+  margin-bottom: 4px;
+}
+
+.sector-focus-item span {
+  color: #6b7280;
+  font-size: .875rem;
+  line-height: 1.4;
+}
+
+.sector-focus-footer {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.sector-focus-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #0d9488;
+  color: #fff;
+  font-weight: 600;
+  font-size: .95rem;
+  padding: 12px 24px;
+  border-radius: 99px;
+  text-decoration: none;
+  transition: background .2s, transform .2s;
+  flex-shrink: 0;
+}
+
+.sector-focus-cta:hover {
+  background: #0f766e;
+  transform: translateY(-2px);
+}
+
+.sector-focus-also {
+  color: #6b7280;
+  font-size: .875rem;
+  margin: 0;
+}
+
+.sector-focus-also span {
+  color: #374151;
+  font-weight: 500;
+}
+
+@media (max-width: 640px) {
+  .sector-focus-inner {
+    padding: 32px 20px;
+  }
+  .sector-focus-items {
+    grid-template-columns: 1fr;
+  }
+  .sector-focus-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
 }
 
 /* ═══════════════════════════════

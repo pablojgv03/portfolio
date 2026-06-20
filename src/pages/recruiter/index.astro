@@ -1,0 +1,264 @@
+---
+import LayoutReclutadores from '../../layouts/LayoutReclutadores.astro';
+import enData from '../../data/i18n/en.json';
+import projectsData from '../../data/projects.json';
+
+function fmtDate(d: string) {
+  if (!d || !/^\d{4}-\d{2}-\d{2}$/.test(d)) return d || '';
+  const [y, m] = d.split('-');
+  return `${ ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][parseInt(m,10)-1] }. ${y}`;
+}
+
+const featuredEn = Object.entries(enData.blog)
+  .filter(([, p]) => (p as any).featured && !(p as any).hidden && (p as any).content)
+  .sort(([, a], [, b]) => ((b as any).date || '').localeCompare((a as any).date || ''))
+  .slice(0, 3)
+  .map(([slug, p]) => ({ slug, ...(p as any) }));
+---
+
+<LayoutReclutadores title="Pablo Gómez — Full Stack Developer in Granada | For Recruiters" lcp="/img/foto-empresa.webp" lang="en">
+
+  <header class="hero">
+    <div class="hero-content">
+      <div class="hero-status">
+        <span class="hero-status-dot"></span>
+        <span>Available for work</span>
+      </div>
+      <h1>Pablo Gómez, <span>Full Stack Developer</span> in Granada</h1>
+      <p>
+        1+ year of production experience with Laravel, PHP, JavaScript and MySQL.
+        AI &amp; Big Data specialisation. Currently studying DAW.
+        <span class="hero-role-sub">Real projects, clean code, and eager to keep growing in a team.</span>
+      </p>
+      <div class="hero-chips">
+        <span>Laravel</span>
+        <span>PHP</span>
+        <span>JavaScript</span>
+        <span>MySQL</span>
+        <span>Astro</span>
+      </div>
+      <div class="hero-buttons">
+        <a href="/recruiter/about" class="btn secondary">About me</a>
+        <a href="/recruiter/projects" class="btn secondary">View projects</a>
+        <a href="/CV_Pablo_Gomez_Villen_Software-Developer.pdf" download target="_blank" rel="noopener noreferrer" class="btn secondary btn--icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download CV
+        </a>
+      </div>
+      <a href="#main-content" class="hero-scroll-arrow" aria-label="Scroll down">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </a>
+    </div>
+  </header>
+
+  <section id="sobre-mi" class="section">
+    <h2>
+      <svg class="section-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      About me
+    </h2>
+    <div class="about-grid">
+      <div class="about-left">
+        <picture>
+          <source type="image/webp" srcset="/img/foto-empresa.webp">
+          <img src="/img/foto-empresa.jpg" alt="Pablo Gómez, Full Stack Developer in Granada" class="avatar" width="140" height="140" fetchpriority="high">
+        </picture>
+        <div class="about-quick-stats">
+          <div class="about-stat"><span class="about-stat-num">1+</span><span class="about-stat-lbl">yrs exp.</span></div>
+          <div class="about-stat"><span class="about-stat-num">2</span><span class="about-stat-lbl">companies</span></div>
+          <div class="about-stat"><span class="about-stat-num">📍</span><span class="about-stat-lbl">Granada</span></div>
+        </div>
+      </div>
+      <div class="about-text">
+        <p>Full Stack Developer with over a year of production experience, specialised in PHP (Laravel), JavaScript and MySQL. I have worked end-to-end on two real projects in edtech companies, from database design to REST API integration and front-end performance optimisation. Additional training in AI &amp; Big Data, and currently studying DAW (graduating Jun. 2026). Looking to join a team where I can keep growing as a Full Stack Developer.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="proyectos" class="section bg-light-rounded">
+    <h2>
+      <svg class="section-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+      Projects
+    </h2>
+    <div class="projects">
+      {projectsData.proyectos.map((p) => (
+        <article class={`project-card${p.image ? ' project-card--with-thumb' : ''}`}>
+          <a href={`/recruiter/projects/${p.slug}`} class="full-link" aria-label={`View ${p.title} details`}></a>
+          {p.image && (
+            <div class="project-card-thumb">
+              <img src={p.image} alt={p.imageAlt || p.title} loading="lazy" decoding="async" width="400" height="210" />
+            </div>
+          )}
+          <div class={p.image ? 'project-card-body' : ''}>
+            <div class="meta">
+              <span class="center">{p.badge === 'mobile' ? 'Android' : p.badge}</span>
+            </div>
+            <h3>{p.title}</h3>
+            <p class="project-desc">{p.description.en ?? p.description.es}</p>
+            {p.skills && p.skills.length > 0 && (
+              <div class="skills">
+                {p.skills.slice(0, 6).map(skill => (
+                  <span class={`skill ${skill.level ?? ''}`}>{skill.name}</span>
+                ))}
+              </div>
+            )}
+            <div class="links" style="position:relative;z-index:11">
+              {p['link-text'] && p['link-text'] !== '#' && (
+                <a href={p['link-text']} target="_blank" rel="noopener noreferrer">GitHub →</a>
+              )}
+              {p.link && p.link !== '#' && (
+                <a href={p.link} target="_blank" rel="noopener noreferrer">Demo →</a>
+              )}
+              <a href={`/recruiter/projects/${p.slug}`} class="rec-ver-detalle">View details →</a>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+    <div style="text-align:center;margin-top:2rem">
+      <a href="/recruiter/projects" class="btn secondary">View all projects →</a>
+    </div>
+  </section>
+
+  <section id="estudios" class="section">
+    <h2>
+      <svg class="section-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+      Education
+    </h2>
+    <div class="projects">
+      <div class="project-card card--study">
+        <h3>Web Application Development</h3>
+        <div class="meta">
+          <span class="center">iLERNA</span>
+          <span class="period"><span class="start">2025</span>–<span class="end">2026</span></span>
+        </div>
+        <div class="skills">
+          <span class="skill high">PHP</span><span class="skill high">JavaScript</span>
+          <span class="skill mid">MySQL</span><span class="skill mid">HTML</span><span class="skill mid">CSS</span>
+        </div>
+        <span class="tech">DAW | In progress</span>
+      </div>
+      <div class="project-card card--study">
+        <h3>AI &amp; Big Data Specialisation</h3>
+        <div class="meta">
+          <span class="center">Campus Net Manyanet Les Corts</span>
+          <span class="period"><span class="start">2025</span>–<span class="end">2025</span></span>
+        </div>
+        <div class="skills">
+          <span class="skill high">Python</span><span class="skill mid">Pandas</span><span class="skill mid">ML Modelling</span>
+        </div>
+        <span class="tech">AI | Big Data</span>
+      </div>
+      <div class="project-card card--study">
+        <h3>Cross-Platform Application Development</h3>
+        <div class="meta">
+          <span class="center">IES Francisco Ayala</span>
+          <span class="period"><span class="start">2021</span>–<span class="end">2023</span></span>
+        </div>
+        <div class="skills">
+          <span class="skill low">Odoo</span><span class="skill high">SQL</span><span class="skill mid">Hibernate</span>
+        </div>
+        <span class="tech">Mobile dev | JavaScript</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="experiencia" class="section bg-light-rounded">
+    <h2>
+      <svg class="section-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+      Experience
+    </h2>
+    <div class="projects">
+      <div class="project-card card--exp">
+        <a href="/recruiter/experience#exp-1" class="full-link" aria-label="View experience at EDUCA EDTECH Group"></a>
+        <h3>Full Stack Developer — EDUCA EDTECH Group</h3>
+        <p>Oct. 2023 – Jun. 2024 · 9 months · Hybrid</p>
+        <div class="skills">
+          <span class="skill high">Laravel</span><span class="skill high">PHP</span>
+          <span class="skill mid">Google Cloud</span><span class="skill low">ElasticSearch</span>
+        </div>
+        <span class="tech">Laravel | JavaScript | SQL</span>
+      </div>
+      <div class="project-card card--exp">
+        <a href="/recruiter/experience#exp-2" class="full-link" aria-label="View experience at Euroinnova"></a>
+        <h3>Junior Software Developer — Euroinnova</h3>
+        <p>Apr. 2023 – Oct. 2023 · 7 months · Hybrid</p>
+        <div class="skills">
+          <span class="skill high">Laravel</span><span class="skill high">PHP</span>
+          <span class="skill high">MySQL</span><span class="skill mid">JavaScript</span>
+        </div>
+        <span class="tech">PHP | Laravel | MySQL</span>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:2rem">
+      <a href="/recruiter/experience" class="btn secondary">View full experience →</a>
+    </div>
+  </section>
+
+  {featuredEn.length > 0 && (
+    <section class="section">
+      <div class="featured-header">
+        <h2>
+          <svg class="section-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          Featured articles
+        </h2>
+        <a href="/en/blog" class="featured-see-all">View all →</a>
+      </div>
+      <div class="featured-grid">
+        {featuredEn.map((p, i) => (
+          <a href={`/en/blog/${p.slug}`} class="featured-card" data-fi={i}>
+            <div class="featured-card-top">
+              <span class={`blog-card-category ${p.category === 'Training' ? 'cat-formation' : 'cat-info'}`}>{p.category}</span>
+              <span class="featured-card-date">{fmtDate(p.date)}</span>
+            </div>
+            <h3 class="featured-card-title">{p.title}</h3>
+            <p class="featured-card-sub">{(p.subtitle||'').slice(0,95)}{(p.subtitle||'').length>95?'…':''}</p>
+            <span class="featured-card-cta">Read article →</span>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <section id="contacto" class="section bg-dark">
+    <h2><span aria-hidden="true">📩 </span>Let's talk</h2>
+    <div class="contacto-footer-cta">
+      <p>Available immediately. <strong>Write to me and I'll reply today.</strong></p>
+      <ul class="contact">
+        <li>💼 <a href="https://www.linkedin.com/in/pablo-gomez-villen" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+        <li>📞 <a href="tel:+34622400727">+34 622 400 727</a></li>
+        <li>📧 <a href="mailto:pablogomezvillen@gmail.com">pablogomezvillen@gmail.com</a></li>
+      </ul>
+    </div>
+  </section>
+
+</LayoutReclutadores>
+
+<style>
+  .rec-ver-detalle {
+    margin-left: auto;
+    color: #2a5298;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding: 4px 0;
+    display: inline-flex;
+    align-items: center;
+  }
+  .rec-ver-detalle:hover { text-decoration: underline; }
+</style>
+
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const scrollArrow = document.querySelector('.hero-scroll-arrow');
+    if (scrollArrow) {
+      scrollArrow.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.getElementById('sobre-mi');
+        if (!target) return;
+        const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth';
+        const top = target.getBoundingClientRect().top + window.scrollY - 80;
+        window.scrollTo({ top, behavior });
+      });
+    }
+  });
+</script>

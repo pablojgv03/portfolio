@@ -1,0 +1,76 @@
+---
+import LayoutReclutadores from '../../layouts/LayoutReclutadores.astro';
+import expData from '../../data/experience.json';
+
+const defaultLang = 'es';
+---
+
+<LayoutReclutadores title="Experiencia — Pablo Gómez | Full Stack Developer">
+
+  <div class="page-banner">
+    <h1>
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+      Experiencia
+    </h1>
+    <p>Mi trayectoria profesional como desarrollador</p>
+    <a href="/CV_Full-stack_Pablo_Gomez_Villen_Desarrollador.pdf" download target="_blank" rel="noopener noreferrer" class="btn secondary btn--icon page-banner-cv">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Descargar CV
+    </a>
+  </div>
+
+  <section class="section">
+
+    <div class="exp-stats">
+      <div class="exp-stat">
+        <span class="exp-stat-num">1+</span>
+        <span class="exp-stat-label">año de experiencia</span>
+      </div>
+      <div class="exp-stat">
+        <span class="exp-stat-num">2</span>
+        <span class="exp-stat-label">empresas</span>
+      </div>
+      <div class="exp-stat">
+        <span class="exp-stat-num">2</span>
+        <span class="exp-stat-label">proyectos en producción</span>
+      </div>
+    </div>
+
+    <div class="exp-timeline">
+      {expData.experiencia.map((job) => (
+        <div class="exp-item" id={`exp-${job.id}`} data-exp-id={String(job.id)}>
+          <div class="exp-dot"></div>
+          <div class="exp-card">
+            <div class="exp-header">
+              <div class="exp-header-left">
+                <h2 class="exp-role">{job.role[defaultLang as 'es' | 'en']}</h2>
+                <p class="exp-company">{job.company}</p>
+              </div>
+              <div class="exp-badges">
+                <span class="exp-badge exp-duration">{job.duration[defaultLang as 'es' | 'en']}</span>
+                <span class="exp-badge exp-badge--mode exp-modality">{job.modality[defaultLang as 'es' | 'en']}</span>
+              </div>
+            </div>
+            <p class="exp-period">
+              <span class="exp-period-text">{job.period[defaultLang as 'es' | 'en']}</span>
+              {' · '}{job.location}
+            </p>
+            <p class="exp-desc">{job.description[defaultLang as 'es' | 'en']}</p>
+            <ul class="exp-bullets">
+              {job.bullets[defaultLang as 'es' | 'en'].map((b) => (
+                <li>{b}</li>
+              ))}
+            </ul>
+            <div class="skills">
+              {job.skills.map(skill => (
+                <span class={`skill ${skill.level}`}>{skill.name}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </section>
+
+</LayoutReclutadores>

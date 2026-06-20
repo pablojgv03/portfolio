@@ -1,0 +1,315 @@
+---
+import LayoutReclutadores from '../../layouts/LayoutReclutadores.astro';
+import esData from '../../data/i18n/es.json';
+import projectsData from '../../data/projects.json';
+
+function fmtDate(d: string) {
+  if (!d || !/^\d{4}-\d{2}-\d{2}$/.test(d)) return d || '';
+  const [y, m] = d.split('-');
+  return `${ ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'][parseInt(m,10)-1] }. ${y}`;
+}
+
+const featuredEs = Object.entries(esData.blog)
+  .filter(([, p]) => (p as any).featured && !(p as any).hidden)
+  .sort(([, a], [, b]) => ((b as any).date || '').localeCompare((a as any).date || ''))
+  .slice(0, 3)
+  .map(([slug, p]) => ({ slug, ...(p as any) }));
+---
+
+<LayoutReclutadores title="Pablo Gómez — Full Stack Developer en Granada | Para reclutadores" lcp="/img/foto-empresa.webp">
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-content">
+      <div class="hero-status">
+        <span class="hero-status-dot"></span>
+        <span>Disponible para trabajar</span>
+      </div>
+      <h1>Pablo Gómez, <span>Desarrollador Full Stack</span> en Granada</h1>
+      <p>
+        Más de 1 año de experiencia en producción con Laravel, PHP, JavaScript y MySQL.
+        Especialización en IA y Big Data. DAW en curso.
+        <span class="hero-role-sub">Proyectos reales, código limpio y ganas de seguir creciendo en equipo.</span>
+      </p>
+      <div class="hero-chips">
+        <span>Laravel</span>
+        <span>PHP</span>
+        <span>JavaScript</span>
+        <span>MySQL</span>
+        <span>Astro</span>
+      </div>
+      <div class="hero-buttons">
+        <a href="/reclutadores/pablo-gomez-villen" class="btn secondary">Sobre mí</a>
+        <a href="/reclutadores/proyectos" class="btn secondary">Ver proyectos</a>
+        <a href="/CV_Full-stack_Pablo_Gomez_Villen_Desarrollador.pdf" download target="_blank" rel="noopener noreferrer" class="btn secondary btn--icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Descargar CV
+        </a>
+      </div>
+      <a href="#main-content" class="hero-scroll-arrow" aria-label="Ver contenido">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- Sobre mí -->
+  <section id="sobre-mi" class="section">
+    <h2>
+      <svg class="section-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Sobre mí
+    </h2>
+    <div class="about-grid">
+      <div class="about-left">
+        <picture>
+          <source type="image/webp" srcset="/img/foto-empresa.webp">
+          <img src="/img/foto-empresa.jpg" alt="Pablo Gómez, Full Stack Developer en Granada" class="avatar" width="140" height="140" fetchpriority="high">
+        </picture>
+        <div class="about-quick-stats">
+          <div class="about-stat">
+            <span class="about-stat-num">1+</span>
+            <span class="about-stat-lbl">años exp.</span>
+          </div>
+          <div class="about-stat">
+            <span class="about-stat-num">2</span>
+            <span class="about-stat-lbl">empresas</span>
+          </div>
+          <div class="about-stat">
+            <span class="about-stat-num">📍</span>
+            <span class="about-stat-lbl">Granada</span>
+          </div>
+        </div>
+      </div>
+      <div class="about-text">
+        <p>Desarrollador Full Stack con más de un año de experiencia en producción, especializado en PHP (Laravel), JavaScript y MySQL. He trabajado en dos proyectos reales de principio a fin en empresas del sector edtech, desde el diseño de bases de datos hasta la integración de APIs REST y la mejora de rendimiento front-end. Formación complementaria en Especialización en IA y Big Data, y actualmente cursando DAW (jun. 2026). Busco incorporarme a un equipo donde seguir creciendo como desarrollador Full Stack.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Proyectos -->
+  <section id="proyectos" class="section bg-light-rounded">
+    <h2>
+      <svg class="section-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+      Proyectos
+    </h2>
+    <div class="projects">
+      {projectsData.proyectos.map((p) => (
+        <article class={`project-card${p.image ? ' project-card--with-thumb' : ''}`}>
+          <a href={`/reclutadores/proyectos/${p.slug}`} class="full-link" aria-label={`Ver detalle de ${p.title}`}></a>
+          {p.image && (
+            <div class="project-card-thumb">
+              <img src={p.image} alt={p.imageAlt || p.title} loading="lazy" decoding="async" width="400" height="210" />
+            </div>
+          )}
+          <div class={p.image ? 'project-card-body' : ''}>
+            <div class="meta">
+              <span class="center">{p.badge === 'mobile' ? 'Android' : p.badge}</span>
+            </div>
+            <h3>{p.title}</h3>
+            <p class="project-desc">{p.description.es}</p>
+            {p.skills && p.skills.length > 0 && (
+              <div class="skills" aria-label={`Aptitudes de ${p.title}`}>
+                {p.skills.slice(0, 6).map(skill => (
+                  <span class={`skill ${skill.level ?? ''}`}>{skill.name}</span>
+                ))}
+              </div>
+            )}
+            <div class="links" style="position:relative;z-index:11">
+              {p['link-text'] && p['link-text'] !== '#' && (
+                <a href={p['link-text']} target="_blank" rel="noopener noreferrer">GitHub →</a>
+              )}
+              {p.link && p.link !== '#' && (
+                <a href={p.link} target="_blank" rel="noopener noreferrer">Demo →</a>
+              )}
+              <a href={`/reclutadores/proyectos/${p.slug}`} class="rec-ver-detalle">Ver detalle →</a>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+    <div style="text-align:center;margin-top:2rem">
+      <a href="/reclutadores/proyectos" class="btn secondary">Ver todos los proyectos →</a>
+    </div>
+  </section>
+
+  <!-- Estudios -->
+  <section id="estudios" class="section">
+    <h2>
+      <svg class="section-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+      Estudios
+    </h2>
+    <div class="projects">
+
+      <div class="project-card card--study">
+        <a href="/reclutadores/blog/daw" class="full-link" aria-label="Ver estudios DAW"></a>
+        <h3>Desarrollo de Aplicaciones Web</h3>
+        <div class="meta">
+          <span class="center">iLERNA</span>
+          <span class="period"><span class="start">2025</span>–<span class="end">2026</span></span>
+        </div>
+        <div class="skills">
+          <span class="skill high">PHP</span>
+          <span class="skill high">JavaScript</span>
+          <span class="skill mid">MySQL</span>
+          <span class="skill mid">HTML</span>
+          <span class="skill mid">CSS</span>
+        </div>
+        <span class="tech">DAW | En curso</span>
+      </div>
+
+      <div class="project-card card--study">
+        <a href="/reclutadores/blog/ia-bigdata" class="full-link" aria-label="Ver especialización en IA y Big Data"></a>
+        <h3>Especialización en IA y Big Data</h3>
+        <div class="meta">
+          <span class="center">Campus Net Manyanet Les Corts</span>
+          <span class="period"><span class="start">2025</span>–<span class="end">2025</span></span>
+        </div>
+        <div class="skills">
+          <span class="skill high">Python</span>
+          <span class="skill mid">Pandas</span>
+          <span class="skill mid">Modelado ML</span>
+        </div>
+        <span class="tech">IA | Big Data</span>
+      </div>
+
+      <div class="project-card card--study">
+        <a href="/reclutadores/blog/dam" class="full-link" aria-label="Ver estudios DAM"></a>
+        <h3>Desarrollo de Aplicaciones Multiplataforma</h3>
+        <div class="meta">
+          <span class="center">IES Francisco Ayala</span>
+          <span class="period"><span class="start">2021</span>–<span class="end">2023</span></span>
+        </div>
+        <div class="skills">
+          <span class="skill low">Odoo</span>
+          <span class="skill high">SQL</span>
+          <span class="skill mid">Hibernate</span>
+        </div>
+        <span class="tech">Desarrollo móvil | JavaScript</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Experiencia -->
+  <section id="experiencia" class="section bg-light-rounded">
+    <h2>
+      <svg class="section-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+      Experiencia
+    </h2>
+    <div class="projects">
+      <div class="project-card card--exp">
+        <a href="/reclutadores/experiencia#exp-1" class="full-link" aria-label="Ver experiencia en EDUCA EDTECH Group"></a>
+        <h3>Programador Full Stack — EDUCA EDTECH Group</h3>
+        <p>oct. 2023 – jun. 2024 · 9 meses · Híbrido</p>
+        <div class="skills">
+          <span class="skill high">Laravel</span>
+          <span class="skill high">PHP</span>
+          <span class="skill mid">Google Cloud</span>
+          <span class="skill low">ElasticSearch</span>
+        </div>
+        <span class="tech">Laravel | JavaScript | SQL</span>
+      </div>
+
+      <div class="project-card card--exp">
+        <a href="/reclutadores/experiencia#exp-2" class="full-link" aria-label="Ver experiencia en Euroinnova"></a>
+        <h3>Junior Software Developer — Euroinnova</h3>
+        <p>abr. 2023 – oct. 2023 · 7 meses · Híbrido</p>
+        <div class="skills">
+          <span class="skill high">Laravel</span>
+          <span class="skill high">PHP</span>
+          <span class="skill high">MySQL</span>
+          <span class="skill mid">JavaScript</span>
+        </div>
+        <span class="tech">PHP | Laravel | MySQL</span>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:2rem">
+      <a href="/reclutadores/experiencia" class="btn secondary">Ver experiencia completa →</a>
+    </div>
+  </section>
+
+  <!-- Artículos destacados -->
+  {featuredEs.length > 0 && (
+    <section id="articulos-destacados" class="section">
+      <div class="featured-header">
+        <h2 id="featured-title">
+          <svg class="section-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          Artículos destacados
+        </h2>
+        <a href="/blog" class="featured-see-all">Ver todos →</a>
+      </div>
+      <div class="featured-grid">
+        {featuredEs.map((p, i) => (
+          <a href={`/blog/${p.slug}`} class="featured-card" data-fi={i}>
+            <div class="featured-card-top">
+              <span class={`blog-card-category ${p.category === 'Formación' ? 'cat-formation' : 'cat-info'}`}>{p.category}</span>
+              <span class="featured-card-date">{fmtDate(p.date)}</span>
+            </div>
+            <h3 class="featured-card-title">{p.title}</h3>
+            <p class="featured-card-sub">{(p.subtitle||'').slice(0,95)}{(p.subtitle||'').length>95?'…':''}</p>
+            <span class="featured-card-cta">Leer artículo →</span>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- Contacto -->
+  <section id="contacto" class="section bg-dark">
+    <h2><span aria-hidden="true">📩 </span>¿Hablamos?</h2>
+    <div class="contacto-footer-cta">
+      <p>
+        Disponible inmediatamente para incorporación.
+        <strong>Escríbeme y te respondo hoy.</strong>
+      </p>
+      <ul class="contact">
+        <li>💼 <a href="https://www.linkedin.com/in/pablo-gomez-villen" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+        <li>📞 <a href="tel:+34622400727">+34 622 400 727</a></li>
+        <li>📧 <a href="mailto:pablogomezvillen@gmail.com">pablogomezvillen@gmail.com</a></li>
+      </ul>
+    </div>
+  </section>
+
+</LayoutReclutadores>
+
+<style>
+  .rec-ver-detalle {
+    margin-left: auto;
+    color: #2a5298;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding: 4px 0;
+    display: inline-flex;
+    align-items: center;
+  }
+  .rec-ver-detalle:hover { text-decoration: underline; }
+</style>
+
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const scrollArrow = document.querySelector('.hero-scroll-arrow');
+    if (scrollArrow) {
+      scrollArrow.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.getElementById('sobre-mi');
+        if (!target) return;
+        const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth';
+        const top = target.getBoundingClientRect().top + window.scrollY - 80;
+        window.scrollTo({ top, behavior });
+      });
+    }
+
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const vh = window.innerHeight;
+      document.querySelectorAll('.project-card, .featured-card').forEach(el => {
+        if (el.getBoundingClientRect().top > vh * 0.88) el.classList.add('scroll-reveal');
+      });
+      const revObs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) { e.target.classList.add('visible'); revObs.unobserve(e.target); }
+        });
+      }, { threshold: 0.05 });
+      document.querySelectorAll('.scroll-reveal').forEach(el => revObs.observe(el));
+    }
+  });
+</script>

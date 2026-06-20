@@ -1,32 +1,19 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import projectsData from '../data/projects.json';
+import LayoutReclutadores from '../../../layouts/LayoutReclutadores.astro';
+import projectsData from '../../../data/projects.json';
 
 const badgeEmojis: Record<string, string> = {
   desktop: '🖥️',
   mobile: '📱',
   web: '🌐',
 };
-
-const proyectos = projectsData.proyectos.filter((p: any) => p.audience === 'negocios');
 ---
 
-<Layout
-  title="Proyectos — Pablo Gómez"
-  lang="es"
-  showHero={false}
-  description="Proyectos de desarrollo web y móvil de Pablo Gómez — aplicaciones full stack, apps Android y más."
-  canonical="https://www.pablogomezvillen.com/proyectos"
-  alternateEs="https://www.pablogomezvillen.com/proyectos"
-  alternateEn="https://www.pablogomezvillen.com/en/proyectos"
-  lcp={proyectos[0]?.image}
->
+<LayoutReclutadores title="Proyectos — Pablo Gómez" lcp={projectsData.proyectos[0]?.image}>
 
-  <!-- Banner de página -->
   <div class="page-banner">
-    <h1 data-i18n="section-proyectos.page-title">🚀 Proyectos</h1>
-    <p data-i18n="section-proyectos.subtitle">Una selección de mis proyectos personales y profesionales</p>
-    <p class="banner-rescue">¿Buscas una web para tu negocio? <a href="/servicios">Ver servicios</a></p>
+    <h1>🚀 Proyectos</h1>
+    <p>Una selección de mis proyectos personales y profesionales</p>
     <a href="/CV_Full-stack_Pablo_Gomez_Villen_Desarrollador.pdf" download target="_blank" rel="noopener noreferrer" class="btn secondary btn--icon page-banner-cv">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
       Descargar CV
@@ -35,21 +22,19 @@ const proyectos = projectsData.proyectos.filter((p: any) => p.audience === 'nego
 
   <section class="section proyectos-page">
 
-    <!-- Filtros -->
     <div class="filtros" role="group" aria-label="Filtrar proyectos">
-      <button class="filtro active" data-filtro="todos" data-i18n="filtros.todos">Todos</button>
-      <button class="filtro" data-filtro="desktop" data-i18n="filtros.desktop">🖥️ Escritorio</button>
-      <button class="filtro" data-filtro="mobile" data-i18n="filtros.mobile">📱 Móvil</button>
-      <button class="filtro" data-filtro="web" data-i18n="filtros.web">🌐 Web</button>
+      <button class="filtro active" data-filtro="todos">Todos</button>
+      <button class="filtro" data-filtro="desktop">🖥️ Escritorio</button>
+      <button class="filtro" data-filtro="mobile">📱 Móvil</button>
+      <button class="filtro" data-filtro="web">🌐 Web</button>
     </div>
 
     <p class="project-count" id="project-count"></p>
 
-    <!-- Grid de proyectos -->
     <div id="lista-proyectos" class="projects">
-      {proyectos.map((p, idx) => (
+      {projectsData.proyectos.map((p, idx) => (
         <article class={`project-card project-card--full${p.image ? ' project-card--with-thumb' : ''}`} data-badge={p.badge}>
-          <a href={`/proyectos/${p.slug}`} class="full-link" aria-label={`Ver detalle de ${p.title}`}></a>
+          <a href={`/reclutadores/proyectos/${p.slug}`} class="full-link" aria-label={`Ver detalle de ${p.title}`}></a>
           {p.image && (
             <div class="project-card-thumb">
               <img
@@ -83,7 +68,7 @@ const proyectos = projectsData.proyectos.filter((p: any) => p.audience === 'nego
               {p.link && p.link !== '#' && !p.link.includes('localhost') && p.link !== p['link-text'] && (
                 <a href={p.link} target="_blank" rel="noopener noreferrer">Demo →</a>
               )}
-              <a href={`/proyectos/${p.slug}`} class="link-detail">Ver detalle →</a>
+              <a href={`/reclutadores/proyectos/${p.slug}`} class="link-detail">Ver detalle →</a>
             </div>
           </div>
         </article>
@@ -144,4 +129,4 @@ const proyectos = projectsData.proyectos.filter((p: any) => p.audience === 'nego
   }
 </style>
 
-</Layout>
+</LayoutReclutadores>

@@ -4,7 +4,7 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://www.pablogomezvillen.com',
   output: 'static',
-  integrations: [sitemap()],
+  integrations: [sitemap({ filter: (page) => !page.includes('/reclutadores/') && !page.includes('/recruiter/') })],
   build: {
     inlineStylesheets: 'always',
   },

@@ -38,7 +38,7 @@
         },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://app.cal.com; style-src 'self' 'unsafe-inline' https://app.cal.com; img-src 'self' data: https://img.youtube.com https://i.ytimg.com https://www.googletagmanager.com https://app.cal.com https://cal.com; font-src 'self' https://app.cal.com; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://app.cal.com https://cal.com; frame-src https://www.youtube-nocookie.com https://www.youtube.com https://www.googletagmanager.com https://app.cal.com https://cal.com; frame-ancestors 'none';"
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://app.cal.com; style-src 'self' 'unsafe-inline' https://app.cal.com; img-src 'self' data: https://img.youtube.com https://i.ytimg.com https://www.googletagmanager.com https://app.cal.com https://cal.com; font-src 'self' https://app.cal.com; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://app.cal.com https://cal.com https://formspree.io; frame-src https://www.youtube-nocookie.com https://www.youtube.com https://www.googletagmanager.com https://app.cal.com https://cal.com; frame-ancestors 'none';"
         },
         {
           "key": "Permissions-Policy",

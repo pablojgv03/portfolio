@@ -10,6 +10,22 @@
       "source": "/:path+/",
       "destination": "/:path+",
       "permanent": true
+    },
+    {
+      "source": "/blog",
+      "has": [{ "type": "query", "key": "slug", "value": "(?<slug>.+)" }],
+      "destination": "/blog/:slug",
+      "permanent": true
+    },
+    {
+      "source": "/sobre-mi",
+      "destination": "/pablo-gomez-villen",
+      "permanent": true
+    },
+    {
+      "source": "/en/sobre-mi",
+      "destination": "/en/pablo-gomez-villen",
+      "permanent": true
     }
   ],
   "headers": [

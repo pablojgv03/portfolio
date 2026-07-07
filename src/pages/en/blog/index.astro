@@ -177,7 +177,8 @@ const posts = Object.entries(esData.blog)
   const grid     = document.getElementById('blog-grid');
   const noResult = document.getElementById('blog-no-results');
   const allCards = Array.from(grid.querySelectorAll('.blog-card'));
-  let curCat = '', curSearch = '', curSort = 'newest';
+  const initCat  = new URLSearchParams(window.location.search).get('cat') || '';
+  let curCat = initCat, curSearch = '', curSort = 'newest';
 
   function norm(s) {
     return (s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
@@ -252,6 +253,12 @@ const posts = Object.entries(esData.blog)
     curSearch = e.target.value;
     applyFilters();
   });
+
+  if (initCat) {
+    document.querySelectorAll('.blog-cat-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.cat === initCat);
+    });
+  }
 
   applyFilters();
 </script>

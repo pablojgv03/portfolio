@@ -1,29 +1,29 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import esData from '../../data/i18n/es.json';
-import enData from '../../data/i18n/en.json';
-import projectsData from '../../data/projects.json';
+import deData from '../../data/i18n/de.json';
 
 function fmtDate(d) {
   if (!d || !/^\d{4}-\d{2}-\d{2}$/.test(d)) return d || '';
   const [y, m] = d.split('-');
-  return `${ ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][parseInt(m,10)-1] }. ${y}`;
+  return `${ ['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'][parseInt(m,10)-1] }. ${y}`;
 }
 
-// Featured articles: use es.json for featured/date, en.json for content
+// Artículos destacados: fecha/orden desde es.json, contenido desde de.json si existe
 const featuredPosts = Object.entries(esData.blog)
   .filter(([, p]) => p.featured && !p.hidden)
   .sort(([, a], [, b]) => (b.date || '').localeCompare(a.date || ''))
   .slice(0, 3)
-  .map(([slug, p]) => ({ slug, ...p, ...(enData.blog?.[slug] || {}) }));
+  .map(([slug, p]) => ({ slug, ...p, ...(deData.blog?.[slug] || {}) }))
+  .filter((p) => deData.blog?.[p.slug]?.content);
 
-const en = enData;
+const de = deData;
 
 const personSchema = {
   "@context": "https://schema.org",
   "@type": "Person",
   "name": "Pablo Gómez",
-  "jobTitle": "Full Stack Developer",
+  "jobTitle": "Full-Stack-Entwickler",
   "url": "https://www.pablogomezvillen.com",
   "email": "pablogomezvillen@gmail.com",
   "telephone": "+34622400727",
@@ -34,37 +34,37 @@ const personSchema = {
 ---
 
 <Layout
-  title="Pablo Gómez — Web Developer & Local SEO in Granada | Full Stack PHP Laravel"
-  lang="en"
-  description="Professional websites for businesses in Granada and Spain. Local SEO, Google Business and Full Stack solutions with PHP, Laravel and JavaScript."
-  canonical="https://www.pablogomezvillen.com/en"
+  title="Pablo Gómez — Webentwickler & lokales SEO in Granada | Full-Stack PHP Laravel"
+  lang="de"
+  description="Professionelle Websites für Unternehmen in Granada und Spanien. Lokales SEO, Google Business und Full-Stack-Lösungen mit PHP, Laravel und JavaScript."
+  canonical="https://www.pablogomezvillen.com/de"
   alternateEs="https://www.pablogomezvillen.com/"
   alternateEn="https://www.pablogomezvillen.com/en"
   alternateDe="https://www.pablogomezvillen.com/de"
-  keywords="Full Stack Developer, Laravel, PHP, JavaScript, MySQL, Google Cloud, ElasticSearch, web developer, Granada, Spain"
+  keywords="Full-Stack-Entwickler, Laravel, PHP, JavaScript, MySQL, Google Cloud, ElasticSearch, Webentwickler, Granada, Spanien"
   jsonLd={[personSchema]}
   lcp="/img/foto-empresa.webp"
 >
-  <!-- About -->
+  <!-- Über mich -->
   <section id="sobre-mi" class="section">
     <h2>
       <svg class="section-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-      {en['section-sobre-mi'].title}
+      {de['section-sobre-mi'].title}
     </h2>
     <div class="about-grid">
       <div class="about-left">
         <picture>
           <source type="image/webp" srcset="/img/foto-empresa.webp">
-          <img src="/img/foto-empresa.jpg" alt="Pablo Gómez, Full Stack Developer in Granada" class="avatar" width="140" height="140" fetchpriority="high">
+          <img src="/img/foto-empresa.jpg" alt="Pablo Gómez, Full-Stack-Entwickler in Granada" class="avatar" width="140" height="140" fetchpriority="high">
         </picture>
         <div class="about-quick-stats">
           <div class="about-stat">
             <span class="about-stat-num">1+</span>
-            <span class="about-stat-lbl">yrs exp.</span>
+            <span class="about-stat-lbl">Jahre Erf.</span>
           </div>
           <div class="about-stat">
             <span class="about-stat-num">2</span>
-            <span class="about-stat-lbl">companies</span>
+            <span class="about-stat-lbl">Unternehmen</span>
           </div>
           <div class="about-stat">
             <span class="about-stat-num">📍</span>
@@ -73,94 +73,94 @@ const personSchema = {
         </div>
       </div>
       <div class="about-text">
-        <p>{en['section-sobre-mi'].content}</p>
+        <p>{de['section-sobre-mi'].content}</p>
       </div>
     </div>
   </section>
 
-  <!-- What can I help you with? -->
+  <!-- Wobei kann ich dir helfen? -->
   <section class="dual-section">
     <div class="dual-section-inner">
-      <h2>What can I help you with?</h2>
-      <p class="dual-section-sub">I work with two very different types of clients — which one are you?</p>
+      <h2>Wobei kann ich dir helfen?</h2>
+      <p class="dual-section-sub">Ich arbeite mit zwei sehr unterschiedlichen Arten von Kunden — welcher bist du?</p>
       <div class="dual-grid">
 
         <div class="dual-card dual-card--negocio">
-          <a href="/en/servicios" class="full-link" aria-label="See my services"></a>
+          <a href="/de/dienstleistungen" class="full-link" aria-label="Meine Leistungen ansehen"></a>
           <div class="dual-card-header">
-            <span class="dual-card-badge dual-card-badge--negocio">For businesses</span>
+            <span class="dual-card-badge dual-card-badge--negocio">Für Unternehmen</span>
             <span class="dual-card-ico" aria-hidden="true">🏪</span>
           </div>
-          <h3>I have a business and need clients</h3>
-          <p>I build a professional website that shows up on Google when someone searches for your business in your city. No jargon, no hassle.</p>
+          <h3>Ich habe ein Unternehmen und brauche mehr Kunden</h3>
+          <p>Ich baue dir eine professionelle Website, die bei Google auftaucht, wenn jemand dein Unternehmen in deiner Stadt sucht. Ohne Fachjargon, ohne Kopfschmerzen.</p>
           <ul>
             <li>
               <span class="dual-card-check" aria-hidden="true">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
               </span>
-              Modern and fast website
+              Moderne und schnelle Website
             </li>
             <li>
               <span class="dual-card-check" aria-hidden="true">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
               </span>
-              Custom automations for your business
+              Individuelle Automatisierungen für dein Unternehmen
             </li>
             <li>
               <span class="dual-card-check" aria-hidden="true">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
               </span>
-              Google Business Profile
+              Google Business Profil
             </li>
             <li>
               <span class="dual-card-check" aria-hidden="true">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
               </span>
-              Monthly maintenance
+              Monatliche Wartung
             </li>
           </ul>
-          <a href="/en/servicios" class="dual-card-cta dual-card-cta--negocio btn--icon" style="position:relative;z-index:11">
-            See my services
+          <a href="/de/dienstleistungen" class="dual-card-cta dual-card-cta--negocio btn--icon" style="position:relative;z-index:11">
+            Meine Leistungen ansehen
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
         </div>
 
         <div class="dual-card dual-card--tech">
-          <a href="/recruiter/about" class="full-link" aria-label="Learn more about me" target="_blank" rel="noopener noreferrer"></a>
+          <a href="/de/recruiter/ueber-mich" class="full-link" aria-label="Mehr über mich erfahren" target="_blank" rel="noopener noreferrer"></a>
           <div class="dual-card-header">
-            <span class="dual-card-badge dual-card-badge--tech">For recruiters</span>
+            <span class="dual-card-badge dual-card-badge--tech">Für Recruiter</span>
             <span class="dual-card-ico" aria-hidden="true">💻</span>
           </div>
-          <h3>I'm a recruiter looking for a Full Stack developer</h3>
-          <p>1+ year of production experience with Laravel, PHP, JavaScript and MySQL. Real projects, clean code and ability to work in a team.</p>
+          <h3>Ich bin Recruiter und suche einen Full-Stack-Entwickler</h3>
+          <p>Über 1 Jahr Produktionserfahrung mit Laravel, PHP, JavaScript und MySQL. Reale Projekte, sauberer Code und Teamfähigkeit.</p>
           <ul>
             <li>
               <span class="dual-card-check dual-card-check--tech" aria-hidden="true">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
               </span>
-              Full Stack PHP / Laravel
+              Full-Stack PHP / Laravel
             </li>
             <li>
               <span class="dual-card-check dual-card-check--tech" aria-hidden="true">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
               </span>
-              Production projects
+              Projekte in Produktion
             </li>
             <li>
               <span class="dual-card-check dual-card-check--tech" aria-hidden="true">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
               </span>
-              REST APIs, MySQL, JS
+              REST-APIs, MySQL, JS
             </li>
             <li>
               <span class="dual-card-check dual-card-check--tech" aria-hidden="true">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
               </span>
-              Immediately available
+              Sofort verfügbar
             </li>
           </ul>
-          <a href="/recruiter/about" class="dual-card-cta dual-card-cta--tech btn--icon" style="position:relative;z-index:11" target="_blank" rel="noopener noreferrer">
-            Learn more about me
+          <a href="/de/recruiter/ueber-mich" class="dual-card-cta dual-card-cta--tech btn--icon" style="position:relative;z-index:11" target="_blank" rel="noopener noreferrer">
+            Mehr über mich erfahren
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
         </div>
@@ -169,78 +169,78 @@ const personSchema = {
     </div>
   </section>
 
-  <!-- Clinic specialization -->
+  <!-- Spezialisierung auf Kliniken -->
   <section class="sector-focus">
     <div class="sector-focus-inner">
-      <div class="sector-focus-eyebrow">Specialization</div>
-      <h2 class="sector-focus-title">I mainly work with clinics</h2>
-      <p class="sector-focus-sub">Dental, aesthetic, physiotherapy and health. I know their specific problems — and I have the solution.</p>
+      <div class="sector-focus-eyebrow">Spezialisierung</div>
+      <h2 class="sector-focus-title">Ich arbeite hauptsächlich mit Kliniken</h2>
+      <p class="sector-focus-sub">Zahnärzte, Ästhetik, Physiotherapie und Gesundheit. Ich kenne ihre konkreten Probleme — und ich habe die Lösung.</p>
       <div class="sector-focus-items">
         <div class="sector-focus-item">
           <span class="sector-focus-ico">📅</span>
           <div>
-            <strong>Online booking that works</strong>
-            <span>Mobile reservations, no phone calls, no lost patients.</span>
+            <strong>Online-Terminbuchung, die funktioniert</strong>
+            <span>Buchungen vom Smartphone, keine Anrufe, keine verlorenen Patienten.</span>
           </div>
         </div>
         <div class="sector-focus-item">
           <span class="sector-focus-ico">⭐</span>
           <div>
-            <strong>Google reputation</strong>
-            <span>Optimised Google Business profile and review management.</span>
+            <strong>Google-Reputation</strong>
+            <span>Optimiertes Google-Business-Profil und Bewertungsmanagement.</span>
           </div>
         </div>
         <div class="sector-focus-item">
           <span class="sector-focus-ico">🌐</span>
           <div>
-            <strong>A website that builds trust</strong>
-            <span>Professional design that turns visitors into new patients.</span>
+            <strong>Eine Website, die Vertrauen schafft</strong>
+            <span>Professionelles Design, das Besucher in neue Patienten verwandelt.</span>
           </div>
         </div>
       </div>
       <div class="sector-focus-footer">
-        <a href="/en/servicios" class="sector-focus-cta btn--icon">
-          See how I work with clinics
+        <a href="/de/dienstleistungen" class="sector-focus-cta btn--icon">
+          So arbeite ich mit Kliniken
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <p class="sector-focus-also">I also work with <span>restaurants</span> · <span>shops</span> · <span>academies</span></p>
+        <p class="sector-focus-also">Ich arbeite auch mit <span>Restaurants</span> · <span>Geschäften</span> · <span>Akademien</span></p>
       </div>
     </div>
   </section>
 
-  <!-- Featured articles -->
+  <!-- Ausgewählte Artikel -->
   {featuredPosts.length > 0 && (
     <section id="articulos-destacados" class="section">
       <div class="featured-header">
         <h2>
           <svg class="section-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          {en.featured.title}
+          {de.featured.title}
         </h2>
-        <a href="/en/blog" class="featured-see-all">{en.featured['see-all']}</a>
+        <a href="/de/blog" class="featured-see-all">{de.featured['see-all']}</a>
       </div>
       <div class="featured-grid">
         {featuredPosts.map((p) => (
-          <a href={`/en/blog/${p.slug}`} class="featured-card">
+          <a href={`/de/blog/${p.slug}`} class="featured-card">
             <div class="featured-card-top">
-              <span class={`blog-card-category ${p.category === 'Education' ? 'cat-formation' : 'cat-info'}`}>{p.category}</span>
+              <span class={`blog-card-category ${p.category === 'Ausbildung' ? 'cat-formation' : 'cat-info'}`}>{p.category}</span>
               <span class="featured-card-date">{fmtDate(p.date)}</span>
             </div>
             <h3 class="featured-card-title">{p.title}</h3>
             <p class="featured-card-sub">{(p.subtitle||'').slice(0,95)}{(p.subtitle||'').length>95?'…':''}</p>
-            <span class="featured-card-cta">{en.featured.read}</span>
+            <span class="featured-card-cta">{de.featured.read}</span>
           </a>
         ))}
       </div>
     </section>
   )}
 
-  <!-- Contact -->
+  <!-- Kontakt -->
   <section id="contacto" class="section bg-dark">
-    <h2><span aria-hidden="true">📩 </span>{en.contact.title}</h2>
+    <h2><span aria-hidden="true">📩 </span>{de.contact.title}</h2>
     <div class="contacto-footer-cta">
-      <p set:html={en.contact.content}></p>
+      <p set:html={de.contact.content}></p>
       <a
-        href="https://wa.me/34622400727?text=Hi%20Pablo%2C%20I%27ve%20seen%20your%20portfolio%20and%20I%27d%20like%20to%20talk%20with%20you."
+        href="https://wa.me/34622400727?text=Hallo%20Pablo%2C%20ich%20habe%20dein%20Portfolio%20gesehen%20und%20w%C3%BCrde%20gerne%20mit%20dir%20sprechen."
         target="_blank"
         rel="noopener noreferrer"
         class="btn-whatsapp"
@@ -248,7 +248,7 @@ const personSchema = {
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
           <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
         </svg>
-        Direct WhatsApp
+        Direkt per WhatsApp
       </a>
       <ul class="contact">
         <li>💼 <a href="https://www.linkedin.com/in/pablo-gomez-villen" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
@@ -257,6 +257,5 @@ const personSchema = {
       </ul>
     </div>
   </section>
-
 
 </Layout>

@@ -1,0 +1,216 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import deData from '../../../data/i18n/de.json';
+import esData from '../../../data/i18n/es.json';
+
+function fmtDate(d) {
+  if (!d || !/^\d{4}-\d{2}-\d{2}$/.test(d)) return d || '';
+  const [y, m] = d.split('-');
+  return `${ ['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'][parseInt(m,10)-1] } ${y}`;
+}
+
+const posts = Object.entries(esData.blog)
+  .filter(([slug, p]) => !p.hidden && deData.blog?.[slug]?.title)
+  .sort(([, a], [, b]) => (b.date || '').localeCompare(a.date || ''))
+  .map(([slug, p]) => {
+    const de = deData.blog[slug];
+    return {
+      slug,
+      date: p.date || '',
+      category: de.category || p.category,
+      cats: de.cats || p.cats || [de.category || p.category],
+      title: de.title || p.title,
+      subtitle: de.subtitle || p.subtitle || '',
+      tags: de.tags || p.tags || [],
+      readTime: de.readTime || p.readTime || '',
+      image: de.image || p.image || null,
+      imageAlt: de.imageAlt || p.imageAlt || '',
+    };
+  });
+---
+
+<Layout
+  title="Blog — Pablo Gómez | Technologie und Entwicklung"
+  lang="de"
+  showHero={false}
+  description="Der Blog von Pablo Gómez über Webentwicklung, KI und Big Data. Artikel über Laravel, PHP, Ausbildung, KI-Spezialisierung und mehr."
+  canonical="https://www.pablogomezvillen.com/de/blog"
+  alternateEs="https://www.pablogomezvillen.com/blog"
+  alternateEn="https://www.pablogomezvillen.com/en/blog"
+  alternateDe="https://www.pablogomezvillen.com/de/blog"
+  keywords="Blog, Webentwicklung, Laravel, PHP, KI, Big Data, Programmierung, Technologie"
+>
+
+  <div id="view-index">
+
+    <div class="blog-index-banner">
+      <div class="blog-index-banner-inner">
+        <span class="blog-index-eyebrow">Blog</span>
+        <h1 class="blog-index-title">Artikel</h1>
+        <p class="blog-index-subtitle">Entwicklung, Technologie und Ausbildung — Gedanken aus der Praxis.</p>
+      </div>
+    </div>
+
+    <div class="blog-index-content">
+
+      <div class="blog-filters-bar">
+        <div class="blog-search-wrap">
+          <svg class="blog-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="search" id="blog-search" class="blog-search-input" placeholder="Artikel suchen…" aria-label="Artikel suchen">
+        </div>
+        <div class="blog-filters-row">
+          <div class="blog-cat-filters" id="blog-cat-filters">
+            <button class="blog-cat-btn active" data-cat="">Alle</button>
+            <button class="blog-cat-btn" data-cat="Ausbildung">Ausbildung</button>
+            <button class="blog-cat-btn" data-cat="Informativ">Informativ</button>
+            <button class="blog-cat-btn" data-cat="Für Unternehmen">Für Unternehmen</button>
+          </div>
+          <div class="blog-sort-wrap" id="blog-sort-wrap">
+            <button class="blog-sort-btn active" data-sort="newest" aria-label="Neueste zuerst sortieren">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+              Neueste
+            </button>
+            <button class="blog-sort-btn" data-sort="oldest" aria-label="Älteste zuerst sortieren">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              Älteste
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="blog-grid" id="blog-grid">
+        {posts.map(p => {
+          const isFm = p.category === 'Ausbildung';
+          const extraCats = (p.cats || []).filter(c => c !== p.category);
+          const tags = p.tags.slice(0, 3);
+          const searchStr = `${p.title} ${p.subtitle} ${p.tags.join(' ')}`.toLowerCase();
+          return (
+            <a href={`/de/blog/${p.slug}`}
+              class="blog-card"
+              data-cats={JSON.stringify(p.cats)}
+              data-date={p.date}
+              data-title={p.title.toLowerCase()}
+              data-search={searchStr}>
+              {p.image && (
+                <div class="blog-card-thumb">
+                  <img src={p.image} alt={p.imageAlt || p.title} width="400" height="210" loading="lazy" decoding="async" />
+                </div>
+              )}
+              <div class="blog-card-body">
+                <div class="blog-card-top">
+                  <div class="blog-card-cats">
+                    <span class={`blog-card-category ${p.category === 'Ausbildung' ? 'cat-formation' : p.category === 'Für Unternehmen' ? 'cat-business' : 'cat-info'}`}>{p.category}</span>
+                    {extraCats.map(cat => <span class="blog-card-category cat-business">{cat}</span>)}
+                  </div>
+                  <span class="blog-card-date">{fmtDate(p.date)}</span>
+                </div>
+                <h2 class="blog-card-title">{p.title}</h2>
+                <p class="blog-card-subtitle">{p.excerpt || p.subtitle}</p>
+                <div class="blog-card-tags">
+                  {tags.map(t => <span>{t}</span>)}
+                </div>
+                <div class="blog-card-footer">
+                  <span class="blog-card-read-time">{p.readTime ? `⏱ ${p.readTime}` : ''}</span>
+                  <span class="blog-card-read-link">Weiterlesen →</span>
+                </div>
+              </div>
+            </a>
+          );
+        })}
+      </div>
+      <p class="blog-no-results" id="blog-no-results" style="display:none">Keine Artikel entsprechen deinen Filtern.</p>
+      {posts.length === 0 && (
+        <p class="blog-no-results" id="blog-empty-notice">
+          Die Artikel werden gerade ins Deutsche übersetzt und erscheinen hier in Kürze. In der Zwischenzeit findest du sie auf{' '}
+          <a href="/en/blog">Englisch</a> oder <a href="/blog">Spanisch</a>.
+        </p>
+      )}
+
+    </div>
+  </div>
+
+</Layout>
+
+<script>
+  const grid     = document.getElementById('blog-grid');
+  const noResult = document.getElementById('blog-no-results');
+  const allCards = Array.from(grid.querySelectorAll('.blog-card'));
+  const initCat  = new URLSearchParams(window.location.search).get('cat') || '';
+  let curCat = initCat, curSearch = '', curSort = 'newest';
+
+  function norm(s) {
+    return (s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+  }
+
+  function relevance(card, q) {
+    const title = norm(card.dataset.title || '');
+    if (title.startsWith(q)) return 30;
+    if (title.includes(q)) return 20;
+    const search = norm(card.dataset.search);
+    const afterTitle = search.slice(title.length);
+    if (afterTitle.includes(q)) return 10;
+    return 1;
+  }
+
+  function applyFilters() {
+    const query = norm(curSearch.trim());
+
+    let visible = allCards.filter(card => {
+      if (curCat) {
+        const cats = JSON.parse(card.dataset.cats || '[]');
+        if (!cats.includes(curCat)) return false;
+      }
+      if (query && !norm(card.dataset.search).includes(query)) return false;
+      return true;
+    });
+
+    if (query) {
+      visible.sort((a, b) => {
+        const diff = relevance(b, query) - relevance(a, query);
+        if (diff !== 0) return diff;
+        return b.dataset.date.localeCompare(a.dataset.date);
+      });
+    } else {
+      visible.sort((a, b) => {
+        const da = a.dataset.date, db = b.dataset.date;
+        return curSort === 'newest' ? db.localeCompare(da) : da.localeCompare(db);
+      });
+    }
+
+    allCards.forEach(c => { c.style.display = 'none'; });
+    visible.forEach(c => { c.style.display = ''; grid.appendChild(c); });
+
+    if (allCards.length > 0) noResult.style.display = visible.length ? 'none' : 'block';
+  }
+
+  document.querySelectorAll('.blog-cat-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.blog-cat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      curCat = btn.dataset.cat;
+      applyFilters();
+    });
+  });
+
+  document.querySelectorAll('.blog-sort-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.blog-sort-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      curSort = btn.dataset.sort;
+      applyFilters();
+    });
+  });
+
+  document.getElementById('blog-search').addEventListener('input', e => {
+    curSearch = e.target.value;
+    applyFilters();
+  });
+
+  if (initCat) {
+    document.querySelectorAll('.blog-cat-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.cat === initCat);
+    });
+  }
+
+  applyFilters();
+</script>

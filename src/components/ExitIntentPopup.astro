@@ -2,6 +2,9 @@
 interface Props { lang?: string; }
 const { lang = 'es' } = Astro.props;
 const isEN = lang === 'en';
+const isDE = lang === 'de';
+const pathReserva = isDE ? '/de/termin' : isEN ? '/en/book' : '/reserva';
+const pathPricing = isDE ? '/de/dienstleistungen#preise' : isEN ? '/en/servicios#pricing' : '/servicios#precios';
 ---
 
 <dialog
@@ -9,30 +12,34 @@ const isEN = lang === 'en';
   class="exit-popup"
   aria-labelledby="exit-popup-title"
 >
-  <button class="exit-popup-close" aria-label={isEN ? 'Close popup' : 'Cerrar popup'}>✕</button>
-  <p class="exit-popup-eyebrow">{isEN ? 'Before you go!' : '¡Antes de irte!'}</p>
-  <h2 class="exit-popup-title" id="exit-popup-title">{isEN ? "Let's work together" : 'Cuéntame tu proyecto'}</h2>
+  <button class="exit-popup-close" aria-label={isDE ? 'Popup schließen' : isEN ? 'Close popup' : 'Cerrar popup'}>✕</button>
+  <p class="exit-popup-eyebrow">{isDE ? 'Bevor du gehst!' : isEN ? 'Before you go!' : '¡Antes de irte!'}</p>
+  <h2 class="exit-popup-title" id="exit-popup-title">{isDE ? 'Lass uns zusammenarbeiten' : isEN ? "Let's work together" : 'Cuéntame tu proyecto'}</h2>
   <p class="exit-popup-desc">
-    {isEN
+    {isDE
+      ? <>Erzähl mir von deinem Projekt oder schick mir dein Angebot, ganz unverbindlich.<br />Ich antworte in weniger als 24h.</>
+      : isEN
       ? <>Tell me about your project or send me your offer, no commitment.<br />I respond in less than 24h.</>
       : <>Cuéntame tu proyecto o envíame tu oferta, sin compromiso.<br />Respondo en menos de 24h.</>
     }
   </p>
-  <a href={isEN ? '/en/book' : '/reserva'} class="exit-btn exit-btn--book">
+  <a href={pathReserva} class="exit-btn exit-btn--book">
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-    {isEN ? 'Book a free call (20 min)' : 'Agendar llamada gratuita de 20 min'}
+    {isDE ? 'Kostenloses Gespräch buchen (20 Min)' : isEN ? 'Book a free call (20 min)' : 'Agendar llamada gratuita de 20 min'}
   </a>
-  <a href={isEN ? '/en/servicios#pricing' : '/servicios#precios'} class="exit-btn exit-btn--budget">
+  <a href={pathPricing} class="exit-btn exit-btn--budget">
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-    {isEN ? 'Get a free quote' : 'Pedir presupuesto sin compromiso'}
+    {isDE ? 'Kostenloses Angebot anfragen' : isEN ? 'Get a free quote' : 'Pedir presupuesto sin compromiso'}
   </a>
   <div class="exit-popup-btns">
     <a href="tel:+34622400727" class="exit-btn exit-btn--call">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-      {isEN ? 'Call' : 'Llamar'}
+      {isDE ? 'Anrufen' : isEN ? 'Call' : 'Llamar'}
     </a>
     <a
-      href={isEN
+      href={isDE
+        ? 'https://wa.me/34622400727?text=Hallo%20Pablo%2C%20ich%20habe%20dein%20Portfolio%20gesehen%20und%20w%C3%BCrde%20gerne%20mit%20dir%20sprechen.'
+        : isEN
         ? 'https://wa.me/34622400727?text=Hi%20Pablo%2C%20I%27ve%20seen%20your%20portfolio%20and%20I%27d%20like%20to%20talk%20with%20you.'
         : 'https://wa.me/34622400727?text=Hola%20Pablo%2C%20he%20visto%20tu%20portfolio%20y%20me%20gustar%C3%ADa%20hablar%20contigo.'}
       target="_blank"

@@ -11,7 +11,8 @@ export default defineConfig({
         !page.includes('/reclutadores/') &&
         !page.includes('/recruiter/') &&
         !page.includes('/gracias/') &&
-        !page.includes('/thank-you/'),
+        !page.includes('/thank-you/') &&
+        !page.includes('/danke/'),
       // Las URLs del sitemap deben coincidir con las canonical: sin barra final
       serialize: (item) => {
         const root = 'https://www.pablogomezvillen.com/';

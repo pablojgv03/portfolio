@@ -1,0 +1,639 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import esData from '../../../data/i18n/es.json';
+import deData from '../../../data/i18n/de.json';
+
+export function getStaticPaths() {
+  return Object.entries(esData.blog)
+    .filter(([slug, post]) => !post.hidden && deData.blog?.[slug]?.content)
+    .map(([slug]) => ({ params: { slug } }));
+}
+
+const { slug } = Astro.params;
+const postDe = deData.blog[slug];
+const postEs = esData.blog[slug];
+
+// ─── Topic cluster definitions (DE) ─────────────────────────────────────────
+const CLUSTERS_DE: Record<string, {
+  label: string; pillarTitle: string; pillarUrl: string; siblings: string[];
+}> = {
+  'web-negocios': {
+    label: 'Komplette Anleitung',
+    pillarTitle: 'Website für Unternehmen in Granada',
+    pillarUrl: '/de/blog/website-fuer-unternehmen-granada',
+    siblings: [
+      'web-restaurantes-granada','web-clinicas-granada','web-seo-abogados-granada',
+      'seo-local-peluquerias-granada','web-para-gimnasios-granada','web-para-fontaneros-granada',
+      'web-para-academias-granada','tienda-online-granada','precio-pagina-web-granada',
+      'diseno-web-que-convierte','errores-web-pymes-granada','mantenimiento-web-granada',
+      'como-es-trabajar-conmigo','freelance-programador-granada','landing-page-vs-pagina-web-negocio',
+      'app-movil-vs-web-granada','php-medida-vs-wordpress','automatizacion-negocios-granada',
+    ],
+  },
+  'seo-local': {
+    label: 'Komplette Anleitung',
+    pillarTitle: 'Lokales SEO in Granada',
+    pillarUrl: '/de/blog/seo-local-granada',
+    siblings: [
+      'google-my-business-granada','reputacion-online-granada','velocidad-web-seo-granada',
+      'lighthouse-100-negocio-local','kit-digital-granada-pagina-web','google-ads-vs-seo-granada',
+    ],
+  },
+  'formacion': {
+    label: 'Komplette Anleitung',
+    pillarTitle: 'Programmierausbildung — DAM, DAW und KI',
+    pillarUrl: '/de/blog/programmierausbildung',
+    siblings: [
+      'daw','dam','ia-bigdata',
+      'desafio-joven-emprendedor-eoi','seoplus-2023-congreso-posicionamiento-web',
+    ],
+  },
+};
+
+const clusterKey = Object.keys(CLUSTERS_DE).find(k => CLUSTERS_DE[k].siblings.includes(slug));
+const cluster = clusterKey ? CLUSTERS_DE[clusterKey] : null;
+
+const clusterSiblings = cluster
+  ? cluster.siblings
+      .filter(s => s !== slug && deData.blog?.[s]?.content && !esData.blog[s]?.hidden)
+      .slice(0, 6)
+      .map(s => ({ slug: s, title: deData.blog[s].title }))
+  : [];
+
+const catClass = postDe.category === 'Ausbildung' ? 'cat-formation' : postDe.category === 'Für Unternehmen' ? 'cat-business' : 'cat-info';
+const tagsHtml = (postDe.tags || []).map(t => `<span>${t}</span>`).join('');
+
+function formatDate(dateStr) {
+  if (!dateStr || !/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr || '';
+  const [y, m] = dateStr.split('-');
+  const months = ['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
+  return `${months[parseInt(m, 10) - 1]} ${y}`;
+}
+
+function truncate(str, max = 55) {
+  return str.length > max ? str.slice(0, max - 1) + '…' : str;
+}
+
+// Related posts (tag-based, using ES data for scoring then DE for display)
+const allSlugs = Object.keys(esData.blog).filter(s => s !== slug && !esData.blog[s].hidden && deData.blog?.[s]?.content);
+const myTags = (postDe.tags || []).map(t => t.toLowerCase());
+
+function tagScore(s) {
+  if (!myTags.length) return 0;
+  const theirTags = (deData.blog[s]?.tags || []).map(t => t.toLowerCase());
+  let score = 0;
+  for (const mt of myTags) {
+    if (theirTags.some(tt => mt === tt || mt.includes(tt) || tt.includes(mt))) score++;
+  }
+  return score;
+}
+
+const sortDesc = (a, b) => (esData.blog[b].date || '').localeCompare(esData.blog[a].date || '');
+const scored = allSlugs.map(s => ({ s, score: tagScore(s) }))
+  .sort((a, b) => b.score - a.score || sortDesc(a.s, b.s));
+
+const withTags = scored.filter(x => x.score > 0).slice(0, 3).map(x => x.s);
+const byCat = allSlugs
+  .filter(s => !withTags.includes(s) && deData.blog?.[s]?.category === postDe.category)
+  .sort(sortDesc);
+const relatedSlugs = [...withTags, ...byCat].slice(0, 3);
+const relatedPosts = relatedSlugs.map(s => ({ slug: s, ...deData.blog[s] }));
+
+// Build TOC: add IDs to H2s and return heading list
+function buildToc(html) {
+  if (!html) return { headings: [], html: '' };
+  const headings = [];
+  const used = {};
+  const processed = html.replace(/<h2([^>]*)>([\s\S]*?)<\/h2>/g, (_, attrs, inner) => {
+    const display = inner.replace(/<[^>]+>/g, '').trim();
+    let base = display.toLowerCase()
+      .normalize('NFD').replace(/[̀-ͯ]/g, '')
+      .replace(/[?!]/g, '').replace(/[^a-z0-9\s]/g, '')
+      .trim().replace(/\s+/g, '-').slice(0, 55);
+    let id = base;
+    if (used[id]) { used[id]++; id = `${base}-${used[id]}`; } else { used[id] = 1; }
+    headings.push({ id, text: display });
+    return `<h2${attrs} id="${id}">${inner}</h2>`;
+  });
+  return { headings, html: processed };
+}
+
+const { headings: tocDe, html: contentDe } = buildToc(postDe.content);
+const showToc = tocDe.length >= 3;
+
+// Auto-extract FAQ pairs from H2/H3 questions ending in ? for FAQPage JSON-LD
+function extractFaqPairs(html) {
+  const pairs = [];
+  const headingRegex = /<h[23][^>]*>([^<]+\?)<\/h[23]>/g;
+  let match;
+  while ((match = headingRegex.exec(html)) !== null) {
+    const question = match[1].trim();
+    const afterHeading = html.slice(match.index + match[0].length);
+    const pMatch = afterHeading.match(/<p[^>]*>([\s\S]*?)<\/p>/);
+    if (pMatch) {
+      const answer = pMatch[1].replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim().slice(0, 500);
+      if (answer.length > 20) pairs.push({ question, answer });
+    }
+  }
+  return pairs;
+}
+
+const faqPairs = extractFaqPairs(postDe.content);
+const faqSchema = faqPairs.length > 0 ? {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqPairs.map(({ question, answer }) => ({
+    "@type": "Question",
+    "name": question,
+    "acceptedAnswer": { "@type": "Answer", "text": answer }
+  }))
+} : null;
+
+const blogPosting = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": postDe.title,
+  "description": postDe.subtitle || '',
+  "datePublished": postEs.date,
+  "dateModified": postEs.date,
+  "author": {
+    "@type": "Person",
+    "@id": "https://www.pablogomezvillen.com/pablo-gomez-villen",
+    "name": "Pablo Gómez Villén",
+    "url": "https://www.pablogomezvillen.com",
+    "image": "https://www.pablogomezvillen.com/img/foto-empresa.jpg",
+    "jobTitle": "Full Stack Developer",
+    "sameAs": [
+      "https://www.linkedin.com/in/pablo-gomez-villen",
+      "https://www.pablogomezvillen.com"
+    ]
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "Pablo Gómez Villén",
+    "url": "https://www.pablogomezvillen.com",
+    "image": "https://www.pablogomezvillen.com/img/foto-empresa.jpg"
+  },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": `https://www.pablogomezvillen.com/de/blog/${slug}` },
+  "url": `https://www.pablogomezvillen.com/de/blog/${slug}`,
+  "image": postDe.image ? `https://www.pablogomezvillen.com${postDe.image}` : "https://www.pablogomezvillen.com/img/opengraph.png",
+  "keywords": (postDe.tags || []).join(', '),
+  "inLanguage": "de-DE",
+  "isPartOf": cluster ? [
+    { "@type": "Blog", "@id": "https://www.pablogomezvillen.com/de/blog", "name": "Blog — Pablo Gómez" },
+    { "@type": "WebPage", "@id": `https://www.pablogomezvillen.com${cluster.pillarUrl}`, "name": cluster.pillarTitle, "url": `https://www.pablogomezvillen.com${cluster.pillarUrl}` }
+  ] : { "@type": "Blog", "@id": "https://www.pablogomezvillen.com/de/blog", "name": "Blog — Pablo Gómez" },
+  "speakable": {
+    "@type": "SpeakableSpecification",
+    "cssSelector": [".blog-quick-answer", ".blog-intro"]
+  }
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Start",  "item": "https://www.pablogomezvillen.com/de" },
+    { "@type": "ListItem", "position": 2, "name": "Blog",  "item": "https://www.pablogomezvillen.com/de/blog" },
+    { "@type": "ListItem", "position": 3, "name": postDe.title, "item": `https://www.pablogomezvillen.com/de/blog/${slug}` }
+  ]
+};
+---
+
+<Layout
+  title={`${postDe.title} — Pablo Gómez`}
+  lang="de"
+  showHero={false}
+  description={postDe.subtitle || ''}
+  canonical={`https://www.pablogomezvillen.com/de/blog/${slug}`}
+  alternateEs={`https://www.pablogomezvillen.com/blog/${slug}`}
+  alternateEn={`https://www.pablogomezvillen.com/en/blog/${slug}`}
+  alternateDe={`https://www.pablogomezvillen.com/de/blog/${slug}`}
+  keywords={(postDe.tags || []).join(', ')}
+  ogType="article"
+  ogArticleDate={postEs.date}
+  ogArticleModified={postEs.modified ?? postEs.date}
+  ogImage={postDe.image || '/img/opengraph.png'}
+  jsonLd={[blogPosting, breadcrumbSchema, ...(faqSchema ? [faqSchema] : [])]}
+  lcp={postDe.image}
+>
+
+  <div id="view-post">
+
+    <div class="blog-post-banner">
+      <div class="blog-post-banner-inner">
+
+        <nav class="blog-breadcrumb" aria-label="Breadcrumb">
+          <ol>
+            <li><a href="/de">Start</a></li>
+            <li><a href="/de/blog">Blog</a></li>
+            <li aria-current="page">{truncate(postDe.title)}</li>
+          </ol>
+        </nav>
+
+        <div class="blog-post-header-meta">
+          <span class={`blog-category-badge ${catClass}`}>{postDe.category}</span>
+          <span class="blog-read-time">{postDe.readTime ? `⏱ ${postDe.readTime}` : ''}</span>
+        </div>
+        <h1 class="blog-post-title">{postDe.title}</h1>
+        <p class="blog-post-subtitle">{postDe.subtitle}</p>
+        <div class="blog-post-tags" set:html={tagsHtml}></div>
+      </div>
+    </div>
+
+    <div class="reading-progress-bar" id="reading-progress" role="progressbar" aria-label="Lesefortschritt" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+
+    <div class="blog-post-layout">
+    <article class="blog-article">
+      <div class="blog-article-meta">
+        <a href="/de/blog" class="blog-back-link">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          Blog
+        </a>
+        <time class="blog-date" datetime={postEs.date}>{formatDate(postEs.date)}</time>
+      </div>
+      {postDe.image && (
+        <figure class="blog-hero-image">
+          <img
+            src={postDe.image}
+            alt={postDe.imageAlt || postDe.title}
+            width="1200"
+            height="630"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </figure>
+      )}
+      {postDe.quickAnswer && (
+        <div class="blog-quick-answer" role="note">
+          <span class="blog-quick-answer-label">Kurze Antwort</span>
+          <p>{postDe.quickAnswer}</p>
+        </div>
+      )}
+      {showToc && (
+        <nav class="blog-toc blog-toc--inline" aria-label="Inhaltsverzeichnis">
+          <p class="blog-toc-title">Inhalt</p>
+          <ol>
+            {tocDe.map(({ id, text }) => (
+              <li><a href={`#${id}`}>{text}</a></li>
+            ))}
+          </ol>
+        </nav>
+      )}
+      {cluster && clusterSiblings.length > 0 && (
+        <nav class="cluster-nav" aria-label={`Artikel in dieser Anleitung: ${cluster.pillarTitle}`}>
+          <div class="cluster-nav-header">
+            <span class="cluster-nav-icon" aria-hidden="true">🗺️</span>
+            <div>
+              <span class="cluster-nav-label">{cluster.label}</span>
+              <a href={cluster.pillarUrl} class="cluster-nav-pillar-link">
+                <span>{cluster.pillarTitle}</span>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </a>
+            </div>
+          </div>
+          <div class="cluster-nav-divider" aria-hidden="true"></div>
+          <p class="cluster-nav-siblings-label">In dieser Anleitung:</p>
+          <div class="cluster-nav-items">
+            {clusterSiblings.map((s) => (
+              <a href={`/de/blog/${s.slug}`} class="cluster-nav-item"><span class="cluster-nav-item-text">{s.title}</span></a>
+            ))}
+          </div>
+        </nav>
+      )}
+      <div class="blog-article-body" set:html={contentDe}></div>
+    </article>
+
+    <aside class="blog-sidebar" aria-label="Artikelinformationen">
+      {postDe.excerpt && (
+        <div class="sidebar-excerpt">
+          <span class="sidebar-excerpt-label">Über diesen Artikel</span>
+          <p>{postDe.excerpt}</p>
+        </div>
+      )}
+      {showToc && (
+        <nav class="blog-toc" aria-label="Inhaltsverzeichnis">
+          <p class="blog-toc-title">Inhalt</p>
+          <ol>
+            {tocDe.map(({ id, text }) => (
+              <li><a href={`#${id}`}>{text}</a></li>
+            ))}
+          </ol>
+        </nav>
+      )}
+    </aside>
+    </div>
+
+    <div class="blog-article-footer">
+      <a href="/de/blog" class="btn secondary">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        Zurück zum Blog
+      </a>
+    </div>
+
+    <!-- Author bio -->
+    <div class="author-bio">
+      <picture>
+        <source srcset="/img/foto-empresa.webp" type="image/webp">
+        <img src="/img/foto-empresa.jpg" alt="Pablo Gómez Villén, Full Stack Developer" class="author-bio-avatar" width="80" height="80">
+      </picture>
+      <div class="author-bio-content">
+        <p class="author-bio-label">Geschrieben von</p>
+        <p class="author-bio-name">Pablo Gómez Villén</p>
+        <p class="author-bio-role">Full-Stack-Entwickler · Laravel, PHP, JavaScript</p>
+        <p class="author-bio-text">Full-Stack-Entwickler mit über einem Jahr Produktionserfahrung. Spezialisiert auf PHP (Laravel), JavaScript und MySQL. Teilt Lerninhalte und technische Einblicke in diesem Blog.</p>
+        <div class="author-bio-links">
+          <a href="https://www.linkedin.com/in/pablo-gomez-villen" class="author-bio-link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a href="/de/pablo-gomez-villen" class="author-bio-link">Über mich</a>
+        </div>
+      </div>
+    </div>
+
+    {relatedPosts.length > 0 && (
+      <aside class="blog-related">
+        <h2 class="blog-related-title">Ähnliche Artikel</h2>
+        <div class="blog-related-grid">
+          {relatedPosts.map((p) => (
+            <a href={`/de/blog/${p.slug}`} class="blog-related-card">
+              {esData.blog[p.slug]?.image && (
+                <div class="blog-related-thumb">
+                  <img src={esData.blog[p.slug].image} alt={p.imageAlt || p.title} width="280" height="147" loading="lazy" decoding="async" />
+                </div>
+              )}
+              <div class="blog-related-card-body">
+                <span class={`blog-related-cat ${p.category === 'Ausbildung' ? 'cat-formation' : p.category === 'Für Unternehmen' ? 'cat-business' : 'cat-info'}`}>{p.category}</span>
+                <h3 class="blog-related-card-title">{p.title}</h3>
+                <span class="blog-related-date">{formatDate(esData.blog[p.slug]?.date)}</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </aside>
+    )}
+
+  </div>
+
+</Layout>
+
+<script>
+  const bar = document.getElementById('reading-progress');
+  const article = document.querySelector('.blog-article');
+  if (bar && article) {
+    window.addEventListener('scroll', () => {
+      const rect = article.getBoundingClientRect();
+      const total = article.offsetHeight - window.innerHeight;
+      const scrolled = Math.max(0, -rect.top);
+      const pct = Math.min(100, total > 0 ? (scrolled / total) * 100 : 0);
+      bar.style.width = pct + '%';
+      bar.setAttribute('aria-valuenow', Math.round(pct));
+    }, { passive: true });
+  }
+
+  // Scroll spy TOC — smooth intensity interpolation
+  const headings = Array.from(document.querySelectorAll('#blog-content h2[id]'));
+  const tocLinks = Array.from(document.querySelectorAll('#blog-toc a[href^="#"], #blog-toc-inline a[href^="#"]'));
+  if (headings.length && tocLinks.length) {
+    function applyTocIntensity(link, t) {
+      const dark = document.documentElement.classList.contains('dark');
+      const r = dark ? Math.round(148 - 52 * t) : Math.round(71 - 34 * t);
+      const g = dark ? Math.round(163 +  2 * t) : Math.round(85 + 14 * t);
+      const b = dark ? Math.round(184 + 66 * t) : Math.round(105 + 130 * t);
+      link.style.color = `rgb(${r},${g},${b})`;
+      link.style.fontWeight = t > 0.5 ? '600' : '';
+    }
+    function updateActiveToc() {
+      const vp = window.innerHeight;
+      const threshold = window.scrollY + vp * 0.28;
+      let activeIdx = 0;
+      for (let i = 0; i < headings.length; i++) {
+        if (headings[i].offsetTop <= threshold) activeIdx = i;
+        else break;
+      }
+      const nxt = headings[activeIdx + 1];
+      let blend = 0;
+      if (nxt) {
+        const sectionH  = nxt.offsetTop - headings[activeIdx].offsetTop;
+        const blendDist = Math.min(sectionH * 0.4, vp * 0.3);
+        const blendStart = nxt.offsetTop - blendDist;
+        const raw = Math.max(0, Math.min(1, (threshold - blendStart) / blendDist));
+        blend = raw * raw * (3 - 2 * raw);
+      }
+      tocLinks.forEach(a => {
+        const idx = headings.findIndex(h => '#' + h.id === a.getAttribute('href'));
+        const t = idx === activeIdx ? 1 - blend : idx === activeIdx + 1 ? blend : 0;
+        applyTocIntensity(a, t);
+      });
+    }
+    window.addEventListener('scroll', updateActiveToc, { passive: true });
+    updateActiveToc();
+  }
+</script>
+
+<style>
+  .blog-hero-image {
+    margin: 0 0 2rem;
+    border-radius: 12px;
+    overflow: hidden;
+    line-height: 0;
+  }
+
+  .blog-hero-image img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1200 / 630;
+    object-fit: cover;
+    object-position: top;
+    display: block;
+  }
+
+  .blog-post-layout {
+    display: grid;
+    grid-template-columns: 1fr 310px;
+    gap: 2rem;
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    align-items: start;
+  }
+
+  :global(.blog-post-layout .blog-article) {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .blog-sidebar {
+    position: sticky;
+    top: 5.5rem;
+  }
+
+  .sidebar-excerpt {
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+    margin-bottom: 1.1rem;
+    background: #f8fafc;
+  }
+
+  .sidebar-excerpt-label {
+    display: block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #2563eb;
+    margin-bottom: 0.5rem;
+  }
+
+  .sidebar-excerpt p {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.65;
+    color: #334155;
+  }
+
+  :global(.dark) .sidebar-excerpt {
+    background: #1e293b;
+    border-color: #334155;
+  }
+
+  :global(.dark) .sidebar-excerpt-label { color: #94a3b8; }
+  :global(.dark) .sidebar-excerpt p { color: #cbd5e1; }
+
+  .blog-toc--inline { display: none; }
+
+  @media (max-width: 1024px) {
+    .blog-post-layout {
+      grid-template-columns: 1fr;
+      padding: 0;
+    }
+    .blog-sidebar { display: none; }
+    .blog-toc--inline { display: block; }
+    :global(.blog-post-layout .blog-article) {
+      max-width: 760px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    :global(.blog-post-layout .blog-article) { padding: 0 16px; }
+  }
+
+  .blog-toc {
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 1rem 1.25rem 1rem 1rem;
+    margin: 0 0 2rem;
+    background: #f8fafc;
+  }
+
+  .blog-toc-title {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #2563eb;
+    margin: 0 0 0.6rem;
+  }
+
+  .blog-toc ol {
+    margin: 0;
+    padding-left: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .blog-toc li {
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+
+  .blog-toc a {
+    color: #334155;
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .blog-toc a:hover {
+    color: #2563eb;
+    text-decoration: underline;
+  }
+
+  :global(.dark) .blog-toc {
+    background: #1e293b;
+    border-color: #334155;
+  }
+
+  :global(.dark) .blog-toc-title {
+    color: #94a3b8;
+  }
+
+  :global(.dark) .blog-toc a {
+    color: #cbd5e1;
+  }
+
+  :global(.dark) .blog-toc a:hover {
+    color: #60a5fa;
+  }
+
+  .blog-toc a.toc-active {
+    color: #2563eb;
+    font-weight: 600;
+  }
+
+  :global(.dark) .blog-toc a.toc-active {
+    color: #60a5fa;
+  }
+
+  .blog-quick-answer {
+    border-left: 4px solid #2563eb;
+    background: #eff6ff;
+    border-radius: 0 10px 10px 0;
+    padding: 1rem 1.25rem;
+    margin: 0 0 2rem;
+  }
+
+  .blog-quick-answer-label {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #2563eb;
+    margin-bottom: 0.4rem;
+  }
+
+  .blog-quick-answer p {
+    margin: 0;
+    font-size: 0.97rem;
+    line-height: 1.65;
+    color: #1e3a5f;
+  }
+
+  :global(.dark) .blog-quick-answer {
+    background: #1e3050;
+    border-left-color: #60a5fa;
+  }
+
+  :global(.dark) .blog-quick-answer-label {
+    color: #93c5fd;
+  }
+
+  :global(.dark) .blog-quick-answer p {
+    color: #bfdbfe;
+  }
+
+  .reading-progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    background: #2563eb;
+    z-index: 9999;
+    transition: width 0.1s linear;
+  }
+</style>

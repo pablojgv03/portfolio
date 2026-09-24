@@ -3,6 +3,7 @@ import '../styles/global.css';
 import ContactScript from '../components/ContactScript.astro';
 import ExitIntentPopup from '../components/ExitIntentPopup.astro';
 import enData from '../data/i18n/en.json';
+import deData from '../data/i18n/de.json';
 
 export const prerender = false;
 const {
@@ -20,20 +21,31 @@ const {
   lcp,
   alternateEn,
   alternateEs,
+  alternateDe,
   footerText,
   noindex = false,
 } = Astro.props;
 
 const isEN = lang === 'en';
-const basePath = isEN ? '/en' : '';
+const isDE = lang === 'de';
+const basePath = isDE ? '/de' : isEN ? '/en' : '';
+
+const pathServicios   = isDE ? '/de/dienstleistungen' : `${basePath}/servicios`;
+const pathProyectos   = isDE ? '/de/projekte'          : `${basePath}/proyectos`;
+const pathExperiencia = `${basePath}/experiencia`;
+const pathAbout       = `${basePath}/pablo-gomez-villen`;
+const pathBlog        = `${basePath}/blog`;
+const pathContacto    = isDE ? '/de/kontakt' : isEN ? '/en/contact' : '/contacto';
+const pathReserva     = isDE ? '/de/termin'  : isEN ? '/en/book'    : '/reserva';
+const pathPricing     = isDE ? '/de/dienstleistungen#preise' : isEN ? '/en/servicios#pricing' : '/servicios#precios';
 
 const ogImageAbsolute = `https://www.pablogomezvillen.com${ogImage}`;
-const ogLocale = isEN ? 'en_US' : 'es_ES';
+const ogLocale = isDE ? 'de_DE' : isEN ? 'en_US' : 'es_ES';
 
 const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
-const normalizedPath = currentPath.replace(/^\/en/, '') || '/';
-const hideContactWidget = normalizedPath === '/contacto' || normalizedPath === '/contact' || normalizedPath === '/pablo-gomez-villen' || normalizedPath === '/reserva' || normalizedPath === '/book';
-const isAboutPage = normalizedPath === '/pablo-gomez-villen' || normalizedPath === '/proyectos' || normalizedPath.startsWith('/proyectos/') || normalizedPath === '/experiencia';
+const normalizedPath = currentPath.replace(/^\/(en|de)/, '') || '/';
+const hideContactWidget = normalizedPath === '/contacto' || normalizedPath === '/contact' || normalizedPath === '/kontakt' || normalizedPath === '/pablo-gomez-villen' || normalizedPath === '/reserva' || normalizedPath === '/book' || normalizedPath === '/termin';
+const isAboutPage = normalizedPath === '/pablo-gomez-villen' || normalizedPath === '/proyectos' || normalizedPath.startsWith('/proyectos/') || normalizedPath === '/projekte' || normalizedPath.startsWith('/projekte/') || normalizedPath === '/experiencia';
 const navClass = (href: string) => {
   let match: boolean;
   if (href === '/') {
@@ -50,23 +62,25 @@ const navClass = (href: string) => {
 const navCurrent = (href: string) => navClass(href) ? 'page' : undefined;
 const jsonLdList = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 
-const navHome       = isEN ? enData.nav.home       : 'Inicio';
-const navServices   = isEN ? 'Services'             : 'Servicios';
-const navProjects   = isEN ? enData.nav.projects    : 'Proyectos';
-const navExperience = isEN ? enData.nav.experience  : 'Experiencia';
-const navAbout      = isEN ? enData.nav.about       : 'Sobre mí';
-const navContact    = isEN ? 'Contact'              : 'Contacto';
-const navBook       = isEN ? 'Book a call'          : 'Reserva reunión';
-const heroGreeting  = isEN ? enData.hero.greeting   : 'Pablo Gómez, <span>Desarrollador Web</span> y SEO Local en Granada';
-const heroRole      = isEN
+const navHome       = isDE ? deData.nav.home       : isEN ? enData.nav.home       : 'Inicio';
+const navServices   = isDE ? 'Leistungen'          : isEN ? 'Services'             : 'Servicios';
+const navProjects   = isDE ? deData.nav.projects   : isEN ? enData.nav.projects    : 'Proyectos';
+const navExperience = isDE ? deData.nav.experience : isEN ? enData.nav.experience  : 'Experiencia';
+const navAbout      = isDE ? deData.nav.about      : isEN ? enData.nav.about       : 'Sobre mí';
+const navContact    = isDE ? 'Kontakt'             : isEN ? 'Contact'              : 'Contacto';
+const navBook       = isDE ? 'Termin buchen'       : isEN ? 'Book a call'          : 'Reserva reunión';
+const heroGreeting  = isDE ? 'Pablo Gómez, <span>Webentwickler</span> und lokales SEO' : isEN ? enData.hero.greeting   : 'Pablo Gómez, <span>Desarrollador Web</span> y SEO Local en Granada';
+const heroRole      = isDE
+  ? 'Websites, lokales SEO und Buchungssysteme, die deinen Terminkalender füllen — statt nur Besuche zu sammeln, die nicht anrufen.'
+  : isEN
   ? 'I build websites that rank on Google and turn visits into clients.'
   : 'Webs, SEO local y sistemas de reservas pensados para llenar tu agenda, no para acumular visitas que no llaman.';
-const heroBtnCV     = isEN ? enData.hero.btnCV      : 'Descargar CV';
-const cvFile        = isEN ? 'CV_Pablo_Gomez_Villen_Software-Developer.pdf' : 'CV_Full-stack_Pablo_Gomez_Villen_Desarrollador.pdf';
-const defaultRightsText = isEN ? enData.rights : '© 2026 Pablo Gómez Villén || Programador Full Stack';
+const heroBtnCV     = isDE ? 'Lebenslauf herunterladen' : isEN ? enData.hero.btnCV      : 'Descargar CV';
+const cvFile        = (isDE || isEN) ? 'CV_Pablo_Gomez_Villen_Software-Developer.pdf' : 'CV_Full-stack_Pablo_Gomez_Villen_Desarrollador.pdf';
+const defaultRightsText = isDE ? deData.rights : isEN ? enData.rights : '© 2026 Pablo Gómez Villén || Programador Full Stack';
 const rightsText       = footerText ?? defaultRightsText;
-const heroBtnProjects  = isEN ? 'View projects'        : 'Ver proyectos';
-const heroAvailability = isEN ? 'Available for work'   : 'Disponible para trabajar';
+const heroBtnProjects  = isDE ? 'Projekte ansehen'     : isEN ? 'View projects'        : 'Ver proyectos';
+const heroAvailability = isDE ? 'Verfügbar für Projekte' : isEN ? 'Available for work'   : 'Disponible para trabajar';
 ---
 
 <html lang={lang}>
@@ -89,6 +103,7 @@ const heroAvailability = isEN ? 'Available for work'   : 'Disponible para trabaj
     {canonical && <link rel="canonical" href={canonical}>}
     {alternateEs && <link rel="alternate" hreflang="es" href={alternateEs}>}
     {alternateEn && <link rel="alternate" hreflang="en" href={alternateEn}>}
+    {alternateDe && <link rel="alternate" hreflang="de" href={alternateDe}>}
     {(alternateEs || alternateEn) && <link rel="alternate" hreflang="x-default" href={alternateEs ?? canonical}>}
 
     <!-- Open Graph -->
@@ -133,7 +148,7 @@ const heroAvailability = isEN ? 'Available for work'   : 'Disponible para trabaj
     <header class="navbar">
       <div class="navbar-container">
         <!-- Logo -->
-        <a href={`${basePath}/`} class="logo" aria-label={isEN ? 'Go to homepage' : 'Ir al inicio'}>
+        <a href={`${basePath}/`} class="logo" aria-label={isDE ? 'Zur Startseite' : isEN ? 'Go to homepage' : 'Ir al inicio'}>
           <picture>
             <source srcset="/favicon.webp" type="image/webp">
             <img src="/favicon.png" alt="Pablo Gómez - Portfolio" width="32" height="32" />
@@ -143,27 +158,31 @@ const heroAvailability = isEN ? 'Available for work'   : 'Disponible para trabaj
         <!-- Menú de escritorio -->
         <nav class="nav-links desktop">
           <a href={`${basePath}/`} class={`nav-link-home${navClass('/') ? ' nav-current' : ''}`} aria-current={navCurrent('/')}>{navHome}</a>
-          {!isAboutPage && <a href={`${basePath}/servicios`} class={`nav-link-services${navClass('/servicios') ? ' nav-current' : ''}`} aria-current={navCurrent('/servicios')}>{navServices}</a>}
-          {isAboutPage && <a href={`${basePath}/proyectos`} class={navClass('/proyectos')} aria-current={navCurrent('/proyectos')}>{navProjects}</a>}
-          {isAboutPage && <a href={`${basePath}/experiencia`} class={navClass('/experiencia')} aria-current={navCurrent('/experiencia')}>{navExperience}</a>}
-          {isAboutPage && <a href={`${basePath}/pablo-gomez-villen`} class={navClass('/pablo-gomez-villen')} aria-current={navCurrent('/pablo-gomez-villen')}>{navAbout}</a>}
-          <a href={`${basePath}/blog`} class={`nav-link-blog${navClass('/blog') ? ' nav-current' : ''}`} aria-current={navCurrent('/blog')}>Blog</a>
-          <a href={isEN ? '/en/contact' : '/contacto'} class={`nav-link-contact${navClass('/contacto') ? ' nav-current' : ''}`} aria-current={navCurrent('/contacto')}>{navContact}</a>
-          {!isAboutPage && <a href={isEN ? '/en/book' : '/reserva'} class={`nav-book-btn${navClass('/reserva') || navClass('/book') ? ' nav-current' : ''}`} aria-current={navClass('/reserva') || navClass('/book') ? 'page' : undefined}>{navBook}</a>}
+          {!isAboutPage && <a href={pathServicios} class={`nav-link-services${(navClass('/servicios') || navClass('/dienstleistungen')) ? ' nav-current' : ''}`} aria-current={(navClass('/servicios') || navClass('/dienstleistungen')) ? 'page' : undefined}>{navServices}</a>}
+          {isAboutPage && <a href={pathProyectos} class={navClass('/proyectos') || navClass('/projekte')} aria-current={(navClass('/proyectos') || navClass('/projekte')) ? 'page' : undefined}>{navProjects}</a>}
+          {isAboutPage && <a href={pathExperiencia} class={navClass('/experiencia')} aria-current={navCurrent('/experiencia')}>{navExperience}</a>}
+          {isAboutPage && <a href={pathAbout} class={navClass('/pablo-gomez-villen')} aria-current={navCurrent('/pablo-gomez-villen')}>{navAbout}</a>}
+          <a href={pathBlog} class={`nav-link-blog${navClass('/blog') ? ' nav-current' : ''}`} aria-current={navCurrent('/blog')}>Blog</a>
+          <a href={pathContacto} class={`nav-link-contact${(navClass('/contacto') || navClass('/contact') || navClass('/kontakt')) ? ' nav-current' : ''}`} aria-current={(navClass('/contacto') || navClass('/contact') || navClass('/kontakt')) ? 'page' : undefined}>{navContact}</a>
+          {!isAboutPage && <a href={pathReserva} class={`nav-book-btn${(navClass('/reserva') || navClass('/book') || navClass('/termin')) ? ' nav-current' : ''}`} aria-current={(navClass('/reserva') || navClass('/book') || navClass('/termin')) ? 'page' : undefined}>{navBook}</a>}
         </nav>
 
-        <!-- Toggle idioma (solo escritorio) -->
-        <div class="lang-toggle desktop-only" aria-label="Cambiar idioma">
-          <input type="checkbox" id="lang-switch" />
-          <label for="lang-switch" class="lang-label">
-            <span class="flag flag-es"><img src="/img/flags/es.svg" alt="Cambiar idioma a Español" loading="lazy"></span>
-            <span class="flag flag-en"><img src="/img/flags/gb.svg" alt="Switch language to English" loading="lazy"></span>
-            <span class="toggle-slider"></span>
-          </label>
+        <!-- Selector de idioma (3 posiciones, solo escritorio) -->
+        <div class="lang-toggle desktop-only" role="group" aria-label={isDE ? 'Sprache wechseln' : isEN ? 'Change language' : 'Cambiar idioma'}>
+          <span class="toggle-slider" data-lang-slider></span>
+          <button type="button" class="lang-flag" data-lang="es" data-lang-btn aria-pressed={!isEN && !isDE} aria-label="Cambiar idioma a Español">
+            <img src="/img/flags/es.svg" alt="ES" loading="lazy">
+          </button>
+          <button type="button" class="lang-flag" data-lang="en" data-lang-btn aria-pressed={isEN} aria-label="Switch language to English">
+            <img src="/img/flags/gb.svg" alt="EN" loading="lazy">
+          </button>
+          <button type="button" class="lang-flag" data-lang="de" data-lang-btn aria-pressed={isDE} aria-label="Sprache auf Deutsch umstellen">
+            <img src="/img/flags/de.svg" alt="DE" loading="lazy">
+          </button>
         </div>
 
         <!-- Botón menú móvil -->
-        <button class="nav-toggle" aria-label="Abrir menú">☰</button>
+        <button class="nav-toggle" aria-label={isDE ? 'Menü öffnen' : isEN ? 'Open menu' : 'Abrir menú'}>☰</button>
       </div>
 
       <!-- Menú móvil -->
@@ -175,25 +194,29 @@ const heroAvailability = isEN ? 'Available for work'   : 'Disponible para trabaj
               <img src="/favicon.png" alt="Pablo Gómez - Portfolio" width="32" height="32" />
             </picture>
           </a>
-          <button class="close-menu" aria-label="Cerrar menú">✕</button>
+          <button class="close-menu" aria-label={isDE ? 'Menü schließen' : isEN ? 'Close menu' : 'Cerrar menú'}>✕</button>
         </div>
         <a href={`${basePath}/`} class={`nav-link-home${navClass('/') ? ' nav-current' : ''}`} aria-current={navCurrent('/')}>{navHome}</a>
-        {!isAboutPage && <a href={`${basePath}/servicios`} class={`nav-link-services${navClass('/servicios') ? ' nav-current' : ''}`} aria-current={navCurrent('/servicios')}>{navServices}</a>}
-        {isAboutPage && <a href={`${basePath}/proyectos`} class={navClass('/proyectos')} aria-current={navCurrent('/proyectos')}>{navProjects}</a>}
-        {isAboutPage && <a href={`${basePath}/experiencia`} class={navClass('/experiencia')} aria-current={navCurrent('/experiencia')}>{navExperience}</a>}
-        <a href={`${basePath}/pablo-gomez-villen`} class={navClass('/pablo-gomez-villen')} aria-current={navCurrent('/pablo-gomez-villen')}>{navAbout}</a>
-        <a href={`${basePath}/blog`} class={`nav-link-blog${navClass('/blog') ? ' nav-current' : ''}`} aria-current={navCurrent('/blog')}>Blog</a>
-        <a href={isEN ? '/en/contact' : '/contacto'} class={`nav-link-contact${navClass('/contacto') ? ' nav-current' : ''}`} aria-current={navCurrent('/contacto')}>{navContact}</a>
-        {!isAboutPage && <a href={isEN ? '/en/book' : '/reserva'} class={`nav-book-btn nav-book-btn--mobile${navClass('/reserva') || navClass('/book') ? ' nav-current' : ''}`} aria-current={navClass('/reserva') || navClass('/book') ? 'page' : undefined}>{navBook}</a>}
+        {!isAboutPage && <a href={pathServicios} class={`nav-link-services${(navClass('/servicios') || navClass('/dienstleistungen')) ? ' nav-current' : ''}`} aria-current={(navClass('/servicios') || navClass('/dienstleistungen')) ? 'page' : undefined}>{navServices}</a>}
+        {isAboutPage && <a href={pathProyectos} class={navClass('/proyectos') || navClass('/projekte')} aria-current={(navClass('/proyectos') || navClass('/projekte')) ? 'page' : undefined}>{navProjects}</a>}
+        {isAboutPage && <a href={pathExperiencia} class={navClass('/experiencia')} aria-current={navCurrent('/experiencia')}>{navExperience}</a>}
+        <a href={pathAbout} class={navClass('/pablo-gomez-villen')} aria-current={navCurrent('/pablo-gomez-villen')}>{navAbout}</a>
+        <a href={pathBlog} class={`nav-link-blog${navClass('/blog') ? ' nav-current' : ''}`} aria-current={navCurrent('/blog')}>Blog</a>
+        <a href={pathContacto} class={`nav-link-contact${(navClass('/contacto') || navClass('/contact') || navClass('/kontakt')) ? ' nav-current' : ''}`} aria-current={(navClass('/contacto') || navClass('/contact') || navClass('/kontakt')) ? 'page' : undefined}>{navContact}</a>
+        {!isAboutPage && <a href={pathReserva} class={`nav-book-btn nav-book-btn--mobile${(navClass('/reserva') || navClass('/book') || navClass('/termin')) ? ' nav-current' : ''}`} aria-current={(navClass('/reserva') || navClass('/book') || navClass('/termin')) ? 'page' : undefined}>{navBook}</a>}
 
-        <!-- Toggle idioma (solo móvil) -->
-        <div class="lang-toggle mobile-only" aria-label="Cambiar idioma">
-          <input type="checkbox" id="lang-switch-mobile" />
-          <label for="lang-switch-mobile" class="lang-label">
-            <span class="flag flag-es"><img src="/img/flags/es.svg" alt="Cambiar idioma a Español"></span>
-            <span class="flag flag-en"><img src="/img/flags/gb.svg" alt="Switch language to English"></span>
-            <span class="toggle-slider"></span>
-          </label>
+        <!-- Selector de idioma (3 posiciones, solo móvil) -->
+        <div class="lang-toggle mobile-only" role="group" aria-label={isDE ? 'Sprache wechseln' : isEN ? 'Change language' : 'Cambiar idioma'}>
+          <span class="toggle-slider" data-lang-slider></span>
+          <button type="button" class="lang-flag" data-lang="es" data-lang-btn aria-pressed={!isEN && !isDE} aria-label="Cambiar idioma a Español">
+            <img src="/img/flags/es.svg" alt="ES">
+          </button>
+          <button type="button" class="lang-flag" data-lang="en" data-lang-btn aria-pressed={isEN} aria-label="Switch language to English">
+            <img src="/img/flags/gb.svg" alt="EN">
+          </button>
+          <button type="button" class="lang-flag" data-lang="de" data-lang-btn aria-pressed={isDE} aria-label="Sprache auf Deutsch umstellen">
+            <img src="/img/flags/de.svg" alt="DE">
+          </button>
         </div>
 
         <!-- Redes sociales (solo móvil) -->
@@ -229,13 +252,13 @@ const heroAvailability = isEN ? 'Available for work'   : 'Disponible para trabaj
             <span>Astro</span>
           </div>
           <div class="hero-buttons">
-            <a href={isEN ? '/en/servicios' : '/servicios'} class="btn">{isEN ? '💼 I need a website' : '💼 Necesito una web'}</a>
-            <a href={isEN ? '/en/book' : '/reserva'} class="btn btn-book">
+            <a href={pathServicios} class="btn">{isDE ? '💼 Ich brauche eine Website' : isEN ? '💼 I need a website' : '💼 Necesito una web'}</a>
+            <a href={pathReserva} class="btn btn-book">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-              {isEN ? 'Book a free call' : 'Agendar llamada gratuita'}
+              {isDE ? 'Kostenloses Gespräch buchen' : isEN ? 'Book a free call' : 'Agendar llamada gratuita'}
             </a>
           </div>
-          <a href="#main-content" class="hero-scroll-arrow" aria-label={isEN ? 'Scroll down' : 'Ver contenido'}>
+          <a href="#main-content" class="hero-scroll-arrow" aria-label={isDE ? 'Nach unten scrollen' : isEN ? 'Scroll down' : 'Ver contenido'}>
             <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
           </a>
         </div>
@@ -276,9 +299,9 @@ const heroAvailability = isEN ? 'Available for work'   : 'Disponible para trabaj
         <div class="contact-fixed">
           <div class="contact-fixed-header">
             <p class="contact-fixed-title" role="heading" aria-level="2">
-              <span aria-hidden="true">📩 </span>{isEN ? 'Contact' : 'Contacto'}
+              <span aria-hidden="true">📩 </span>{isDE ? 'Kontakt' : isEN ? 'Contact' : 'Contacto'}
             </p>
-            <button class="contact-close" aria-label={isEN ? 'Close contact' : 'Cerrar contacto'}>✕</button>
+            <button class="contact-close" aria-label={isDE ? 'Kontakt schließen' : isEN ? 'Close contact' : 'Cerrar contacto'}>✕</button>
           </div>
           <ul class="contact">
             <li>📞 <a href="tel:+34622400727">+34 622 400 727</a></li>
@@ -295,16 +318,16 @@ const heroAvailability = isEN ? 'Available for work'   : 'Disponible para trabaj
               </a>
             </li>
           </ul>
-          <a href={isEN ? '/en/book' : '/reserva'} class="contact-fixed-cta contact-fixed-cta--book btn--icon">
+          <a href={pathReserva} class="contact-fixed-cta contact-fixed-cta--book btn--icon">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-            {isEN ? 'Book free meeting' : 'Reservar reunión gratis'}
+            {isDE ? 'Kostenloses Treffen buchen' : isEN ? 'Book free meeting' : 'Reservar reunión gratis'}
           </a>
-          <a href={isEN ? '/en/servicios#pricing' : '/servicios#precios'} class="contact-fixed-cta btn--icon">
-            {isEN ? 'Request a quote' : 'Pedir presupuesto'}
+          <a href={pathPricing} class="contact-fixed-cta btn--icon">
+            {isDE ? 'Angebot anfragen' : isEN ? 'Request a quote' : 'Pedir presupuesto'}
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
         </div>
-        <button class="contact-mini" aria-label={isEN ? 'Open contact' : 'Abrir contacto'}>
+        <button class="contact-mini" aria-label={isDE ? 'Kontakt öffnen' : isEN ? 'Open contact' : 'Abrir contacto'}>
           <span aria-hidden="true">📩</span>
         </button>
       </>
@@ -342,28 +365,45 @@ const heroAvailability = isEN ? 'Available for work'   : 'Disponible para trabaj
           }
         });
 
-        // --- Idioma (URL-based) ---
-        const langSwitches = document.querySelectorAll('#lang-switch, #lang-switch-mobile');
-        const isEnPage = window.location.pathname.startsWith('/en');
-        langSwitches.forEach(sw => sw.checked = isEnPage);
-        // Sincronizar cookie con la URL actual
-        document.cookie = `lang=${isEnPage ? 'en' : 'es'}; path=/; max-age=31536000`;
+        // --- Idioma (selector de 3 posiciones, URL-based) ---
+        const currentLang = window.location.pathname.startsWith('/de') ? 'de' : window.location.pathname.startsWith('/en') ? 'en' : 'es';
+        document.cookie = `lang=${currentLang}; path=/; max-age=31536000`;
+        const langPosition = { es: '0', en: '1', de: '2' };
+        document.querySelectorAll('.lang-toggle').forEach(el => el.setAttribute('data-active', langPosition[currentLang]));
 
-        // Toggle: navegar a la URL del idioma alternativo
-        langSwitches.forEach(sw => {
-          sw.addEventListener('change', (e) => {
-            const toEN = e.target.checked;
-            langSwitches.forEach(other => other.checked = toEN);
-            document.cookie = `lang=${toEN ? 'en' : 'es'}; path=/; max-age=31536000`;
-            const path = window.location.pathname;
-            if (toEN) {
-              const altEn = document.querySelector('link[rel="alternate"][hreflang="en"]')?.getAttribute('href');
-              window.location.href = altEn ? new URL(altEn).pathname : '/en' + (path === '/' ? '' : path);
-            } else {
-              const altEs = document.querySelector('link[rel="alternate"][hreflang="es"]')?.getAttribute('href');
-              window.location.href = altEs ? new URL(altEs).pathname : (path.replace(/^\/en/, '') || '/');
+        // Slugs traducidos: para el fallback cuando no hay <link alternate> en la página (p.ej. blog aún sin versión DE)
+        const slugMap = {
+          servicios: { es: 'servicios', en: 'servicios', de: 'dienstleistungen' },
+          proyectos: { es: 'proyectos', en: 'proyectos', de: 'projekte' },
+          contacto:  { es: 'contacto',  en: 'contact',   de: 'kontakt' },
+          reserva:   { es: 'reserva',   en: 'book',      de: 'termin' },
+          gracias:   { es: 'gracias',   en: 'thank-you', de: 'danke' },
+        };
+
+        function fallbackPath(target) {
+          const stripped = (window.location.pathname.replace(/^\/(en|de)/, '') || '/').replace(/\/$/, '') || '/';
+          const segments = stripped.split('/').filter(Boolean);
+          if (segments.length) {
+            for (const key in slugMap) {
+              if (Object.values(slugMap[key]).includes(segments[0])) {
+                segments[0] = slugMap[key][target];
+                break;
+              }
             }
-          });
+          }
+          const rest = segments.length ? '/' + segments.join('/') : '';
+          return (target === 'es' ? '' : '/' + target) + rest || '/';
+        }
+
+        function goToLang(target) {
+          if (target === currentLang) return;
+          document.cookie = `lang=${target}; path=/; max-age=31536000`;
+          const alt = document.querySelector(`link[rel="alternate"][hreflang="${target}"]`)?.getAttribute('href');
+          window.location.href = alt ? new URL(alt).pathname : fallbackPath(target);
+        }
+
+        document.querySelectorAll('[data-lang-btn]').forEach(btn => {
+          btn.addEventListener('click', () => goToLang(btn.getAttribute('data-lang')));
         });
 
         // --- Navbar backdrop-blur al hacer scroll ---

@@ -5,8 +5,8 @@ const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   "@id": "https://www.pablogomezvillen.com",
-  "name": "Pablo Gómez Villén — Web Development",
-  "description": "Professional web development and local SEO for businesses in Granada and Spain",
+  "name": "Pablo Gómez Villén — Webentwicklung",
+  "description": "Professionelle Webentwicklung und lokales SEO für Unternehmen in Granada und Spanien",
   "url": "https://www.pablogomezvillen.com",
   "telephone": "+34622400727",
   "email": "pablogomezvillen@gmail.com",
@@ -17,45 +17,45 @@ const localBusinessSchema = {
     "addressCountry": "ES"
   },
   "areaServed": ["Granada", "Andalucía", "España"],
-  "serviceType": ["Web Design", "Local SEO", "Full Stack Development"]
+  "serviceType": ["Webdesign", "Lokales SEO", "Full-Stack-Entwicklung"]
 };
 ---
 
 <Layout
-  title="Contact | Pablo Gómez — Web Developer in Granada"
-  lang="en"
-  description="Request a quote for your website or digital project. Response within 24 hours. No commitment."
-  canonical="https://www.pablogomezvillen.com/en/contact"
+  title="Kontakt | Pablo Gómez — Webentwickler in Granada"
+  lang="de"
+  description="Fordere ein Angebot für deine Website oder dein digitales Projekt an. Antwort innerhalb von 24 Stunden. Unverbindlich."
+  canonical="https://www.pablogomezvillen.com/de/kontakt"
   alternateEs="https://www.pablogomezvillen.com/contacto"
   alternateEn="https://www.pablogomezvillen.com/en/contact"
   alternateDe="https://www.pablogomezvillen.com/de/kontakt"
   showHero={false}
-  keywords="contact web developer Granada, web quote, hire programmer Granada"
+  keywords="Kontakt Webentwickler Granada, Website-Angebot, Programmierer Granada beauftragen"
   jsonLd={[localBusinessSchema]}
 >
 
   <div class="page-banner">
     <h1>
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-      Let's Talk
+      Lass uns reden
     </h1>
-    <p>Tell me what you need — I'll reply within 24 hours</p>
+    <p>Erzähl mir, was du brauchst — ich antworte innerhalb von 24 Stunden</p>
   </div>
 
   <div class="contact-booking-alt contact-booking-alt--top">
-    <p class="contact-booking-alt-title">Prefer to talk directly?</p>
-    <p class="contact-booking-alt-desc">Book a free 20-minute call and let's chat with no strings attached.</p>
-    <a href="/en/book" class="contact-booking-alt-btn">
+    <p class="contact-booking-alt-title">Lieber direkt sprechen?</p>
+    <p class="contact-booking-alt-desc">Buche ein kostenloses 20-minütiges Gespräch, ganz unverbindlich.</p>
+    <a href="/de/termin" class="contact-booking-alt-btn">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-      Book a free meeting
+      Kostenloses Treffen buchen
     </a>
   </div>
 
   <div class="contacto-page">
 
-    <!-- Form -->
+    <!-- Formular -->
     <div>
-      <h2 style="font-size:1.3rem;font-weight:700;color:#1e3c72;margin-bottom:20px;">Send me a message</h2>
+      <h2 style="font-size:1.3rem;font-weight:700;color:#1e3c72;margin-bottom:20px;">Schreib mir eine Nachricht</h2>
 
       <form
         class="contact-form"
@@ -64,44 +64,44 @@ const localBusinessSchema = {
       >
         <div class="contact-form-group">
           <label for="cf-nombre">Name *</label>
-          <input type="text" id="cf-nombre" name="nombre" required placeholder="Your name" autocomplete="name" />
+          <input type="text" id="cf-nombre" name="nombre" required placeholder="Dein Name" autocomplete="name" />
         </div>
 
         <div class="contact-form-group">
-          <label for="cf-email">Email *</label>
-          <input type="email" id="cf-email" name="email" required placeholder="you@email.com" autocomplete="email" />
+          <label for="cf-email">E-Mail *</label>
+          <input type="email" id="cf-email" name="email" required placeholder="du@email.com" autocomplete="email" />
         </div>
 
         <div class="contact-form-group">
-          <label for="cf-tel">Phone (optional)</label>
-          <input type="tel" id="cf-tel" name="telefono" placeholder="+34 600 000 000" autocomplete="tel" />
+          <label for="cf-tel">Telefon (optional)</label>
+          <input type="tel" id="cf-tel" name="telefono" placeholder="+49 151 00000000" autocomplete="tel" />
         </div>
 
         <div class="contact-form-group">
-          <label for="cf-tipo">Project type *</label>
+          <label for="cf-tipo">Projektart *</label>
           <select id="cf-tipo" name="tipo_proyecto" required>
-            <option value="" disabled selected>Select an option...</option>
-            <option value="web-negocio">Website for my business</option>
-            <option value="seo">SEO & local search</option>
-            <option value="app">App or custom development</option>
-            <option value="mantenimiento">Website maintenance</option>
-            <option value="otro">Other</option>
+            <option value="" disabled selected>Option wählen...</option>
+            <option value="web-negocio">Website für mein Unternehmen</option>
+            <option value="seo">SEO & lokale Suche</option>
+            <option value="app">App oder individuelle Entwicklung</option>
+            <option value="mantenimiento">Website-Wartung</option>
+            <option value="otro">Sonstiges</option>
           </select>
         </div>
 
         <div class="contact-form-group">
-          <label for="cf-plan">Plan of interest</label>
+          <label for="cf-plan">Interessanter Plan</label>
           <select id="cf-plan" name="plan_interes">
-            <option value="" selected>No preference / let's discuss</option>
-            <option value="basico">Basic Plan — from €350</option>
-            <option value="negocio">Business Plan — from €650</option>
-            <option value="premium">Premium Plan — price on request</option>
+            <option value="" selected>Keine Präferenz / lass uns sprechen</option>
+            <option value="basico">Basic-Plan — ab 350 €</option>
+            <option value="negocio">Business-Plan — ab 650 €</option>
+            <option value="premium">Premium-Plan — Preis auf Anfrage</option>
           </select>
         </div>
 
         <div class="contact-form-group">
-          <label for="cf-mensaje">Message *</label>
-          <textarea id="cf-mensaje" name="mensaje" required placeholder="Tell me how I can help you..."></textarea>
+          <label for="cf-mensaje">Nachricht *</label>
+          <textarea id="cf-mensaje" name="mensaje" required placeholder="Erzähl mir, wie ich dir helfen kann..."></textarea>
         </div>
 
         <!-- Honeypot anti-spam -->
@@ -110,7 +110,7 @@ const localBusinessSchema = {
         <div id="form-feedback" role="alert" aria-live="polite" style="display:none;padding:12px 16px;border-radius:8px;font-size:0.9rem;margin-bottom:12px"></div>
 
         <button type="submit" class="contact-form-btn" id="form-submit-btn">
-          Send message →
+          Nachricht senden →
         </button>
       </form>
     </div>
@@ -131,8 +131,8 @@ const localBusinessSchema = {
         e.preventDefault();
         if (!btn || !feedback) return;
 
-        const originalText = btn.textContent ?? 'Send message →';
-        btn.textContent = 'Sending...';
+        const originalText = btn.textContent ?? 'Nachricht senden →';
+        btn.textContent = 'Wird gesendet...';
         btn.disabled = true;
         feedback.style.display = 'none';
 
@@ -144,14 +144,14 @@ const localBusinessSchema = {
           });
 
           if (res.ok) {
-            window.location.href = '/en/thank-you';
+            window.location.href = '/de/danke';
           } else {
             const data: { errors?: { message: string }[] } = await res.json().catch(() => ({}));
-            const msg = data.errors?.map((err) => err.message).join('. ') || 'Something went wrong. Please try again or message me on WhatsApp.';
+            const msg = data.errors?.map((err) => err.message).join('. ') || 'Etwas ist schiefgelaufen. Bitte versuche es erneut oder schreib mir auf WhatsApp.';
             showError(msg);
           }
         } catch {
-          showError('Connection error. Check your internet and try again.');
+          showError('Verbindungsfehler. Prüfe deine Internetverbindung und versuche es erneut.');
         }
 
         function showError(msg: string) {
@@ -163,16 +163,16 @@ const localBusinessSchema = {
       });
     </script>
 
-    <!-- Contact info -->
+    <!-- Kontaktinfo -->
     <div class="contact-info-panel">
-      <h3>Contact information</h3>
+      <h3>Kontaktinformationen</h3>
 
       <div class="contact-info-item">
         <span class="contact-info-ico" aria-hidden="true">💬</span>
         <div>
           <span class="contact-info-label">WhatsApp</span>
           <a
-            href="https://wa.me/34622400727?text=Hi%20Pablo%2C%20I%27m%20interested%20in%20talking%20about%20my%20website"
+            href="https://wa.me/34622400727?text=Hallo%20Pablo%2C%20ich%20interessiere%20mich%20f%C3%BCr%20ein%20Gespr%C3%A4ch%20%C3%BCber%20meine%20Website"
             target="_blank"
             rel="noopener noreferrer"
             class="contact-info-val"
@@ -183,7 +183,7 @@ const localBusinessSchema = {
       <div class="contact-info-item">
         <span class="contact-info-ico" aria-hidden="true">📧</span>
         <div>
-          <span class="contact-info-label">Email</span>
+          <span class="contact-info-label">E-Mail</span>
           <a href="mailto:pablogomezvillen@gmail.com" class="contact-info-val">pablogomezvillen@gmail.com</a>
         </div>
       </div>
@@ -199,13 +199,13 @@ const localBusinessSchema = {
       <div class="contact-info-item">
         <span class="contact-info-ico" aria-hidden="true">📍</span>
         <div>
-          <span class="contact-info-label">Location</span>
-          <span class="contact-info-val" style="cursor:default">Granada, Spain<br><small style="font-weight:400;color:#696969">Working remotely with businesses across Spain</small></span>
+          <span class="contact-info-label">Standort</span>
+          <span class="contact-info-val" style="cursor:default">Granada, Spanien<br><small style="font-weight:400;color:#696969">Remote-Arbeit mit Unternehmen in ganz Spanien</small></span>
         </div>
       </div>
 
       <div class="contact-respuesta">
-        ⏱️ Usual response time: <strong>under 24 hours</strong> on working days
+        ⏱️ Übliche Antwortzeit: <strong>unter 24 Stunden</strong> an Werktagen
       </div>
     </div>
 

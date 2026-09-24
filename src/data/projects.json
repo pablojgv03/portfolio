@@ -16,8 +16,11 @@
           "altEn": "Dashboard showing monthly revenue, active members, today's check-ins and upcoming renewals",
           "title": "Dashboard",
           "titleEn": "Dashboard",
+          "titleDe": "Dashboard",
           "caption": "Vista general del gimnasio en tiempo real: ingresos, socios activos, check-ins del día y membresías que vencen pronto.",
-          "captionEn": "Real-time gym overview: revenue, active members, today's check-ins and memberships expiring soon."
+          "captionEn": "Real-time gym overview: revenue, active members, today's check-ins and memberships expiring soon.",
+          "altDe": "Dashboard mit Monatseinnahmen, aktiven Mitgliedern, heutigen Check-ins und anstehenden Verlängerungen",
+          "captionDe": "Echtzeit-Überblick über das Fitnessstudio: Einnahmen, aktive Mitglieder, heutige Check-ins und bald ablaufende Mitgliedschaften."
         },
         {
           "src": "/img/projects/coregym-pos/tpv.webp",
@@ -25,8 +28,11 @@
           "altEn": "POS with product catalogue by category, cart and payment summary with discounts",
           "title": "TPV",
           "titleEn": "POS Terminal",
+          "titleDe": "Kasse",
           "caption": "Terminal de punto de venta con catálogo filtrable, carrito y checkout atómico. El cobro nunca queda a medias.",
-          "captionEn": "Point-of-sale terminal with filterable catalogue, cart and atomic checkout. Payments are never left incomplete."
+          "captionEn": "Point-of-sale terminal with filterable catalogue, cart and atomic checkout. Payments are never left incomplete.",
+          "altDe": "Kasse mit Produktkatalog nach Kategorie, Warenkorb und Zahlungsübersicht mit Rabatten",
+          "captionDe": "Kassenterminal mit filterbarem Katalog, Warenkorb und atomarem Checkout. Eine Zahlung bleibt niemals unvollständig."
         },
         {
           "src": "/img/projects/coregym-pos/clientes.webp",
@@ -34,8 +40,11 @@
           "altEn": "Clients panel with modal for assigning membership — plan selection, payment method and activation",
           "title": "Clientes",
           "titleEn": "Members",
+          "titleDe": "Mitglieder",
           "caption": "Gestión completa de socios: ficha, historial y asignación de membresía con plan, precio y método de pago desde un solo modal.",
-          "captionEn": "Full member management: profile, history and membership assignment with plan, price and payment method in one modal."
+          "captionEn": "Full member management: profile, history and membership assignment with plan, price and payment method in one modal.",
+          "altDe": "Kundenpanel mit Modal zur Zuweisung einer Mitgliedschaft — Planauswahl, Zahlungsmethode und Aktivierung",
+          "captionDe": "Vollständige Mitgliederverwaltung: Profil, Verlauf und Mitgliedschaftszuweisung mit Plan, Preis und Zahlungsmethode in einem Modal."
         },
         {
           "src": "/img/projects/coregym-pos/estadisticas.webp",
@@ -43,17 +52,22 @@
           "altEn": "Statistics page with annual revenue chart, plan distribution donut and upcoming renewals",
           "title": "Estadísticas",
           "titleEn": "Analytics",
+          "titleDe": "Statistiken",
           "caption": "Análisis detallado: ingresos anuales, distribución de membresías y renovaciones próximas con alertas de urgencia.",
-          "captionEn": "Detailed analytics: annual revenue, membership distribution and upcoming renewals with urgency alerts."
+          "captionEn": "Detailed analytics: annual revenue, membership distribution and upcoming renewals with urgency alerts.",
+          "altDe": "Statistikseite mit Diagramm der Jahreseinnahmen, Verteilung nach Plan und anstehenden Verlängerungen",
+          "captionDe": "Detaillierte Analyse: Jahreseinnahmen, Verteilung der Mitgliedschaften und anstehende Verlängerungen mit Dringlichkeitshinweisen."
         }
       ],
       "large-description": {
         "es": "CoreGym POS es un sistema de punto de venta diseñado específicamente para gimnasios pequeños y medianos. Es una aplicación de escritorio nativa que corre completamente en local: sin suscripciones en la nube, sin dependencias externas, con todos los datos almacenados en el propio equipo del negocio.\n\nEl problema que resuelve: la mayoría de soluciones de gestión para gimnasios son caras, complejas o requieren conexión constante a internet. CoreGym ofrece las herramientas esenciales de forma clara y rápida — saber quién tiene la membresía activa, cobrar en segundos, y ver los ingresos del mes de un vistazo.\n\nEl módulo de Clientes centraliza toda la información de los socios: ficha con datos de contacto, historial de pagos y estado de membresía en tiempo real. Desde aquí se puede asignar o renovar un plan directamente — Día, Mensual, Trimestral o Anual — con selección de método de pago (efectivo, tarjeta, transferencia) y activación instantánea.\n\nEl TPV es el corazón operativo de la app: catálogo de productos y membresías con filtros por categoría, carrito con selección de descuentos y resumen de cobro. Todo el proceso de checkout es atómico — ejecutado en una transacción SQL BEGIN IMMEDIATE / COMMIT — de forma que nunca puede quedar un pago registrado sin su ticket correspondiente.\n\nEl Dashboard y la sección de Estadísticas muestran ingresos del mes y del año, socios activos, check-ins del día y renovaciones próximas, con gráficas de evolución mensual y distribución por plan. Toda la información se deriva en tiempo real desde SQLite sin peticiones a servidor.\n\nDesarrollada con Tauri 2 (shell nativa en Rust) y React 19 + TypeScript en el frontend. El estado global se gestiona con Zustand 5. La base de datos es SQLite accedida vía tauri-plugin-sql, con migraciones versionadas que se aplican automáticamente en la primera ejecución. La arquitectura sigue una separación estricta en capas: UI → Stores → Services → Repositories → SQLite.",
-        "en": "CoreGym POS is a point-of-sale system designed specifically for small and medium gyms. It is a native desktop application that runs entirely offline — no cloud subscriptions, no external dependencies, all data stored on the business's own machine.\n\nThe problem it solves: most gym management solutions are expensive, complex, or require a constant internet connection. CoreGym delivers the essential tools in a clear, fast interface — know who has an active membership, charge in seconds, and see the month's revenue at a glance.\n\nThe Clients module centralises all member information: a profile with contact details, payment history and real-time membership status. From here, plans can be assigned or renewed directly — Day, Monthly, Quarterly or Annual — with payment method selection (cash, card, transfer) and instant activation.\n\nThe POS is the operational core of the app: a product and membership catalogue with category filters, a cart with discount selectors and a payment summary. The entire checkout process is atomic — executed in a SQL BEGIN IMMEDIATE / COMMIT transaction — so a payment can never be recorded without its corresponding ticket.\n\nThe Dashboard and Statistics section display monthly and annual revenue, active members, today's check-ins and upcoming renewals, with monthly evolution charts and plan distribution donut chart. All data is derived in real time from SQLite with no server requests.\n\nBuilt with Tauri 2 (native Rust shell) and React 19 + TypeScript on the frontend. Global state is managed with Zustand 5. The database is SQLite accessed via tauri-plugin-sql, with versioned migrations that apply automatically on first run. The architecture follows strict layer separation: UI → Stores → Services → Repositories → SQLite."
+        "en": "CoreGym POS is a point-of-sale system designed specifically for small and medium gyms. It is a native desktop application that runs entirely offline — no cloud subscriptions, no external dependencies, all data stored on the business's own machine.\n\nThe problem it solves: most gym management solutions are expensive, complex, or require a constant internet connection. CoreGym delivers the essential tools in a clear, fast interface — know who has an active membership, charge in seconds, and see the month's revenue at a glance.\n\nThe Clients module centralises all member information: a profile with contact details, payment history and real-time membership status. From here, plans can be assigned or renewed directly — Day, Monthly, Quarterly or Annual — with payment method selection (cash, card, transfer) and instant activation.\n\nThe POS is the operational core of the app: a product and membership catalogue with category filters, a cart with discount selectors and a payment summary. The entire checkout process is atomic — executed in a SQL BEGIN IMMEDIATE / COMMIT transaction — so a payment can never be recorded without its corresponding ticket.\n\nThe Dashboard and Statistics section display monthly and annual revenue, active members, today's check-ins and upcoming renewals, with monthly evolution charts and plan distribution donut chart. All data is derived in real time from SQLite with no server requests.\n\nBuilt with Tauri 2 (native Rust shell) and React 19 + TypeScript on the frontend. Global state is managed with Zustand 5. The database is SQLite accessed via tauri-plugin-sql, with versioned migrations that apply automatically on first run. The architecture follows strict layer separation: UI → Stores → Services → Repositories → SQLite.",
+        "de": "CoreGym POS ist ein Kassensystem, das speziell für kleine und mittlere Fitnessstudios entwickelt wurde. Es ist eine native Desktop-Anwendung, die komplett offline läuft — keine Cloud-Abonnements, keine externen Abhängigkeiten, alle Daten auf dem eigenen Rechner des Unternehmens gespeichert.\n\nDas gelöste Problem: Die meisten Verwaltungslösungen für Fitnessstudios sind teuer, komplex oder benötigen eine ständige Internetverbindung. CoreGym bietet die wesentlichen Werkzeuge klar und schnell — wissen, wer eine aktive Mitgliedschaft hat, in Sekunden kassieren und die Monatseinnahmen auf einen Blick sehen.\n\nDas Kundenmodul zentralisiert alle Mitgliederinformationen: Profil mit Kontaktdaten, Zahlungsverlauf und Mitgliedschaftsstatus in Echtzeit. Von hier aus kann direkt ein Plan zugewiesen oder verlängert werden — Tag, Monat, Quartal oder Jahr — mit Auswahl der Zahlungsmethode (Bar, Karte, Überweisung) und sofortiger Aktivierung.\n\nDas Kassensystem ist das operative Herz der App: Produkt- und Mitgliedschaftskatalog mit Kategoriefiltern, Warenkorb mit Rabattauswahl und Zahlungsübersicht. Der gesamte Checkout-Prozess ist atomar — ausgeführt in einer SQL-BEGIN-IMMEDIATE/COMMIT-Transaktion —, sodass eine Zahlung nie ohne den entsprechenden Beleg erfasst werden kann.\n\nDashboard und Statistikbereich zeigen Monats- und Jahreseinnahmen, aktive Mitglieder, heutige Check-ins und anstehende Verlängerungen, mit Diagrammen zur monatlichen Entwicklung und zur Verteilung nach Plan. Alle Daten stammen in Echtzeit aus SQLite, ohne Serveranfragen.\n\nEntwickelt mit Tauri 2 (native Rust-Shell) und React 19 + TypeScript im Frontend. Der globale State wird mit Zustand 5 verwaltet. Die Datenbank ist SQLite, zugänglich über tauri-plugin-sql, mit versionierten Migrationen, die beim ersten Start automatisch angewendet werden. Die Architektur folgt einer strikten Schichtentrennung: UI → Stores → Services → Repositories → SQLite."
       },
       "description": {
         "es": "Sistema POS de escritorio para gimnasios — gestión de socios, membresías, TPV con checkout atómico y estadísticas en tiempo real. Todo local, sin nube.",
-        "en": "Desktop POS system for gyms — member management, memberships, POS with atomic checkout and real-time analytics. Fully offline, no cloud."
+        "en": "Desktop POS system for gyms — member management, memberships, POS with atomic checkout and real-time analytics. Fully offline, no cloud.",
+        "de": "Desktop-POS-System für Fitnessstudios — Mitgliederverwaltung, Mitgliedschaften, Kasse mit atomarem Checkout und Echtzeitstatistiken. Komplett offline, keine Cloud."
       },
       "skills": [
         { "name": "Tauri 2", "level": "high" },
@@ -77,17 +91,19 @@
       "image": "/img/projects/duowatch/portada.webp",
       "imageAlt": "DuoWatch — pantalla de inicio con catálogo de películas",
       "screenshots": [
-        { "src": "/img/projects/duowatch/swipe.webp",   "alt": "Pantalla de swipe — El Caballero Oscuro", "altEn": "Swipe screen — The Dark Knight",   "title": "Swipe de películas",  "titleEn": "Movie Swiping",     "caption": "Swipe derecha para dar like, izquierda para descartar. Sin ver lo que elige tu amigo.", "captionEn": "Swipe right to like, left to skip — without seeing your friend's picks." },
-        { "src": "/img/projects/duowatch/detalle.webp", "alt": "Vista detalle de película con puntuación, duración y descripción", "altEn": "Movie detail view with rating, duration and description", "title": "Vista detalle", "titleEn": "Movie Details", "caption": "Puntuación, año, duración, géneros, sinopsis y enlace al tráiler si está disponible.", "captionEn": "Rating, year, runtime, genres, synopsis and trailer link when available." },
-        { "src": "/img/projects/duowatch/movil.webp",   "alt": "Landing page responsive en móvil", "altEn": "Responsive landing page on mobile", "title": "100% Responsive",   "titleEn": "100% Responsive",   "caption": "La misma experiencia en escritorio y en móvil gracias a TailwindCSS.", "captionEn": "Seamless experience across desktop and mobile, built with TailwindCSS." }
+        { "src": "/img/projects/duowatch/swipe.webp",   "alt": "Pantalla de swipe — El Caballero Oscuro", "altEn": "Swipe screen — The Dark Knight", "altDe": "Swipe-Bildschirm — The Dark Knight",   "title": "Swipe de películas",  "titleEn": "Movie Swiping", "titleDe": "Filme swipen",     "caption": "Swipe derecha para dar like, izquierda para descartar. Sin ver lo que elige tu amigo.", "captionEn": "Swipe right to like, left to skip — without seeing your friend's picks.", "captionDe": "Nach rechts wischen für Like, nach links zum Überspringen — ohne die Wahl deines Freundes zu sehen." },
+        { "src": "/img/projects/duowatch/detalle.webp", "alt": "Vista detalle de película con puntuación, duración y descripción", "altEn": "Movie detail view with rating, duration and description", "altDe": "Filmdetailansicht mit Bewertung, Laufzeit und Beschreibung", "title": "Vista detalle", "titleEn": "Movie Details", "titleDe": "Filmdetails", "caption": "Puntuación, año, duración, géneros, sinopsis y enlace al tráiler si está disponible.", "captionEn": "Rating, year, runtime, genres, synopsis and trailer link when available.", "captionDe": "Bewertung, Jahr, Laufzeit, Genres, Zusammenfassung und Trailer-Link, falls verfügbar." },
+        { "src": "/img/projects/duowatch/movil.webp",   "alt": "Landing page responsive en móvil", "altEn": "Responsive landing page on mobile", "altDe": "Responsive Landingpage auf dem Handy", "title": "100% Responsive",   "titleEn": "100% Responsive", "titleDe": "100% Responsive",   "caption": "La misma experiencia en escritorio y en móvil gracias a TailwindCSS.", "captionEn": "Seamless experience across desktop and mobile, built with TailwindCSS.", "captionDe": "Dieselbe Erfahrung auf Desktop und Mobilgerät, dank TailwindCSS." }
       ],
       "large-description": {
         "es": "¿Alguna vez has pasado media hora negociando qué ver con alguien? DuoWatch resuelve eso. Funciona como Tinder pero para películas y series: cada usuario hace swipe por su cuenta — sin ver las elecciones del otro — y cuando dos amigos coinciden en un like, la app genera un match automático y les notifica al instante. Sin negociaciones, sin spoilers de lo que le gusta al otro.\n\nCada película o serie tiene su propia vista detalle: puntuación, año de estreno, duración, géneros, sinopsis y, si está disponible, un botón directo al tráiler. Todo extraído en tiempo real desde la API oficial de TMDB con su catálogo de más de 1 millón de títulos.\n\nLa interfaz es completamente responsive — misma experiencia en escritorio y en móvil — con animaciones fluidas en los swipes gracias a Framer Motion.\n\nDesarrollada de cero como proyecto full stack con Next.js 15 (App Router) en el frontend y NestJS 10 en el backend, comunicados por API REST y WebSocket en tiempo real (Socket.IO). La base de datos es PostgreSQL gestionada con Prisma ORM, todo contenerizado con Docker Compose.\n\nEl motor de recomendaciones es propio: aprende de los swipes del usuario en tiempo real, aplica boost ×1.5 a contenido similar a sus últimos likes y excluye automáticamente lo similar a sus dislikes. El sistema de compatibilidad entre amigos usa similitud de Jaccard sobre géneros e historial compartido. La autenticación implementa JWT con access token de 15 min, refresh token de 7 días y rotación automática en el cliente.",
-        "en": "Ever spent half an hour arguing about what to watch? DuoWatch fixes that. It works like Tinder but for movies and series: each user swipes independently — without seeing the other's choices — and when two friends both like the same title, the app creates a match and notifies them instantly. No negotiations, no spoilers.\n\nEvery movie or series has its own detail view: rating, release year, runtime, genres, synopsis and, when available, a direct link to the trailer. All data fetched in real time from the official TMDB API with its catalogue of over 1 million titles.\n\nThe interface is fully responsive — same seamless experience on desktop and mobile — with fluid swipe animations powered by Framer Motion.\n\nBuilt from scratch as a full stack project with Next.js 15 (App Router) on the frontend and NestJS 10 on the backend, connected via REST API and real-time WebSocket (Socket.IO). PostgreSQL database managed with Prisma ORM, fully containerised with Docker Compose.\n\nThe recommendation engine is custom-built: it learns from swipes in real time, applies a ×1.5 boost to content similar to recent likes, and automatically excludes content similar to dislikes. The friend compatibility score uses Jaccard similarity over shared genres and interaction history. Auth implements JWT with 15-min access tokens, 7-day refresh tokens and automatic rotation on the client."
+        "en": "Ever spent half an hour arguing about what to watch? DuoWatch fixes that. It works like Tinder but for movies and series: each user swipes independently — without seeing the other's choices — and when two friends both like the same title, the app creates a match and notifies them instantly. No negotiations, no spoilers.\n\nEvery movie or series has its own detail view: rating, release year, runtime, genres, synopsis and, when available, a direct link to the trailer. All data fetched in real time from the official TMDB API with its catalogue of over 1 million titles.\n\nThe interface is fully responsive — same seamless experience on desktop and mobile — with fluid swipe animations powered by Framer Motion.\n\nBuilt from scratch as a full stack project with Next.js 15 (App Router) on the frontend and NestJS 10 on the backend, connected via REST API and real-time WebSocket (Socket.IO). PostgreSQL database managed with Prisma ORM, fully containerised with Docker Compose.\n\nThe recommendation engine is custom-built: it learns from swipes in real time, applies a ×1.5 boost to content similar to recent likes, and automatically excludes content similar to dislikes. The friend compatibility score uses Jaccard similarity over shared genres and interaction history. Auth implements JWT with 15-min access tokens, 7-day refresh tokens and automatic rotation on the client.",
+        "de": "Schon mal eine halbe Stunde diskutiert, was ihr schauen sollt? DuoWatch löst das. Es funktioniert wie Tinder, aber für Filme und Serien: Jeder Nutzer swipt unabhängig — ohne die Wahl des anderen zu sehen — und wenn zwei Freunde denselben Titel liken, erstellt die App automatisch ein Match und benachrichtigt beide sofort. Keine Diskussionen, keine Spoiler.\n\nJeder Film oder jede Serie hat eine eigene Detailansicht: Bewertung, Erscheinungsjahr, Laufzeit, Genres, Zusammenfassung und, falls verfügbar, einen direkten Link zum Trailer. Alle Daten werden in Echtzeit von der offiziellen TMDB-API mit über 1 Million Titeln abgerufen.\n\nDie Oberfläche ist vollständig responsive — dieselbe nahtlose Erfahrung auf Desktop und Mobilgerät — mit flüssigen Swipe-Animationen powered by Framer Motion.\n\nVon Grund auf als Full-Stack-Projekt entwickelt mit Next.js 15 (App Router) im Frontend und NestJS 10 im Backend, verbunden über REST-API und Echtzeit-WebSocket (Socket.IO). PostgreSQL-Datenbank verwaltet mit Prisma ORM, komplett containerisiert mit Docker Compose.\n\nDie Empfehlungs-Engine ist eigenentwickelt: Sie lernt in Echtzeit aus den Swipes, wendet einen ×1,5-Boost auf Inhalte ähnlich den letzten Likes an und schließt automatisch Inhalte ähnlich den Dislikes aus. Der Kompatibilitäts-Score zwischen Freunden nutzt Jaccard-Ähnlichkeit über gemeinsame Genres und Interaktionsverlauf. Die Authentifizierung implementiert JWT mit 15-minütigen Access-Tokens, 7-tägigen Refresh-Tokens und automatischer Rotation auf dem Client."
       },
       "description": {
         "es": "Red social de matching de películas estilo Tinder — swipe con amigos, matches en tiempo real vía WebSocket y motor de recomendaciones propio.",
-        "en": "Movie matching social app Tinder-style — swipe with friends, real-time matches via WebSocket and a custom recommendation engine."
+        "en": "Movie matching social app Tinder-style — swipe with friends, real-time matches via WebSocket and a custom recommendation engine.",
+        "de": "Social-App zum Filme-Matchen im Tinder-Stil — mit Freunden swipen, Echtzeit-Matches per WebSocket und eine eigene Empfehlungs-Engine."
       },
       "skills": [
         { "name": "Next.js 15", "level": "high" },
@@ -120,8 +136,11 @@
           "altEn": "Dashboard showing total reviews, star average and response status",
           "title": "Dashboard",
           "titleEn": "Dashboard",
+          "titleDe": "Dashboard",
           "caption": "Métricas en tiempo real: reseñas totales, media de estrellas, negativas pendientes y estado de las respuestas.",
-          "captionEn": "Real-time metrics: total reviews, star average, pending negatives and response pipeline status."
+          "captionEn": "Real-time metrics: total reviews, star average, pending negatives and response pipeline status.",
+          "altDe": "Dashboard mit Gesamtzahl der Bewertungen, Sternedurchschnitt und Antwortstatus",
+          "captionDe": "Echtzeit-Kennzahlen: Bewertungen gesamt, Sternedurchschnitt, ausstehende negative Bewertungen und Antwortstatus."
         },
         {
           "src": "/img/projects/local-reviews-ai/resenas.webp",
@@ -129,8 +148,11 @@
           "altEn": "Reviews panel with filterable list and AI-generated response in the sidebar",
           "title": "Respuesta IA",
           "titleEn": "AI Response",
+          "titleDe": "KI-Antwort",
           "caption": "Selecciona una reseña y la IA genera una respuesta profesional al instante. Edítala antes de usarla.",
-          "captionEn": "Select a review and the AI generates a professional reply instantly. Edit it before sending."
+          "captionEn": "Select a review and the AI generates a professional reply instantly. Edit it before sending.",
+          "altDe": "Bewertungspanel mit filterbarer Liste und KI-generierter Antwort in der Seitenleiste",
+          "captionDe": "Wähle eine Bewertung aus und die KI generiert sofort eine professionelle Antwort. Bearbeite sie vor dem Versand."
         },
         {
           "src": "/img/projects/local-reviews-ai/configuracion.webp",
@@ -138,17 +160,22 @@
           "altEn": "Settings screen with business name, response tone and Ollama model configuration",
           "title": "Configuración",
           "titleEn": "Settings",
+          "titleDe": "Einstellungen",
           "caption": "Ajusta el tono (formal, cercano, profesional) y conecta tu modelo de Ollama local sin coste de API.",
-          "captionEn": "Set the tone (formal, friendly, professional) and connect your local Ollama model — zero API cost."
+          "captionEn": "Set the tone (formal, friendly, professional) and connect your local Ollama model — zero API cost.",
+          "altDe": "Einstellungsbildschirm mit Unternehmensname, Antwortton und Ollama-Modellkonfiguration",
+          "captionDe": "Stelle den Ton ein (formell, locker, professionell) und verbinde dein lokales Ollama-Modell — ohne API-Kosten."
         }
       ],
       "large-description": {
         "es": "Local Reviews AI es una aplicación de escritorio para negocios locales — restaurantes, clínicas, tiendas — que centraliza la gestión de reseñas de Google y genera respuestas profesionales usando inteligencia artificial que corre en tu propio ordenador.\n\nEl problema que resuelve: responder reseñas de forma consistente y rápida es una tarea que la mayoría de negocios descuida, aunque tiene un impacto directo en la reputación y el SEO local. Esta app convierte esa tarea de minutos en segundos.\n\nEl flujo es simple: la app muestra todas las reseñas con su puntuación, autor y fecha. Analiza automáticamente el sentimiento de cada una (positiva, neutra, negativa) y marca las urgentes. Al seleccionar una reseña, el modelo de IA genera una respuesta adaptada al tono configurado para el negocio — formal, cercano o profesional. La respuesta se puede editar antes de copiarla y enviarla desde Google Business.\n\nLo que hace diferente a esta herramienta es que la IA corre completamente en local con Ollama (llama3, mistral, gemma2…). Sin suscripción, sin enviar datos de clientes a servidores externos, sin coste por token. El negocio mantiene el control total de sus datos.\n\nDesarrollada con Tauri 2 (app nativa en Rust) y React + TailwindCSS en el frontend. Los datos se almacenan en SQLite de forma local. El motor de IA usa la API de Ollama, configurable desde la propia app con cualquier modelo instalado en el equipo.",
-        "en": "Local Reviews AI is a desktop application for local businesses — restaurants, clinics, shops — that centralises Google review management and generates professional replies using AI running entirely on your own machine.\n\nThe problem it solves: responding to reviews consistently and quickly is a task most businesses neglect, even though it has a direct impact on reputation and local SEO. This app turns a minutes-long chore into a matter of seconds.\n\nThe workflow is straightforward: the app displays all reviews with their rating, author and date. It automatically analyses the sentiment of each one (positive, neutral, negative) and flags urgent ones. When you select a review, the AI model generates a reply adapted to the tone configured for the business — formal, friendly, or professional. The reply can be edited before copying it to Google Business.\n\nWhat makes this tool different is that the AI runs entirely locally with Ollama (llama3, mistral, gemma2…). No subscription, no sending customer data to external servers, no per-token cost. The business keeps full control of its data.\n\nBuilt with Tauri 2 (native app in Rust) and React + TailwindCSS on the frontend. Data is stored locally in SQLite. The AI engine uses the Ollama API, configurable directly from the app with any model installed on the machine."
+        "en": "Local Reviews AI is a desktop application for local businesses — restaurants, clinics, shops — that centralises Google review management and generates professional replies using AI running entirely on your own machine.\n\nThe problem it solves: responding to reviews consistently and quickly is a task most businesses neglect, even though it has a direct impact on reputation and local SEO. This app turns a minutes-long chore into a matter of seconds.\n\nThe workflow is straightforward: the app displays all reviews with their rating, author and date. It automatically analyses the sentiment of each one (positive, neutral, negative) and flags urgent ones. When you select a review, the AI model generates a reply adapted to the tone configured for the business — formal, friendly, or professional. The reply can be edited before copying it to Google Business.\n\nWhat makes this tool different is that the AI runs entirely locally with Ollama (llama3, mistral, gemma2…). No subscription, no sending customer data to external servers, no per-token cost. The business keeps full control of its data.\n\nBuilt with Tauri 2 (native app in Rust) and React + TailwindCSS on the frontend. Data is stored locally in SQLite. The AI engine uses the Ollama API, configurable directly from the app with any model installed on the machine.",
+        "de": "Local Reviews AI ist eine Desktop-Anwendung für lokale Unternehmen — Restaurants, Kliniken, Geschäfte —, die die Verwaltung von Google-Bewertungen zentralisiert und professionelle Antworten mit KI generiert, die komplett auf dem eigenen Rechner läuft.\n\nDas gelöste Problem: Konsistent und schnell auf Bewertungen zu antworten ist eine Aufgabe, die die meisten Unternehmen vernachlässigen, obwohl sie direkten Einfluss auf Reputation und lokales SEO hat. Diese App verwandelt eine Aufgabe von Minuten in eine Sache von Sekunden.\n\nDer Ablauf ist einfach: Die App zeigt alle Bewertungen mit Bewertung, Autor und Datum an. Sie analysiert automatisch die Stimmung jeder Bewertung (positiv, neutral, negativ) und markiert dringende Fälle. Bei Auswahl einer Bewertung generiert das KI-Modell eine Antwort im für das Unternehmen konfigurierten Ton — formell, locker oder professionell. Die Antwort kann vor dem Kopieren zu Google Business bearbeitet werden.\n\nWas dieses Tool besonders macht: Die KI läuft komplett lokal mit Ollama (llama3, mistral, gemma2…). Kein Abonnement, keine Kundendaten an externe Server, keine Kosten pro Token. Das Unternehmen behält die volle Kontrolle über seine Daten.\n\nEntwickelt mit Tauri 2 (native App in Rust) und React + TailwindCSS im Frontend. Die Daten werden lokal in SQLite gespeichert. Die KI-Engine nutzt die Ollama-API, direkt aus der App konfigurierbar mit jedem auf dem Rechner installierten Modell."
       },
       "description": {
         "es": "App de escritorio para negocios locales — gestión de reseñas de Google con respuestas automáticas generadas por IA local (Ollama), sin coste de API y sin enviar datos a terceros.",
-        "en": "Desktop app for local businesses — Google review management with automatic replies generated by local AI (Ollama), no API cost and no data sent to third parties."
+        "en": "Desktop app for local businesses — Google review management with automatic replies generated by local AI (Ollama), no API cost and no data sent to third parties.",
+        "de": "Desktop-App für lokale Unternehmen — Verwaltung von Google-Bewertungen mit automatischen Antworten durch lokale KI (Ollama), keine API-Kosten und keine Datenweitergabe an Dritte."
       },
       "skills": [
         { "name": "Tauri 2", "level": "high" },
@@ -178,8 +205,11 @@
           "altEn": "Active events screen with real-time maps",
           "title": "Eventos activos",
           "titleEn": "Active Events",
+          "titleDe": "Aktive Events",
           "caption": "Muestra los eventos en curso, el mapa, el modo de juego y la disponibilidad en tiempo real.",
-          "captionEn": "Displays ongoing events, map, game mode and real-time availability."
+          "captionEn": "Displays ongoing events, map, game mode and real-time availability.",
+          "altDe": "Bildschirm mit aktiven Events und Echtzeitkarten",
+          "captionDe": "Zeigt laufende Events, Karte, Spielmodus und Verfügbarkeit in Echtzeit."
         },
         {
           "src": "/img/projects/start-brawling/brawlers.webp",
@@ -187,8 +217,11 @@
           "altEn": "Brawler roster with avatar, name and description",
           "title": "Lista de brawlers",
           "titleEn": "Brawler Roster",
+          "titleDe": "Brawler-Liste",
           "caption": "Catálogo completo con imagen y descripción de cada personaje extraídos de la API oficial.",
-          "captionEn": "Full catalogue with avatar and description for each character, fetched from the official API."
+          "captionEn": "Full catalogue with avatar and description for each character, fetched from the official API.",
+          "altDe": "Brawler-Liste mit Bild, Name und Beschreibung",
+          "captionDe": "Vollständiger Katalog mit Bild und Beschreibung jeder Figur, abgerufen von der offiziellen API."
         },
         {
           "src": "/img/projects/start-brawling/detalle.webp",
@@ -196,17 +229,22 @@
           "altEn": "Glowbert brawler detail view with rarity, description, Star Powers and gadgets",
           "title": "Detalle del brawler",
           "titleEn": "Brawler Details",
+          "titleDe": "Brawler-Details",
           "caption": "Rareza, descripción, Star Powers y gadgets de cada personaje en una sola pantalla.",
-          "captionEn": "Rarity, description, Star Powers and gadgets for each character in one screen."
+          "captionEn": "Rarity, description, Star Powers and gadgets for each character in one screen.",
+          "altDe": "Detailansicht des Brawlers Glowbert mit Seltenheit, Beschreibung, Star Powers und Gadgets",
+          "captionDe": "Seltenheit, Beschreibung, Star Powers und Gadgets jeder Figur auf einem Bildschirm."
         }
       ],
       "large-description": {
         "es": "Start Brawling es una app Android nativa que conecta en tiempo real con la API oficial de Brawl Stars para darte toda la información del juego en un solo lugar.\n\nLa pantalla principal muestra los eventos activos en este momento: nombre del mapa, modo de juego y si está disponible o ya terminó. Todo se actualiza con cada petición a la API sin necesidad de refrescar manualmente.\n\nEl catálogo de brawlers lista todos los personajes disponibles con su imagen oficial, nombre y descripción. Al pulsar en uno se abre la vista de detalle, donde puedes ver su rareza, su historia dentro del juego, los Star Powers desbloqueables y los gadgets que puede equipar.\n\nDesarrollada en Java con Android SDK. Usa RecyclerView con adaptadores personalizados para los listados dinámicos, Glide para la carga y caché de imágenes desde URLs externas, y AsyncTask para las llamadas asíncronas a la API sin bloquear el hilo principal.",
-        "en": "Start Brawling is a native Android app that connects in real time to the official Brawl Stars API to give you all the game information in one place.\n\nThe main screen displays the currently active events: map name, game mode and whether it's live or already over. Everything updates with each API request without any manual refresh.\n\nThe brawler catalogue lists all available characters with their official avatar, name and description. Tapping one opens the detail view, where you can see the character's rarity, in-game story, unlockable Star Powers and equippable gadgets.\n\nBuilt in Java with Android SDK. Uses RecyclerView with custom adapters for dynamic listings, Glide for image loading and URL caching, and AsyncTask for asynchronous API calls without blocking the main thread."
+        "en": "Start Brawling is a native Android app that connects in real time to the official Brawl Stars API to give you all the game information in one place.\n\nThe main screen displays the currently active events: map name, game mode and whether it's live or already over. Everything updates with each API request without any manual refresh.\n\nThe brawler catalogue lists all available characters with their official avatar, name and description. Tapping one opens the detail view, where you can see the character's rarity, in-game story, unlockable Star Powers and equippable gadgets.\n\nBuilt in Java with Android SDK. Uses RecyclerView with custom adapters for dynamic listings, Glide for image loading and URL caching, and AsyncTask for asynchronous API calls without blocking the main thread.",
+        "de": "Start Brawling ist eine native Android-App, die sich in Echtzeit mit der offiziellen Brawl-Stars-API verbindet, um alle Spielinformationen an einem Ort zu liefern.\n\nDer Hauptbildschirm zeigt die aktuell aktiven Events: Kartenname, Spielmodus und ob das Event läuft oder schon beendet ist. Alles wird mit jeder API-Anfrage aktualisiert, ohne manuelles Neuladen.\n\nDer Brawler-Katalog listet alle verfügbaren Figuren mit offiziellem Bild, Namen und Beschreibung auf. Ein Tap öffnet die Detailansicht, in der du Seltenheit, Spielgeschichte, freischaltbare Star Powers und ausrüstbare Gadgets der Figur siehst.\n\nEntwickelt in Java mit Android SDK. Verwendet RecyclerView mit benutzerdefinierten Adaptern für dynamische Listen, Glide zum Laden und Cachen von Bildern und AsyncTask für asynchrone API-Aufrufe, ohne den Hauptthread zu blockieren."
       },
       "description": {
         "es": "App Android con la API de Brawl Stars — eventos activos, fichas de personajes con rareza, Star Powers y gadgets.",
-        "en": "Android app using the Brawl Stars API — active events, character profiles with rarity, Star Powers and gadgets."
+        "en": "Android app using the Brawl Stars API — active events, character profiles with rarity, Star Powers and gadgets.",
+        "de": "Android-App mit der Brawl-Stars-API — aktive Events, Charakterprofile mit Seltenheit, Star Powers und Gadgets."
       },
       "skills": [
         { "name": "Java", "level": "high" },
